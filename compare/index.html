@@ -185,7 +185,7 @@ const caps=s=>s.toUpperCase()
  .replace(/Ό/g,'Ο').replace(/Ύ/g,'Υ').replace(/Ώ/g,'Ω').replace(/Ϊ/g,'Ι').replace(/Ϋ/g,'Υ');
 const fmt=(v,d)=>(v==null||isNaN(v))?'—':v.toLocaleString('el-GR',{minimumFractionDigits:d,maximumFractionDigits:d});
 const fv=(m,v)=>(v==null||isNaN(v))?'—':fmt(v,m.d)+(m.pct?' %':(m.x?'x':''));
-const eur=v=> (v==null||isNaN(v))?'—':(v>=1000 ? fmt(v/1000,1)+' δισ. €' : fmt(v,0)+' εκ. €');
+const eur=v=>(v==null||isNaN(v))?'—':Math.round(v/1e6).toLocaleString('el-GR')+' εκ. €';
 const q=(a,p)=>{const s=[...a].sort((x,y)=>x-y),i=(s.length-1)*p,lo=Math.floor(i),hi=Math.ceil(i);return s[lo]+(s[hi]-s[lo])*(i-lo);};
 const norm=x=>x.toUpperCase().replace(/[ΆΑ]/g,'Α').replace(/[ΈΕ]/g,'Ε').replace(/[ΉΗ]/g,'Η').replace(/[ΊΪΙ]/g,'Ι').replace(/[ΌΟ]/g,'Ο').replace(/[ΎΫΥ]/g,'Υ').replace(/[ΏΩ]/g,'Ω');
 

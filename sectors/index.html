@@ -101,7 +101,7 @@ const DATA=(window.AXION&&window.AXION.rows&&window.AXION.rows[AXBASIS])||[];
 document.addEventListener('axion:basischange',function(){location.reload();});
 
 const fmt=(v,d)=>(v==null||isNaN(v))?'—':v.toLocaleString('el-GR',{minimumFractionDigits:d,maximumFractionDigits:d});
-const eur=v=> v>=1000 ? fmt(v/1000,1)+' δισ. €' : fmt(v,0)+' εκ. €';
+const eur=v=>(v==null||isNaN(v))?'—':Math.round(v/1e6).toLocaleString('el-GR')+' εκ. €';
 const q=(arr,p)=>{const s=[...arr].sort((a,b)=>a-b),i=(s.length-1)*p,lo=Math.floor(i),hi=Math.ceil(i);return s[lo]+(s[hi]-s[lo])*(i-lo);};
 
 // ---- προσομοιωμένη ανάπτυξη τζίρου (CAGR) ανά εταιρεία, ντετερμινιστική ----

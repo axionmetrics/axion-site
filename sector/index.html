@@ -277,7 +277,7 @@ function clTable(){
 function clRender(){ clRenderMet(); clTable(); }
 
 const fmt=(v,d)=>(v==null||isNaN(v))?'—':v.toLocaleString('el-GR',{minimumFractionDigits:d,maximumFractionDigits:d});
-const eur=v=> (v==null||isNaN(v))?'—':(v>=1000 ? fmt(v/1000,1)+' δισ. €' : fmt(v,0)+' εκ. €');
+const eur=v=>(v==null||isNaN(v))?'—':Math.round(v/1e6).toLocaleString('el-GR')+' εκ. €';
 const q=(a,p)=>{const s=[...a].filter(x=>x!=null&&!isNaN(x)).sort((x,y)=>x-y);if(!s.length)return null;const i=(s.length-1)*p,lo=Math.floor(i),hi=Math.ceil(i);return s[lo]+(s[hi]-s[lo])*(i-lo);};
 
 const rowsOf=()=>DATA.filter(r=>r.s===sector);
