@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Σύγκριση εταιρειών — Axion Metrics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&family=Open+Sans:wght@400;600;700;800&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+ :root{--bg:#fff;--phead:#223c66;--text:#1b2740;--muted:#6b7890;--line:#e4e8f0;
+  --good:#00922f;--mid:#e08600;--bad:#f01c00;--accent:#1E4FA0;--soft:#f7f9fc;
+  --zg:#37a05e;--zm:#e0a53a;--zb:#db5247}
+ *{box-sizing:border-box;margin:0;padding:0}
+ body{background:var(--bg);color:var(--text);font-family:'Open Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+ .wrap{max-width:1180px;margin:0 auto;padding:0 22px 60px}
+ .mast{padding:26px 0 12px}
+ .mast h1{font-size:28px;font-weight:800}
+ .mast .sub{font-size:12.5px;color:var(--muted);margin-top:5px}
+
+ /* picker */
+ .controls{background:#f4f6f9;border:1px solid #e4e8f0;border-left:3px solid #5a6b85;border-radius:12px;padding:14px 16px;margin-top:14px}
+ .searchwrap{position:relative;max-width:520px}
+ .search{display:flex;align-items:center;gap:9px;background:#fff;border:1.5px solid var(--line);border-radius:9px;padding:9px 13px}
+ .search:focus-within{border-color:var(--accent)}
+ .search input{flex:1;border:none;outline:none;font-family:inherit;font-size:14px;color:var(--text)}
+ .search svg{opacity:.45}
+ .sugg{position:absolute;z-index:20;left:0;right:0;top:calc(100% + 5px);background:#fff;border:1px solid var(--line);
+   border-radius:10px;box-shadow:0 10px 28px rgba(20,40,80,.12);max-height:260px;overflow:auto;display:none}
+ .sugg.on{display:block}
+ .sitem{padding:9px 14px;font-size:13.5px;cursor:pointer;display:flex;justify-content:space-between;gap:10px}
+ .sitem:hover{background:#f2f6fc}
+ .sitem .sc{font-size:11.5px;color:var(--muted)}
+ .sitem.dis{opacity:.42;cursor:not-allowed}
+
+ .picked{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+ .pchip{display:flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--line);border-radius:22px;padding:6px 8px 6px 15px;font-size:13px;font-weight:700}
+  .pchip .x{width:20px;height:20px;border-radius:50%;background:#eef1f6;color:#8794a8;font-size:13px;line-height:19px;text-align:center;cursor:pointer;flex:none}
+ .pchip .x:hover{background:#e2e7ee;color:var(--text)}
+ .hint{font-size:11.5px;color:#9aa7b8;margin-top:10px}
+
+
+ /* metric picker */
+ .metbar{margin-top:14px;padding-top:13px;border-top:1px solid var(--line)}
+ .metlabel{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9aa7b8;margin-bottom:9px}
+ .metpick{display:flex;flex-wrap:wrap;gap:8px}
+ .mchip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:#fff;border-radius:20px;
+   padding:6px 13px;font-size:12.5px;font-weight:700;color:#5f7088;cursor:pointer;transition:.12s;user-select:none}
+ .mchip:hover{border-color:#c3d3e8}
+ .mchip.on{background:#33425c;border-color:#33425c;color:#fff}
+ .mchip .mx{font-size:14px;opacity:.85}
+ .mchip .mplus{color:var(--accent);font-size:15px;font-weight:800;line-height:1}
+ .tablewrap{overflow-x:auto;margin-top:8px}
+
+ /* table */
+ table{width:100%;border-collapse:collapse;font-size:13px}
+ thead th{background:var(--phead);color:#fff;font-weight:700;padding:10px 8px;font-size:11.5px;
+   text-align:center;letter-spacing:.02em;line-height:1.3;vertical-align:middle}
+ thead th.l{text-align:left;width:240px;padding-left:14px}
+ thead th .dirn{display:block;font-size:8.5px;font-weight:400;color:#9fb3d1;margin-top:3px}
+ tbody td{padding:13px 8px;border-bottom:1px solid var(--line);text-align:center;
+   font-family:'Ubuntu Mono';font-weight:700;font-size:17px}
+ tbody td.co{text-align:left;font-family:'Open Sans';font-size:14px;font-weight:700;padding-left:14px}
+ tbody td.co a{color:var(--text);text-decoration:none}
+ tbody td.co a:hover{color:var(--accent)}
+ tbody td.co small{display:block;font-weight:400;font-size:10.5px;color:#9aa7b8;margin-top:1px}
+ tbody tr:hover{background:#f9fbfe}
+ .g{color:var(--good)}.m{color:var(--mid)}.b{color:var(--bad)}.neu{color:var(--text)}
+
+ h2.sec{font-size:16px;font-weight:800;margin:34px 0 4px}
+ .sech{font-size:11.5px;color:var(--muted);margin-bottom:14px}
+ .search svg{width:15px;height:15px;flex:none}
+
+ .empty{border:1px dashed #d4dbe6;border-radius:12px;padding:52px 20px;text-align:center;color:var(--muted);font-size:14px;margin-top:24px;background:#fbfcfe}
+ .foot{font-size:11.5px;color:var(--muted);margin-top:22px;line-height:1.6}
+
+ /* == ομογενοποίηση: κοινή τυπογραφία επικεφαλίδων == */
+ .mast h1,h2.sec{font-family:'Inter',sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.02em}
+
+ 
+ /* navy hero (όπως στο ευρετήριο κλάδων) */
+ .hero{background:#fff;border:1px solid #eef1f6;border-radius:14px;box-shadow:0 4px 16px rgba(27,39,64,.06);overflow:hidden;margin-top:22px}
+ .hero .stripe{height:5px;background:#c6a24e}
+ .hero .hero-in{padding:24px 34px 22px}
+ .hero-stats{display:flex;flex-wrap:wrap;margin-top:15px}
+ .hero .hs{display:flex;flex-direction:column;gap:3px;padding:2px 18px;max-width:210px}
+ .hero .hs:first-child{padding-left:0}
+ .hero .hs+.hs{border-left:1px solid #edf0f5}
+ .hero .hs .v{font-size:14px;font-weight:800;color:#1b2740;line-height:1.15}
+ .hero .hs .l{font-size:10.5px;color:#8a95a6;letter-spacing:.01em;line-height:1.3}
+ .hero .eye{font-family:Inter,sans-serif;font-weight:700;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:#7fb0e8;margin-bottom:10px}
+ .hero h1{font-family:Inter,sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.02em;color:#1b2740;font-size:30px;line-height:1.05;margin:0}
+ .hero .lead{font-size:14px;line-height:1.6;color:#aebfd8;max-width:640px;margin-top:11px}
+ /* επιλογές μέσα στο navy hero */
+ .hero .controls{background:transparent;border:none;border-radius:0;padding:0;margin-top:20px}
+ .hero .hint{color:#8ea3c6}
+ .hero .metbar{border-top:1px solid rgba(255,255,255,.14)}
+ .hero .metlabel{color:#8ea3c6}
+ .hero .metpick .mchip{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.20);color:#cdd7e6}
+ .hero .metpick .mchip:hover{border-color:rgba(255,255,255,.42)}
+ .hero .metpick .mchip.on{background:#fff;border-color:#fff;color:var(--phead)}
+ .hero .metpick .mchip .mplus{color:#7fb0e8}
+ @media(max-width:640px){ .hero .hero-in{padding:20px 20px}.hero .hs{padding:2px 14px} }
+</style>
+<link rel="stylesheet" href="../assets/chrome.css">
+<script src="../assets/data.js"></script>
+</head>
+<body>
+<div id="am-nav"></div>
+<div class="wrap">
+ <section class="hero">
+    <div class="stripe"></div>
+    <div class="hero-in">
+      <h1>Σύγκριση εταιρειών</h1>
+      <div class="hero-stats">
+        <div class="hs"><span class="v">Αποτίμηση</span><span class="l">P/E · P/BV · EV/EBITDA</span></div>
+        <div class="hs"><span class="v">Κερδοφορία</span><span class="l">ROE · περιθώρια</span></div>
+        <div class="hs"><span class="v">Μόχλευση</span><span class="l">καθαρός δανεισμός</span></div>
+        <div class="hs"><span class="v">Μέρισμα</span><span class="l">απόδοση</span></div>
+      </div>
+    </div>
+  </section>
+
+ <div class="controls">
+  <div class="searchwrap">
+   <label class="search">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+    <input id="q" type="text" placeholder="Πρόσθεσε εταιρεία…  π.χ. ΟΠΑΠ, JUMBO, ΤΙΤΑΝ" autocomplete="off"
+      oninput="suggest()" onfocus="suggest()">
+   </label>
+   <div class="sugg" id="sugg"></div>
+  </div>
+  <div class="picked" id="picked"></div>
+  <div class="hint" id="hint"></div>
+ </div>
+
+ <div class="controls">
+  <div class="metpick" id="metpick"></div>
+ </div>
+
+ <div id="out"></div>
+
+ <div class="foot">
+  <div style="margin-top:8px"><span style="color:var(--mid)">⚠</span> Πρόσεξε ότι εταιρείες <b>διαφορετικών κλάδων</b> δεν αποτιμώνται με τα ίδια κριτήρια:
+  ένα P/E 7 σε τράπεζα δεν είναι «φθηνότερο» από ένα P/E 16 σε εταιρεία λογισμικού. Για σύγκριση με τους ομοειδείς,
+  δες τη <b>Σελίδα κλάδου</b>.</div>
+ </div>
+</div>
+
+<script>
+const COMPANY_PAGE='../company/';
+
+const AXBASIS=(function(){try{var u=new URLSearchParams(location.search).get('basis');var b=u||localStorage.getItem('am-basis')||'annual';return (window.AXION&&window.AXION.meta&&window.AXION.meta.bases.indexOf(b)>-1)?b:'annual';}catch(e){return 'annual';}})();
+const DATA=(window.AXION&&window.AXION.rows&&window.AXION.rows[AXBASIS])||[];
+document.addEventListener('axion:basischange',function(){location.reload();});
+
+/* δειγματικές τιμές για τους επιπλέον δείκτες — ντετερμινιστικά ανά όνομα */
+function h32(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return (h>>>0)/4294967296;}
+DATA.forEach(r=>{const u=k=>h32(r.t+'|'+k);
+ r.gm =Math.round((18+u('gm')*44)*10)/10;
+ r.nm =Math.round((3 +u('nm')*24)*10)/10;
+ r.cr =Math.round((0.8+u('cr')*2.2)*10)/10;
+ r.roa=Math.round((2 +u('roa')*15)*10)/10;
+});
+
+const ALLMET=[
+ {k:'pe', label:'P/E',       note:'τιμή προς κέρδη',           dir:-1,d:1},
+ {k:'pbv',label:'P/BV',      note:'τιμή προς λογιστική αξία',  dir:-1,d:1},
+ {k:'ev', label:'EV/EBITDA', note:'αξία επιχείρησης προς EBITDA',dir:-1,d:1},
+ {k:'roe',label:'ROE',       note:'απόδοση ιδίων κεφαλαίων',   dir:+1,d:0,pct:true},
+ {k:'dy', label:'Μερισματική απόδοση',note:'μέρισμα προς τιμή',dir:+1,d:1,pct:true},
+ {k:'nde',label:'Καθαρός δανεισμός / EBITDA',note:'μόχλευση · αρνητικό = καθαρό ταμείο',dir:-1,d:1},
+ // --- ενδεικτικοί επιπλέον δείκτες (μη επιλεγμένοι εξ ορισμού) ---
+ {k:'gm', label:'Μικτό περιθώριο',   note:'μικτά κέρδη προς πωλήσεις',       dir:+1,d:1,pct:true},
+ {k:'nm', label:'Καθαρό περιθώριο',  note:'καθαρά κέρδη προς πωλήσεις',      dir:+1,d:1,pct:true},
+ {k:'cr', label:'Γενική ρευστότητα', note:'κυκλοφορούν προς βραχυπρόθεσμες', dir:+1,d:1,x:true},
+ {k:'roa',label:'ROA',               note:'απόδοση ενεργητικού',            dir:+1,d:1,pct:true},
+];
+let metSel=['pe','pbv','ev','roe','dy','nde'];
+const MAX=4;
+let picked=[];
+
+const caps=s=>s.toUpperCase()
+ .replace(/Ά/g,'Α').replace(/Έ/g,'Ε').replace(/Ή/g,'Η').replace(/Ί/g,'Ι')
+ .replace(/Ό/g,'Ο').replace(/Ύ/g,'Υ').replace(/Ώ/g,'Ω').replace(/Ϊ/g,'Ι').replace(/Ϋ/g,'Υ');
+const fmt=(v,d)=>(v==null||isNaN(v))?'—':v.toLocaleString('el-GR',{minimumFractionDigits:d,maximumFractionDigits:d});
+const fv=(m,v)=>(v==null||isNaN(v))?'—':fmt(v,m.d)+(m.pct?' %':(m.x?'x':''));
+const eur=v=> (v==null||isNaN(v))?'—':(v>=1000 ? fmt(v/1000,1)+' δισ. €' : fmt(v,0)+' εκ. €');
+const q=(a,p)=>{const s=[...a].sort((x,y)=>x-y),i=(s.length-1)*p,lo=Math.floor(i),hi=Math.ceil(i);return s[lo]+(s[hi]-s[lo])*(i-lo);};
+const norm=x=>x.toUpperCase().replace(/[ΆΑ]/g,'Α').replace(/[ΈΕ]/g,'Ε').replace(/[ΉΗ]/g,'Η').replace(/[ΊΪΙ]/g,'Ι').replace(/[ΌΟ]/g,'Ο').replace(/[ΎΫΥ]/g,'Υ').replace(/[ΏΩ]/g,'Ω');
+
+/* Κατάταξη ΜΕΤΑΞΥ των επιλεγμένων εταιρειών (όχι έναντι κλάδου).
+   Καλύτερη τιμή = πράσινο, χειρότερη = κόκκινο, ενδιάμεσες = κεχριμπάρι.
+   Ισοβαθμίες παίρνουν το ίδιο χρώμα. Αν όλες οι τιμές είναι ίσες, όλες ουδέτερες. */
+function rankCls(m, rows, v){
+ if(v==null||isNaN(v)) return 'm';
+ const vals=rows.map(r=>r[m.k]).filter(x=>x!=null&&!isNaN(x));
+ if(!vals.length) return 'm';
+ const best = m.dir<0 ? Math.min(...vals) : Math.max(...vals);
+ const worst= m.dir<0 ? Math.max(...vals) : Math.min(...vals);
+ if(best===worst) return 'm';
+ if(v===best) return 'g';
+ if(v===worst) return 'b';
+ return 'm';
+}
+const ZCOL={g:'var(--zg)',m:'var(--zm)',b:'var(--zb)'};
+
+/* ---------- picker ---------- */
+function suggest(){
+ const term=norm(document.getElementById('q').value.trim());
+ const box=document.getElementById('sugg');
+ let rows=DATA;
+ if(term) rows=DATA.filter(r=>norm(r.t).includes(term)||norm(r.s).includes(term));
+ rows=rows.slice(0,8);
+ if(!rows.length){box.classList.remove('on');return;}
+ box.innerHTML=rows.map(r=>{
+  const has=picked.includes(r.t), full=picked.length>=MAX&&!has;
+  const dis=has||full;
+  return `<div class="sitem ${dis?'dis':''}" ${dis?'':`onclick="add('${r.t.replace(/'/g,"\\'")}')"`}>
+    <span>${r.t}</span><span class="sc">${has?'επιλεγμένη':r.s}</span></div>`;
+ }).join('');
+ box.classList.add('on');
+}
+function add(t){
+ if(picked.length>=MAX||picked.includes(t))return;
+ picked.push(t);
+ document.getElementById('q').value='';
+ document.getElementById('sugg').classList.remove('on');
+ render();
+}
+function drop(t){picked=picked.filter(x=>x!==t);render();}
+document.addEventListener('click',e=>{
+ if(!e.target.closest('.searchwrap')) document.getElementById('sugg').classList.remove('on');
+});
+
+
+/* ---------- δείκτες: add/remove ---------- */
+function renderMet(){
+ document.getElementById('metpick').innerHTML=ALLMET.map(m=>{
+   const on=metSel.includes(m.k);
+   return `<span class="mchip ${on?'on':''}" onclick="toggleMet('${m.k}')">`+
+     (on?`${m.label} <span class="mx">×</span>`:`<span class="mplus">+</span> ${m.label}`)+`</span>`;
+ }).join('');
+}
+function toggleMet(k){
+ if(metSel.includes(k)){ if(metSel.length<=1) return; metSel=metSel.filter(x=>x!==k); }
+ else metSel.push(k);
+ renderMet(); render();
+}
+
+/* ---------- render ---------- */
+function render(){
+ const out=document.getElementById('out');
+ const chips=document.getElementById('picked');
+ chips.innerHTML=picked.map(t=>`<span class="pchip">${t}
+   <span class="x" onclick="drop('${t.replace(/'/g,"\\'")}')">×</span></span>`).join('');
+ document.getElementById('hint').textContent = picked.length>=MAX
+   ? `Έφτασες το μέγιστο (${MAX} εταιρείες). Αφαίρεσε μία για να προσθέσεις άλλη.`
+   : `Επιλεγμένες ${picked.length} από ${MAX}. Πρόσθεσε τουλάχιστον δύο για σύγκριση.`;
+
+ if(picked.length<2){
+  out.innerHTML=`<div class="empty">Διάλεξε <b>δύο ή περισσότερες</b> εταιρείες για να ξεκινήσει η σύγκριση.</div>`;
+  return;
+ }
+ const rows=picked.map(t=>DATA.find(r=>r.t===t)).filter(Boolean);
+ if(rows.length<2){out.innerHTML=`<div class="empty">Διάλεξε <b>δύο ή περισσότερες</b> εταιρείες για να ξεκινήσει η σύγκριση.</div>`;return;}
+
+ // κεφαλίδα: δείκτες στις στήλες
+ const shown=ALLMET.filter(m=>metSel.includes(m.k));
+ const th=`<tr><th class="l">ΕΤΑΙΡΕΙΑ</th>`+
+   shown.map(m=>`<th>${caps(m.label)}<span class="dirn">${m.dir<0?'χαμηλό = καλύτερο':'υψηλό = καλύτερο'}</span></th>`).join('')+
+   `</tr>`;
+
+ // γραμμές: μία ανά εταιρεία
+ const tb=rows.map(r=>{
+  const tds=shown.map(m=>`<td class="${rankCls(m,rows,r[m.k])}">${fv(m,r[m.k])}</td>`).join('');
+  return `<tr><td class="co"><a href="${encodeURI(COMPANY_PAGE)}" target="_blank">${r.t}</a><small>${r.s}</small></td>${tds}</tr>`;
+ }).join('');
+
+ out.innerHTML =
+   `<div class="tablewrap"><table><thead>${th}</thead><tbody>${tb}</tbody></table></div>`;
+}
+
+// αρχική επιλογή για επίδειξη
+picked=['ΟΠΑΠ','JUMBO','ΚΡΙ-ΚΡΙ'].map(function(n){var r=DATA.find(function(x){return x.t===n})||DATA.find(function(x){return x.tk===n});return r?r.t:null;}).filter(Boolean);
+if(picked.length<2 && DATA.length) picked=DATA.slice(0,3).map(function(r){return r.t});
+renderMet();
+render();
+</script>
+<div id="am-foot"></div>
+<script>window.NAV_ACTIVE=0;window.NAV_CUR="Σύγκριση εταιρειών";</script>
+<script src="../assets/chrome.js"></script>
+</body>
+</html>

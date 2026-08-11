@@ -1,0 +1,141 @@
+<!DOCTYPE html><html lang="el"><head><meta charset="UTF-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Μεθοδολογία & δείκτες — Axion Metrics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&family=Open+Sans:wght@400;600;700;800&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+ :root{--bg:#fff;--phead:#223c66;--text:#1b2740;--muted:#6b7890;--line:#e4e8f0;--accent:#1E4FA0;--soft:#f7f9fc;
+  --good:#00922f;--mid:#e08600;--bad:#f01c00}
+ *{box-sizing:border-box;margin:0;padding:0}
+ body{background:var(--bg);color:var(--text);font-family:'Open Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.65}
+ .wrap{max-width:1180px;margin:0 auto;padding:0 22px 70px}
+ .crumb{font-size:11.5px;color:#9aa7b8;padding:20px 0 0}
+ .crumb a{color:var(--accent);text-decoration:none}
+ .mast{background:#fff;border:1px solid #eef1f6;border-radius:14px;box-shadow:0 4px 16px rgba(27,39,64,.06);overflow:hidden;margin-top:22px;margin-bottom:26px}
+.mast .stripe{height:5px;background:#c6a24e}
+.mast .hero-in{padding:24px 34px 22px}
+.mast .sub{font-size:13px;line-height:1.55;color:#5a6675;margin-top:10px;max-width:620px}
+ .mast h1{font-family:Inter,sans-serif;font-size:30px;font-weight:800;text-transform:uppercase;letter-spacing:.02em;color:#1b2740;line-height:1.05;margin:0}
+ .mast .sub{font-size:13px;color:var(--muted);margin:6px 0 18px;max-width:720px}
+ .updated{font-size:11px;color:#9aa7b8;font-family:'Ubuntu Mono';margin-bottom:16px}
+
+ .layout{display:grid;grid-template-columns:210px 1fr;gap:38px;align-items:start}
+ nav.toc{position:sticky;top:22px;font-size:12.5px}
+ nav.toc .th{font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#9aa7b8;margin-bottom:9px}
+ nav.toc a{display:block;color:var(--muted);text-decoration:none;padding:5px 0 5px 11px;border-left:2px solid var(--line)}
+ nav.toc a:hover{color:var(--accent);border-left-color:var(--accent)}
+
+ section{margin-bottom:34px;scroll-margin-top:20px}
+ section h2{font-size:18px;font-weight:800;margin-bottom:10px;letter-spacing:-.01em}
+ section h3{font-size:14px;font-weight:700;margin:18px 0 6px}
+ section p{font-size:14px;color:#33415a;margin-bottom:11px}
+ section ul{margin:0 0 12px 18px}
+ section li{font-size:14px;color:#33415a;margin-bottom:6px}
+ code{font-family:'Ubuntu Mono';font-size:13px;background:var(--soft);border:1px solid var(--line);
+   border-radius:5px;padding:1px 6px;color:var(--phead)}
+ .mono{font-family:'Ubuntu Mono'}
+
+ table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0 16px}
+ thead th{background:var(--phead);color:#fff;font-weight:700;padding:9px 11px;text-align:left;font-size:11.5px;letter-spacing:.02em}
+ tbody td{padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:top;color:#33415a}
+ tbody td.f{font-family:'Ubuntu Mono';font-size:12.5px;color:var(--phead);white-space:nowrap}
+ tbody td.d{white-space:nowrap;font-weight:700;font-size:12px}
+ .lo{color:var(--good)}.hi{color:var(--good)}
+ tbody tr:hover{background:#f9fbfe}
+
+ .box{border:1px solid var(--line);border-radius:11px;padding:15px 18px;margin:14px 0;background:var(--soft)}
+ .box.warn{background:#fbf1db;border-color:#ecd9a6;color:#7a5a12}
+ .box.warn b{color:#6b4e0d}
+ .box.info{background:#eff5fd;border-color:#cfe0f6}
+ .box p:last-child{margin-bottom:0}
+ .box .bt{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9aa7b8;margin-bottom:6px}
+
+ .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:14px 0}
+ .card{border:1px solid var(--line);border-radius:11px;padding:15px 16px}
+ .card .n{font-family:'Ubuntu Mono';font-size:22px;font-weight:700;color:var(--accent)}
+ .card .l{font-size:12px;color:var(--muted);margin-top:2px}
+
+ .foot{border-top:1px solid var(--line);margin-top:34px;padding-top:16px;font-size:11.5px;color:var(--muted);line-height:1.7}
+ a.lnk{color:var(--accent);text-decoration:none;border-bottom:1px solid #cfe0f6}
+
+ /* == ομογενοποίηση: κοινή τυπογραφία επικεφαλίδων == */
+ .mast h1,h2{font-family:'Inter',sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.02em}
+
+ 
+</style><link rel="stylesheet" href="../assets/chrome.css">
+</head><body>
+<div id="am-nav"></div><div class="wrap">
+<div class="mast">
+  <div class="stripe"></div>
+  <div class="hero-in">
+    <h1>Μεθοδολογία & δείκτες</h1>
+    <div class="sub">Πώς συλλέγονται τα δεδομένα, πώς υπολογίζονται οι αριθμοδείκτες και γιατί κάθε τιμή κρίνεται πάντα σε σχέση με τον κλάδο της.</div>
+  </div>
+</div>
+<div class="updated">Τελευταία ενημέρωση: Ιούλιος 2026</div>
+<div class="layout">
+<nav class="toc"><div class="th">Περιεχόμενα</div><a href="#kalypsi">Κάλυψη δεδομένων</a><a href="#pigi">Πηγές & επαλήθευση</a><a href="#deiktes">Οι δείκτες</a><a href="#klados">Σύγκριση με τον κλάδο</a><a href="#orio">Όρια και γνωστοί περιορισμοί</a></nav>
+<main><section id="kalypsi"><h2>Κάλυψη δεδομένων</h2>
+  <p>Το Axion Metrics καλύπτει τις εισηγμένες εταιρείες του Χρηματιστηρίου Αθηνών, με ετήσια χρηματοοικονομικά
+  στοιχεία για τις χρήσεις <b>2020 έως 2025</b>.</p>
+  <div class="cards">
+   <div class="card"><div class="n">133</div><div class="l">εταιρείες σε κάλυψη</div></div>
+   <div class="card"><div class="n">10</div><div class="l">κλάδοι</div></div>
+   <div class="card"><div class="n">2020–25</div><div class="l">χρήσεις</div></div>
+  </div>
+  <p>Τα στοιχεία εξάγονται από τις <b>δημοσιευμένες ετήσιες οικονομικές εκθέσεις</b> κάθε εταιρείας
+  (ενοποιημένες καταστάσεις, όπου υπάρχουν) και επαληθεύονται χειροκίνητα ανά εταιρεία και ανά χρήση.</p></section><section id="pigi"><h2>Πηγές & επαλήθευση</h2>
+  <ul>
+   <li><b>Οικονομικά μεγέθη:</b> ετήσιες οικονομικές εκθέσεις των εταιρειών (ισολογισμός, κατάσταση αποτελεσμάτων, ταμειακές ροές).</li>
+   <li><b>Μετοχική σύνθεση & θυγατρικές:</b> ετήσιες εκθέσεις και επίσημες γνωστοποιήσεις.</li>
+   <li><b>Εταιρικά γεγονότα:</b> ανακοινώσεις εταιρειών και του ΧΑ (αυξήσεις κεφαλαίου, split, μερίσματα, εξαγορές).</li>
+  </ul>
+  <h3>Κανόνες που τηρούνται</h3>
+  <ul>
+   <li>Οι τιμές καταχωρούνται <b>ακριβώς όπως στην πηγή</b> — δεν αντιστρέφονται πρόσημα. Ζημιές παραμένουν αρνητικές.</li>
+   <li>Όταν ένα έτος εμφανίζεται σε περισσότερες από μία εκθέσεις, υπερισχύει η <b>πιο πρόσφατη</b> (αναμορφωμένα στοιχεία).</li>
+   <li>Για τις τράπεζες εφαρμόζονται ειδικές συμβάσεις: τα «έσοδα» αντιστοιχούν στα καθαρά έσοδα από τόκους,
+       και οι «απομειώσεις» στις προβλέψεις πιστωτικού κινδύνου.</li>
+  </ul></section><section id="deiktes"><h2>Οι δείκτες</h2>
+  <p>Κάθε δείκτης υπολογίζεται από τα πρωτογενή μεγέθη — δεν αντιγράφεται από τρίτες πηγές.
+  Η στήλη «Καλύτερο» δείχνει την <b>κατεύθυνση</b> που θεωρείται ευνοϊκή στο site.</p>
+  <table>
+   <thead><tr><th>Δείκτης</th><th>Τύπος</th><th>Κατηγορία</th><th>Καλύτερο</th><th>Τι σημαίνει</th></tr></thead>
+   <tbody><tr><td><b>P/E</b></td><td class="f">Τιμή μετοχής ÷ Κέρδη ανά μετοχή</td><td>Αποτίμηση</td><td class="d hi">Χαμηλό</td><td>Πόσα χρόνια κερδών πληρώνεις για τη μετοχή. Χαμηλό = φθηνότερη — ή προβληματική.</td></tr><tr><td><b>P/BV</b></td><td class="f">Τιμή μετοχής ÷ Λογιστική αξία ανά μετοχή</td><td>Αποτίμηση</td><td class="d hi">Χαμηλό</td><td>Τιμή έναντι καθαρής θέσης. Κάτω από 1 σημαίνει ότι η αγορά αποτιμά κάτω από τα ίδια κεφάλαια.</td></tr><tr><td><b>EV/EBITDA</b></td><td class="f">(Κεφαλαιοποίηση + Καθαρός δανεισμός) ÷ EBITDA</td><td>Αποτίμηση</td><td class="d hi">Χαμηλό</td><td>Λαμβάνει υπόψη και το χρέος — γι' αυτό συγκρίνει καλύτερα εταιρείες με διαφορετική μόχλευση.</td></tr><tr><td><b>ROE</b></td><td class="f">Καθαρά κέρδη ÷ Ίδια κεφάλαια</td><td>Κερδοφορία</td><td class="d hi">Υψηλό</td><td>Πόσο αποδοτικά αξιοποιεί η διοίκηση τα κεφάλαια των μετόχων.</td></tr><tr><td><b>ROA</b></td><td class="f">Καθαρά κέρδη ÷ Σύνολο ενεργητικού</td><td>Κερδοφορία</td><td class="d hi">Υψηλό</td><td>Απόδοση επί του συνόλου των περιουσιακών στοιχείων.</td></tr><tr><td><b>Περιθώριο EBITDA</b></td><td class="f">EBITDA ÷ Πωλήσεις</td><td>Κερδοφορία</td><td class="d hi">Υψηλό</td><td>Λειτουργική αποδοτικότητα, πριν από αποσβέσεις και τόκους.</td></tr><tr><td><b>Μερισματική απόδοση</b></td><td class="f">Μέρισμα ανά μετοχή ÷ Τιμή</td><td>Μέρισμα</td><td class="d hi">Υψηλό</td><td>Η ταμειακή απόδοση που εισπράττεις σήμερα.</td></tr><tr><td><b>Ποσοστό διανομής</b></td><td class="f">Μέρισμα ÷ Καθαρά κέρδη</td><td>Μέρισμα</td><td class="d ">—</td><td>Πόσο από τα κέρδη μοιράζεται. Πολύ υψηλό ποσοστό μπορεί να μη διατηρείται.</td></tr><tr><td><b>Καθαρός δανεισμός / EBITDA</b></td><td class="f">(Δανεισμός − Διαθέσιμα) ÷ EBITDA</td><td>Μόχλευση</td><td class="d hi">Χαμηλό</td><td>Πόσα χρόνια EBITDA χρειάζονται για την αποπληρωμή. Αρνητικό = καθαρό ταμείο.</td></tr><tr><td><b>Δανειακή μόχλευση</b></td><td class="f">Σύνολο υποχρεώσεων ÷ Ίδια κεφάλαια</td><td>Μόχλευση</td><td class="d hi">Χαμηλό</td><td>Πόσο στηρίζεται η εταιρεία σε δανεισμό έναντι ιδίων κεφαλαίων.</td></tr><tr><td><b>Κάλυψη τόκων</b></td><td class="f">EBIT ÷ Τόκοι</td><td>Μόχλευση</td><td class="d hi">Υψηλό</td><td>Πόσες φορές καλύπτουν τα λειτουργικά κέρδη τους τόκους.</td></tr><tr><td><b>Γενική ρευστότητα</b></td><td class="f">Κυκλοφορούν ÷ Βραχυπρόθεσμες υποχρεώσεις</td><td>Ρευστότητα</td><td class="d hi">Υψηλό</td><td>Ικανότητα κάλυψης βραχυπρόθεσμων υποχρεώσεων.</td></tr><tr><td><b>Ποιότητα κερδών</b></td><td class="f">Λειτουργικές ταμειακές ροές ÷ Καθαρά κέρδη</td><td>Ποιότητα</td><td class="d hi">Υψηλό</td><td>Πόσο από τα λογιστικά κέρδη γίνονται πραγματικά μετρητά. Πάνω από 100% = ισχυρή ποιότητα.</td></tr><tr><td><b>Ανάπτυξη εσόδων (CAGR)</b></td><td class="f">(Πωλήσεις τελ. έτους ÷ Πωλήσεις αρχ. έτους)^(1/έτη) − 1</td><td>Ανάπτυξη</td><td class="d hi">Υψηλό</td><td>Μέσος ετήσιος ρυθμός αύξησης του τζίρου στην πενταετία.</td></tr></tbody>
+  </table>
+  <div class="box info"><div class="bt">Σημείωση</div>
+   <p>Ο πίνακας δείχνει τους βασικούς δείκτες. Το πλήρες σύνολο περιλαμβάνει περισσότερους δείκτες
+   αποτίμησης, κερδοφορίας, ρευστότητας, μόχλευσης και μερίσματος ανά εταιρεία και χρήση.</p></div></section><section id="klados"><h2>Σύγκριση με τον κλάδο</h2>
+  <p>Το κεντρικό στοιχείο του Axion Metrics είναι ότι <b>καμία τιμή δεν κρίνεται μόνη της</b>. Κάθε δείκτης
+  τοποθετείται στην κατανομή του <b>κλάδου της εταιρείας</b>, όχι της συνολικής αγοράς.</p>
+  <h3>Τεταρτημόρια</h3>
+  <p>Για κάθε δείκτη και κάθε κλάδο υπολογίζονται το <code>25ο εκατοστημόριο</code>, η <code>διάμεσος</code>
+  και το <code>75ο εκατοστημόριο</code>. Οι τρεις ζώνες που προκύπτουν χρωματίζονται:</p>
+  <ul>
+   <li><b class="lo">Πράσινο</b> — η εταιρεία βρίσκεται στο καλύτερο τεταρτημόριο του κλάδου.</li>
+   <li><b style="color:#e08600">Κεχριμπάρι</b> — βρίσκεται ανάμεσα στο 25ο και το 75ο εκατοστημόριο.</li>
+   <li><b style="color:#f01c00">Κόκκινο</b> — βρίσκεται στο χειρότερο τεταρτημόριο.</li>
+  </ul>
+  <p>Ο χρωματισμός είναι <b>direction-aware</b>: για το P/E «καλύτερο» σημαίνει χαμηλότερο, ενώ για το ROE
+  σημαίνει υψηλότερο. Το ίδιο ισχύει και για τον καθαρό δανεισμό, όπου η αρνητική τιμή (καθαρό ταμείο)
+  θεωρείται η καλύτερη δυνατή.</p>
+  <div class="box"><div class="bt">Γιατί έχει σημασία</div>
+   <p>Μια τράπεζα με P/E 7 δεν είναι «φθηνότερη» από μια εταιρεία λογισμικού με P/E 18. Οι δύο κλάδοι
+   αποτιμώνται διαφορετικά επειδή έχουν διαφορετική ανάπτυξη, ρίσκο και ένταση κεφαλαίου. Η σύγκριση
+   αποκτά νόημα μόνο μεταξύ ομοειδών.</p></div></section><section id="orio"><h2>Όρια και γνωστοί περιορισμοί</h2>
+  <div class="box warn"><div class="bt">Διαβάστε πριν χρησιμοποιήσετε τα δεδομένα</div>
+  <ul>
+   <li><b>Ετήσια στοιχεία.</b> Δεν καλύπτονται τριμηνιαία μεγέθη. Οι δείκτες αντανακλούν την τελευταία
+       δημοσιευμένη χρήση, όχι την τρέχουσα κατάσταση.</li>
+   <li><b>Ελεύθερες ταμειακές ροές (FCF).</b> Δεν υπολογίζονται, καθώς δεν έχουν εξαχθεί οι επενδύσεις σε πάγια (capex).
+       Ως προσέγγιση χρησιμοποιούνται οι λειτουργικές ταμειακές ροές.</li>
+   <li><b>Καμία πρόβλεψη.</b> Δεν περιλαμβάνονται εκτιμήσεις αναλυτών, τιμές-στόχοι ή forward πολλαπλάσια.</li>
+   <li><b>Τράπεζες.</b> Οι δείκτες EV/EBITDA και καθαρού δανεισμού δεν έχουν την ίδια έννοια για πιστωτικά ιδρύματα
+       και παραλείπονται ή ερμηνεύονται με προσοχή.</li>
+  </ul></div></section></main></div>
+<div class="foot"><b>Το Axion Metrics δεν παρέχει επενδυτικές συμβουλές.</b> Τα δεδομένα προέρχονται από δημόσιες πηγές και παρέχονται «ως έχουν», χωρίς εγγύηση ακρίβειας ή πληρότητας. Κάθε επενδυτική απόφαση λαμβάνεται με αποκλειστική ευθύνη του χρήστη.</div>
+</div><div id="am-foot"></div>
+<script>window.NAV_ACTIVE=3;window.NAV_CUR="Μεθοδολογία & δείκτες";</script>
+<script src="../assets/chrome.js"></script>
+</body></html>

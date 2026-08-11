@@ -1,0 +1,122 @@
+<!DOCTYPE html><html lang="el"><head><meta charset="UTF-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Περί — Axion Metrics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&family=Open+Sans:wght@400;600;700;800&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+ :root{--bg:#fff;--phead:#223c66;--text:#1b2740;--muted:#6b7890;--line:#e4e8f0;--accent:#1E4FA0;--soft:#f7f9fc;
+  --good:#00922f;--mid:#e08600;--bad:#f01c00}
+ *{box-sizing:border-box;margin:0;padding:0}
+ body{background:var(--bg);color:var(--text);font-family:'Open Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.65}
+ .wrap{max-width:1180px;margin:0 auto;padding:0 22px 70px}
+ .crumb{font-size:11.5px;color:#9aa7b8;padding:20px 0 0}
+ .crumb a{color:var(--accent);text-decoration:none}
+ .mast{background:#fff;border:1px solid #eef1f6;border-radius:14px;box-shadow:0 4px 16px rgba(27,39,64,.06);overflow:hidden;margin-top:22px;margin-bottom:26px}
+.mast .stripe{height:5px;background:#c6a24e}
+.mast .hero-in{padding:24px 34px 22px}
+.mast .sub{font-size:13px;line-height:1.55;color:#5a6675;margin-top:10px;max-width:620px}
+ .mast h1{font-family:Inter,sans-serif;font-size:30px;font-weight:800;text-transform:uppercase;letter-spacing:.02em;color:#1b2740;line-height:1.05;margin:0}
+ .mast .sub{font-size:13px;color:var(--muted);margin:6px 0 18px;max-width:720px}
+ .updated{font-size:11px;color:#9aa7b8;font-family:'Ubuntu Mono';margin-bottom:16px}
+
+ .layout{display:grid;grid-template-columns:210px 1fr;gap:38px;align-items:start}
+ nav.toc{position:sticky;top:22px;font-size:12.5px}
+ nav.toc .th{font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#9aa7b8;margin-bottom:9px}
+ nav.toc a{display:block;color:var(--muted);text-decoration:none;padding:5px 0 5px 11px;border-left:2px solid var(--line)}
+ nav.toc a:hover{color:var(--accent);border-left-color:var(--accent)}
+
+ section{margin-bottom:34px;scroll-margin-top:20px}
+ section h2{font-size:18px;font-weight:800;margin-bottom:10px;letter-spacing:-.01em}
+ section h3{font-size:14px;font-weight:700;margin:18px 0 6px}
+ section p{font-size:14px;color:#33415a;margin-bottom:11px}
+ section ul{margin:0 0 12px 18px}
+ section li{font-size:14px;color:#33415a;margin-bottom:6px}
+ code{font-family:'Ubuntu Mono';font-size:13px;background:var(--soft);border:1px solid var(--line);
+   border-radius:5px;padding:1px 6px;color:var(--phead)}
+ .mono{font-family:'Ubuntu Mono'}
+
+ table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0 16px}
+ thead th{background:var(--phead);color:#fff;font-weight:700;padding:9px 11px;text-align:left;font-size:11.5px;letter-spacing:.02em}
+ tbody td{padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:top;color:#33415a}
+ tbody td.f{font-family:'Ubuntu Mono';font-size:12.5px;color:var(--phead);white-space:nowrap}
+ tbody td.d{white-space:nowrap;font-weight:700;font-size:12px}
+ .lo{color:var(--good)}.hi{color:var(--good)}
+ tbody tr:hover{background:#f9fbfe}
+
+ .box{border:1px solid var(--line);border-radius:11px;padding:15px 18px;margin:14px 0;background:var(--soft)}
+ .box.warn{background:#fbf1db;border-color:#ecd9a6;color:#7a5a12}
+ .box.warn b{color:#6b4e0d}
+ .box.info{background:#eff5fd;border-color:#cfe0f6}
+ .box p:last-child{margin-bottom:0}
+ .box .bt{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9aa7b8;margin-bottom:6px}
+
+ .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:14px 0}
+ .card{border:1px solid var(--line);border-radius:11px;padding:15px 16px}
+ .card .n{font-family:'Ubuntu Mono';font-size:22px;font-weight:700;color:var(--accent)}
+ .card .l{font-size:12px;color:var(--muted);margin-top:2px}
+
+ .foot{border-top:1px solid var(--line);margin-top:34px;padding-top:16px;font-size:11.5px;color:var(--muted);line-height:1.7}
+ a.lnk{color:var(--accent);text-decoration:none;border-bottom:1px solid #cfe0f6}
+
+ /* == ομογενοποίηση: κοινή τυπογραφία επικεφαλίδων == */
+ .mast h1,h2{font-family:'Inter',sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.02em}
+
+ 
+</style><link rel="stylesheet" href="../assets/chrome.css">
+</head><body>
+<div id="am-nav"></div><div class="wrap">
+<div class="mast">
+  <div class="stripe"></div>
+  <div class="hero-in">
+    <h1>Περί</h1>
+    <div class="sub">Τι είναι το Axion Metrics, γιατί φτιάχτηκε, πώς χτίστηκε η βάση δεδομένων και τι δεν επιχειρεί να είναι.</div>
+  </div>
+</div>
+<div class="updated">Τελευταία ενημέρωση: Ιούλιος 2026</div>
+<div class="layout">
+<nav class="toc"><div class="th">Περιεχόμενα</div><a href="#skopos">Ο σκοπός</a><a href="#ti-tha-vreis">Τι θα βρεις</a><a href="#pos-ftiachtike">Πώς φτιάχτηκε</a><a href="#gia-poion">Για ποιον</a><a href="#ti-den-einai">Τι δεν είναι</a><a href="#epikoinonia">Επικοινωνία & διορθώσεις</a></nav>
+<main><section id="skopos"><h2>Ο σκοπός</h2>
+  <p>Ο Έλληνας ιδιώτης επενδυτής που θέλει να απαντήσει σε ένα απλό ερώτημα — <b>«είναι αυτή η μετοχή φθηνή ή
+  ακριβή;»</b> — βρίσκεται συνήθως μπροστά σε δύο κακές επιλογές: είτε σε επαγγελματικά εργαλεία που κοστίζουν
+  και προϋποθέτουν εξειδίκευση, είτε σε αποσπασματικές πληροφορίες χωρίς κανένα μέτρο σύγκρισης.</p>
+  <p>Το <b>Axion Metrics</b> γεννήθηκε για να καλύψει αυτό το κενό: θεμελιώδη μεγέθη και αριθμοδείκτες για κάθε
+  εισηγμένη του Χρηματιστηρίου Αθηνών, τοποθετημένα πάντα <b>δίπλα στους ομοειδείς της</b>, με απλή γλώσσα και
+  στα ελληνικά.</p>
+  <div class="box info"><div class="bt">Η αρχή</div>
+   <p>Ένας αριθμός χωρίς μέτρο σύγκρισης δεν λέει τίποτα. Ένα P/E 12 είναι ακριβό για μια τράπεζα και φθηνό για
+   μια εταιρεία λογισμικού. Κάθε τιμή στο Axion Metrics κρίνεται σε σχέση με τον κλάδο της.</p></div></section><section id="ti-tha-vreis"><h2>Τι θα βρεις</h2>
+  <ul>
+   <li><b>Σελίδα εταιρείας</b> — ιστορικά μεγέθη, αριθμοδείκτες, μέτοχοι, θυγατρικές, εταιρικά γεγονότα.</li>
+   <li><b>Σύγκριση κλάδου</b> — η θέση κάθε εταιρείας στην κατανομή του κλάδου, ανά δείκτη.</li>
+   <li><b>Screener</b> — φιλτράρισμα και κατάταξη με βάση θεμελιώδεις δείκτες.</li>   <li><b>Κατατάξεις</b> — ποιος ξεχωρίζει και σε τι, ανά δείκτη.</li>
+  </ul></section><section id="pos-ftiachtike"><h2>Πώς φτιάχτηκε</h2>
+  <p>Η βάση δεν αγοράστηκε ούτε αντιγράφηκε. Χτίστηκε από το μηδέν:</p>
+  <ul>
+   <li>Συγκέντρωση ιστορικών χρήσεων από τις <b>δημοσιευμένες εκθέσεις</b> για κάθε εισηγμένη.</li>
+   <li>Εξαγωγή των βασικών μεγεθών από τις οικονομικές καταστάσεις και <b>χειροκίνητη επαλήθευση</b> ανά εταιρεία και ανά έτος.</li>
+   <li>Υπολογισμός των αριθμοδεικτών από τα πρωτογενή μεγέθη — όχι αντιγραφή από τρίτες πηγές.</li>
+   <li>Καταγραφή <b>θυγατρικών</b> και <b>εταιρικών γεγονότων</b> από τις ετήσιες εκθέσεις και τις επίσημες ανακοινώσεις.</li>
+   <li>Υπολογισμός κλαδικών διαμέσων και τεταρτημορίων, που δίνουν σε κάθε αριθμό το πλαίσιό του.</li>
+  </ul>
+  <p>Η πιο κοπιώδης δουλειά — και η πραγματική αξία του εγχειρήματος — δεν είναι οι δείκτες, αλλά η
+  <b>συλλογή και επαλήθευση</b> των μεγεθών που τους τροφοδοτούν.</p></section><section id="gia-poion"><h2>Για ποιον</h2>
+  <p>Για τον ιδιώτη επενδυτή που ενδιαφέρεται για τα θεμελιώδη μεγέθη μιας εταιρείας, όχι για βραχυπρόθεσμα
+  σήματα αγοράς και πώλησης. Για τον φοιτητή ή τον αναλυτή που θέλει γρήγορη κλαδική εικόνα. Για όποιον
+  πιστεύει ότι μια μετοχή είναι μερίδιο σε μια επιχείρηση, και ότι οι επιχειρήσεις κρίνονται από τα νούμερά τους.</p></section><section id="ti-den-einai"><h2>Τι δεν είναι</h2>
+  <div class="box warn"><div class="bt">Ξεκάθαρα</div>
+  <ul>
+   <li><b>Δεν είναι επενδυτική συμβουλή.</b> Δεν προτείνει αγορές ή πωλήσεις, ούτε δίνει τιμές-στόχους.</li>
+   <li><b>Δεν είναι πλατφόρμα συναλλαγών.</b></li>
+   <li><b>Δεν κάνει προβλέψεις.</b> Δεν περιέχει εκτιμήσεις αναλυτών ή forward πολλαπλάσια.</li>
+   <li><b>Δεν είναι αλάνθαστο.</b> Τα δεδομένα εξάγονται από ανθρώπους και μπορεί να περιέχουν σφάλματα.</li>
+  </ul></div></section><section id="epikoinonia"><h2>Επικοινωνία & διορθώσεις</h2>
+  <p>Εντοπίσατε λάθος σε κάποιο μέγεθος ή δείκτη; Η ενημέρωση είναι ευπρόσδεκτη και βοηθά όλους.</p>
+  <p><span class="mono"><a href="mailto:info@axionmetrics.gr">info@axionmetrics.gr</a></span></p>
+  <p>Για τη μεθοδολογία δείτε τη σελίδα <a class="lnk" href="#">Μεθοδολογία & δείκτες</a>·
+  για τους κανόνες χρήσης, τους <a class="lnk" href="#">Όρους χρήσης</a>.</p></section></main></div>
+<div class="foot"><b>Το Axion Metrics δεν παρέχει επενδυτικές συμβουλές.</b> Τα δεδομένα προέρχονται από δημόσιες πηγές και παρέχονται «ως έχουν», χωρίς εγγύηση ακρίβειας ή πληρότητας. Κάθε επενδυτική απόφαση λαμβάνεται με αποκλειστική ευθύνη του χρήστη.</div>
+</div><div id="am-foot"></div>
+<script>window.NAV_ACTIVE=3;window.NAV_CUR="Περί";</script>
+<script src="../assets/chrome.js"></script>
+</body></html>

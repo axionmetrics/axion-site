@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Αναθεωρήσεις δεικτών — Axion Metrics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&family=Open+Sans:wght@400;600;700;800&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+ :root{--bg:#fff;--phead:#223c66;--text:#1b2740;--muted:#6b7890;--line:#e4e8f0;
+  --good:#00922f;--mid:#e08600;--bad:#f01c00;--accent:#1E4FA0;--soft:#f7f9fc;
+  --zg:#37a05e;--zm:#e0a53a;--zb:#db5247}
+ *{box-sizing:border-box;margin:0;padding:0}
+ body{background:var(--bg);color:var(--text);font-family:'Open Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+ .wrap{max-width:1180px;margin:0 auto;padding:0 22px 60px}
+ .mast{padding:26px 0 12px}
+ .mast h1{font-size:28px;font-weight:800}
+ .mast .sub{font-size:12.5px;color:var(--muted);margin-top:5px}
+
+ .controls{background:#f4f6f9;border:1px solid #e4e8f0;border-left:3px solid #5a6b85;border-radius:12px;padding:14px 16px;margin-top:14px}
+ .crow{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+ .crow + .crow{margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+ .lbl{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9aa7b8;width:78px;flex:none}
+ .chip{font-size:12.5px;font-weight:600;padding:6px 13px;border-radius:20px;border:1px solid var(--line);
+   background:#fff;color:var(--muted);cursor:pointer;transition:.12s}
+ .chip:hover{border-color:#c3d3e8;color:var(--text)}
+ .chip.on{background:#33425c;border-color:#33425c;color:#fff}
+ .chip.acc.on{background:#33425c;border-color:#33425c}
+ .seg{display:flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;background:#fff}
+ .seg button{font-family:inherit;font-size:12.5px;font-weight:600;padding:7px 14px;border:none;background:#fff;color:var(--muted);cursor:pointer}
+ .seg button.on{background:#33425c;color:#fff}
+
+ .resbar{display:flex;align-items:baseline;justify-content:space-between;margin:22px 2px 10px}
+ .resbar h2{font-size:17px;font-weight:800}
+ .resbar .meta{font-size:12px;color:var(--muted)}
+
+ table{width:100%;border-collapse:collapse;font-size:13px}
+ thead th{background:var(--phead);color:#fff;font-weight:700;padding:9px 10px;font-size:11.5px;letter-spacing:.02em}
+ thead th.l{text-align:left}
+ tbody td{padding:10px;border-bottom:1px solid var(--line);vertical-align:middle}
+ tbody tr:hover{background:#f4f7fc}
+ td.rk{font-family:'Ubuntu Mono';font-weight:700;color:#b9c3d0;width:38px;text-align:center;font-size:14px}
+ tbody tr.top3 td.rk{color:var(--accent)}
+ td.nm{font-weight:700;font-size:14px}
+ td.nm a{color:var(--text);text-decoration:none}
+ td.nm a:hover{color:var(--accent)}
+ td.sc{font-size:12px;color:var(--muted);width:130px}
+ td.val{font-family:'Ubuntu Mono';font-weight:700;font-size:17px;text-align:right;width:96px}
+ td.pct{width:280px;padding-right:16px}
+ td.sec2{font-family:'Ubuntu Mono';font-size:13px;color:var(--muted);text-align:center;width:78px}
+ .g{color:var(--good)}.m{color:var(--mid)}.b{color:var(--bad)}
+ .pbar{position:relative;height:9px;border-radius:5px;background:#eef1f6;overflow:hidden}
+ .pfill{position:absolute;left:0;top:0;bottom:0;border-radius:5px}
+ .pnum{font-family:'Ubuntu Mono';font-size:10px;color:#9aa7b8;margin-top:3px;display:block}
+
+ .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
+ .card{border:1px solid var(--line);border-radius:12px;padding:14px 16px;cursor:pointer;transition:.12s}
+ .card:hover{border-color:#c3d3e8;box-shadow:0 6px 18px rgba(30,79,160,.07)}
+ .card.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+ .card .bh{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9aa7b8;margin-bottom:8px}
+ .brow{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #eef1f6;font-size:12.5px}
+ .brow:last-child{border-bottom:none}
+ .brow .n{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ .brow .v{font-family:'Ubuntu Mono';font-weight:700;font-size:13.5px;flex:none;margin-left:10px}
+
+ h2.sec{font-size:16px;font-weight:800;margin:34px 0 4px}
+ .sech{font-size:11.5px;color:var(--muted);margin-bottom:6px}
+ .foot{font-size:11.5px;color:var(--muted);margin-top:20px;line-height:1.6}
+
+ /* == ομογενοποίηση: κοινή τυπογραφία επικεφαλίδων == */
+ .mast h1,h2,h2.sec{font-family:'Inter',sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.02em}
+
+ 
+ /* navy hero + secbox + picker (όπως στη σελίδα κλάδου) */
+ .crumb{font-size:11.5px;color:#9aa7b8;padding:20px 0 0}
+ .crumb a{color:var(--accent);text-decoration:none}
+ .hero{background:var(--text);border-radius:14px;padding:16px 24px;margin-top:14px}
+ .secbox{background:#fff;border:1px solid #eef1f6;border-radius:14px;box-shadow:0 4px 16px rgba(27,39,64,.06);overflow:hidden;margin-top:22px}
+ .secbox .stripe{height:5px;background:#c6a24e}
+ .secbox .hero-in{padding:24px 34px 22px}
+ .secbox .hero-stats{display:flex;flex-wrap:wrap;margin-top:15px}
+ .secbox .hs{display:flex;flex-direction:column;gap:3px;padding:2px 18px;max-width:210px}
+ .secbox .hs:first-child{padding-left:0}
+ .secbox .hs+.hs{border-left:1px solid #edf0f5}
+ .secbox .hs .v{font-size:14px;font-weight:800;color:#1b2740;line-height:1.15}
+ .secbox .hs .l{font-size:10.5px;color:#8a95a6;letter-spacing:.01em;line-height:1.3}
+ .secbox h1{font-family:Inter,sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.02em;color:#1b2740;font-size:30px;line-height:1.05;margin:0}
+ .secbox .sub{font-size:13.5px;line-height:1.55;color:#aebfd8;margin-top:10px;max-width:640px}
+ .hero .picker .chip{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.20);color:#cdd7e6}
+ .hero .picker .chip:hover{border-color:rgba(255,255,255,.42);color:#fff}
+ .hero .picker .chip.on{background:#fff;border-color:#fff;color:var(--phead)}
+ @media(max-width:640px){.hero{padding:14px 16px}.secbox .hero-in{padding:20px 20px}.secbox .hs{padding:2px 14px}}
+</style>
+<style>
+.ix-flt{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:20px}
+.ix-lb{font-size:12px;color:var(--muted)}
+.ix-seg{display:inline-flex;border:1px solid #dce2ec;border-radius:9px;overflow:hidden}
+.ix-seg button{font-family:inherit;font-size:12.5px;font-weight:700;padding:8px 15px;color:#5a6884;background:#fff;border:0;cursor:pointer}
+.ix-seg button.on{background:#223c66;color:#fff}
+.ix-yr{margin-left:auto;font-family:inherit;font-size:12.5px;border:1px solid #e0e5ee;border-radius:8px;padding:7px 11px;color:#42506a;background:#fff}
+.ix-list{margin-top:16px;display:flex;flex-direction:column;gap:14px}
+.ix-rev{border:1px solid #e9edf4;border-radius:12px;overflow:hidden}
+.ix-rh{display:flex;align-items:baseline;gap:10px;padding:12px 16px;background:var(--soft);border-bottom:1px solid #eef1f6}
+.ix-rh .rd{font-family:Inter,sans-serif;font-weight:800;font-size:15px;color:var(--phead)}
+.ix-rh .rt{font-size:11px;color:var(--muted)}
+.ix-rh .net{margin-left:auto;font-size:11px;color:var(--muted)}
+.ix-cols{display:grid;grid-template-columns:1fr 1fr}
+.ix-col{padding:11px 16px}
+.ix-col.in{border-right:1px solid #eef1f6}
+.ix-ch{display:flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;margin-bottom:8px}
+.ix-ch .n{margin-left:auto;font-family:'Ubuntu Mono',monospace;font-size:12.5px}
+.ix-ch.gin{color:#1f7a3e}.ix-ch.rout{color:#c0341f}
+.ix-r{display:flex;align-items:center;gap:8px;padding:5px 0}
+.ix-r .ic{width:12px;font-weight:800;font-size:12px}
+.ix-r.gin .ic{color:var(--good)}.ix-r.rout .ic{color:var(--bad)}
+.ix-r .co{font-family:Inter,sans-serif;font-weight:700;font-size:12.5px;color:var(--text)}
+.ix-r .tk{font-family:'Ubuntu Mono',monospace;font-size:10.5px;color:#98a2b3;margin-left:auto}
+.ix-r.none{color:#b3bcc9;font-style:italic;font-size:11.5px}
+.ix-note{font-size:11.5px;color:var(--muted);margin-top:16px;line-height:1.5}
+@media(max-width:560px){.ix-cols{grid-template-columns:1fr}.ix-col.in{border-right:0;border-bottom:1px solid #eef1f6}}
+</style>
+<link rel="stylesheet" href="../assets/chrome.css">
+<script src="../assets/data.js"></script>
+</head>
+<body>
+<div id="am-nav"></div>
+<div class="wrap">
+ <div class="secbox">
+    <div class="stripe"></div>
+    <div class="hero-in">
+      <h1>Αναθεωρήσεις δεικτών</h1>
+      <div class="hero-stats">
+        <div class="hs"><span class="v">19</span><span class="l">Κινήσεις</span></div>
+        <div class="hs"><span class="v">11</span><span class="l">Αναθεωρήσεις</span></div>
+        <div class="hs"><span class="v">Large / Mid Cap</span><span class="l">Δείκτες</span></div>
+        <div class="hs"><span class="v">2020–2025</span><span class="l">Περίοδος</span></div>
+      </div>
+    </div>
+  </div>
+ <div class="ix-flt">
+  <span class="ix-lb">Δείκτης:</span>
+  <span class="ix-seg" id="ixSeg">
+   <button class="on" data-ix="large" type="button">FTSE/Athex Large Cap</button>
+   <button data-ix="mid" type="button">Mid Cap</button>
+  </span>
+  <select class="ix-yr" id="ixYr">
+   <option value="">Όλα τα έτη</option>
+   <option value="2025">2025</option><option value="2024">2024</option><option value="2023">2023</option>
+   <option value="2022">2022</option><option value="2021">2021</option><option value="2020">2020</option>
+  </select>
+ </div>
+ <div class="ix-list" id="ixList"></div>
+</div>
+<script>
+const INDEX_DATA=(window.AXION&&window.AXION.indexReviews)||{large:[],mid:[],market:[]};
+let ixCur='large', ixYear='';
+function ixRender(){
+ const list=INDEX_DATA[ixCur].filter(r=>!ixYear||r.ym.slice(0,4)===ixYear);
+ const el=document.getElementById('ixList');
+ if(!list.length){el.innerHTML='<div class="ix-note">Καμία αναθεώρηση για την επιλογή.</div>';return;}
+ el.innerHTML=list.map(r=>{
+  const net=r.in.length-r.out.length, netTxt=net>0?('+'+net):(net<0?(''+net):'0');
+  const inRows=r.in.length?r.in.map(c=>`<div class="ix-r gin"><span class="ic">＋</span><span class="co">${c[0]}</span><span class="tk">${c[1]}</span></div>`).join(''):'<div class="ix-r none">καμία εισαγωγή</div>';
+  const outRows=r.out.length?r.out.map(c=>`<div class="ix-r rout"><span class="ic">－</span><span class="co">${c[0]}</span><span class="tk">${c[1]}</span></div>`).join(''):'<div class="ix-r none">καμία εξαγωγή</div>';
+  return `<div class="ix-rev"><div class="ix-rh"><span class="rd">${r.period}</span><span class="rt">εξαμηνιαία αναθεώρηση</span><span class="net">καθαρή μεταβολή ${netTxt}</span></div><div class="ix-cols"><div class="ix-col in"><div class="ix-ch gin">▲ Εισαγωγές <span class="n">${r.in.length}</span></div>${inRows}</div><div class="ix-col out"><div class="ix-ch rout">▼ Εξαγωγές <span class="n">${r.out.length}</span></div>${outRows}</div></div></div>`;
+ }).join('');
+}
+document.getElementById('ixSeg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;[...e.currentTarget.querySelectorAll('button')].forEach(x=>x.classList.remove('on'));b.classList.add('on');ixCur=b.dataset.ix;ixRender();});
+document.getElementById('ixYr').addEventListener('change',e=>{ixYear=e.target.value;ixRender();});
+ixRender();
+</script>
+<div id="am-foot"></div>
+<script>window.NAV_ACTIVE=2;window.NAV_CUR="Αναθεωρήσεις δεικτών";</script>
+<script src="../assets/chrome.js"></script>
+</body>
+</html>

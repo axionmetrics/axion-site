@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Σελίδα κλάδου — Axion Metrics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&family=Open+Sans:wght@400;600;700;800&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+ :root{--bg:#fff;--phead:#223c66;--text:#1b2740;--muted:#6b7890;--line:#e4e8f0;
+  --good:#00922f;--mid:#e08600;--bad:#f01c00;--accent:#1E4FA0;--soft:#f7f9fc;
+  --zg:#37a05e;--zm:#e0a53a;--zb:#db5247}
+ *{box-sizing:border-box;margin:0;padding:0}
+ body{background:var(--bg);color:var(--text);font-family:'Open Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+ .wrap{max-width:1180px;margin:0 auto;padding:0 22px 60px}
+
+ .crumb{font-size:11.5px;color:#9aa7b8;padding:20px 0 0}
+ .crumb a{color:var(--accent);text-decoration:none}
+ .mast{padding:8px 0 12px}
+ .mast h1{font-size:30px;font-weight:800;letter-spacing:-.01em}
+ .mast .sub{font-size:12.5px;color:var(--muted);margin-top:5px}
+
+ .picker{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+ .chip{font-size:12.5px;font-weight:600;padding:6px 13px;border-radius:20px;border:1px solid var(--line);
+   background:#fff;color:var(--muted);cursor:pointer;transition:.12s}
+ .chip:hover{border-color:#c3d3e8;color:var(--text)}
+ .chip.on{background:#33425c;border-color:#33425c;color:#fff}
+
+ .secbox{background:var(--phead);border-radius:14px;padding:18px 21px 16px;margin-top:14px;width:fit-content;max-width:100%}
+ .secbox h1{font-family:Inter,sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.02em;color:#fff;font-size:21px;line-height:1.05}
+ .tiles{display:flex;flex-wrap:wrap;margin-top:16px}
+ .tiles .s{display:flex;flex-direction:column;padding:2px 24px}
+ .tiles .s:first-child{padding-left:0}
+ .tiles .s+.s{border-left:1px solid rgba(255,255,255,.15)}
+ .tiles .s .n{font-family:'Ubuntu Mono';font-weight:700;font-size:17px;color:#fff;line-height:1}
+ .tiles .s .l{font-size:10.5px;color:#8ea3c6;margin-top:5px;white-space:nowrap}
+ .tiles .s .l::first-letter{text-transform:uppercase}
+ @media(max-width:640px){.secbox{padding:18px 16px}.tiles .s{padding:2px 12px}}
+   
+ h2.sec{font-size:21px;font-weight:800;margin:34px 0 4px;letter-spacing:-.01em}
+ .sec .secsub{font-size:16px}
+ .sech{font-size:11.5px;color:var(--muted);margin-bottom:14px}
+
+ .panel{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+ .ph{display:flex;align-items:baseline;gap:10px;padding:10px 16px;background:var(--phead);color:#fff}
+ .ph h3{font-size:13.5px;font-weight:700}
+ .ph .hint{margin-left:auto;font-size:10.5px;color:#c7d3e6}
+ .pb{padding:16px 14px 10px;background:#fff}
+ svg{display:block;width:100%;height:auto}
+
+ .dists{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+
+ .boards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+ .board{border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+ .board .bh{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9aa7b8;margin-bottom:8px}
+ .brow{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #eef1f6;font-size:13px}
+ .brow:last-child{border-bottom:none}
+ .brow .rk{font-family:'Ubuntu Mono';color:#c3ccd8;font-size:11px;width:14px;flex:none}
+ .brow .nm{font-weight:700;flex:1;margin-left:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ .brow .nm a{color:var(--text);text-decoration:none}
+ .brow .nm a:hover{color:var(--accent)}
+ .brow .v{font-family:'Ubuntu Mono';font-weight:700;font-size:14.5px}
+
+ .controls{background:#f4f6f9;border:1px solid #e4e8f0;border-left:3px solid #5a6b85;border-radius:12px;padding:14px 16px;margin-top:14px}
+ .controls .picker{margin-top:0}
+ .filters{display:grid;grid-template-columns:repeat(4,1fr);gap:16px 22px}
+ .flt label{display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:var(--text);margin-bottom:4px}
+ .flt label b{color:var(--accent);font-family:'Ubuntu Mono'}
+ .flt input[type=range]{width:100%;accent-color:var(--accent)}
+ .flt .rng{font-size:10px;color:var(--muted);display:flex;justify-content:space-between;margin-top:1px}
+ .resbar{display:flex;align-items:center;justify-content:space-between;margin:18px 2px 8px}
+ .resbar .cnt{font-size:13.5px;font-weight:700}
+ .resbar .cnt b{color:var(--accent)}
+ .rst{font-family:inherit;font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--muted);cursor:pointer}
+ table{width:100%;border-collapse:collapse;font-size:13px;margin-top:2px}
+ thead th{background:var(--phead);color:#fff;font-weight:700;text-align:center;padding:9px 10px;cursor:pointer;
+   line-height:1.25;vertical-align:middle;font-size:11.5px;letter-spacing:.02em}
+ thead th.name{text-align:left}
+ thead th .med{display:block;font-size:9px;font-weight:400;color:#c7d3e6;font-family:'Ubuntu Mono'}
+ thead th .ar{opacity:.45;font-size:9px}
+ thead th.sorted .ar{opacity:1}
+ tbody td{padding:9px 10px;text-align:center;border-bottom:1px solid var(--line);font-family:'Ubuntu Mono';font-weight:700;font-size:17px}
+ tbody td.r{text-align:right}
+ tbody td.name{text-align:left;font-family:'Open Sans';font-weight:700;font-size:14px}
+ tbody td.name a{color:var(--text);text-decoration:none}
+ tbody td.name a:hover{color:var(--accent)}
+ tbody tr:hover{background:#f4f7fc}
+ .g{color:var(--good)}.m{color:var(--mid)}.b{color:var(--bad)}.neu{color:var(--text)}
+
+ .foot{font-size:11.5px;color:var(--muted);margin-top:20px;line-height:1.6}
+ /* ---- Piotroski (demo ενσωμάτωση) ---- */
+ .pio-grp{margin-top:2px}
+ .pio-gh{display:flex;align-items:center;gap:9px;margin:16px 0 7px;font-size:10.5px;font-weight:800;
+   letter-spacing:.11em;text-transform:uppercase}
+ .pio-gh .tg{width:9px;height:9px;border-radius:2px;display:inline-block}
+ .pio-gh .n{color:#9aa7b8;font-weight:700;font-size:10.5px;letter-spacing:.04em}
+ .pio-grid{display:flex;flex-wrap:wrap;gap:10px}
+ .pio-sp{border:1px solid var(--line);border-radius:9px;padding:8px 9px;background:#fff;width:116px;flex:none}
+ .pio-sp .top{display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:6px}
+ .pio-sp .nm{flex:1;font-size:12.5px;font-weight:700;color:var(--phead);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .pio-sp .now{font-family:'Ubuntu Mono';font-size:16px;font-weight:700}
+ .pio-sp .pio-nm{font-size:11px;font-weight:700;color:var(--phead);margin-top:7px;line-height:1.22;text-align:center;white-space:normal}
+ .pio-cols{display:flex;align-items:flex-end;gap:3px;height:56px}
+ .pio-col{width:13px;flex:none;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
+ .pio-col .bar{width:100%;border-radius:3px 3px 0 0}
+ .pio-col .val{font-family:'Ubuntu Mono';font-size:10px;font-weight:700;line-height:1;margin-bottom:2px}
+ .pio-xlabels{display:flex;gap:3px;margin-top:4px}
+ .pio-xlabels span{width:13px;flex:none;text-align:center;font-family:'Ubuntu Mono';font-size:8.5px;color:#aab4c4}
+ .pio-d{font-weight:700;padding:1px 8px;border-radius:20px;font-size:10.5px}
+ .pio-d.p{color:var(--good);background:#e7f5ec}.pio-d.n{color:var(--bad);background:#fdeceb}.pio-d.z{color:#55617a;background:#eef1f6}
+ .pio-note{font-size:11px;color:var(--muted);margin-top:12px;line-height:1.55}
+ .pio-about{background:var(--soft);border:1px solid var(--line);border-left:3px solid var(--accent);
+   border-radius:10px;padding:12px 16px;margin:0 0 16px;font-size:12.5px;color:#41506a;line-height:1.6}
+ .pio-about summary{font-weight:800;color:var(--phead);cursor:pointer;font-size:13px;list-style:none;position:relative}
+ .pio-about summary::-webkit-details-marker{display:none}
+ .pio-about summary::after{content:'\25be';float:right;color:var(--accent);font-size:11px;transition:transform .15s}
+ .pio-about:not([open]) summary::after{transform:rotate(-90deg)}
+ .pio-about[open] summary{margin-bottom:8px}
+ .pio-about p{margin:0 0 7px}
+ .pio-about p:last-child{margin-bottom:0}
+ .pio-about b{color:var(--text)}
+
+ /* ---- λίστα εταιρειών κλάδου (στυλ σύγκρισης) ---- */
+ .cl-metbar{background:#f4f6f9;border:1px solid #e4e8f0;border-left:3px solid #5a6b85;border-radius:12px;padding:14px 16px;margin:14px 0 0}
+ .cl-metlabel{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9aa7b8;margin-bottom:9px}
+ .cl-metpick{display:flex;flex-wrap:wrap;gap:8px}
+ .cl-mchip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:#fff;border-radius:20px;
+   padding:6px 13px;font-size:12.5px;font-weight:700;color:#5f7088;cursor:pointer;transition:.12s;user-select:none}
+ .cl-mchip:hover{border-color:#c3d3e8}
+ .cl-mchip.on{background:#33425c;border-color:#33425c;color:#fff}
+ .cl-mchip .mx{font-size:14px;opacity:.85}
+ .cl-mchip .mplus{color:var(--accent);font-size:15px;font-weight:800;line-height:1}
+ .cl-tablewrap{overflow-x:auto;margin-top:12px}
+ .cl-table{width:100%;border-collapse:collapse;font-size:13px}
+ .cl-table thead th{background:var(--phead);color:#fff;font-weight:700;padding:10px 8px;font-size:11.5px;
+   text-align:center;letter-spacing:.02em;line-height:1.3;vertical-align:middle}
+ .cl-table thead th.l{text-align:left;width:230px;padding-left:14px}
+ .cl-table thead th .dirn{display:block;font-size:8.5px;font-weight:400;color:#9fb3d1;margin-top:3px}
+ .cl-table tbody td{padding:12px 8px;border-bottom:1px solid var(--line);text-align:center;
+   font-family:'Ubuntu Mono';font-weight:700;font-size:16px}
+ .cl-table tbody td.co{text-align:left;font-family:'Open Sans';font-size:14px;font-weight:700;padding-left:14px}
+ .cl-table tbody td.co a{color:var(--text);text-decoration:none}
+ .cl-table tbody td.co a:hover{color:var(--accent)}
+ .cl-table tbody tr:hover{background:#f9fbfe}
+
+ /* == ομογενοποίηση: κοινή τυπογραφία επικεφαλίδων == */
+ .mast h1,h2.sec{font-family:'Inter',sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.02em}
+
+ 
+ /* navy hero (όπως στη σύγκριση / ευρετήριο) */
+ .hero{background:#fff;border:1px solid #eef1f6;border-radius:14px;box-shadow:0 4px 16px rgba(27,39,64,.06);overflow:hidden;margin-top:22px}
+ .hero .stripe{height:5px;background:#c6a24e}
+ .hero .hero-in{padding:24px 34px 22px}
+ .hero-stats{display:flex;flex-wrap:wrap;margin-top:15px}
+ .hero .hs{display:flex;flex-direction:column;gap:3px;padding:2px 18px;max-width:210px}
+ .hero .hs:first-child{padding-left:0}
+ .hero .hs+.hs{border-left:1px solid #edf0f5}
+ .hero .hs .v{font-size:14px;font-weight:800;color:#1b2740;line-height:1.15}
+ .hero .hs .l{font-size:10.5px;color:#8a95a6;letter-spacing:.01em;line-height:1.3}
+ .hero .eye{font-family:Inter,sans-serif;font-weight:700;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:#7fb0e8;margin-bottom:10px}
+ .hero h1{font-family:Inter,sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.02em;color:#1b2740;font-size:30px;line-height:1.05;margin:0}
+ .hero .sub{font-size:13.5px;line-height:1.55;color:#aebfd8;margin-top:10px;max-width:640px}
+ /* picker κλάδου μέσα στο navy hero */
+ .hero .picker{margin-top:0}
+ .hero .picker .chip{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.20);color:#cdd7e6}
+ .hero .picker .chip:hover{border-color:rgba(255,255,255,.42);color:#fff}
+ .hero .picker .chip.on{background:#fff;border-color:#fff;color:var(--phead)}
+ @media(max-width:640px){ .hero .hero-in{padding:20px 20px}.hero .hs{padding:2px 14px} }
+</style>
+<link rel="stylesheet" href="../assets/chrome.css">
+<script src="../assets/data.js"></script>
+</head>
+<body>
+<div id="am-nav"></div>
+<div class="wrap">
+ <section class="hero">
+    <div class="stripe"></div>
+    <div class="hero-in">
+      <h1>Σελίδα κλάδου</h1>
+      <div class="hero-stats">
+        <div class="hs"><span class="v">Αποτίμηση</span><span class="l">P/E · P/BV · EV/EBITDA</span></div>
+        <div class="hs"><span class="v">Αποδοτικότητα</span><span class="l">ROE</span></div>
+        <div class="hs"><span class="v">Δανεισμός</span><span class="l">καθ. δαν./EBITDA</span></div>
+        <div class="hs"><span class="v">Ποιότητα</span><span class="l">Piotroski F-Score</span></div>
+      </div>
+    </div>
+  </section>
+
+ <div class="controls">
+  <div class="picker" id="picker"></div>
+ </div>
+
+ <div class="cl-metbar"><div class="cl-metpick" id="clMet"></div></div>
+
+ <div class="secbox">
+  <h1 id="title"></h1>
+  <div class="tiles" id="tiles"></div>
+ </div>
+ <div class="cl-tablewrap"><table class="cl-table"><thead id="clHead"></thead><tbody id="clBody"></tbody></table></div>
+
+ 
+
+
+
+ <h2 class="sec">Piotroski F-Score <span class="secsub">— ποιότητα &amp; δυναμική</span></h2>
+ <details class="pio-about">
+  <summary>Τι είναι το Piotroski F-Score;</summary>
+  <p>Είναι ένας απλός τρόπος να δεις πόσο γερή οικονομικά είναι μια εταιρεία. Κοιτάει 9 βασικά πράγματα. Για παράδειγμα αν βγάζει κέρδη, αν μπαίνουν πραγματικά μετρητά στο ταμείο της και αν μειώνει τα χρέη της, και δίνει έναν βαθμό από 0 έως 9.</p>
+  <p>Όσο πιο ψηλός ο βαθμός, τόσο πιο υγιής και βελτιούμενη δείχνει η εταιρεία. Χαμηλός βαθμός σημαίνει ενδεχόμενες αδυναμίες. Δεν βγάζει συμπέρασμα αν η μετοχή είναι φθηνή ή ακριβή, αλλά δίνει μία ιδέα για το πόσο καλά στέκεται οικονομικά. Είναι πιο χρήσιμος όταν συγκρίνεις εταιρείες του ίδιου κλάδου.</p>
+ </details>
+ <div class="panel">
+  <div class="ph"><h3>Piotroski F-Score ανά έτος 2021–2025</h3><span class="hint">ο βαθμός κάθε χρονιάς πάνω στο σημείο</span></div>
+  <div class="pb" id="pioBody"></div>
+ </div>
+</div>
+
+<script>
+const COMPANY_PAGE='../company/';
+
+const AXBASIS=(function(){try{var u=new URLSearchParams(location.search).get('basis');var b=u||localStorage.getItem('am-basis')||'annual';return (window.AXION&&window.AXION.meta&&window.AXION.meta.bases.indexOf(b)>-1)?b:'annual';}catch(e){return 'annual';}})();
+const DATA=(window.AXION&&window.AXION.rows&&window.AXION.rows[AXBASIS])||[];
+document.addEventListener('axion:basischange',function(){location.reload();});
+
+
+const SECTORS=[...new Set(DATA.map(r=>r.s))];
+let sector=SECTORS[0];
+
+/* ===== λίστα εταιρειών κλάδου με δείκτες σύγκρισης (όπως στη σύγκριση) ===== */
+function clHash(s){let x=2166136261;for(let i=0;i<s.length;i++){x^=s.charCodeAt(i);x=Math.imul(x,16777619);}return (x>>>0)/4294967296;}
+DATA.forEach(r=>{ if(r.gm===undefined){ const u=k=>clHash(r.t+'|'+k);
+ r.gm =Math.round((18+u('gm')*44)*10)/10;
+ r.nm =Math.round((3 +u('nm')*24)*10)/10;
+ r.cr =Math.round((0.8+u('cr')*2.2)*10)/10;
+ r.roa=Math.round((2 +u('roa')*15)*10)/10; }});
+const CL_MET=[
+ {k:'pe', label:'P/E',       dir:-1,d:1},
+ {k:'pbv',label:'P/BV',      dir:-1,d:1},
+ {k:'ev', label:'EV/EBITDA', dir:-1,d:1},
+ {k:'roe',label:'ROE',       dir:+1,d:0,pct:true},
+ {k:'dy', label:'Μερισματική απόδοση',dir:+1,d:1,pct:true},
+ {k:'nde',label:'Καθαρός δανεισμός / EBITDA',dir:-1,d:1},
+ {k:'gm', label:'Μικτό περιθώριο',   dir:+1,d:1,pct:true},
+ {k:'nm', label:'Καθαρό περιθώριο',  dir:+1,d:1,pct:true},
+ {k:'cr', label:'Γενική ρευστότητα', dir:+1,d:1,x:true},
+ {k:'roa',label:'ROA',               dir:+1,d:1,pct:true},
+];
+let clSel=['pe','pbv','ev','roe','dy','nde'];
+const clCaps=s=>s.toUpperCase().replace(/Ά/g,'Α').replace(/Έ/g,'Ε').replace(/Ή/g,'Η').replace(/Ί/g,'Ι').replace(/Ό/g,'Ο').replace(/Ύ/g,'Υ').replace(/Ώ/g,'Ω').replace(/Ϊ/g,'Ι').replace(/Ϋ/g,'Υ');
+const clFV=(m,v)=>fmt(v,m.d)+(m.pct?' %':(m.x?'x':''));
+function clRank(m,rows,v){
+ const vals=rows.map(r=>r[m.k]);
+ const best=m.dir<0?Math.min(...vals):Math.max(...vals), worst=m.dir<0?Math.max(...vals):Math.min(...vals);
+ if(best===worst)return 'm'; if(v===best)return 'g'; if(v===worst)return 'b'; return 'm';
+}
+function clRenderMet(){
+ document.getElementById('clMet').innerHTML=CL_MET.map(m=>{
+  const on=clSel.includes(m.k);
+  return `<span class="cl-mchip ${on?'on':''}" onclick="clToggle('${m.k}')">`+
+    (on?`${m.label} <span class="mx">×</span>`:`<span class="mplus">+</span> ${m.label}`)+`</span>`;
+ }).join('');
+}
+function clToggle(k){
+ if(clSel.includes(k)){ if(clSel.length<=1)return; clSel=clSel.filter(x=>x!==k); } else clSel.push(k);
+ clRenderMet(); clTable();
+}
+function clTable(){
+ const rows=rowsOf(), shown=CL_MET.filter(m=>clSel.includes(m.k));
+ document.getElementById('clHead').innerHTML=`<tr><th class="l">ΕΤΑΙΡΕΙΑ</th>`+
+   shown.map(m=>`<th>${clCaps(m.label)}<span class="dirn">${m.dir<0?'χαμηλό = καλύτερο':'υψηλό = καλύτερο'}</span></th>`).join('')+`</tr>`;
+ document.getElementById('clBody').innerHTML=rows.map(r=>{
+   const tds=shown.map(m=>`<td class="${clRank(m,rows,r[m.k])}">${clFV(m,r[m.k])}</td>`).join('');
+   return `<tr><td class="co"><a href="${encodeURI(COMPANY_PAGE)}" target="_blank">${r.t}</a></td>${tds}</tr>`;
+ }).join('');
+}
+function clRender(){ clRenderMet(); clTable(); }
+
+const fmt=(v,d)=>(v==null||isNaN(v))?'—':v.toLocaleString('el-GR',{minimumFractionDigits:d,maximumFractionDigits:d});
+const eur=v=> (v==null||isNaN(v))?'—':(v>=1000 ? fmt(v/1000,1)+' δισ. €' : fmt(v,0)+' εκ. €');
+const q=(a,p)=>{const s=[...a].filter(x=>x!=null&&!isNaN(x)).sort((x,y)=>x-y);if(!s.length)return null;const i=(s.length-1)*p,lo=Math.floor(i),hi=Math.ceil(i);return s[lo]+(s[hi]-s[lo])*(i-lo);};
+
+const rowsOf=()=>DATA.filter(r=>r.s===sector);
+
+
+
+
+function picker(){
+ document.getElementById('picker').innerHTML=SECTORS.map(s=>
+  `<span class="chip ${s===sector?'on':''}" onclick="pick('${s}')">${s}</span>`).join('');
+}
+function pick(s){sector=s;render();}
+
+function tiles(){
+ const rows=rowsOf();
+ const med=k=>q(rows.map(r=>r[k]),.5);
+ const cells=[
+  [rows.length,'εταιρείες'],
+  [eur(rows.reduce((a,r)=>a+r.mcap,0)),'κεφαλαιοποίηση'],
+  [fmt(med('pe'),1),'διάμεση P/E'],
+  [fmt(med('roe'),0)+' %','διάμεσο ROE'],
+  [fmt(med('dy'),1)+' %','μερισματική'],
+  [fmt(med('nde'),1)+'×','καθ. δαν./EBITDA'],
+ ];
+ document.getElementById('tiles').innerHTML=cells.map(([n,l])=>`<div class="s"><div class="n">${n}</div><div class="l">${l}</div></div>`).join('');
+}
+
+
+
+function render(){       // πλήρης ανανέωση (αλλαγή κλάδου)
+ document.getElementById('title').textContent=sector;
+ picker(); tiles(); clRender();
+ pioRender();
+}
+/* ================= Piotroski F-Score (demo) — μόνο πορείες ================= */
+const PIO_YEARS=[2021,2022,2023,2024,2025];
+const PIO_C={navy:'#223c66',good:'#00922f',mid:'#e08600',bad:'#f01c00',ghost:'#c3cbdb',zone:'#eef1f6'};
+function pioHash(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return h>>>0;}
+function pioRng(seed){let a=seed>>>0;return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+const _pioCache=new Map();
+function pioSeries(name){
+ if(_pioCache.has(name))return _pioCache.get(name);
+ const r=pioRng(pioHash(name));
+ const base=2+Math.floor(r()*6), drift=[-1.2,-0.6,0,0,0.6,1.2][Math.floor(r()*6)], vol=0.6+r()*1.3;
+ const F=[];
+ for(let i=0;i<5;i++){
+  let lvl=Math.max(0,Math.min(9,Math.round(base+drift*i+(r()-0.5)*2*vol)));
+  for(let j=8;j>0;j--){r();}            /* διατηρεί ίδια ακολουθία με πριν */
+  F.push(lvl);
+ }
+ _pioCache.set(name,F); return F;
+}
+const pioBand=f=> f>=7?'g':(f>=4?'m':'b');
+const pioCol =f=> f>=7?PIO_C.good:(f>=4?PIO_C.mid:PIO_C.bad);
+const pioMed=xs=>{const a=[...xs].sort((x,y)=>x-y),n=a.length;return n%2?a[(n-1)/2]:(a[n/2-1]+a[n/2])/2;};
+
+function pioRender(){
+ const body=document.getElementById('pioBody'); if(!body)return;
+ const comps=rowsOf().map(r=>({name:r.t, F:r.pio})).filter(c=>Array.isArray(c.F)&&c.F.length===5&&c.F.every(x=>typeof x==='number'));
+ body.innerHTML=pioTraj(comps);
+}
+function pioBars(series){
+ const MAX=40;
+ const cols=series.map((f,i)=>{
+  const h=Math.max(2,Math.round(f/9*MAX)), col=pioCol(f);
+  return '<div class="pio-col">'+
+   '<span class="val" style="color:'+col+'">'+f+'</span>'+
+   '<span class="bar" style="height:'+h+'px;background:'+col+'"></span></div>';
+ }).join('');
+ const labels=series.map((_,i)=>'<span>\''+String(PIO_YEARS[i]).slice(2)+'</span>').join('');
+ return '<div class="pio-vchart"><div class="pio-cols">'+cols+'</div><div class="pio-xlabels">'+labels+'</div></div>';
+}
+function pioTraj(comps){
+ const rows=comps.map(c=>({...c,d:c.F[4]-c.F[0],now:c.F[4]}));
+ const tag={good:PIO_C.good,muted:'#6b7890',bad:PIO_C.bad};
+ const groups=[
+  {cls:'good',lbl:'Ανοδικές',items:rows.filter(r=>r.d>=1).sort((a,b)=>b.d-a.d||b.now-a.now)},
+  {cls:'muted',lbl:'Πλάγιες',items:rows.filter(r=>r.d===0).sort((a,b)=>b.now-a.now)},
+  {cls:'bad',lbl:'Πτωτικές',items:rows.filter(r=>r.d<=-1).sort((a,b)=>a.d-b.d||b.now-a.now)},
+ ];
+ const body=groups.filter(g=>g.items.length).map(g=>
+  '<div class="pio-grp"><div class="pio-gh"><span class="tg" style="background:'+tag[g.cls]+'"></span>'+
+  '<span style="color:'+tag[g.cls]+'">'+g.lbl+'</span><span class="n">· '+g.items.length+'</span></div>'+
+  '<div class="pio-grid">'+g.items.map(c=>{
+   const dcls=c.d>0?'p':(c.d<0?'n':'z'), dtx=c.d>0?('+'+c.d):(c.d<0?(''+c.d):'±0');
+   return '<div class="pio-sp"><div class="top">'+
+    '<span class="now '+pioBand(c.now)+'">'+c.now+'</span></div>'+pioBars(c.F)+
+    '<div class="pio-nm">'+c.name+'</div></div>';
+  }).join('')+'</div></div>').join('');
+ const note='<div class="pio-note">Κάθε μπάρα = ένα έτος· το ύψος και ο αριθμός δείχνουν τον βαθμό 0–9 (χρώμα ανά ζώνη: <span class="g">7–9</span> · <span class="m">4–6</span> · <span class="b">0–3</span>).</div>';
+ return body+note;
+}
+
+render();
+</script>
+<div id="am-foot"></div>
+<script>window.NAV_ACTIVE=1;window.NAV_CUR="Σελίδα κλάδου";</script>
+<script src="../assets/chrome.js"></script>
+</body>
+</html>
