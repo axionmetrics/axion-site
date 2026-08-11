@@ -274,7 +274,7 @@ function render(){
  // γραμμές: μία ανά εταιρεία
  const tb=rows.map(r=>{
   const tds=shown.map(m=>`<td class="${rankCls(m,rows,r[m.k])}">${fv(m,r[m.k])}</td>`).join('');
-  return `<tr><td class="co"><a href="${encodeURI(COMPANY_PAGE)}" target="_blank">${r.t}</a><small>${r.s}</small></td>${tds}</tr>`;
+  return `<tr><td class="co"><a href="${COMPANY_PAGE}?tk=${encodeURIComponent(r.tk)}" target="_blank">${r.t}</a><small>${r.s}</small></td>${tds}</tr>`;
  }).join('');
 
  out.innerHTML =

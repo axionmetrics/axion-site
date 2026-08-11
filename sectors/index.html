@@ -133,7 +133,7 @@ function card(sec){
  const g=sec.cagr, gc=g>=0?'up':'down', gt=(g>=0?'+':'−')+fmt(Math.abs(g),1)+' %';
  const list = sec.rows
    .slice().sort((a,b)=>b.mcap-a.mcap)
-   .map(r=>`<a class="co" href="${encodeURI(COMPANY_PAGE)}" target="_blank"><span class="cn">${r.t}</span><span class="cm">${eur(r.mcap)}</span></a>`).join('');
+   .map(r=>`<a class="co" href="${COMPANY_PAGE}?tk=${encodeURIComponent(r.tk)}" target="_blank"><span class="cn">${r.t}</span><span class="cm">${eur(r.mcap)}</span></a>`).join('');
  return `<div class="card">
   <div class="chdr">
    <div class="chead">

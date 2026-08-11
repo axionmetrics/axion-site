@@ -270,7 +270,7 @@ function clTable(){
    shown.map(m=>`<th>${clCaps(m.label)}<span class="dirn">${m.dir<0?'χαμηλό = καλύτερο':'υψηλό = καλύτερο'}</span></th>`).join('')+`</tr>`;
  document.getElementById('clBody').innerHTML=rows.map(r=>{
    const tds=shown.map(m=>`<td class="${clRank(m,rows,r[m.k])}">${clFV(m,r[m.k])}</td>`).join('');
-   return `<tr><td class="co"><a href="${encodeURI(COMPANY_PAGE)}" target="_blank">${r.t}</a></td>${tds}</tr>`;
+   return `<tr><td class="co"><a href="${COMPANY_PAGE}?tk=${encodeURIComponent(r.tk)}" target="_blank">${r.t}</a></td>${tds}</tr>`;
  }).join('');
 }
 function clRender(){ clRenderMet(); clTable(); }

@@ -398,7 +398,7 @@ const METRICS=[
   {key:'net_debt',label:'Καθ. δανεισμός',sub:'χρέος μείον ταμειακά',unit:'eur',goodUp:false}
 ];
 const fMil=v=>(v/1e6).toLocaleString('el-GR',{minimumFractionDigits:1,maximumFractionDigits:1});
-const fX=v=>v.toLocaleString('el-GR',{minimumFractionDigits:1,maximumFractionDigits:1});
+const fX=v=>(v==null||(typeof v==='number'&&isNaN(v)))?'—':v.toLocaleString('el-GR',{minimumFractionDigits:1,maximumFractionDigits:1});
 const fmt=(v,unit)=>v==null?'—':(unit==='eur'?fMil(v):fX(v));
 function deltaMark(arr,i,goodUp){
   if(i===0||arr[i]==null||arr[i-1]==null) return '';
@@ -496,7 +496,7 @@ function draw(){
 
   lines.forEach(v=>{const y=yOf(v);
     svg.appendChild(el('line',{x1:padL,y1:y,x2:W-padR,y2:y,stroke:'#eaf1f8','stroke-width':1}));
-    const tl=el('text',{x:padL-10,y:y+4,'text-anchor':'end','font-family':"'Ubuntu Mono'",'font-size':10,fill:'#8199b3'}); tl.textContent=v.toLocaleString('el-GR'); svg.appendChild(tl);
+    const tl=el('text',{x:padL-10,y:y+4,'text-anchor':'end','font-family':"'Ubuntu Mono'",'font-size':10,fill:'#8199b3'}); tl.textContent=(v==null||isNaN(v))?'—':v.toLocaleString('el-GR'); svg.appendChild(tl);
   });
   const evl=el('text',{x:3,y:evLaneY+4,'font-family':"'Open Sans'",'font-size':9,'font-weight':700,fill:'#6b8199'}); evl.textContent='Εταιρικά γεγονότα'; svg.appendChild(evl);
 
@@ -521,7 +521,7 @@ function draw(){
 
   // secondary metrics as lines below the axis
   const np=company.metrics.net_profit.map(v=>v/1e6);
-  const f0=v=>Math.round(v).toLocaleString('el-GR'), fx=v=>v.toLocaleString('el-GR',{maximumFractionDigits:1});
+  const f0=v=>(v==null||isNaN(v))?'—':Math.round(v).toLocaleString('el-GR'), fx=v=>(v==null||isNaN(v))?'—':v.toLocaleString('el-GR',{maximumFractionDigits:1});
   metricRow(svg,'Καθ. κέρδη', np, f0, '#cf7f00', ROWS_TOP, true, true);
   metricRow(svg,'Συν. δανεισμός', company.metrics.total_debt.map(v=>v/1e6), f0, '#8fc4ee', ROWS_TOP+ROW_H, false, true);
   metricRow(svg,'Καθ. δανεισμός', company.metrics.net_debt.map(v=>v/1e6), f0, '#2b4a6b', ROWS_TOP+2*ROW_H, false, true);
@@ -579,7 +579,7 @@ const SIZE_RAMP=['#c2410c','#e2590e','#f0791f','#f5a04c','#f0c07e','#5ea9b4','#8
   const ffObj=ownership.find(h=>h.type==='ευρύ επενδυτικό κοινό');
   const rest=ownership.filter(h=>h!==ffObj).sort((a,b)=>b.pct-a.pct);
   const ord=[...rest,ffObj];
-  const fp=p=>p.toLocaleString('el-GR',{minimumFractionDigits:1,maximumFractionDigits:1})+'%';
+  const fp=p=>(p==null?0:p).toLocaleString('el-GR',{minimumFractionDigits:1,maximumFractionDigits:1})+'%';
   const R=92, cx=100, cy=100;
   const arc=(a0,a1)=>{
     const x0=cx+R*Math.cos(a0),y0=cy+R*Math.sin(a0),x1=cx+R*Math.cos(a1),y1=cy+R*Math.sin(a1);
@@ -590,7 +590,8 @@ const SIZE_RAMP=['#c2410c','#e2590e','#f0791f','#f5a04c','#f0c07e','#5ea9b4','#8
   ord.forEach(h=>{ const ang=h.pct/100*2*Math.PI,a0=a,a1=a+ang; a=a1; slices+=`<path d="${arc(a0,a1)}" fill="${h._c}" stroke="#ffffff" stroke-width="3"/>`; });
   const top2=rest.slice(0,2);
   const topBoxes=top2.map(h=>`<div class="holder-box"><span class="hb-sw" style="background:${h._c}"></span><span class="hb-n">${h.name}</span><span class="hb-t">${h.type}</span><span class="hb-p">${fp(h.pct)}</span></div>`).join('');
-  const leg=ord.slice(2).map(h=>`<div class="pl"><span class="pl-s" style="background:${h._c}"></span><span class="pl-n">${h.name}</span><span class="pl-p">${fp(h.pct)}</span></div>`).join('');
+  const legItems=rest.slice(2).concat(ffObj?[ffObj]:[]);
+  const leg=legItems.map(h=>`<div class="pl"><span class="pl-s" style="background:${h._c}"></span><span class="pl-n">${h===ffObj?'Free float':h.name}</span><span class="pl-p">${fp(h.pct)}</span></div>`).join('');
   document.getElementById('own-viz').innerHTML=`<div class="holder-top">${topBoxes}</div><div class="pie-wrap"><div class="pie-c"><svg viewBox="0 0 200 200" class="pie" role="img" aria-label="Μετοχική σύνθεση">${slices}</svg></div><div class="pie-leg">${leg}</div></div>`;
 })();
 
@@ -624,11 +625,11 @@ new Chart(document.getElementById('geo'),{type:'doughnut',
   options:{cutout:'66%',responsive:true,maintainAspectRatio:false,
     plugins:{legend:{display:false},tooltip:{backgroundColor:'#16243d',borderColor:'#2b4a6b',borderWidth:1,padding:10,callbacks:{label:c=>` ${c.label}: ${c.parsed} (${geoPct(c.parsed)}%)`}}}}
 });
-document.getElementById('listed-wrap').innerHTML=subs.listed.map(l=>`<div class="listed-box"><span class="tag">εισηγμένη</span><span class="ln">${l.name}</span><span class="lp">${l.stake.toLocaleString('el-GR',{minimumFractionDigits:1,maximumFractionDigits:1})}%</span>${l.exch?`<span class="lx"><i class="ti ti-building-bank"></i>${l.exch}</span>`:''}</div>`).join('');
+document.getElementById('listed-wrap').innerHTML=subs.listed.map(l=>`<div class="listed-box"><span class="tag">εισηγμένη</span><span class="ln">${l.name}</span><span class="lp">${(l.stake==null?0:l.stake).toLocaleString('el-GR',{minimumFractionDigits:1,maximumFractionDigits:1})}%</span>${l.exch?`<span class="lx"><i class="ti ti-building-bank"></i>${l.exch}</span>`:''}</div>`).join('');
 
 const acc=document.getElementById('acc');
 acc.innerHTML=subs.byCountry.map(g=>{
-  const named=g.named.map(e=>`<div class="ent" data-name="${e.name.toLowerCase()}"><span class="en">${e.name}${e.listed?'<span class="mini-listed">εισηγμένη</span>':''}<span class="meth">${e.method}</span></span><span class="est">${e.stake.toLocaleString('el-GR',{minimumFractionDigits:1,maximumFractionDigits:1})}%</span></div>`).join('');
+  const named=g.named.map(e=>`<div class="ent" data-name="${e.name.toLowerCase()}"><span class="en">${e.name}${e.listed?'<span class="mini-listed">εισηγμένη</span>':''}<span class="meth">${e.method}</span></span><span class="est">${(e.stake==null?0:e.stake).toLocaleString('el-GR',{minimumFractionDigits:1,maximumFractionDigits:1})}%</span></div>`).join('');
   const clusters=g.clusters.map(c=>`<div class="ent cluster" data-name="${c.label.toLowerCase()}"><span class="en">+ ${c.n} ${c.label}</span><span class="est">—</span></div>`).join('');
   return `<div class="acc-group" data-country="${g.country.toLowerCase()}"><div class="acc-head"><span class="cn">${g.country}</span><span><span class="cc">${g.count} οντότητες</span><span class="arr">›</span></span></div><div class="acc-body">${named}${clusters}</div></div>`;
 }).join('');
@@ -690,6 +691,7 @@ const RATIOS=[
  ]},
 ];
 const fmtU=(v,u)=>{
+  if(v==null||(typeof v==='number'&&isNaN(v))) return '—';
   if(u==='€') return v.toLocaleString('el-GR',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
   if(u==='d') return Math.round(v).toLocaleString('el-GR')+' ημ.';
   return v.toLocaleString('el-GR',{minimumFractionDigits:1,maximumFractionDigits:1})+(u==='%'?'%':'');
@@ -718,7 +720,7 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
 // scorecard «Με μια ματιά» — synthesis vs sector
 (function(){
   const R=(label)=>{for(const c of RATIOS){const it=c.items.find(i=>i.label===label); if(it) return {v:it.series[it.series.length-1],s:it.sector};} return null;};
-  const nf=(v,d)=>v.toLocaleString('el-GR',{minimumFractionDigits:d===undefined?1:d,maximumFractionDigits:d===undefined?1:d});
+  const nf=(v,d)=>(v==null||(typeof v==='number'&&isNaN(v)))?'—':v.toLocaleString('el-GR',{minimumFractionDigits:d===undefined?1:d,maximumFractionDigits:d===undefined?1:d});
   const cards=[];
   const roe=R('ROE'),ebm=R('Περιθώριο EBITDA');
   let rel=((roe.v/roe.s)+(ebm.v/ebm.s))/2, t=rel>1.1?'good':rel>=0.9?'mid':'bad';
@@ -728,11 +730,11 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
   t=(gR>3&&gN>3)?'good':(gR<0||gN<-5)?'bad':'mid';
   cards.push({cat:'Ανάπτυξη',tone:t,rating:t==='good'?'Θετική':t==='bad'?'Συρρίκνωση':'Επιβράδυνση',lines:[`Έσοδα ${gR>=0?'+':''}${nf(gR)}%`,`(κλάδος ${gS>=0?'+':''}${nf(gS)}%)`]});
   const de=R('Χρέος / Ίδια κεφάλαια');
-  t=de.v<=1?'good':de.v<=2?'mid':'bad';
-  cards.push({cat:'Μόχλευση',tone:t,rating:t==='good'?'Χαμηλή':t==='mid'?'Μέτρια':'Υψηλή',lines:[`Χρέος/Ίδια ${nf(de.v)}×`,`(κλάδος ${nf(de.s)}×)`]});
+  t=de.v==null?'mid':(de.v<=1?'good':de.v<=2?'mid':'bad');
+  cards.push({cat:'Μόχλευση',tone:t,rating:de.v==null?'—':t==='good'?'Χαμηλή':t==='mid'?'Μέτρια':'Υψηλή',lines:[`Χρέος/Ίδια ${nf(de.v)}×`,`(κλάδος ${nf(de.s)}×)`]});
   const cur=R('Γενική ρευστότητα');
-  t=cur.v>=1.5?'good':cur.v>=1?'mid':'bad';
-  cards.push({cat:'Ρευστότητα',tone:t,rating:t==='good'?'Επαρκής':t==='mid'?'Οριακή':'Πιεσμένη',lines:[`Γενική ${nf(cur.v)}×`,`(κλάδος ${nf(cur.s)}×)`]});
+  t=cur.v==null?'mid':(cur.v>=1.5?'good':cur.v>=1?'mid':'bad');
+  cards.push({cat:'Ρευστότητα',tone:t,rating:cur.v==null?'—':t==='good'?'Επαρκής':t==='mid'?'Οριακή':'Πιεσμένη',lines:[`Γενική ${nf(cur.v)}×`,`(κλάδος ${nf(cur.s)}×)`]});
   const dy=R('Μερισματική απόδοση'),dps=R('DPS');
   t=dy.v<=0?'bad':dy.v>=4?'good':'mid';
   cards.push({cat:'Μέρισμα',tone:t,rating:dy.v<=0?'Δεν διανέμει':t==='good'?'Ελκυστικό':'Μέτριο',lines:[`Απόδοση ${nf(dy.v)}%`,`(κλάδος ${nf(dy.s)}%)`]});

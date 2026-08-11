@@ -221,7 +221,7 @@ function table(){
   const rank = dir==='top' ? i+1 : rows.length-i;
   return `<tr class="${dir==='top'&&i<3?'top3':''}">
    <td class="rk">${rank}</td>
-   <td class="nm"><a href="${encodeURI(COMPANY_PAGE)}" target="_blank">${r.t}</a></td>
+   <td class="nm"><a href="${COMPANY_PAGE}?tk=${encodeURIComponent(r.tk)}" target="_blank">${r.t}</a></td>
    <td class="sc">${r.s}</td>
    <td class="pct"><div class="pbar"><div class="pfill" style="width:${pctv}%;background:${ZCOL[cls]}"></div></div>
      <span class="pnum">${pctv}%</span></td>
