@@ -282,6 +282,17 @@
  .mast h1{font-family:'Inter',sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.02em}
 
  
+.cband{background:linear-gradient(180deg,rgba(47,128,194,.16),rgba(47,128,194,.05));border-radius:11px;padding:10px 8px 11px;margin-top:12px;border:1px solid rgba(255,255,255,.10)}
+.cdiv{display:flex;align-items:center;gap:8px;margin:0 0 8px}
+.cdiv .ln{flex:1;height:1px;background:rgba(255,255,255,.14)}
+.cdiv .ct{font-size:9.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;color:#8fc4ee;display:flex;align-items:center}
+.cband .k{color:#bcd9f2}
+.cband .cell{background:#2f80c2;border:1px solid #3f92d6}
+.cband .v{color:#fff}.cband .v small{color:rgba(255,255,255,.72)}
+.cband .spacer,.latest .spacer{flex:1;min-width:0}
+.cdot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#f4c24e;margin-right:7px;animation:cping 1.8s ease-out infinite}
+@keyframes cping{0%{box-shadow:0 0 0 0 rgba(244,194,78,.7)}70%,100%{box-shadow:0 0 0 8px rgba(244,194,78,0)}}
+@media (prefers-reduced-motion:reduce){.cdot{animation:none}}
 </style>
 <link rel="stylesheet" href="../assets/chrome.css">
 <script src="../assets/data.js"></script>
@@ -321,7 +332,7 @@
 
     <div class="a-year">
       <div class="panel">
-        <div class="phead yr"><div class="yr-top"><i class="ti ti-calendar-stats"></i><h2>2025</h2></div><div class="latest" id="latest"></div></div>
+        <div class="phead yr"><div class="yr-top"><i class="ti ti-calendar-stats"></i><h2>2025</h2></div><div class="latest" id="latest"></div><div class="cband" id="current-band"></div></div>
         <div class="pbody year-body">
           <div class="year-top">
             <div class="panel sub">
@@ -387,12 +398,13 @@ const _AXC=(window.AXION&&window.AXION.companies&&window.AXION.companies[AXBASIS
 const _tk=new URLSearchParams(location.search).get('tk');
 const AX=(_tk&&_AXC.find(function(c){return c.tk===_tk;}))||_AXC[0]||null;
 document.addEventListener('axion:basischange',function(){location.reload();});
-const company = AX ? {ticker:AX.tk,name:AX.name,euronext_name:(AX.en||''),sector:AX.s,latest:AX.latest,years:AX.years,metrics:AX.metrics} : {ticker:'',name:'—',euronext_name:'',sector:'',latest:{period:'',type:''},years:[2020,2021,2022,2023,2024,2025],metrics:{revenue:[],net_profit:[],ebitda:[],pe:[],pbv:[],total_debt:[],net_debt:[]}};;
+const company = AX ? {ticker:AX.tk,name:AX.name,euronext_name:(AX.en||''),sector:AX.s,latest:AX.latest,years:AX.years,metrics:AX.metrics,current:(AX.current||null)} : {ticker:'',name:'—',euronext_name:'',sector:'',latest:{period:'',type:''},years:[2020,2021,2022,2023,2024,2025],metrics:{revenue:[],net_profit:[],ebitda:[],pe:[],pbv:[],total_debt:[],net_debt:[]}};;
 const METRICS=[
   {key:'revenue',label:'Τζίρος',sub:'Κύκλος εργασιών',unit:'eur',goodUp:true},
   {key:'net_profit',label:'Καθαρά κέρδη',sub:'μετά φόρων, μητρικής',unit:'eur',goodUp:true},
   {key:'ebitda',label:'EBITDA',sub:'λειτουργική κερδοφορία',unit:'eur',goodUp:true},
-  {key:'pe',label:'P/E',sub:'τιμή / κέρδη',unit:'x',goodUp:null},
+  {key:'mcap',label:'Κεφαλαιοποίηση',sub:'χρημ. αξία',unit:'eur',goodUp:null},
+ {key:'pe',label:'P/E',sub:'τιμή / κέρδη',unit:'x',goodUp:null},
   {key:'pbv',label:'P/BV',sub:'τιμή / λογιστική αξία',unit:'x',goodUp:null},
   {key:'total_debt',label:'Συν. δανεισμός',sub:'σύνολο χρέους',unit:'eur',goodUp:false},
   {key:'net_debt',label:'Καθ. δανεισμός',sub:'χρέος μείον ταμειακά',unit:'eur',goodUp:false}
@@ -415,10 +427,23 @@ document.getElementById('co-sector').textContent=company.sector;
 
 const li=company.years.length-1;
 document.getElementById('latest').innerHTML=METRICS.map(m=>{
-  const arr=company.metrics[m.key],v=arr[li];
-  const val=m.unit==='eur'?`${Math.round(v/1e6).toLocaleString('el-GR')}<small> εκ.€</small>`:fX(v);
+  const arr=company.metrics[m.key]; if(!arr) return '';
+  const v=arr[li];
+  const val=m.unit==='eur'?(v==null?'—':`${Math.round(v/1e6).toLocaleString('el-GR')}<small> εκ.€</small>`):fX(v);
   return `<div class="metric-item"><div class="k">${m.label}</div><div class="cell"><div class="v">${val}</div></div></div>`;
 }).join('');
+(function(){
+  const cb=document.getElementById('current-band'); if(!cb) return;
+  const cur=company.current;
+  if(!cur||(cur.mcap==null&&cur.pe==null&&cur.pbv==null)){ cb.style.display='none'; return; }
+  const eur=v=>v==null?'—':`${Math.round(v/1e6).toLocaleString('el-GR')}<small> εκ.€</small>`;
+  const xx=v=>(v==null||isNaN(v))?'—':fX(v);
+  const item=(k,val)=>`<div class="metric-item"><div class="k">${k}</div><div class="cell"><div class="v">${val}</div></div></div>`;
+  const sp='<div class="spacer"></div>';
+  const dt=cur.date?` · ${cur.date}`:'';
+  cb.innerHTML=`<div class="cdiv"><span class="ln"></span><span class="ct"><span class="cdot"></span>Τρέχον · τιμή κλεισίματος${dt}</span><span class="ln"></span></div>`+
+   `<div class="latest">${sp}${sp}${sp}${item('Κεφαλαιοποίηση',eur(cur.mcap))}${item('P/E',xx(cur.pe))}${item('P/BV',xx(cur.pbv))}${sp}${sp}</div>`;
+})();
 
 const FAM={
   capital:{c:'#2f80c2',name:'Κεφάλαιο/μετοχή'},
