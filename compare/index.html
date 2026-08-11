@@ -164,9 +164,9 @@ DATA.forEach(r=>{const u=k=>h32(r.t+'|'+k);
 });
 
 const ALLMET=[
- {k:'pe', label:'P/E',       note:'τιμή προς κέρδη',           dir:-1,d:1},
- {k:'pbv',label:'P/BV',      note:'τιμή προς λογιστική αξία',  dir:-1,d:1},
- {k:'ev', label:'EV/EBITDA', note:'αξία επιχείρησης προς EBITDA',dir:-1,d:1},
+ {k:'pe', label:'P/E',       note:'τιμή προς κέρδη',           dir:-1,d:1,negWorst:1},
+ {k:'pbv',label:'P/BV',      note:'τιμή προς λογιστική αξία',  dir:-1,d:1,negWorst:1},
+ {k:'ev', label:'EV/EBITDA', note:'αξία επιχείρησης προς EBITDA',dir:-1,d:1,negWorst:1},
  {k:'roe',label:'ROE',       note:'απόδοση ιδίων κεφαλαίων',   dir:+1,d:0,pct:true},
  {k:'dy', label:'Μερισματική απόδοση',note:'μέρισμα προς τιμή',dir:+1,d:1,pct:true},
  {k:'nde',label:'Καθαρός δανεισμός / EBITDA',note:'μόχλευση · αρνητικό = καθαρό ταμείο',dir:-1,d:1},
@@ -196,6 +196,12 @@ function rankCls(m, rows, v){
  if(v==null||isNaN(v)) return 'm';
  const vals=rows.map(r=>r[m.k]).filter(x=>x!=null&&!isNaN(x));
  if(!vals.length) return 'm';
+ if(m.negWorst){
+  if(v<0) return 'b';
+  const pos=vals.filter(x=>x>=0); if(!pos.length) return 'm';
+  const b1=Math.min(...pos), w1=Math.max(...pos);
+  return b1===w1?'m':(v===b1?'g':v===w1?'b':'m');
+ }
  const best = m.dir<0 ? Math.min(...vals) : Math.max(...vals);
  const worst= m.dir<0 ? Math.max(...vals) : Math.min(...vals);
  if(best===worst) return 'm';

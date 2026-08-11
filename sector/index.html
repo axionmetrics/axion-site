@@ -234,9 +234,9 @@ DATA.forEach(r=>{ if(r.gm===undefined){ const u=k=>clHash(r.t+'|'+k);
  r.cr =Math.round((0.8+u('cr')*2.2)*10)/10;
  r.roa=Math.round((2 +u('roa')*15)*10)/10; }});
 const CL_MET=[
- {k:'pe', label:'P/E',       dir:-1,d:1},
- {k:'pbv',label:'P/BV',      dir:-1,d:1},
- {k:'ev', label:'EV/EBITDA', dir:-1,d:1},
+ {k:'pe', label:'P/E',       dir:-1,d:1,negWorst:1},
+ {k:'pbv',label:'P/BV',      dir:-1,d:1,negWorst:1},
+ {k:'ev', label:'EV/EBITDA', dir:-1,d:1,negWorst:1},
  {k:'roe',label:'ROE',       dir:+1,d:0,pct:true},
  {k:'dy', label:'Μερισματική απόδοση',dir:+1,d:1,pct:true},
  {k:'nde',label:'Καθαρός δανεισμός / EBITDA',dir:-1,d:1},
@@ -249,7 +249,8 @@ let clSel=['pe','pbv','ev','roe','dy','nde'];
 const clCaps=s=>s.toUpperCase().replace(/Ά/g,'Α').replace(/Έ/g,'Ε').replace(/Ή/g,'Η').replace(/Ί/g,'Ι').replace(/Ό/g,'Ο').replace(/Ύ/g,'Υ').replace(/Ώ/g,'Ω').replace(/Ϊ/g,'Ι').replace(/Ϋ/g,'Υ');
 const clFV=(m,v)=>fmt(v,m.d)+(m.pct?' %':(m.x?'x':''));
 function clRank(m,rows,v){
- const vals=rows.map(r=>r[m.k]);
+ const vals=rows.map(r=>r[m.k]).filter(x=>x!=null&&!isNaN(x));
+ if(m.negWorst){ if(v<0) return 'b'; const pos=vals.filter(x=>x>=0); if(!pos.length) return 'm'; const b1=Math.min(...pos), w1=Math.max(...pos); return b1===w1?'m':(v===b1?'g':v===w1?'b':'m'); }
  const best=m.dir<0?Math.min(...vals):Math.max(...vals), worst=m.dir<0?Math.max(...vals):Math.min(...vals);
  if(best===worst)return 'm'; if(v===best)return 'g'; if(v===worst)return 'b'; return 'm';
 }

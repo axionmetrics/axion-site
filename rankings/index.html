@@ -149,9 +149,9 @@ const DATA=(window.AXION&&window.AXION.rows&&window.AXION.rows[AXBASIS])||[];
 document.addEventListener('axion:basischange',function(){location.reload();});
 
 const MET=[
- {k:'pe', label:'P/E',                 short:'P/E',      dir:-1,d:1},
- {k:'pbv',label:'P/BV',                short:'P/BV',     dir:-1,d:1},
- {k:'ev', label:'EV/EBITDA',           short:'EV/EBITDA',dir:-1,d:1},
+ {k:'pe', label:'P/E',                 short:'P/E',      dir:-1,d:1,negWorst:1},
+ {k:'pbv',label:'P/BV',                short:'P/BV',     dir:-1,d:1,negWorst:1},
+ {k:'ev', label:'EV/EBITDA',           short:'EV/EBITDA',dir:-1,d:1,negWorst:1},
  {k:'roe',label:'ROE',                 short:'ROE',      dir:+1,d:0,pct:true},
  {k:'dy', label:'Μερισματική απόδοση', short:'Μέρισμα',  dir:+1,d:1,pct:true},
  {k:'nde',label:'Καθαρός δανεισμός / EBITDA', short:'Καθ.δαν/EBITDA', dir:-1,d:1},
@@ -171,11 +171,19 @@ const valid=(m,rows)=> rows.filter(r=> r[m.k]!=null && !isNaN(r[m.k]));
 // βαθμολογία 0..1 όπου 1 = καλύτερο (direction-aware)
 function scoreOf(m,rows){
  const vals=rows.map(r=>r[m.k]);
+ if(m.negWorst){
+  const pos=vals.filter(v=>v>=0), lo=Math.min(...pos), hi=Math.max(...pos), rng=(hi-lo)||1;
+  return v => v<0 ? 0 : (hi-v)/rng;
+ }
  const lo=Math.min(...vals), hi=Math.max(...vals), rng=(hi-lo)||1;
  return v => m.dir<0 ? (hi-v)/rng : (v-lo)/rng;
 }
 function zoneOf(m,rows){
  const vals=rows.map(r=>r[m.k]);
+ if(m.negWorst){
+  const pos=vals.filter(v=>v>=0), q1=q(pos,.25), q3=q(pos,.75);
+  return v=> v<0 ? 'b' : (v<=q1?'g':v>=q3?'b':'m');
+ }
  const q1=q(vals,.25), q3=q(vals,.75);
  return v=>{const good=m.dir<0?v<=q1:v>=q3, bad=m.dir<0?v>=q3:v<=q1;return good?'g':bad?'b':'m';};
 }
@@ -202,7 +210,7 @@ function table(){
  const m=M(metric), rows=valid(m,scoped());
  const score=scoreOf(m,rows), zone=zoneOf(m,rows);
  // ταξινόμηση: καλύτερο πρώτα
- let ranked=[...rows].sort((a,b)=> m.dir<0 ? a[m.k]-b[m.k] : b[m.k]-a[m.k]);
+ let ranked=[...rows].sort((a,b)=>{ if(m.negWorst){const av=a[m.k],bv=b[m.k],an=av<0,bn=bv<0; if(an!==bn)return an?1:-1; return an? bv-av : av-bv;} return m.dir<0 ? a[m.k]-b[m.k] : b[m.k]-a[m.k]; });
  if(dir==='bottom') ranked.reverse();
  const shown = topN? ranked.slice(0,topN) : ranked;
 
