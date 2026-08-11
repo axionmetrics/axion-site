@@ -2,7 +2,6 @@
 <html lang="el">
 <head>
 <meta charset="UTF-8">
-<meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Κατατάξεις — Axion Metrics</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -241,7 +240,7 @@ function cards(){
  document.getElementById('cards').innerHTML=MET.map(m=>{
   const rows=valid(m,scoped());
   const zone=zoneOf(m,rows);
-  const top=[...rows].sort((a,b)=> m.dir<0? a[m.k]-b[m.k] : b[m.k]-a[m.k]).slice(0,5);
+  const top=[...rows].sort((a,b)=>{ if(m.negWorst){const av=a[m.k],bv=b[m.k],an=av<0,bn=bv<0; if(an!==bn)return an?1:-1; return an? bv-av : av-bv;} return m.dir<0? a[m.k]-b[m.k] : b[m.k]-a[m.k]; }).slice(0,5);
   const body=top.map((r,i)=>`<div class="brow"><span class="n">${i+1}. ${r.t}</span>
     <span class="v ${zone(r[m.k])}">${fv(m,r[m.k])}</span></div>`).join('');
   return `<div class="card ${m.k===metric?'on':''}" onclick="setMetric('${m.k}')">
