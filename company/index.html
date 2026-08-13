@@ -481,7 +481,8 @@ function addPill(g,x,by,txt,col){
 }
 function ptLabel(x,py,val,d,place){
   const g=el('g',{});
-  const valStr=Math.round(val).toLocaleString('el-GR');
+  const _a=Math.abs(val),_d=_a<100?2:_a<1000?1:0;
+  const valStr=val.toLocaleString('el-GR',{minimumFractionDigits:_d,maximumFractionDigits:_d});
   const nearBy = place==='above'? py-11 : py+16;
   const farBy  = place==='above'? py-28 : py+33;
   addPill(g,x,nearBy,valStr,'#16243d');
