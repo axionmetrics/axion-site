@@ -2,7 +2,6 @@
 <html lang="el">
 <head>
 <meta charset="UTF-8">
-<meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ευρετήριο κλάδων — Axion Metrics</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -101,7 +100,7 @@ const DATA=(window.AXION&&window.AXION.rows&&window.AXION.rows[AXBASIS])||[];
 document.addEventListener('axion:basischange',function(){location.reload();});
 
 const fmt=(v,d)=>(v==null||isNaN(v))?'—':v.toLocaleString('el-GR',{minimumFractionDigits:d,maximumFractionDigits:d});
-const eur=v=>(v==null||isNaN(v))?'—':Math.round(v/1e6).toLocaleString('el-GR')+' εκ. €';
+const eur=v=>{if(v==null||isNaN(v))return '—';const m=v/1e6,a=Math.abs(m),d=a<100?2:a<1000?1:0;return m.toLocaleString('el-GR',{minimumFractionDigits:d,maximumFractionDigits:d})+' εκ. €';};
 const q=(arr,p)=>{const s=[...arr].sort((a,b)=>a-b),i=(s.length-1)*p,lo=Math.floor(i),hi=Math.ceil(i);return s[lo]+(s[hi]-s[lo])*(i-lo);};
 
 // ---- προσομοιωμένη ανάπτυξη τζίρου (CAGR) ανά εταιρεία, ντετερμινιστική ----

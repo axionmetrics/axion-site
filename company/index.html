@@ -2,7 +2,6 @@
 <html lang="el">
 <head>
 <meta charset="UTF-8">
-<meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ALLWYN — Θεμελιώδης ανάλυση</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -409,7 +408,7 @@ const METRICS=[
   {key:'total_debt',label:'Συν. δανεισμός',sub:'σύνολο χρέους',unit:'eur',goodUp:false},
   {key:'net_debt',label:'Καθ. δανεισμός',sub:'χρέος μείον ταμειακά',unit:'eur',goodUp:false}
 ];
-const fMil=v=>(v/1e6).toLocaleString('el-GR',{minimumFractionDigits:1,maximumFractionDigits:1});
+const fMil=v=>{if(v==null||isNaN(v))return '—';const m=v/1e6,a=Math.abs(m),d=a<100?2:a<1000?1:0;return m.toLocaleString('el-GR',{minimumFractionDigits:d,maximumFractionDigits:d});};
 const fX=v=>(v==null||(typeof v==='number'&&isNaN(v)))?'—':v.toLocaleString('el-GR',{minimumFractionDigits:1,maximumFractionDigits:1});
 const fmt=(v,unit)=>v==null?'—':(unit==='eur'?fMil(v):fX(v));
 function deltaMark(arr,i,goodUp){
@@ -429,14 +428,14 @@ const li=company.years.length-1;
 document.getElementById('latest').innerHTML=METRICS.map(m=>{
   const arr=company.metrics[m.key]; if(!arr) return '';
   const v=arr[li];
-  const val=m.unit==='eur'?(v==null?'—':`${Math.round(v/1e6).toLocaleString('el-GR')}<small> εκ.€</small>`):fX(v);
+  const val=m.unit==='eur'?(v==null?'—':`${fMil(v)}<small> εκ.€</small>`):fX(v);
   return `<div class="metric-item"><div class="k">${m.label}</div><div class="cell"><div class="v">${val}</div></div></div>`;
 }).join('');
 (function(){
   const cb=document.getElementById('current-band'); if(!cb) return;
   const cur=company.current;
   if(!cur||(cur.mcap==null&&cur.pe==null&&cur.pbv==null)){ cb.style.display='none'; return; }
-  const eur=v=>v==null?'—':`${Math.round(v/1e6).toLocaleString('el-GR')}<small> εκ.€</small>`;
+  const eur=v=>v==null?'—':`${fMil(v)}<small> εκ.€</small>`;
   const xx=v=>(v==null||isNaN(v))?'—':fX(v);
   const item=(k,val)=>`<div class="metric-item"><div class="k">${k}</div><div class="cell"><div class="v">${val}</div></div></div>`;
   const sp='<div class="spacer"></div>';
@@ -546,7 +545,7 @@ function draw(){
 
   // secondary metrics as lines below the axis
   const np=company.metrics.net_profit.map(v=>v/1e6);
-  const f0=v=>(v==null||isNaN(v))?'—':Math.round(v).toLocaleString('el-GR'), fx=v=>(v==null||isNaN(v))?'—':v.toLocaleString('el-GR',{maximumFractionDigits:1});
+  const f0=v=>{if(v==null||isNaN(v))return '—';const a=Math.abs(v),d=a<100?2:a<1000?1:0;return v.toLocaleString('el-GR',{minimumFractionDigits:d,maximumFractionDigits:d});}, fx=v=>(v==null||isNaN(v))?'—':v.toLocaleString('el-GR',{maximumFractionDigits:1});
   metricRow(svg,'Καθ. κέρδη', np, f0, '#cf7f00', ROWS_TOP, true, true);
   metricRow(svg,'Συν. δανεισμός', company.metrics.total_debt.map(v=>v/1e6), f0, '#8fc4ee', ROWS_TOP+ROW_H, false, true);
   metricRow(svg,'Καθ. δανεισμός', company.metrics.net_debt.map(v=>v/1e6), f0, '#2b4a6b', ROWS_TOP+2*ROW_H, false, true);
