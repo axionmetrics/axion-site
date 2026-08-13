@@ -1,5 +1,4 @@
 <!DOCTYPE html><html lang="el"><head><meta charset="UTF-8">
-<meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Μεθοδολογία & δείκτες — Axion Metrics</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -62,7 +61,19 @@
  /* == ομογενοποίηση: κοινή τυπογραφία επικεφαλίδων == */
  .mast h1,h2{font-family:'Inter',sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.02em}
 
- 
+ /* ===== mobile ===== */
+ @media(max-width:820px){
+   .layout{grid-template-columns:minmax(0,1fr);gap:16px}
+   .layout>*{min-width:0}
+   nav.toc{position:static;top:auto;display:flex;flex-wrap:wrap;gap:2px 16px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+   nav.toc a{border-left:none;padding:4px 0}
+   .cards{grid-template-columns:1fr 1fr}
+   .tblwrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+   .tblwrap table{min-width:520px}
+ }
+ @media(max-width:520px){
+   .cards{grid-template-columns:1fr}
+ }
 </style><link rel="stylesheet" href="../assets/chrome.css">
 </head><body>
 <div id="am-nav"></div><div class="wrap">
@@ -100,10 +111,10 @@
   </ul></section><section id="deiktes"><h2>Οι δείκτες</h2>
   <p>Κάθε δείκτης υπολογίζεται από τα πρωτογενή μεγέθη — δεν αντιγράφεται από τρίτες πηγές.
   Η στήλη «Καλύτερο» δείχνει την <b>κατεύθυνση</b> που θεωρείται ευνοϊκή στο site.</p>
-  <table>
+  <div class="tblwrap"><table>
    <thead><tr><th>Δείκτης</th><th>Τύπος</th><th>Κατηγορία</th><th>Καλύτερο</th><th>Τι σημαίνει</th></tr></thead>
    <tbody><tr><td><b>P/E</b></td><td class="f">Τιμή μετοχής ÷ Κέρδη ανά μετοχή</td><td>Αποτίμηση</td><td class="d hi">Χαμηλό</td><td>Πόσα χρόνια κερδών πληρώνεις για τη μετοχή. Χαμηλό = φθηνότερη — ή προβληματική.</td></tr><tr><td><b>P/BV</b></td><td class="f">Τιμή μετοχής ÷ Λογιστική αξία ανά μετοχή</td><td>Αποτίμηση</td><td class="d hi">Χαμηλό</td><td>Τιμή έναντι καθαρής θέσης. Κάτω από 1 σημαίνει ότι η αγορά αποτιμά κάτω από τα ίδια κεφάλαια.</td></tr><tr><td><b>EV/EBITDA</b></td><td class="f">(Κεφαλαιοποίηση + Καθαρός δανεισμός) ÷ EBITDA</td><td>Αποτίμηση</td><td class="d hi">Χαμηλό</td><td>Λαμβάνει υπόψη και το χρέος — γι' αυτό συγκρίνει καλύτερα εταιρείες με διαφορετική μόχλευση.</td></tr><tr><td><b>ROE</b></td><td class="f">Καθαρά κέρδη ÷ Ίδια κεφάλαια</td><td>Κερδοφορία</td><td class="d hi">Υψηλό</td><td>Πόσο αποδοτικά αξιοποιεί η διοίκηση τα κεφάλαια των μετόχων.</td></tr><tr><td><b>ROA</b></td><td class="f">Καθαρά κέρδη ÷ Σύνολο ενεργητικού</td><td>Κερδοφορία</td><td class="d hi">Υψηλό</td><td>Απόδοση επί του συνόλου των περιουσιακών στοιχείων.</td></tr><tr><td><b>Περιθώριο EBITDA</b></td><td class="f">EBITDA ÷ Πωλήσεις</td><td>Κερδοφορία</td><td class="d hi">Υψηλό</td><td>Λειτουργική αποδοτικότητα, πριν από αποσβέσεις και τόκους.</td></tr><tr><td><b>Μερισματική απόδοση</b></td><td class="f">Μέρισμα ανά μετοχή ÷ Τιμή</td><td>Μέρισμα</td><td class="d hi">Υψηλό</td><td>Η ταμειακή απόδοση που εισπράττεις σήμερα.</td></tr><tr><td><b>Ποσοστό διανομής</b></td><td class="f">Μέρισμα ÷ Καθαρά κέρδη</td><td>Μέρισμα</td><td class="d ">—</td><td>Πόσο από τα κέρδη μοιράζεται. Πολύ υψηλό ποσοστό μπορεί να μη διατηρείται.</td></tr><tr><td><b>Καθαρός δανεισμός / EBITDA</b></td><td class="f">(Δανεισμός − Διαθέσιμα) ÷ EBITDA</td><td>Μόχλευση</td><td class="d hi">Χαμηλό</td><td>Πόσα χρόνια EBITDA χρειάζονται για την αποπληρωμή. Αρνητικό = καθαρό ταμείο.</td></tr><tr><td><b>Δανειακή μόχλευση</b></td><td class="f">Σύνολο υποχρεώσεων ÷ Ίδια κεφάλαια</td><td>Μόχλευση</td><td class="d hi">Χαμηλό</td><td>Πόσο στηρίζεται η εταιρεία σε δανεισμό έναντι ιδίων κεφαλαίων.</td></tr><tr><td><b>Κάλυψη τόκων</b></td><td class="f">EBIT ÷ Τόκοι</td><td>Μόχλευση</td><td class="d hi">Υψηλό</td><td>Πόσες φορές καλύπτουν τα λειτουργικά κέρδη τους τόκους.</td></tr><tr><td><b>Γενική ρευστότητα</b></td><td class="f">Κυκλοφορούν ÷ Βραχυπρόθεσμες υποχρεώσεις</td><td>Ρευστότητα</td><td class="d hi">Υψηλό</td><td>Ικανότητα κάλυψης βραχυπρόθεσμων υποχρεώσεων.</td></tr><tr><td><b>Ποιότητα κερδών</b></td><td class="f">Λειτουργικές ταμειακές ροές ÷ Καθαρά κέρδη</td><td>Ποιότητα</td><td class="d hi">Υψηλό</td><td>Πόσο από τα λογιστικά κέρδη γίνονται πραγματικά μετρητά. Πάνω από 100% = ισχυρή ποιότητα.</td></tr><tr><td><b>Ανάπτυξη εσόδων (CAGR)</b></td><td class="f">(Πωλήσεις τελ. έτους ÷ Πωλήσεις αρχ. έτους)^(1/έτη) − 1</td><td>Ανάπτυξη</td><td class="d hi">Υψηλό</td><td>Μέσος ετήσιος ρυθμός αύξησης του τζίρου στην πενταετία.</td></tr></tbody>
-  </table>
+  </table></div>
   <div class="box info"><div class="bt">Σημείωση</div>
    <p>Ο πίνακας δείχνει τους βασικούς δείκτες. Το πλήρες σύνολο περιλαμβάνει περισσότερους δείκτες
    αποτίμησης, κερδοφορίας, ρευστότητας, μόχλευσης και μερίσματος ανά εταιρεία και χρήση.</p></div></section><section id="klados"><h2>Σύγκριση με τον κλάδο</h2>

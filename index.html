@@ -1,5 +1,4 @@
 <!DOCTYPE html><html lang="el"><head><meta charset="UTF-8">
-<meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Axion Metrics — Θεμελιώδης ανάλυση ΧΑ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -56,6 +55,27 @@
 
  /* == ομογενοποίηση: κοινή τυπογραφία επικεφαλίδων == */
  h2{font-family:'Inter',sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.02em}
+
+ /* ===== mobile ===== */
+ @media(max-width:820px){
+   .wrap{padding:0 22px}
+   .grid{grid-template-columns:1fr;gap:22px}
+   .stage{display:none}
+   .wordmark{font-size:clamp(44px,13.5vw,66px)}
+   .lead{font-size:15.5px;margin-top:20px}
+   .stats{gap:22px 34px;margin-top:26px;flex-wrap:wrap}
+   .navspace{display:none}
+   .menu{gap:16px;font-size:13px}
+   .fgrid{grid-template-columns:1fr 1fr}
+   .feat{padding:48px 0 60px}
+   .feath h2{font-size:24px}
+ }
+ @media(max-width:440px){
+   .nav{flex-wrap:wrap;gap:10px;justify-content:center;text-align:center}
+   .menu{gap:14px}
+   .stats{justify-content:space-between}
+   .fgrid{grid-template-columns:1fr}
+ }
 </style></head><body>
 
 <div class="hero"><div class="wrap">

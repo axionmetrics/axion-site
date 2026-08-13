@@ -1,5 +1,4 @@
 <!DOCTYPE html><html lang="el"><head><meta charset="UTF-8">
-<meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Περί — Axion Metrics</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -62,7 +61,16 @@
  /* == ομογενοποίηση: κοινή τυπογραφία επικεφαλίδων == */
  .mast h1,h2{font-family:'Inter',sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.02em}
 
- 
+ /* ===== mobile ===== */
+ @media(max-width:820px){
+   .layout{grid-template-columns:minmax(0,1fr);gap:16px}
+   .layout>*{min-width:0}
+   nav.toc{position:static;top:auto;display:flex;flex-wrap:wrap;gap:2px 16px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+   nav.toc a{border-left:none;padding:4px 0}
+   .cards{grid-template-columns:1fr 1fr}
+   table{font-size:12.5px}
+ }
+ @media(max-width:520px){ .cards{grid-template-columns:1fr} }
 </style><link rel="stylesheet" href="../assets/chrome.css">
 </head><body>
 <div id="am-nav"></div><div class="wrap">
