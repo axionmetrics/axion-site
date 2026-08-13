@@ -394,8 +394,10 @@
 <script>
 const AXBASIS=(function(){try{var u=new URLSearchParams(location.search).get('basis');var b=u||localStorage.getItem('am-basis')||'annual';return (window.AXION&&window.AXION.meta&&window.AXION.meta.bases.indexOf(b)>-1)?b:'annual';}catch(e){return 'annual';}})();
 const _AXC=(window.AXION&&window.AXION.companies&&window.AXION.companies[AXBASIS])||[];
-const _tk=new URLSearchParams(location.search).get('tk');
+let _tk=new URLSearchParams(location.search).get('tk');
+try{ if(!_tk){ const _saved=localStorage.getItem('am-last-company'); if(_saved&&_AXC.find(function(c){return c.tk===_saved;})) _tk=_saved; } }catch(e){}
 const AX=(_tk&&_AXC.find(function(c){return c.tk===_tk;}))||_AXC[0]||null;
+try{ if(AX&&AX.tk) localStorage.setItem('am-last-company', AX.tk); }catch(e){}
 document.addEventListener('axion:basischange',function(){location.reload();});
 const company = AX ? {ticker:AX.tk,name:AX.name,euronext_name:(AX.en||''),sector:AX.s,latest:AX.latest,years:AX.years,metrics:AX.metrics,current:(AX.current||null)} : {ticker:'',name:'—',euronext_name:'',sector:'',latest:{period:'',type:''},years:[2020,2021,2022,2023,2024,2025],metrics:{revenue:[],net_profit:[],ebitda:[],pe:[],pbv:[],total_debt:[],net_debt:[]}};;
 const METRICS=[
