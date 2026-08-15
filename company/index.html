@@ -52,19 +52,41 @@
   .phead.yr i{align-self:center}
   .phead.yr .hint{font-family:var(--disp);font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-left:2px}
   .phead.scr{background:linear-gradient(90deg,#2f80c2,#2b4a6b)}
-  .sc-grid{display:flex;gap:10px;flex-wrap:wrap;justify-content:space-between}
+  .sc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;flex:1}
+  .glance-row{display:flex;gap:16px;align-items:stretch}
+  .p-glance{flex:1 1 62%}.p-dist{flex:1 1 38%}
+  .glance-row .panel .pbody{flex:1;display:flex;flex-direction:column}
+  .phead .hint{margin-left:auto;font-family:var(--sans);font-size:11px;font-weight:500;color:#cfe0f6;white-space:nowrap;text-transform:none;letter-spacing:0}
   .scorecard-wrap{margin-top:16px;padding-top:18px;border-top:1px solid var(--line)}
   .mini-h{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:12px}
   .mini-h span{color:var(--faint);font-weight:400;letter-spacing:.02em;text-transform:none}
-  .sc-item{--tone:#2f9e52;width:158px;text-align:center;min-width:0}
+  .sc-item{--tone:#2f9e52;text-align:center;min-width:0;display:flex;flex-direction:column}
   .sc-good{--tone:#2f9e52;--toneBg:rgba(47,158,82,.10);--toneBd:rgba(47,158,82,.32)}
   .sc-mid{--tone:#cf7f00;--toneBg:rgba(207,127,0,.10);--toneBd:rgba(207,127,0,.30)}
   .sc-bad{--tone:#d64530;--toneBg:rgba(214,69,48,.09);--toneBd:rgba(214,69,48,.30)}
   .sc-cat{font-size:11.5px;color:var(--muted);font-weight:600;margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase;letter-spacing:.04em}
-  .sc-box{background:var(--panel2);border:1px solid var(--line);border-top:2px solid var(--tone);border-radius:9px;padding:9px 6px;display:flex;flex-direction:column;align-items:center;gap:6px}
-  .sc-badge{font-size:12.5px;font-weight:700;color:var(--tone);background:var(--toneBg);border:1px solid var(--toneBd);padding:2px 10px;border-radius:20px;white-space:nowrap}
-  .sc-lines{display:flex;flex-direction:column;gap:1px}
-  .sc-lines span{font-family:var(--mono);font-size:15px;color:var(--text);white-space:nowrap}  .phead.yr h2,.phead.blue h2{font-size:26px;letter-spacing:.02em}
+  .sc-basis{display:inline-block;align-self:center;font-size:9.5px;font-weight:700;letter-spacing:.02em;padding:1px 8px;border-radius:20px;margin-bottom:8px;white-space:nowrap}
+  .sc-basis.b3{color:#2b4a6b;background:#e9f1fb;border:1px solid #d4e5f6}
+  .sc-basis.bp{color:#6b8199;background:#f2f5f9;border:1px solid #e6ecf3}
+  .sc-box{background:var(--panel2);border:1px solid var(--line);border-top:2px solid var(--tone);border-radius:9px;padding:12px 6px;display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;justify-content:center}
+  .sc-badge{font-size:12.5px;font-weight:700;color:var(--tone);background:var(--toneBg);border:1px solid var(--toneBd);padding:2px 11px;border-radius:20px;white-space:nowrap}
+  .sc-val{display:flex;flex-direction:column;align-items:center;gap:1px}
+  .sc-metric{font-family:var(--sans);font-size:11px;font-weight:600;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+  .sc-main{font-family:var(--mono);font-size:19px;font-weight:700;color:var(--ink);white-space:nowrap}
+  .sc-sub{font-family:var(--mono);font-size:12px;color:var(--muted);white-space:nowrap}
+  .dv-list{display:flex;flex-direction:column;flex:1}
+  .dv-head{display:grid;grid-template-columns:1fr auto auto;gap:10px;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);font-weight:700;padding:0 2px 8px;border-bottom:1px solid var(--line)}
+  .dv-head .r{text-align:right}
+  .dv-row{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;padding:13px 2px;border-bottom:1px solid var(--line2)}
+  .dv-row:last-of-type{border-bottom:none}
+  .dv-yr{font-family:var(--mono);font-weight:700;font-size:15px;color:var(--ink)}
+  .dv-eur{font-family:var(--mono);font-weight:700;font-size:17px;color:var(--ink);text-align:right;min-width:78px}
+  .dv-yld{font-family:var(--mono);font-size:14px;color:var(--muted);text-align:right;min-width:58px}
+  .dv-note{margin-top:auto;padding-top:12px;font-size:11px;color:var(--faint);border-top:1px solid var(--line2)}
+  .dv-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:12px;padding:14px 8px}
+  .dv-empty .ic{width:52px;height:52px;border-radius:50%;background:#f2f5f9;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--faint)}
+  .dv-empty .t{font-family:var(--disp);font-weight:800;font-size:18px;color:var(--muted)}
+  .dv-empty .s{font-size:12.5px;color:var(--faint);line-height:1.45;max-width:210px}  .phead.yr h2,.phead.blue h2{font-size:26px;letter-spacing:.02em}
   .year-body{background:var(--page);display:flex;flex-direction:column;gap:16px}
   .layout{margin-top:14px}
   .year-top{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
@@ -356,9 +378,15 @@
               </div>
             </div>
           </div>
-          <div class="panel sub">
-            <div class="phead teal"><i class="ti ti-gauge"></i><h2>Με μια ματιά</h2></div>
-            <div class="pbody"><div class="sc-grid" id="scorecard"></div></div>
+          <div class="glance-row">
+            <div class="panel sub p-glance">
+              <div class="phead teal"><i class="ti ti-gauge"></i><h2>Με μια ματιά</h2><span class="hint">έναντι κλάδου</span></div>
+              <div class="pbody"><div class="sc-grid" id="scorecard"></div></div>
+            </div>
+            <div class="panel sub p-dist">
+              <div class="phead teal"><i class="ti ti-coin"></i><h2>Χρηματικές διανομές</h2><span class="hint">3ετία</span></div>
+              <div class="pbody" id="distcard"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -745,28 +773,53 @@ ratiosEl.innerHTML=RATIOS.map((c,ci)=>{
 }).join('');
 ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.classList.toggle('open'));
 
-// scorecard «Με μια ματιά» — synthesis vs sector
+// «Με μια ματιά» — 3ετία μ.ο. (Κερδοφορία/Ανάπτυξη) & περιόδου (Μόχλευση/Ρευστότητα) έναντι κλάδου + Χρηματικές διανομές
 (function(){
-  const R=(label)=>{for(const c of RATIOS){const it=c.items.find(i=>i.label===label); if(it) return {v:it.series[it.series.length-1],s:it.sector};} return null;};
+  const G=(AX&&AX.glance)||null;
+  const scEl=document.getElementById('scorecard'), dvEl=document.getElementById('distcard');
   const nf=(v,d)=>(v==null||(typeof v==='number'&&isNaN(v)))?'—':v.toLocaleString('el-GR',{minimumFractionDigits:d===undefined?1:d,maximumFractionDigits:d===undefined?1:d});
+  const sgn=v=>(v==null?'':(v>=0?'+':''));
+  if(!G){ if(scEl)scEl.innerHTML=''; if(dvEl)dvEl.innerHTML=''; return; }
   const cards=[];
-  const roe=R('ROE'),ebm=R('Περιθώριο EBITDA');
-  let rel=((roe.v/roe.s)+(ebm.v/ebm.s))/2, t=rel>1.1?'good':rel>=0.9?'mid':'bad';
-  cards.push({cat:'Κερδοφορία',tone:t,rating:t==='good'?'Υψηλή':t==='mid'?'Μέτρια':'Χαμηλή',lines:[`ROE ${nf(roe.v)}%`,`(κλάδος ${nf(roe.s)}%)`]});
-  const rev=company.metrics.revenue, np=company.metrics.net_profit;
-  const gR=(rev[5]-rev[4])/rev[4]*100, gN=(np[5]-np[4])/np[4]*100, gS=5.0;
-  t=(gR>3&&gN>3)?'good':(gR<0||gN<-5)?'bad':'mid';
-  cards.push({cat:'Ανάπτυξη',tone:t,rating:t==='good'?'Θετική':t==='bad'?'Συρρίκνωση':'Επιβράδυνση',lines:[`Έσοδα ${gR>=0?'+':''}${nf(gR)}%`,`(κλάδος ${gS>=0?'+':''}${nf(gS)}%)`]});
-  const de=R('Χρέος / Ίδια κεφάλαια');
-  t=de.v==null?'mid':(de.v<=1?'good':de.v<=2?'mid':'bad');
-  cards.push({cat:'Μόχλευση',tone:t,rating:de.v==null?'—':t==='good'?'Χαμηλή':t==='mid'?'Μέτρια':'Υψηλή',lines:[`Χρέος/Ίδια ${nf(de.v)}×`,`(κλάδος ${nf(de.s)}×)`]});
-  const cur=R('Γενική ρευστότητα');
-  t=cur.v==null?'mid':(cur.v>=1.5?'good':cur.v>=1?'mid':'bad');
-  cards.push({cat:'Ρευστότητα',tone:t,rating:cur.v==null?'—':t==='good'?'Επαρκής':t==='mid'?'Οριακή':'Πιεσμένη',lines:[`Γενική ${nf(cur.v)}×`,`(κλάδος ${nf(cur.s)}×)`]});
-  const dy=R('Μερισματική απόδοση'),dps=R('DPS');
-  t=dy.v<=0?'bad':dy.v>=4?'good':'mid';
-  cards.push({cat:'Μέρισμα',tone:t,rating:dy.v<=0?'Δεν διανέμει':t==='good'?'Ελκυστικό':'Μέτριο',lines:[`Απόδοση ${nf(dy.v)}%`,`(κλάδος ${nf(dy.s)}%)`]});
-  document.getElementById('scorecard').innerHTML=cards.map(c=>`<div class="sc-item sc-${c.tone}"><div class="sc-cat">${c.cat}</div><div class="sc-box"><span class="sc-badge">${c.rating}</span><div class="sc-lines">${c.lines.map(l=>`<span>${l}</span>`).join('')}</div></div></div>`).join('');
+  // Κερδοφορία — ROE μ.ο. 3ετίας vs διάμεσος κλάδου
+  (function(){
+    const co=G.profit.co, sec=G.profit.sec;
+    let t='mid';
+    if(co!=null&&sec!=null&&sec!==0){const rel=co/sec; t=rel>1.1?'good':rel>=0.9?'mid':'bad';}
+    const r=co==null?'—':(t==='good'?'Υψηλή':t==='mid'?'Μέτρια':'Χαμηλή');
+    cards.push({cat:'Κερδοφορία',basis:'μ.ο. 3ετίας',bc:'b3',tone:t,rating:r,metric:'ROE',main:co==null?'—':nf(co)+'%',sub:'κλάδος '+(sec==null?'—':nf(sec)+'%')});
+  })();
+  // Ανάπτυξη — μ.ο. 3ετίας ανάπτυξης εσόδων vs διάμεσος κλάδου
+  (function(){
+    const co=G.growth.co, sec=G.growth.sec;
+    let t='mid',r='—';
+    if(co!=null){ t=(co<0)?'bad':(sec!=null&&co>=sec)?'good':'mid'; r=(t==='bad'?'Συρρίκνωση':t==='good'?'Θετική':'Επιβράδυνση'); }
+    cards.push({cat:'Ανάπτυξη',basis:'μ.ο. 3ετίας',bc:'b3',tone:t,rating:r,metric:'Έσοδα',main:co==null?'—':sgn(co)+nf(co)+'%',sub:'κλάδος '+(sec==null?'—':sgn(sec)+nf(sec)+'%')});
+  })();
+  // Μόχλευση — Χρέος/Ίδια περιόδου vs διάμεσος κλάδου
+  (function(){
+    const co=G.lev.co, sec=G.lev.sec;
+    const t=co==null?'mid':(co<=1?'good':co<=2?'mid':'bad');
+    const r=co==null?'—':(t==='good'?'Χαμηλή':t==='mid'?'Μέτρια':'Υψηλή');
+    cards.push({cat:'Μόχλευση',basis:'περιόδου',bc:'bp',tone:t,rating:r,metric:'Χρέος/Ίδια',main:co==null?'—':nf(co)+'×',sub:'κλάδος '+(sec==null?'—':nf(sec)+'×')});
+  })();
+  // Ρευστότητα — Γενική περιόδου vs διάμεσος κλάδου
+  (function(){
+    const co=G.liq.co, sec=G.liq.sec;
+    const t=co==null?'mid':(co>=1.5?'good':co>=1?'mid':'bad');
+    const r=co==null?'—':(t==='good'?'Επαρκής':t==='mid'?'Οριακή':'Πιεσμένη');
+    cards.push({cat:'Ρευστότητα',basis:'περιόδου',bc:'bp',tone:t,rating:r,metric:'Γενική',main:co==null?'—':nf(co)+'×',sub:'κλάδος '+(sec==null?'—':nf(sec)+'×')});
+  })();
+  scEl.innerHTML=cards.map(c=>`<div class="sc-item sc-${c.tone}"><div class="sc-cat">${c.cat}</div><div class="sc-basis ${c.bc}">${c.basis}</div><div class="sc-box"><span class="sc-badge">${c.rating}</span><div class="sc-val"><span class="sc-metric">${c.metric}</span><span class="sc-main">${c.main}</span></div><span class="sc-sub">${c.sub}</span></div></div>`).join('');
+  // Χρηματικές διανομές — τελευταία 3ετία
+  const D=G.dist||{distributes:false,rows:[]};
+  const rows=(D.rows||[]).filter(r=>r&&r.dps!=null&&r.dps>1e-9);
+  if(D.distributes&&rows.length){
+    const rev=rows.slice().reverse();
+    dvEl.innerHTML=`<div class="dv-list"><div class="dv-head"><span>Χρήση</span><span class="r">€/μτχ</span><span class="r">Απόδοση</span></div>${rev.map(r=>`<div class="dv-row"><span class="dv-yr">${r.y}</span><span class="dv-eur">${nf(r.dps,2)}</span><span class="dv-yld">${r.dy==null?'—':nf(r.dy)+'%'}</span></div>`).join('')}<div class="dv-note">Μέρισμα + επιστροφή κεφαλαίου, αθροιστικά ανά χρήση.</div></div>`;
+  } else {
+    dvEl.innerHTML=`<div class="dv-empty"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/></svg></div><div class="t">Δεν διανέμει</div><div class="s">Καμία χρηματική διανομή στους μετόχους την τελευταία 3ετία.</div></div>`;
+  }
 })();
 </script>
 <div class="qs-ov" id="qsOv" onclick="qsClose()"></div>
