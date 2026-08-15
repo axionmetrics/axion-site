@@ -842,7 +842,7 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
     <div class="qs-title"><h3>Εύρεση εταιρείας</h3><button class="qs-x" onclick="qsClose()" aria-label="Κλείσιμο">×</button></div>
     <label class="qs-field">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-      <input id="qsInput" type="text" placeholder="Όνομα, σύμβολο ή κλάδος…" autocomplete="off">
+      <input id="qsInput" type="text" placeholder="Όνομα ή σύμβολο…" autocomplete="off">
     </label>
   </div>
   <div class="qs-body" id="qsBody"></div>
@@ -853,21 +853,30 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
 /* ---------- Γρήγορη εύρεση εταιρείας ---------- */
 const QS_CURRENT=(AX?AX.name:'');
 const QS_PAGE='';   // προσωρινά: όλες δείχνουν στην ίδια σελίδα
-const QS_DATA=((window.AXION&&window.AXION.companies&&window.AXION.companies[AXBASIS])||[]).map(function(c){return [c.name,c.tk,c.s];});;
-const qsNorm=s=>s.toUpperCase()
+const qsNorm=s=>(s||'').toUpperCase()
  .replace(/[ΆΑ]/g,'Α').replace(/[ΈΕ]/g,'Ε').replace(/[ΉΗ]/g,'Η').replace(/[ΊΪΐΙ]/g,'Ι')
  .replace(/[ΌΟ]/g,'Ο').replace(/[ΎΫΰΥ]/g,'Υ').replace(/[ΏΩ]/g,'Ω');
+// Αλφαβητικά: πρώτα οι λατινικές επωνυμίες (A–Z), μετά οι ελληνικές (Α–Ω)· εμφάνιση χωρίς κλάδο.
+// Ομαδοποίηση με βάση το ΚΥΡΙΑΡΧΟ αλφάβητο (αντέχει σε επωνυμίες με ανάμεικτους χαρακτήρες).
+const _qsLatin=function(s){s=s||'';for(var i=0;i<s.length;i++){if(/[A-Za-z]/.test(s[i]))return true;if(/[\u0370-\u03FF\u1F00-\u1FFF]/.test(s[i]))return false;}return false;};
+const _qsKey=s=>qsNorm(s).replace(/^[^A-Za-z\u0370-\u03FF\u1F00-\u1FFF]+/,'');
+const QS_DATA=((window.AXION&&window.AXION.companies&&window.AXION.companies[AXBASIS])||[])
+ .map(function(c){return [c.name,c.tk];})
+ .sort(function(a,b){
+   const la=_qsLatin(a[0]), lb=_qsLatin(b[0]);
+   if(la!==lb) return la?-1:1;
+   return _qsKey(a[0]).localeCompare(_qsKey(b[0]),'el');
+ });
 let qsSel=0, qsRows=[];
 
 function qsRender(){
   const term=qsNorm(document.getElementById('qsInput').value.trim());
-  qsRows = term ? QS_DATA.filter(r=>qsNorm(r[0]).includes(term)||qsNorm(r[1]).includes(term)||qsNorm(r[2]).includes(term)) : QS_DATA;
+  qsRows = term ? QS_DATA.filter(r=>qsNorm(r[0]).includes(term)||qsNorm(r[1]).includes(term)) : QS_DATA;
   const body=document.getElementById('qsBody');
   if(!qsRows.length){ body.innerHTML='<div class="qs-empty">Καμία εταιρεία δεν ταιριάζει.</div>'; return; }
   if(qsSel>=qsRows.length) qsSel=qsRows.length-1;
-  let html='', last='';
+  let html='';
   qsRows.forEach((r,i)=>{
-    if(r[2]!==last){ html+=`<div class="qs-sec">${r[2]}</div>`; last=r[2]; }
     const here = r[0]===QS_CURRENT ? ' here' : '';
     const sel  = i===qsSel && !here ? ' sel' : '';
     html+=`<a class="qs-item${here}${sel}" data-i="${i}" href="${encodeURI(QS_PAGE)}?tk=${encodeURIComponent(r[1])}">
