@@ -669,13 +669,23 @@ const SIZE_RAMP=['#c2410c','#e2590e','#f0791f','#f5a04c','#f0c07e','#5ea9b4','#8
 })();
 
 const subs=(AX&&AX.subs)||{total:0,countries:0,full:0,equity:0,listed:[],byCountry:[]};;
-const geoShort={'Ηνωμένο Βασίλειο':'Ην. Βασίλειο','Λοιπές (8 χώρες)':'Λοιπές (8)'};
-const _grank=subs.byCountry.map((g,i)=>({i,n:g.count})).sort((a,b)=>b.n-a.n).reduce((m,o,r)=>(m[o.i]=r,m),{});
-const geoData=subs.byCountry.map((g,i)=>({c:g.country,label:geoShort[g.country]||g.country,n:g.count,col:SIZE_RAMP[Math.min(_grank[i],SIZE_RAMP.length-1)]}));
+const geoShort={'Ηνωμένο Βασίλειο':'Ην. Βασίλειο'};
+// Εμφανίζουμε τις 5 χώρες με τις περισσότερες οντότητες (byCountry είναι ήδη ταξινομημένο φθίνουσα)·
+// οι υπόλοιπες συγκεντρώνονται σε ένα «Λοιπές (Ν χώρες)» — και στο legend και στο pie. Η πλήρης λίστα μένει στο dropdown.
+const GEO_TOP=5, GEO_REST_COL='#c3d3e3';
+const geoData=(function(){
+  const all=subs.byCountry||[];
+  const out=all.slice(0,GEO_TOP).map((g,i)=>({c:g.country,label:geoShort[g.country]||g.country,n:g.count,col:SIZE_RAMP[Math.min(i,SIZE_RAMP.length-1)]}));
+  if(all.length>GEO_TOP){
+    const rest=all.slice(GEO_TOP), rn=rest.reduce((s,g)=>s+(g.count||0),0);
+    out.push({c:`Λοιπές (${rest.length} ${rest.length===1?'χώρα':'χώρες'})`,label:`Λοιπές (${rest.length})`,n:rn,col:GEO_REST_COL,rest:true});
+  }
+  return out;
+})();
 const geoPct=n=>Math.round(n/subs.total*100);
 document.getElementById('geo-total').textContent=subs.total;
 document.getElementById('geo-sub').innerHTML='οντότητες<br>'+subs.countries+' χώρες';
-document.getElementById('geo-legend').innerHTML=geoData.map(g=>`<div class="lg"><span class="sw" style="background:${g.col}"></span><span class="c">${g.label}</span><span class="n">${g.n}</span><span class="p">${geoPct(g.n)}%</span></div>`).join('');
+document.getElementById('geo-legend').innerHTML=geoData.map(g=>`<div class="lg${g.rest?' rest':''}"><span class="sw" style="background:${g.col}"></span><span class="c">${g.label}</span><span class="n">${g.n}</span><span class="p">${geoPct(g.n)}%</span></div>`).join('');
 new Chart(document.getElementById('geo'),{type:'doughnut',
   data:{labels:geoData.map(g=>g.c),datasets:[{data:geoData.map(g=>g.n),backgroundColor:geoData.map(g=>g.col),borderColor:'#ffffff',borderWidth:3,hoverOffset:5}]},
   options:{cutout:'66%',responsive:true,maintainAspectRatio:false,
