@@ -773,7 +773,7 @@ ratiosEl.innerHTML=RATIOS.map((c,ci)=>{
 }).join('');
 ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.classList.toggle('open'));
 
-// «Με μια ματιά» — 3ετία μ.ο. (Κερδοφορία/Ανάπτυξη) & περιόδου (Μόχλευση/Ρευστότητα) έναντι κλάδου + Χρηματικές διανομές
+// «Με μια ματιά» — χαρακτηρισμοί με ΑΠΟΛΥΤΑ ΟΡΙΑ (κλάδος μόνο ως αναφορά)· 3ετία μ.ο. Κερδοφορία/Ανάπτυξη, περιόδου Μόχλευση/Ρευστότητα + Χρηματικές διανομές
 (function(){
   const G=(AX&&AX.glance)||null;
   const scEl=document.getElementById('scorecard'), dvEl=document.getElementById('distcard');
@@ -781,33 +781,47 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
   const sgn=v=>(v==null?'':(v>=0?'+':''));
   if(!G){ if(scEl)scEl.innerHTML=''; if(dvEl)dvEl.innerHTML=''; return; }
   const cards=[];
-  // Κερδοφορία — ROE μ.ο. 3ετίας vs διάμεσος κλάδου
+  // Κερδοφορία — ROE μ.ο. 3ετίας (απόλυτα όρια· κλάδος μόνο ως αναφορά)
   (function(){
     const co=G.profit.co, sec=G.profit.sec;
-    let t='mid';
-    if(co!=null&&sec!=null&&sec!==0){const rel=co/sec; t=rel>1.1?'good':rel>=0.9?'mid':'bad';}
-    const r=co==null?'—':(t==='good'?'Υψηλή':t==='mid'?'Μέτρια':'Χαμηλή');
+    let t,r;
+    if(co==null){t='mid';r='—';}
+    else if(co<0){t='bad';r='Ζημιογόνα';}
+    else if(co<5){t='bad';r='Χαμηλή';}
+    else if(co<12){t='mid';r='Μέτρια';}
+    else {t='good';r='Υψηλή';}
     cards.push({cat:'Κερδοφορία',basis:'μ.ο. 3ετίας',bc:'b3',tone:t,rating:r,metric:'ROE',main:co==null?'—':nf(co)+'%',sub:'κλάδος '+(sec==null?'—':nf(sec)+'%')});
   })();
-  // Ανάπτυξη — μ.ο. 3ετίας ανάπτυξης εσόδων vs διάμεσος κλάδου
+  // Ανάπτυξη — μ.ο. 3ετίας ανάπτυξης εσόδων (απόλυτα όρια· κλάδος μόνο ως αναφορά)
   (function(){
     const co=G.growth.co, sec=G.growth.sec;
-    let t='mid',r='—';
-    if(co!=null){ t=(co<0)?'bad':(sec!=null&&co>=sec)?'good':'mid'; r=(t==='bad'?'Συρρίκνωση':t==='good'?'Θετική':'Επιβράδυνση'); }
+    let t,r;
+    if(co==null){t='mid';r='—';}
+    else if(co<0){t='bad';r='Συρρίκνωση';}
+    else if(co<3){t='mid';r='Στάσιμη';}
+    else if(co<8){t='good';r='Σταθερή';}
+    else {t='good';r='Ισχυρή';}
     cards.push({cat:'Ανάπτυξη',basis:'μ.ο. 3ετίας',bc:'b3',tone:t,rating:r,metric:'Έσοδα',main:co==null?'—':sgn(co)+nf(co)+'%',sub:'κλάδος '+(sec==null?'—':sgn(sec)+nf(sec)+'%')});
   })();
-  // Μόχλευση — Χρέος/Ίδια περιόδου vs διάμεσος κλάδου
+  // Μόχλευση — Χρέος/Ίδια περιόδου (απόλυτα όρια· κλάδος μόνο ως αναφορά)
   (function(){
     const co=G.lev.co, sec=G.lev.sec;
-    const t=co==null?'mid':(co<=1?'good':co<=2?'mid':'bad');
-    const r=co==null?'—':(t==='good'?'Χαμηλή':t==='mid'?'Μέτρια':'Υψηλή');
+    let t,r;
+    if(co==null){t='mid';r='—';}
+    else if(co<0){t='bad';r='Αρνητικά ίδια';}
+    else if(co<=1){t='good';r='Χαμηλή';}
+    else if(co<=2){t='mid';r='Μέτρια';}
+    else {t='bad';r='Υψηλή';}
     cards.push({cat:'Μόχλευση',basis:'περιόδου',bc:'bp',tone:t,rating:r,metric:'Χρέος/Ίδια',main:co==null?'—':nf(co)+'×',sub:'κλάδος '+(sec==null?'—':nf(sec)+'×')});
   })();
-  // Ρευστότητα — Γενική περιόδου vs διάμεσος κλάδου
+  // Ρευστότητα — Γενική περιόδου (απόλυτα όρια· κλάδος μόνο ως αναφορά)
   (function(){
     const co=G.liq.co, sec=G.liq.sec;
-    const t=co==null?'mid':(co>=1.5?'good':co>=1?'mid':'bad');
-    const r=co==null?'—':(t==='good'?'Επαρκής':t==='mid'?'Οριακή':'Πιεσμένη');
+    let t,r;
+    if(co==null){t='mid';r='—';}
+    else if(co>=1.5){t='good';r='Επαρκής';}
+    else if(co>=1){t='mid';r='Οριακή';}
+    else {t='bad';r='Πιεσμένη';}
     cards.push({cat:'Ρευστότητα',basis:'περιόδου',bc:'bp',tone:t,rating:r,metric:'Γενική',main:co==null?'—':nf(co)+'×',sub:'κλάδος '+(sec==null?'—':nf(sec)+'×')});
   })();
   scEl.innerHTML=cards.map(c=>`<div class="sc-item sc-${c.tone}"><div class="sc-cat">${c.cat}</div><div class="sc-basis ${c.bc}">${c.basis}</div><div class="sc-box"><span class="sc-badge">${c.rating}</span><div class="sc-val"><span class="sc-metric">${c.metric}</span><span class="sc-main">${c.main}</span></div><span class="sc-sub">${c.sub}</span></div></div>`).join('');
