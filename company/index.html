@@ -342,6 +342,7 @@
     <div class="mast-nameline">
       <h1 id="co-name">ALLWYN</h1>
       <span class="tbadge" id="co-status" hidden></span>
+      <span class="tbadge" id="co-h1" hidden></span>
       <span class="sub" id="co-eur">Allwyn AG · Euronext Athens</span>
     </div>
     <div class="mast-meta">
@@ -350,6 +351,7 @@
     </div>
   </section>
   <div class="tbanner" id="co-banner" hidden></div>
+  <div class="tbanner" id="co-h1-banner" hidden></div>
 
   <div class="layout">
 
@@ -475,6 +477,19 @@ document.getElementById('co-sector').textContent=company.sector;
     ban.innerHTML=icon+'<span><b>'+head+'</b> <span class="thin">'+detail+'</span></span>';
     ban.hidden=false;
   }
+})();
+
+// «Ελλιπές 6μηνο» — σήμανση όταν <2 εξάμηνα (μόνο στην προβολή 6μήνου)
+(function(){
+  var pill=document.getElementById('co-h1'), ban=document.getElementById('co-h1-banner');
+  var partial=!!(AX&&AXBASIS==='interim'&&AX.interimPartial);
+  if(!partial){ if(pill)pill.hidden=true; if(ban)ban.hidden=true; return; }
+  var n=(AX&&AX.h1n)||1;
+  var icon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/></svg>';
+  if(pill){ pill.className='tbadge t-prov'; pill.innerHTML='<b>'+n+'</b>/2 εξάμηνα'; pill.hidden=false; }
+  if(ban){ ban.className='tbanner t-prov';
+    ban.innerHTML=icon+'<span><b>'+n+' από 2 εξάμηνα</b> <span class="thin">— διαθέσιμοι οι δείκτες στιγμιότυπου (αποτίμηση, περιθώρια, ρευστότητα, D/E). Η σύγκριση με πέρσι, το Piotroski και οι τάσεις ενεργοποιούνται με το 2ο εξάμηνο.</span></span>';
+    ban.hidden=false; }
 })();
 
 const li=company.years.length-1;

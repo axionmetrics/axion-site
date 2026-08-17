@@ -270,7 +270,7 @@ function clTable(){
    shown.map(m=>`<th>${clCaps(m.label)}<span class="dirn">${m.dir<0?'χαμηλό = καλύτερο':'υψηλό = καλύτερο'}</span></th>`).join('')+`</tr>`;
  document.getElementById('clBody').innerHTML=rows.map(r=>{
    const tds=shown.map(m=>`<td class="${clRank(m,rows,r[m.k])}">${clFV(m,r[m.k])}</td>`).join('');
-   return `<tr><td class="co${r.trading===false?' co-dead':''}"><a href="${COMPANY_PAGE}?tk=${encodeURIComponent(r.tk)}" target="_blank">${r.t}</a>${(r.trading===false&&r.tstatus)?` <span class="tbadge sm ${r.tstatus.type==='delisted'?'t-del':'t-sus'}">${r.tstatus.label}</span>`:''}</td>${tds}</tr>`;
+   return `<tr><td class="co${r.trading===false?' co-dead':''}"><a href="${COMPANY_PAGE}?tk=${encodeURIComponent(r.tk)}" target="_blank">${r.t}</a>${(r.trading===false&&r.tstatus)?` <span class="tbadge sm ${r.tstatus.type==='delisted'?'t-del':'t-sus'}">${r.tstatus.label}</span>`:''}${(AXBASIS==='interim'&&r.interimPartial)?` <span class="tbadge sm t-prov"><b>${r.h1n||1}</b>/2 εξάμηνα</span>`:''}</td>${tds}</tr>`;
  }).join('');
 }
 function clRender(){ clRenderMet(); clTable(); }

@@ -136,7 +136,7 @@ function card(sec){
    .slice().sort((a,b)=>b.mcap-a.mcap)
    .map(r=>{
      const dead=r.trading===false?' co-dead':'';
-     const dot=(r.trading===false&&r.tstatus)?`<span class="tdot ${r.tstatus.type==='delisted'?'t-del':'t-sus'}" title="${r.tstatus.label}"></span>`:'';
+     const dot=(r.trading===false&&r.tstatus)?`<span class="tdot ${r.tstatus.type==='delisted'?'t-del':'t-sus'}" title="${r.tstatus.label}"></span>`:((AXBASIS==='interim'&&r.interimPartial)?`<span class="tdot t-prov" title="${(r.h1n||1)}/2 εξάμηνα"></span>`:'');
      return `<a class="co${dead}" href="${COMPANY_PAGE}?tk=${encodeURIComponent(r.tk)}" target="_blank"><span class="cn">${dot}${r.t}</span><span class="cm">${eur(r.mcap)}</span></a>`;
    }).join('');
  return `<div class="card">

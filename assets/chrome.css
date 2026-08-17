@@ -44,13 +44,16 @@
 .tbadge.sm{font-size:10px;padding:1px 7px;gap:3px;margin-left:7px}
 .tbadge.t-del{background:#eef1f5;color:#475569;border-color:#cbd5e1}
 .tbadge.t-sus{background:#fdf4e3;color:#b57d00;border-color:#f0d8a6}
+.tbadge.t-prov{background:#eef1f5;color:#51607a;border-color:#cbd5e1}
+.tbadge.t-prov b{font-weight:800}
 .tbanner{display:flex;align-items:center;gap:10px;padding:11px 16px;border-radius:11px;font-size:13.5px;line-height:1.45;margin:0 0 18px;border:1px solid transparent}
 .tbanner svg{width:18px;height:18px;flex:none}
 .tbanner b{font-weight:700}.tbanner .thin{opacity:.85;font-weight:400}
 .tbanner.t-del{background:#eef1f5;color:#475569;border-color:#cbd5e1}
 .tbanner.t-sus{background:#fdf4e3;color:#b57d00;border-color:#f0d8a6}
+.tbanner.t-prov{background:#eef1f5;color:#51607a;border-color:#cbd5e1}
 .qs-item.qs-dead span:first-child{color:#8493a6}
 .co-dead{opacity:.72}
 .co-dead .co,.co-dead a.co,.co-dead .co a{color:#7c8a9c}
 .tdot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px;vertical-align:middle;flex:none}
-.tdot.t-del{background:#94a3b8}.tdot.t-sus{background:#cf7f00}
+.tdot.t-del{background:#94a3b8}.tdot.t-sus{background:#cf7f00}.tdot.t-prov{background:#8595ad}

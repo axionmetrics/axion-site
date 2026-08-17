@@ -231,7 +231,7 @@ function table(){
   const rank = dir==='top' ? i+1 : rows.length-i;
   return `<tr class="${dir==='top'&&i<3?'top3':''}">
    <td class="rk">${rank}</td>
-   <td class="nm${r.trading===false?' co-dead':''}"><a href="${COMPANY_PAGE}?tk=${encodeURIComponent(r.tk)}" target="_blank">${r.t}</a>${(r.trading===false&&r.tstatus)?` <span class="tbadge sm ${r.tstatus.type==='delisted'?'t-del':'t-sus'}">${r.tstatus.label}</span>`:''}</td>
+   <td class="nm${r.trading===false?' co-dead':''}"><a href="${COMPANY_PAGE}?tk=${encodeURIComponent(r.tk)}" target="_blank">${r.t}</a>${(r.trading===false&&r.tstatus)?` <span class="tbadge sm ${r.tstatus.type==='delisted'?'t-del':'t-sus'}">${r.tstatus.label}</span>`:''}${(AXBASIS==='interim'&&r.interimPartial)?` <span class="tbadge sm t-prov"><b>${r.h1n||1}</b>/2 εξάμηνα</span>`:''}</td>
    <td class="sc">${r.s}</td>
    <td class="pct"><div class="pbar"><div class="pfill" style="width:${pctv}%;background:${ZCOL[cls]}"></div></div>
      <span class="pnum">${pctv}%</span></td>
