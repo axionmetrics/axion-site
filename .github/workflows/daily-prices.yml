@@ -1,1 +1,42 @@
+name: Ημερήσιες τιμές (EOD)
 
+# Τρέχει αυτόματα μετά το κλείσιμο του ΧΑΑ (Δευ–Παρ) και ενημερώνει το
+# assets/data.js με τις τρέχουσες τιμές/δείκτες από το Euronext Athens.
+# 18:30 UTC = 20:30 (χειμ.) / 21:30 (θερ.) ώρα Ελλάδας — άνετα μετά την εκκαθάριση.
+on:
+  schedule:
+    - cron: '30 18 * * 1-5'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-prices
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Ενημέρωση τρεχουσών τιμών στο data.js
+        run: python .github/scripts/daily_prices.py
+
+      - name: Commit & push αν άλλαξε το data.js
+        run: |
+          if git diff --quiet -- assets/data.js; then
+            echo "Καμία αλλαγή — δεν έγινε commit."
+          else
+            git config user.name  "axion-bot"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add assets/data.js
+            git commit -m "daily: EOD τιμές $(date -u +%Y-%m-%d)"
+            git push
+          fi
