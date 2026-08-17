@@ -98,7 +98,7 @@ const COMPANY_PAGE='../company/';
 
 // ίδια δεδομένα-δείγμα με το ευρετήριο εταιρειών
 const AXBASIS=(function(){try{var u=new URLSearchParams(location.search).get('basis');var b=u||localStorage.getItem('am-basis')||'annual';return (window.AXION&&window.AXION.meta&&window.AXION.meta.bases.indexOf(b)>-1)?b:'annual';}catch(e){return 'annual';}})();
-const DATA=(window.AXION&&window.AXION.rows&&window.AXION.rows[AXBASIS])||[];
+const DATA=((window.AXION&&window.AXION.rows&&window.AXION.rows[AXBASIS])||[]).filter(function(r){return r.calculated!==false;}); // εξαίρεση (CALCULATED=NO) από τη λίστα κλάδων
 document.addEventListener('axion:basischange',function(){location.reload();});
 
 const fmt=(v,d)=>(v==null||isNaN(v))?'—':v.toLocaleString('el-GR',{minimumFractionDigits:d,maximumFractionDigits:d});
@@ -134,7 +134,11 @@ function card(sec){
  const g=sec.cagr, gc=g>=0?'up':'down', gt=(g>=0?'+':'−')+fmt(Math.abs(g),1)+' %';
  const list = sec.rows
    .slice().sort((a,b)=>b.mcap-a.mcap)
-   .map(r=>`<a class="co" href="${COMPANY_PAGE}?tk=${encodeURIComponent(r.tk)}" target="_blank"><span class="cn">${r.t}</span><span class="cm">${eur(r.mcap)}</span></a>`).join('');
+   .map(r=>{
+     const dead=r.trading===false?' co-dead':'';
+     const dot=(r.trading===false&&r.tstatus)?`<span class="tdot ${r.tstatus.type==='delisted'?'t-del':'t-sus'}" title="${r.tstatus.label}"></span>`:'';
+     return `<a class="co${dead}" href="${COMPANY_PAGE}?tk=${encodeURIComponent(r.tk)}" target="_blank"><span class="cn">${dot}${r.t}</span><span class="cm">${eur(r.mcap)}</span></a>`;
+   }).join('');
  return `<div class="card">
   <div class="chdr">
    <div class="chead">

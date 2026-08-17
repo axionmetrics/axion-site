@@ -147,7 +147,7 @@
 const COMPANY_PAGE='../company/';
 
 const AXBASIS=(function(){try{var u=new URLSearchParams(location.search).get('basis');var b=u||localStorage.getItem('am-basis')||'annual';return (window.AXION&&window.AXION.meta&&window.AXION.meta.bases.indexOf(b)>-1)?b:'annual';}catch(e){return 'annual';}})();
-const DATA=(window.AXION&&window.AXION.rows&&window.AXION.rows[AXBASIS])||[];
+const DATA=((window.AXION&&window.AXION.rows&&window.AXION.rows[AXBASIS])||[]).filter(function(r){return r.calculated!==false;}); // εξαίρεση (CALCULATED=NO: διαγραμμένες/σε αναστολή/manual exception) από τις κατατάξεις
 document.addEventListener('axion:basischange',function(){location.reload();});
 
 const MET=[
@@ -231,7 +231,7 @@ function table(){
   const rank = dir==='top' ? i+1 : rows.length-i;
   return `<tr class="${dir==='top'&&i<3?'top3':''}">
    <td class="rk">${rank}</td>
-   <td class="nm"><a href="${COMPANY_PAGE}?tk=${encodeURIComponent(r.tk)}" target="_blank">${r.t}</a></td>
+   <td class="nm${r.trading===false?' co-dead':''}"><a href="${COMPANY_PAGE}?tk=${encodeURIComponent(r.tk)}" target="_blank">${r.t}</a>${(r.trading===false&&r.tstatus)?` <span class="tbadge sm ${r.tstatus.type==='delisted'?'t-del':'t-sus'}">${r.tstatus.label}</span>`:''}</td>
    <td class="sc">${r.s}</td>
    <td class="pct"><div class="pbar"><div class="pfill" style="width:${pctv}%;background:${ZCOL[cls]}"></div></div>
      <span class="pnum">${pctv}%</span></td>

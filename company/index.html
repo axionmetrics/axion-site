@@ -341,6 +341,7 @@
     </button>
     <div class="mast-nameline">
       <h1 id="co-name">ALLWYN</h1>
+      <span class="tbadge" id="co-status" hidden></span>
       <span class="sub" id="co-eur">Allwyn AG · Euronext Athens</span>
     </div>
     <div class="mast-meta">
@@ -348,6 +349,7 @@
       <span class="sctag" id="co-sector">—</span>
     </div>
   </section>
+  <div class="tbanner" id="co-banner" hidden></div>
 
   <div class="layout">
 
@@ -454,6 +456,26 @@ document.title=(company.name&&company.name!=='—'?company.name+' — ':'')+'Axi
 document.getElementById('co-ticker').textContent=company.ticker;
 document.getElementById('co-eur').textContent=company.euronext_name+' · Euronext Athens';
 document.getElementById('co-sector').textContent=company.sector;
+(function(){
+  var st=(AX&&AX.tstatus)||null, notTrading=!!(AX&&AX.trading===false&&st);
+  var pill=document.getElementById('co-status'), ban=document.getElementById('co-banner');
+  if(!notTrading){ if(pill)pill.hidden=true; if(ban)ban.hidden=true; return; }
+  var isDel=st.type==='delisted', cls=isDel?'t-del':'t-sus';
+  var icon=isDel
+    ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
+    : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="7" y="6" width="3.5" height="12" rx="1"/><rect x="13.5" y="6" width="3.5" height="12" rx="1"/></svg>';
+  if(pill){ pill.className='tbadge '+cls; pill.innerHTML=icon+'<span>'+st.label+'</span>'; pill.hidden=false; }
+  if(ban){
+    var head, detail;
+    if(isDel){ head='Εκτός διαπραγμάτευσης — διαγραμμένη από το Χρηματιστήριο Αθηνών.';
+      detail=(st.note||'')+(st.dateLabel?(' — '+st.dateLabel):'')+'. Τα εμφανιζόμενα στοιχεία είναι ιστορικά.'; }
+    else{ head='Σε αναστολή διαπραγμάτευσης'+(st.dateLabel?(' από '+st.dateLabel):'')+'.';
+      detail='Τα εμφανιζόμενα στοιχεία αφορούν την τελευταία διαθέσιμη περίοδο.'; }
+    ban.className='tbanner '+cls;
+    ban.innerHTML=icon+'<span><b>'+head+'</b> <span class="thin">'+detail+'</span></span>';
+    ban.hidden=false;
+  }
+})();
 
 const li=company.years.length-1;
 document.getElementById('latest').innerHTML=METRICS.map(m=>{
@@ -871,7 +893,7 @@ const qsNorm=s=>(s||'').toUpperCase()
 const _qsLatin=function(s){s=s||'';for(var i=0;i<s.length;i++){if(/[A-Za-z]/.test(s[i]))return true;if(/[\u0370-\u03FF\u1F00-\u1FFF]/.test(s[i]))return false;}return false;};
 const _qsKey=s=>qsNorm(s).replace(/^[^A-Za-z\u0370-\u03FF\u1F00-\u1FFF]+/,'');
 const QS_DATA=((window.AXION&&window.AXION.companies&&window.AXION.companies[AXBASIS])||[])
- .map(function(c){return [c.name,c.tk];})
+ .map(function(c){return [c.name,c.tk,(c.trading!==false),(c.tstatus||null)];})
  .sort(function(a,b){
    const la=_qsLatin(a[0]), lb=_qsLatin(b[0]);
    if(la!==lb) return la?-1:1;
@@ -889,8 +911,11 @@ function qsRender(){
   qsRows.forEach((r,i)=>{
     const here = r[0]===QS_CURRENT ? ' here' : '';
     const sel  = i===qsSel && !here ? ' sel' : '';
-    html+=`<a class="qs-item${here}${sel}" data-i="${i}" href="${encodeURI(QS_PAGE)}?tk=${encodeURIComponent(r[1])}">
-      <span>${r[0]}</span><span class="tk">${r[1]}</span></a>`;
+    const dead = r[2]===false ? ' qs-dead' : '';
+    const st   = r[3];
+    const pill = (r[2]===false && st) ? `<span class="tbadge sm ${st.type==='delisted'?'t-del':'t-sus'}">${st.label}</span>` : '';
+    html+=`<a class="qs-item${here}${sel}${dead}" data-i="${i}" href="${encodeURI(QS_PAGE)}?tk=${encodeURIComponent(r[1])}">
+      <span>${r[0]}${pill}</span><span class="tk">${r[1]}</span></a>`;
   });
   body.innerHTML=html;
   const el=body.querySelector(`[data-i="${qsSel}"]`);
