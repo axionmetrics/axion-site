@@ -513,12 +513,10 @@ document.getElementById('latest').innerHTML=METRICS.map(m=>{
 })();
 
 const FAM={
-  capital:{c:'#2f80c2',name:'Κεφάλαιο/μετοχή'},
-  div:{c:'#cf7f00',name:'Μέρισμα'},
-  listing:{c:'#57a5df',name:'Εισαγωγή/Αγορά'},
-  index:{c:'#2b4a6b',name:'Δείκτες'},
-  ma:{c:'#e08600',name:'Μετασχηματισμός/M&A'},
-  crit:{c:'#d64530',name:'Κρίσιμα'}
+  capital:{c:'#2f80c2',name:'Μετ.Κεφαλαίου'},
+  div:{c:'#cf7f00',name:'Χρημ.Διανομές'},
+  listing:{c:'#57a5df',name:'Εισαγωγές/Διαγραφές'},
+  index:{c:'#2b4a6b',name:'Δείκτες'}
 };
 const EVENTS=(AX&&AX.events)||[];;
 const REV_C='#2f80c2', EB_C='#3f9e6a';
@@ -635,7 +633,7 @@ function draw(){
     g.appendChild(el('circle',{cx:x,cy:evLaneY,r:15,fill:'transparent'}));
     g.addEventListener('mouseenter',()=>{
       let h=`<div class="ty">${single?list[0].date:yr+' · '+list.length+' γεγονότα'}</div>`;
-      list.forEach(e=>{ h+=`<div class="row"><i style="background:${FAM[e.fam].c}"></i><span class="l">${!single?`<span class="d">${e.date}</span> `:''}${e.label}</span></div>`; });
+      list.forEach(e=>{ h+=`<div class="row"><i style="background:${(FAM[e.fam]||{c:'#8595ad'}).c}"></i><span class="l">${!single?`<span class="d">${e.date}</span> `:''}${e.label}</span></div>`; });
       tip.innerHTML=h; tip.classList.add('on');
       const wr=wrapEl.getBoundingClientRect(), dr=dot.getBoundingClientRect();
       const cx=dr.left-wr.left+dr.width/2, tw=tip.offsetWidth, pad=8;
