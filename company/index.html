@@ -306,7 +306,7 @@
 .cband{background:linear-gradient(180deg,rgba(47,128,194,.16),rgba(47,128,194,.05));border-radius:11px;padding:10px 8px 11px;margin-top:12px;border:1px solid rgba(255,255,255,.10)}
 .cdiv{display:flex;align-items:center;gap:8px;margin:0 0 8px}
 .cdiv .ln{flex:1;height:1px;background:rgba(255,255,255,.14)}
-.cdiv .ct{font-size:9.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;color:#8fc4ee;display:flex;align-items:center}
+.cdiv .ct{font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;color:#8fc4ee;display:flex;align-items:center}
 .cband .k{color:#bcd9f2}
 .cband .cell{background:#2f80c2;border:1px solid #3f92d6}
 .cband .v{color:#fff}.cband .v small{color:rgba(255,255,255,.72)}
@@ -507,7 +507,8 @@ document.getElementById('latest').innerHTML=METRICS.map(m=>{
   const xx=v=>(v==null||isNaN(v))?'—':fX(v);
   const item=(k,val)=>`<div class="metric-item"><div class="k">${k}</div><div class="cell"><div class="v">${val}</div></div></div>`;
   const sp='<div class="spacer"></div>';
-  const dt=cur.date?` · ${cur.date}`:'';
+  const fmtd=s=>{const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(s||'');return m?`${m[3]}/${m[2]}/${m[1]}`:s;};
+  const dt=cur.date?` · ${fmtd(cur.date)}`:'';
   cb.innerHTML=`<div class="cdiv"><span class="ln"></span><span class="ct"><span class="cdot"></span>Τρέχοντα Μεγέθη (τιμή κλεισίματος${dt})</span><span class="ln"></span></div>`+
    `<div class="latest">${sp}${sp}${sp}${item('Κεφαλαιοποίηση',eur(cur.mcap))}${item('P/E',xx(cur.pe))}${item('P/BV',xx(cur.pbv))}${sp}${sp}</div>`;
 })();
