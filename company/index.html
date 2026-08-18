@@ -508,7 +508,7 @@ document.getElementById('latest').innerHTML=METRICS.map(m=>{
   const item=(k,val)=>`<div class="metric-item"><div class="k">${k}</div><div class="cell"><div class="v">${val}</div></div></div>`;
   const sp='<div class="spacer"></div>';
   const dt=cur.date?` · ${cur.date}`:'';
-  cb.innerHTML=`<div class="cdiv"><span class="ln"></span><span class="ct"><span class="cdot"></span>Τρέχον · τιμή κλεισίματος${dt}</span><span class="ln"></span></div>`+
+  cb.innerHTML=`<div class="cdiv"><span class="ln"></span><span class="ct"><span class="cdot"></span>Τρέχοντα Μεγέθη (τιμή κλεισίματος${dt})</span><span class="ln"></span></div>`+
    `<div class="latest">${sp}${sp}${sp}${item('Κεφαλαιοποίηση',eur(cur.mcap))}${item('P/E',xx(cur.pe))}${item('P/BV',xx(cur.pbv))}${sp}${sp}</div>`;
 })();
 
