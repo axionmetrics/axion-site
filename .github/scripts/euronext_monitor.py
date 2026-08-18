@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -46,8 +45,23 @@ CASH_PAGES  = 2   # πόσες σελίδες διανομών να τραβάμ
  
 HERE      = os.path.dirname(os.path.abspath(__file__))
 MON_DIR   = os.path.normpath(os.path.join(HERE, "..", "monitor"))
-SNAP_PATH = os.path.join(MON_DIR, "snapshot.json")
-REPORT_MD = os.path.join(MON_DIR, "last_report.md")
+SNAP_PATH  = os.path.join(MON_DIR, "snapshot.json")
+REPORT_MD  = os.path.join(MON_DIR, "last_report.md")
+QUEUE_PATH = os.path.join(MON_DIR, "events_queue.csv")
+ 
+# Στήλες ουράς — ό,τι χρειάζεται το apply_events.py για να χτίσει τη γραμμή
+# ΕΤΑΙΡΙΚΑ ΓΕΓΟΝΟΤΑ (η ανάλυση symbol->όνομα master γίνεται στο apply, από το INDEX).
+QUEUE_COLS = ["detected_on", "euronext_symbol", "euronext_company", "date",
+              "family", "category", "type", "description", "source_title",
+              "needs_detail", "event_key"]
+ 
+# family -> Κατηγορία (ακριβώς όπως στο master)
+CATEGORY = {
+    "div":     "Μέρισμα / Διανομή",
+    "capital": "Κεφαλαιακή πράξη",
+    "crit":    "Διαπραγμάτευση / Εταιρικό",
+    "listing": "Εισαγωγή / Κατηγορία",
+}
  
 STATUS_LABEL = {"1": "Ενεργή διαπραγμάτευση", "0": "Σε αναστολή"}
  
@@ -82,14 +96,18 @@ def load_stocks():
         if not sym:
             continue
         status = (e.get("Trading Status") or "").split("|")[0].strip()
+        stq = (e.get("Trading Status") or "").split("|")
+        st_change = stq[1][:10] if len(stq) > 1 else ""
         out[sym] = {
             "segment":  (e.get("Market Segment") or "").strip(),
             "status":   status,
+            "st_change_date": st_change,
             "isin":     (e.get("ISIN") or "").strip(),
             "ca_type":  (e.get("Type of Last Corporate Action") or "").strip(),
             "ca_date":  _ca_date(e.get("Date of Last Corporate Action")),
             "mcap":     (e.get("Market Capitalisation") or "").strip(),
-            "company":  (e.get("_productId") or sym),  # φιλικό ref
+            "company":  (e.get("Symbol") or sym).strip(),
+            "name_full": (e.get("_productId") or sym),
         }
     return out, j.get("lastUpdated")
  
@@ -210,6 +228,140 @@ def has_any(ch):
  
  
 # ----------------------------------------------------------------------------
+# Κανονικοποίηση αλλαγών -> γραμμές ουράς (schema ΕΤΑΙΡΙΚΑ ΓΕΓΟΝΟΤΑ)
+# ----------------------------------------------------------------------------
+def _strip_tonos(s):
+    import unicodedata
+    return "".join(c for c in unicodedata.normalize("NFD", s)
+                   if unicodedata.category(c) != "Mn")
+ 
+ 
+def _iso(dmy):
+    """'17/08/2026' -> '2026-08-17'· ό,τι άλλο επιστρέφεται ως έχει."""
+    dmy = (dmy or "").strip()
+    parts = dmy.split("/")
+    if len(parts) == 3 and all(parts):
+        d, m, y = parts
+        return "%s-%s-%s" % (y, m.zfill(2), d.zfill(2))
+    return dmy
+ 
+ 
+def _src_date(iso):
+    """'2026-08-17' -> '17 - 08 - 2026' (μορφή τίτλου πηγής του master)."""
+    p = (iso or "").split("-")
+    if len(p) == 3:
+        return "%s - %s - %s" % (p[2], p[1], p[0])
+    return iso or ""
+ 
+ 
+def _ev(sym, comp, date_iso, fam, typ, desc, src, detected_on, needs=False):
+    key = "%s|%s|%s" % (sym, date_iso, typ)
+    return {
+        "detected_on": detected_on,
+        "euronext_symbol": sym,
+        "euronext_company": comp or sym,
+        "date": date_iso,
+        "family": fam,
+        "category": CATEGORY.get(fam, ""),
+        "type": typ,
+        "description": desc,
+        "source_title": src,
+        "needs_detail": "1" if needs else "",
+        "event_key": key,
+    }
+ 
+ 
+def build_events(ch, stocks, detected_on):
+    """Μετατρέπει το diff σε λίστα γεγονότων έτοιμων για το master."""
+    ev = []
+ 
+    # Διανομές (ακριβή)
+    for r in ch["new_dists"]:
+        sym = r["symbol"]
+        diso = _iso(r["ex"])
+        t = _strip_tonos((r["type"] or "").upper())
+        price = r["price"]
+        if "ΜΕΡΙΣΜ" in t:
+            fam, typ = "div", "dividend"
+            desc = "Διανομή €%s/μετοχή" % price if price else "Διανομή μερίσματος"
+        elif "ΚΕΦΑΛΑ" in t:   # «ΕΠΙΣΤΡΟΦΗ ΚΕΦΑΛΑΙΟΥ» (τονο-ανεξάρτητο)
+            fam, typ = "capital", "capital_return"
+            desc = "Επιστροφή κεφαλαίου €%s/μετοχή" % price if price else "Επιστροφή κεφαλαίου"
+        else:
+            fam, typ = "div", "dividend"
+            desc = "%s €%s/μετοχή" % (r["type"], price) if price else r["type"]
+        src = "%s ΧΡΗΜΑΤΙΚΗ ΔΙΑΝΟΜΗ %s" % (r["company"], _src_date(diso))
+        ev.append(_ev(sym, r["company"], diso, fam, typ, desc, src, detected_on))
+ 
+    # Αναστολή / επαναφορά διαπραγμάτευσης
+    for sym, o, n in ch["status_changes"]:
+        d = stocks.get(sym, {}).get("st_change_date") or detected_on
+        if n == "0":
+            ev.append(_ev(sym, sym, d, "crit", "suspension",
+                          "Αναστολή διαπραγμάτευσης", "Euronext — αλλαγή κατάστασης",
+                          detected_on))
+        elif n == "1":
+            ev.append(_ev(sym, sym, d, "crit", "resume",
+                          "Επαναφορά σε διαπραγμάτευση", "Euronext — αλλαγή κατάστασης",
+                          detected_on))
+ 
+    # Διαγραφές
+    for sym in ch["gone_syms"]:
+        ev.append(_ev(sym, sym, detected_on, "crit", "delisting",
+                      "Διαγραφή από το Euronext (επιβεβαίωση: Διεγραμμένες Εταιρείες)",
+                      "Euronext — εξαφάνιση συμβόλου", detected_on, needs=True))
+ 
+    # Νέες εισαγωγές
+    for sym in ch["new_syms"]:
+        seg = stocks.get(sym, {}).get("segment", "")
+        ev.append(_ev(sym, sym, detected_on, "listing", "market_change",
+                      "Νέα εισαγωγή προς διαπραγμάτευση%s" % ((" — %s" % seg) if seg else ""),
+                      "Euronext — νέο σύμβολο", detected_on, needs=True))
+ 
+    # Αλλαγές segment (μεταφορά κατηγορίας)
+    for sym, o, n in ch["seg_changes"]:
+        ev.append(_ev(sym, sym, detected_on, "listing", "market_change",
+                      "Μεταφορά κατηγορίας: %s → %s" % (o or "—", n or "—"),
+                      "Euronext — αλλαγή κατηγορίας αγοράς", detected_on))
+ 
+    # Σκανδάλη ΑΜΚ (χρειάζεται λεπτομέρεια από ανακοίνωση)
+    for sym, t, d in ch["ca_changes"]:
+        ev.append(_ev(sym, sym, d or detected_on, "capital", "amk",
+                      "Μεταβολή μετοχικού κεφαλαίου — έλεγξε ανακοίνωση (υποείδος/ποσό)",
+                      "Euronext — %s" % t, detected_on, needs=True))
+ 
+    return ev
+ 
+ 
+def _read_queue_keys():
+    keys = set()
+    if os.path.exists(QUEUE_PATH):
+        import csv
+        with open(QUEUE_PATH, encoding="utf-8", newline="") as f:
+            for row in csv.DictReader(f):
+                if row.get("event_key"):
+                    keys.add(row["event_key"])
+    return keys
+ 
+ 
+def write_queue(events):
+    """Append-only ουρά, με dedup στο event_key. Επιστρέφει πλήθος νέων."""
+    import csv
+    existing = _read_queue_keys()
+    fresh = [e for e in events if e["event_key"] not in existing]
+    if not fresh:
+        return 0
+    new_file = not os.path.exists(QUEUE_PATH)
+    with open(QUEUE_PATH, "a", encoding="utf-8", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=QUEUE_COLS)
+        if new_file:
+            w.writeheader()
+        for e in fresh:
+            w.writerow(e)
+    return len(fresh)
+ 
+ 
+# ----------------------------------------------------------------------------
 def render_report(ch, stocks, first_run, gen_dt):
     L = []
     L.append("# 🛰️ Euronext Monitor — %s" % gen_dt)
@@ -319,6 +471,17 @@ def main():
     report = render_report(ch, stocks, first_run, gen_dt)
  
     os.makedirs(MON_DIR, exist_ok=True)
+ 
+    # Ουρά γεγονότων για το master (μόνο εκτός baseline).
+    queued = 0
+    if changed:
+        events = build_events(ch, stocks, gen_dt[:10])
+        queued = write_queue(events)
+        if queued:
+            report += ("\n\n> 📥 %d νέα γεγονότα προστέθηκαν στην ουρά "
+                       "`events_queue.csv` — θα περάσουν στο master με το "
+                       "επόμενο apply." % queued)
+ 
     with open(REPORT_MD, "w", encoding="utf-8") as f:
         f.write(report + "\n")
  
