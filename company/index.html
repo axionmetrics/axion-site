@@ -670,7 +670,7 @@ const SIZE_RAMP=['#c2410c','#e2590e','#f0791f','#f5a04c','#f0c07e','#5ea9b4','#8
 (function(){
   const ffObj=ownership.find(h=>h.type==='ευρύ επενδυτικό κοινό');
   const rest=ownership.filter(h=>h!==ffObj).sort((a,b)=>b.pct-a.pct);
-  const ord=[...rest,ffObj];
+  const ord=ffObj?[...rest,ffObj]:rest.slice();
   const fp=p=>(p==null?0:p).toLocaleString('el-GR',{minimumFractionDigits:1,maximumFractionDigits:1})+'%';
   const R=92, cx=100, cy=100;
   const arc=(a0,a1)=>{
