@@ -36,11 +36,16 @@ jobs:
         run: |
           if git diff --quiet -- assets/data.js; then
             echo "Καμία αλλαγή — δεν έγινε commit."
-          else
-            git config user.name  "axion-bot"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add assets/data.js
-            git commit -m "daily: EOD τιμές $(date -u +%Y-%m-%d)"
-            git pull --rebase origin main
-            git push
+            exit 0
           fi
+          git config user.name  "axion-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/data.js
+          git commit -m "daily: EOD τιμές $(date -u +%Y-%m-%d)"
+          for i in 1 2 3 4 5; do
+            git fetch origin main
+            if git rebase origin/main && git push; then echo "OK pushed"; exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            echo "retry $i ..."; sleep 5
+          done
+          echo "push failed after retries"; exit 1
