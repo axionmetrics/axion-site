@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Σελίδα κλάδου — Axion Metrics</title>
+<title data-i18n="sm.title">Σελίδα κλάδου — Axion Metrics</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&family=Open+Sans:wght@400;600;700;800&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -36,7 +36,7 @@
  .tiles .s .l{font-size:10.5px;color:#8ea3c6;margin-top:5px;white-space:nowrap}
  .tiles .s .l::first-letter{text-transform:uppercase}
  @media(max-width:640px){.secbox{padding:18px 16px}.tiles .s{padding:2px 12px}}
-   
+
  h2.sec{font-size:21px;font-weight:800;margin:34px 0 4px;letter-spacing:-.01em}
  .sec .secsub{font-size:16px}
  .sech{font-size:11.5px;color:var(--muted);margin-bottom:14px}
@@ -146,7 +146,7 @@
  /* == ομογενοποίηση: κοινή τυπογραφία επικεφαλίδων == */
  .mast h1,h2.sec{font-family:'Inter',sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.02em}
 
- 
+
  /* navy hero (όπως στη σύγκριση / ευρετήριο) */
  .hero{background:#fff;border:1px solid #eef1f6;border-radius:14px;box-shadow:0 4px 16px rgba(27,39,64,.06);overflow:hidden;margin-top:22px}
  .hero .stripe{height:5px;background:#c6a24e}
@@ -169,6 +169,7 @@
 </style>
 <link rel="stylesheet" href="../assets/chrome.css">
 <script src="../assets/data.js"></script>
+<script src="../assets/i18n.js"></script>
 </head>
 <body>
 <div id="am-nav"></div>
@@ -176,12 +177,12 @@
  <section class="hero">
     <div class="stripe"></div>
     <div class="hero-in">
-      <h1>Σελίδα κλάδου</h1>
+      <h1 data-i18n="sm.h1">Σελίδα κλάδου</h1>
       <div class="hero-stats">
-        <div class="hs"><span class="v">Αποτίμηση</span><span class="l">P/E · P/BV · EV/EBITDA</span></div>
-        <div class="hs"><span class="v">Αποδοτικότητα</span><span class="l">ROE</span></div>
-        <div class="hs"><span class="v">Δανεισμός</span><span class="l">καθ. δαν./EBITDA</span></div>
-        <div class="hs"><span class="v">Ποιότητα</span><span class="l">Piotroski F-Score</span></div>
+        <div class="hs"><span class="v" data-i18n="sm.hs1v">Αποτίμηση</span><span class="l">P/E · P/BV · EV/EBITDA</span></div>
+        <div class="hs"><span class="v" data-i18n="sm.hs2v">Αποδοτικότητα</span><span class="l">ROE</span></div>
+        <div class="hs"><span class="v" data-i18n="sm.hs3v">Δανεισμός</span><span class="l" data-i18n="sm.hs3l">καθ. δαν./EBITDA</span></div>
+        <div class="hs"><span class="v" data-i18n="sm.hs4v">Ποιότητα</span><span class="l">Piotroski F-Score</span></div>
       </div>
     </div>
   </section>
@@ -198,23 +199,62 @@
  </div>
  <div class="cl-tablewrap"><table class="cl-table"><thead id="clHead"></thead><tbody id="clBody"></tbody></table></div>
 
- 
 
 
 
- <h2 class="sec">Piotroski F-Score <span class="secsub">— ποιότητα &amp; δυναμική</span></h2>
+ <h2 class="sec">Piotroski F-Score <span class="secsub" data-i18n="sm.piosub">— ποιότητα &amp; δυναμική</span></h2>
  <details class="pio-about">
-  <summary>Τι είναι το Piotroski F-Score;</summary>
-  <p>Είναι ένας απλός τρόπος να δεις πόσο γερή οικονομικά είναι μια εταιρεία. Κοιτάει 9 βασικά πράγματα. Για παράδειγμα αν βγάζει κέρδη, αν μπαίνουν πραγματικά μετρητά στο ταμείο της και αν μειώνει τα χρέη της, και δίνει έναν βαθμό από 0 έως 9.</p>
-  <p>Όσο πιο ψηλός ο βαθμός, τόσο πιο υγιής και βελτιούμενη δείχνει η εταιρεία. Χαμηλός βαθμός σημαίνει ενδεχόμενες αδυναμίες. Δεν βγάζει συμπέρασμα αν η μετοχή είναι φθηνή ή ακριβή, αλλά δίνει μία ιδέα για το πόσο καλά στέκεται οικονομικά. Είναι πιο χρήσιμος όταν συγκρίνεις εταιρείες του ίδιου κλάδου.</p>
+  <summary data-i18n="sm.pio.q">Τι είναι το Piotroski F-Score;</summary>
+  <p data-i18n="sm.pio.a1">Είναι ένας απλός τρόπος να δεις πόσο γερή οικονομικά είναι μια εταιρεία. Κοιτάει 9 βασικά πράγματα. Για παράδειγμα αν βγάζει κέρδη, αν μπαίνουν πραγματικά μετρητά στο ταμείο της και αν μειώνει τα χρέη της, και δίνει έναν βαθμό από 0 έως 9.</p>
+  <p data-i18n="sm.pio.a2">Όσο πιο ψηλός ο βαθμός, τόσο πιο υγιής και βελτιούμενη δείχνει η εταιρεία. Χαμηλός βαθμός σημαίνει ενδεχόμενες αδυναμίες. Δεν βγάζει συμπέρασμα αν η μετοχή είναι φθηνή ή ακριβή, αλλά δίνει μία ιδέα για το πόσο καλά στέκεται οικονομικά. Είναι πιο χρήσιμος όταν συγκρίνεις εταιρείες του ίδιου κλάδου.</p>
  </details>
  <div class="panel">
-  <div class="ph"><h3>Piotroski F-Score ανά έτος 2021–2025</h3><span class="hint">ο βαθμός κάθε χρονιάς πάνω στο σημείο</span></div>
+  <div class="ph"><h3 data-i18n="sm.panelh">Piotroski F-Score ανά έτος 2021–2025</h3><span class="hint" data-i18n="sm.panelhint">ο βαθμός κάθε χρονιάς πάνω στο σημείο</span></div>
   <div class="pb" id="pioBody"></div>
  </div>
 </div>
 
 <script>
+AX_I18N.add({
+ 'sm.title':{el:'Σελίδα κλάδου — Axion Metrics', en:'Sector page — Axion Metrics'},
+ 'sm.h1':{el:'Σελίδα κλάδου', en:'Sector page'},
+ 'sm.hs1v':{el:'Αποτίμηση', en:'Valuation'},
+ 'sm.hs2v':{el:'Αποδοτικότητα', en:'Profitability'},
+ 'sm.hs3v':{el:'Δανεισμός', en:'Leverage'}, 'sm.hs3l':{el:'καθ. δαν./EBITDA', en:'net debt/EBITDA'},
+ 'sm.hs4v':{el:'Ποιότητα', en:'Quality'},
+ 'sm.piosub':{el:'— ποιότητα & δυναμική', en:'— quality & momentum'},
+ 'sm.pio.q':{el:'Τι είναι το Piotroski F-Score;', en:'What is the Piotroski F-Score?'},
+ 'sm.pio.a1':{el:'Είναι ένας απλός τρόπος να δεις πόσο γερή οικονομικά είναι μια εταιρεία. Κοιτάει 9 βασικά πράγματα. Για παράδειγμα αν βγάζει κέρδη, αν μπαίνουν πραγματικά μετρητά στο ταμείο της και αν μειώνει τα χρέη της, και δίνει έναν βαθμό από 0 έως 9.', en:'It is a simple way to see how financially sound a company is. It looks at 9 basic things — for example whether it is profitable, whether real cash is coming into its coffers and whether it is reducing its debt — and gives a score from 0 to 9.'},
+ 'sm.pio.a2':{el:'Όσο πιο ψηλός ο βαθμός, τόσο πιο υγιής και βελτιούμενη δείχνει η εταιρεία. Χαμηλός βαθμός σημαίνει ενδεχόμενες αδυναμίες. Δεν βγάζει συμπέρασμα αν η μετοχή είναι φθηνή ή ακριβή, αλλά δίνει μία ιδέα για το πόσο καλά στέκεται οικονομικά. Είναι πιο χρήσιμος όταν συγκρίνεις εταιρείες του ίδιου κλάδου.', en:'The higher the score, the healthier and more improving the company looks. A low score signals possible weaknesses. It does not tell you whether the stock is cheap or expensive, but it gives a sense of how well the company stands financially. It is most useful when comparing companies in the same sector.'},
+ 'sm.panelh':{el:'Piotroski F-Score ανά έτος 2021–2025', en:'Piotroski F-Score by year 2021–2025'},
+ 'sm.panelhint':{el:'ο βαθμός κάθε χρονιάς πάνω στο σημείο', en:'each year’s score above the point'},
+ 'sm.h.company':{el:'ΕΤΑΙΡΕΙΑ', en:'COMPANY'},
+ 'sm.lowbest':{el:'χαμηλό = καλύτερο', en:'lower = better'},
+ 'sm.highbest':{el:'υψηλό = καλύτερο', en:'higher = better'},
+ 'sm.til.cos':{el:'εταιρείες', en:'companies'},
+ 'sm.til.mcap':{el:'κεφαλαιοποίηση', en:'market cap'},
+ 'sm.til.medpe':{el:'διάμεση P/E', en:'median P/E'},
+ 'sm.til.medroe':{el:'διάμεσο ROE', en:'median ROE'},
+ 'sm.til.dy':{el:'μερισματική', en:'dividend yield'},
+ 'sm.til.nde':{el:'καθ. δαν./EBITDA', en:'net debt/EBITDA'},
+ 'sm.pio.up':{el:'Ανοδικές', en:'Rising'},
+ 'sm.pio.flat':{el:'Πλάγιες', en:'Flat'},
+ 'sm.pio.down':{el:'Πτωτικές', en:'Declining'},
+ 'sm.pio.note':{el:'Κάθε μπάρα = ένα έτος· το ύψος και ο αριθμός δείχνουν τον βαθμό 0–9 (χρώμα ανά ζώνη:', en:'Each bar = one year; the height and number show the 0–9 score (colour by zone:'},
+ 'word.semesters':{el:'εξάμηνα', en:'semesters'},
+ 'unit.meur':{el:' εκ. €', en:' €M'},
+ 'sm.met.pe':{el:'P/E', en:'P/E'}, 'sm.met.pbv':{el:'P/BV', en:'P/BV'}, 'sm.met.ev':{el:'EV/EBITDA', en:'EV/EBITDA'},
+ 'sm.met.roe':{el:'ROE', en:'ROE'}, 'sm.met.dy':{el:'Μερισματική απόδοση', en:'Dividend yield'},
+ 'sm.met.nde':{el:'Καθαρός δανεισμός / EBITDA', en:'Net debt / EBITDA'},
+ 'sm.met.gm':{el:'Μικτό περιθώριο', en:'Gross margin'}, 'sm.met.nm':{el:'Καθαρό περιθώριο', en:'Net margin'},
+ 'sm.met.cr':{el:'Γενική ρευστότητα', en:'Current ratio'}, 'sm.met.roa':{el:'ROA', en:'ROA'}
+});
+function L(k){return AX_I18N.t(k);}
+function SEC(n){return AX_I18N.sector(n);}
+function curLang(){return window.AX_I18N?AX_I18N.lang:'el';}
+function LOC(){return curLang()==='en'?'en-US':'el-GR';}
+function metL(k){return L('sm.met.'+k);}
+
 const COMPANY_PAGE='../company/';
 
 const AXBASIS=(function(){try{var u=new URLSearchParams(location.search).get('basis');var b=u||localStorage.getItem('am-basis')||'annual';return (window.AXION&&window.AXION.meta&&window.AXION.meta.bases.indexOf(b)>-1)?b:'annual';}catch(e){return 'annual';}})();
@@ -225,7 +265,6 @@ document.addEventListener('axion:basischange',function(){location.reload();});
 const SECTORS=[...new Set(DATA.map(r=>r.s))];
 let sector=SECTORS[0];
 
-/* ===== λίστα εταιρειών κλάδου με δείκτες σύγκρισης (όπως στη σύγκριση) ===== */
 function clHash(s){let x=2166136261;for(let i=0;i<s.length;i++){x^=s.charCodeAt(i);x=Math.imul(x,16777619);}return (x>>>0)/4294967296;}
 DATA.forEach(r=>{ if(r.gm===undefined){ const u=k=>clHash(r.t+'|'+k);
  r.gm =Math.round((18+u('gm')*44)*10)/10;
@@ -233,16 +272,16 @@ DATA.forEach(r=>{ if(r.gm===undefined){ const u=k=>clHash(r.t+'|'+k);
  r.cr =Math.round((0.8+u('cr')*2.2)*10)/10;
  r.roa=Math.round((2 +u('roa')*15)*10)/10; }});
 const CL_MET=[
- {k:'pe', label:'P/E',       dir:-1,d:1,negWorst:1},
- {k:'pbv',label:'P/BV',      dir:-1,d:1,negWorst:1},
- {k:'ev', label:'EV/EBITDA', dir:-1,d:1,negWorst:1},
- {k:'roe',label:'ROE',       dir:+1,d:0,pct:true},
- {k:'dy', label:'Μερισματική απόδοση',dir:+1,d:1,pct:true},
- {k:'nde',label:'Καθαρός δανεισμός / EBITDA',dir:-1,d:1},
- {k:'gm', label:'Μικτό περιθώριο',   dir:+1,d:1,pct:true},
- {k:'nm', label:'Καθαρό περιθώριο',  dir:+1,d:1,pct:true},
- {k:'cr', label:'Γενική ρευστότητα', dir:+1,d:1,x:true},
- {k:'roa',label:'ROA',               dir:+1,d:1,pct:true},
+ {k:'pe', dir:-1,d:1,negWorst:1},
+ {k:'pbv',dir:-1,d:1,negWorst:1},
+ {k:'ev', dir:-1,d:1,negWorst:1},
+ {k:'roe',dir:+1,d:0,pct:true},
+ {k:'dy', dir:+1,d:1,pct:true},
+ {k:'nde',dir:-1,d:1},
+ {k:'gm', dir:+1,d:1,pct:true},
+ {k:'nm', dir:+1,d:1,pct:true},
+ {k:'cr', dir:+1,d:1,x:true},
+ {k:'roa',dir:+1,d:1,pct:true},
 ];
 let clSel=['pe','pbv','ev','roe','dy','nde'];
 const clCaps=s=>s.toUpperCase().replace(/Ά/g,'Α').replace(/Έ/g,'Ε').replace(/Ή/g,'Η').replace(/Ί/g,'Ι').replace(/Ό/g,'Ο').replace(/Ύ/g,'Υ').replace(/Ώ/g,'Ω').replace(/Ϊ/g,'Ι').replace(/Ϋ/g,'Υ');
@@ -257,7 +296,7 @@ function clRenderMet(){
  document.getElementById('clMet').innerHTML=CL_MET.map(m=>{
   const on=clSel.includes(m.k);
   return `<span class="cl-mchip ${on?'on':''}" onclick="clToggle('${m.k}')">`+
-    (on?`${m.label} <span class="mx">×</span>`:`<span class="mplus">+</span> ${m.label}`)+`</span>`;
+    (on?`${metL(m.k)} <span class="mx">×</span>`:`<span class="mplus">+</span> ${metL(m.k)}`)+`</span>`;
  }).join('');
 }
 function clToggle(k){
@@ -266,27 +305,27 @@ function clToggle(k){
 }
 function clTable(){
  const rows=rowsOf(), shown=CL_MET.filter(m=>clSel.includes(m.k));
- document.getElementById('clHead').innerHTML=`<tr><th class="l">ΕΤΑΙΡΕΙΑ</th>`+
-   shown.map(m=>`<th>${clCaps(m.label)}<span class="dirn">${m.dir<0?'χαμηλό = καλύτερο':'υψηλό = καλύτερο'}</span></th>`).join('')+`</tr>`;
+ document.getElementById('clHead').innerHTML=`<tr><th class="l">${L('sm.h.company')}</th>`+
+   shown.map(m=>`<th>${clCaps(metL(m.k))}<span class="dirn">${m.dir<0?L('sm.lowbest'):L('sm.highbest')}</span></th>`).join('')+`</tr>`;
  document.getElementById('clBody').innerHTML=rows.map(r=>{
    const tds=shown.map(m=>`<td class="${clRank(m,rows,r[m.k])}">${clFV(m,r[m.k])}</td>`).join('');
-   return `<tr><td class="co${r.trading===false?' co-dead':''}"><a href="${COMPANY_PAGE}?tk=${encodeURIComponent(r.tk)}" target="_blank">${r.t}</a>${(r.trading===false&&r.tstatus)?` <span class="tbadge sm ${r.tstatus.type==='delisted'?'t-del':'t-sus'}">${r.tstatus.label}</span>`:''}${(AXBASIS==='interim'&&r.interimPartial)?` <span class="tbadge sm t-prov"><b>${r.h1n||1}</b>/2 εξάμηνα</span>`:''}</td>${tds}</tr>`;
+   return `<tr><td class="co${r.trading===false?' co-dead':''}"><a href="${COMPANY_PAGE}?tk=${encodeURIComponent(r.tk)}" target="_blank">${r.t}</a>${(r.trading===false&&r.tstatus)?` <span class="tbadge sm ${r.tstatus.type==='delisted'?'t-del':'t-sus'}">${r.tstatus.label}</span>`:''}${(AXBASIS==='interim'&&r.interimPartial)?` <span class="tbadge sm t-prov"><b>${r.h1n||1}</b>/2 ${L('word.semesters')}</span>`:''}</td>${tds}</tr>`;
  }).join('');
 }
 function clRender(){ clRenderMet(); clTable(); }
 
-const fmt=(v,d)=>(v==null||isNaN(v))?'—':v.toLocaleString('el-GR',{minimumFractionDigits:d,maximumFractionDigits:d});
-const eur=v=>{if(v==null||isNaN(v))return '—';const m=v/1e6,a=Math.abs(m),d=a<100?2:a<1000?1:0;return m.toLocaleString('el-GR',{minimumFractionDigits:d,maximumFractionDigits:d})+' εκ. €';};
+const fmt=(v,d)=>(v==null||isNaN(v))?'—':v.toLocaleString(LOC(),{minimumFractionDigits:d,maximumFractionDigits:d});
+const eur=v=>{if(v==null||isNaN(v))return '—';const m=v/1e6,a=Math.abs(m),d=a<100?2:a<1000?1:0;return m.toLocaleString(LOC(),{minimumFractionDigits:d,maximumFractionDigits:d})+L('unit.meur');};
 const q=(a,p)=>{const s=[...a].filter(x=>x!=null&&!isNaN(x)).sort((x,y)=>x-y);if(!s.length)return null;const i=(s.length-1)*p,lo=Math.floor(i),hi=Math.ceil(i);return s[lo]+(s[hi]-s[lo])*(i-lo);};
 
-const rowsOf=()=>DATA.filter(r=>r.s===sector && r.calculated!==false); // εξαίρεση (CALCULATED=NO) από τον κλάδο
+const rowsOf=()=>DATA.filter(r=>r.s===sector && r.calculated!==false);
 
 
 
 
 function picker(){
  document.getElementById('picker').innerHTML=SECTORS.map(s=>
-  `<span class="chip ${s===sector?'on':''}" onclick="pick('${s}')">${s}</span>`).join('');
+  `<span class="chip ${s===sector?'on':''}" onclick="pick('${s}')">${SEC(s)}</span>`).join('');
 }
 function pick(s){sector=s;render();}
 
@@ -294,44 +333,28 @@ function tiles(){
  const rows=rowsOf();
  const med=k=>q(rows.map(r=>r[k]),.5);
  const cells=[
-  [rows.length,'εταιρείες'],
-  [eur(rows.reduce((a,r)=>a+r.mcap,0)),'κεφαλαιοποίηση'],
-  [fmt(med('pe'),1),'διάμεση P/E'],
-  [fmt(med('roe'),0)+' %','διάμεσο ROE'],
-  [fmt(med('dy'),1)+' %','μερισματική'],
-  [fmt(med('nde'),1)+'×','καθ. δαν./EBITDA'],
+  [rows.length,L('sm.til.cos')],
+  [eur(rows.reduce((a,r)=>a+r.mcap,0)),L('sm.til.mcap')],
+  [fmt(med('pe'),1),L('sm.til.medpe')],
+  [fmt(med('roe'),0)+' %',L('sm.til.medroe')],
+  [fmt(med('dy'),1)+' %',L('sm.til.dy')],
+  [fmt(med('nde'),1)+'×',L('sm.til.nde')],
  ];
  document.getElementById('tiles').innerHTML=cells.map(([n,l])=>`<div class="s"><div class="n">${n}</div><div class="l">${l}</div></div>`).join('');
 }
 
 
 
-function render(){       // πλήρης ανανέωση (αλλαγή κλάδου)
- document.getElementById('title').textContent=sector;
+function render(){
+ document.getElementById('title').textContent=SEC(sector);
  picker(); tiles(); clRender();
  pioRender();
 }
 /* ================= Piotroski F-Score (demo) — μόνο πορείες ================= */
 const PIO_YEARS=[2021,2022,2023,2024,2025];
 const PIO_C={navy:'#223c66',good:'#00922f',mid:'#e08600',bad:'#f01c00',ghost:'#c3cbdb',zone:'#eef1f6'};
-function pioHash(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return h>>>0;}
-function pioRng(seed){let a=seed>>>0;return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
-const _pioCache=new Map();
-function pioSeries(name){
- if(_pioCache.has(name))return _pioCache.get(name);
- const r=pioRng(pioHash(name));
- const base=2+Math.floor(r()*6), drift=[-1.2,-0.6,0,0,0.6,1.2][Math.floor(r()*6)], vol=0.6+r()*1.3;
- const F=[];
- for(let i=0;i<5;i++){
-  let lvl=Math.max(0,Math.min(9,Math.round(base+drift*i+(r()-0.5)*2*vol)));
-  for(let j=8;j>0;j--){r();}            /* διατηρεί ίδια ακολουθία με πριν */
-  F.push(lvl);
- }
- _pioCache.set(name,F); return F;
-}
 const pioBand=f=> f>=7?'g':(f>=4?'m':'b');
 const pioCol =f=> f>=7?PIO_C.good:(f>=4?PIO_C.mid:PIO_C.bad);
-const pioMed=xs=>{const a=[...xs].sort((x,y)=>x-y),n=a.length;return n%2?a[(n-1)/2]:(a[n/2-1]+a[n/2])/2;};
 
 function pioRender(){
  const body=document.getElementById('pioBody'); if(!body)return;
@@ -353,24 +376,24 @@ function pioTraj(comps){
  const rows=comps.map(c=>({...c,d:c.F[4]-c.F[0],now:c.F[4]}));
  const tag={good:PIO_C.good,muted:'#6b7890',bad:PIO_C.bad};
  const groups=[
-  {cls:'good',lbl:'Ανοδικές',items:rows.filter(r=>r.d>=1).sort((a,b)=>b.d-a.d||b.now-a.now)},
-  {cls:'muted',lbl:'Πλάγιες',items:rows.filter(r=>r.d===0).sort((a,b)=>b.now-a.now)},
-  {cls:'bad',lbl:'Πτωτικές',items:rows.filter(r=>r.d<=-1).sort((a,b)=>a.d-b.d||b.now-a.now)},
+  {cls:'good',lbl:L('sm.pio.up'),items:rows.filter(r=>r.d>=1).sort((a,b)=>b.d-a.d||b.now-a.now)},
+  {cls:'muted',lbl:L('sm.pio.flat'),items:rows.filter(r=>r.d===0).sort((a,b)=>b.now-a.now)},
+  {cls:'bad',lbl:L('sm.pio.down'),items:rows.filter(r=>r.d<=-1).sort((a,b)=>a.d-b.d||b.now-a.now)},
  ];
  const body=groups.filter(g=>g.items.length).map(g=>
   '<div class="pio-grp"><div class="pio-gh"><span class="tg" style="background:'+tag[g.cls]+'"></span>'+
   '<span style="color:'+tag[g.cls]+'">'+g.lbl+'</span><span class="n">· '+g.items.length+'</span></div>'+
   '<div class="pio-grid">'+g.items.map(c=>{
-   const dcls=c.d>0?'p':(c.d<0?'n':'z'), dtx=c.d>0?('+'+c.d):(c.d<0?(''+c.d):'±0');
    return '<div class="pio-sp"><div class="top">'+
     '<span class="now '+pioBand(c.now)+'">'+c.now+'</span></div>'+pioBars(c.F)+
     '<div class="pio-nm">'+c.name+'</div></div>';
   }).join('')+'</div></div>').join('');
- const note='<div class="pio-note">Κάθε μπάρα = ένα έτος· το ύψος και ο αριθμός δείχνουν τον βαθμό 0–9 (χρώμα ανά ζώνη: <span class="g">7–9</span> · <span class="m">4–6</span> · <span class="b">0–3</span>).</div>';
+ const note='<div class="pio-note">'+L('sm.pio.note')+' <span class="g">7–9</span> · <span class="m">4–6</span> · <span class="b">0–3</span>).</div>';
  return body+note;
 }
 
 render();
+document.addEventListener('axion:langchange',render);
 </script>
 <div id="am-foot"></div>
 <script>window.NAV_ACTIVE=1;window.NAV_CUR="Σελίδα κλάδου";</script>

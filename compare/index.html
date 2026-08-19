@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Σύγκριση εταιρειών — Axion Metrics</title>
+<title data-i18n="cmp.title">Σύγκριση εταιρειών — Axion Metrics</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&family=Open+Sans:wght@400;600;700;800&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -76,7 +76,7 @@
  /* == ομογενοποίηση: κοινή τυπογραφία επικεφαλίδων == */
  .mast h1,h2.sec{font-family:'Inter',sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.02em}
 
- 
+
  /* navy hero (όπως στο ευρετήριο κλάδων) */
  .hero{background:#fff;border:1px solid #eef1f6;border-radius:14px;box-shadow:0 4px 16px rgba(27,39,64,.06);overflow:hidden;margin-top:22px}
  .hero .stripe{height:5px;background:#c6a24e}
@@ -103,6 +103,7 @@
 </style>
 <link rel="stylesheet" href="../assets/chrome.css">
 <script src="../assets/data.js"></script>
+<script src="../assets/i18n.js"></script>
 </head>
 <body>
 <div id="am-nav"></div>
@@ -110,12 +111,12 @@
  <section class="hero">
     <div class="stripe"></div>
     <div class="hero-in">
-      <h1>Σύγκριση εταιρειών</h1>
+      <h1 data-i18n="cmp.h1">Σύγκριση εταιρειών</h1>
       <div class="hero-stats">
-        <div class="hs"><span class="v">Αποτίμηση</span><span class="l">P/E · P/BV · EV/EBITDA</span></div>
-        <div class="hs"><span class="v">Κερδοφορία</span><span class="l">ROE · περιθώρια</span></div>
-        <div class="hs"><span class="v">Μόχλευση</span><span class="l">καθαρός δανεισμός</span></div>
-        <div class="hs"><span class="v">Μέρισμα</span><span class="l">απόδοση</span></div>
+        <div class="hs"><span class="v" data-i18n="cmp.hs1v">Αποτίμηση</span><span class="l">P/E · P/BV · EV/EBITDA</span></div>
+        <div class="hs"><span class="v" data-i18n="cmp.hs2v">Κερδοφορία</span><span class="l" data-i18n="cmp.hs2l">ROE · περιθώρια</span></div>
+        <div class="hs"><span class="v" data-i18n="cmp.hs3v">Μόχλευση</span><span class="l" data-i18n="cmp.hs3l">καθαρός δανεισμός</span></div>
+        <div class="hs"><span class="v" data-i18n="cmp.hs4v">Μέρισμα</span><span class="l" data-i18n="cmp.hs4l">απόδοση</span></div>
       </div>
     </div>
   </section>
@@ -124,7 +125,7 @@
   <div class="searchwrap">
    <label class="search">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-    <input id="q" type="text" placeholder="Πρόσθεσε εταιρεία…  π.χ. ΟΠΑΠ, JUMBO, ΤΙΤΑΝ" autocomplete="off"
+    <input id="q" type="text" data-i18n-ph="cmp.search" placeholder="Πρόσθεσε εταιρεία…  π.χ. ΟΠΑΠ, JUMBO, ΤΙΤΑΝ" autocomplete="off"
       oninput="suggest()" onfocus="suggest()">
    </label>
    <div class="sugg" id="sugg"></div>
@@ -140,20 +141,47 @@
  <div id="out"></div>
 
  <div class="foot">
-  <div style="margin-top:8px"><span style="color:var(--mid)">⚠</span> Πρόσεξε ότι εταιρείες <b>διαφορετικών κλάδων</b> δεν αποτιμώνται με τα ίδια κριτήρια:
+  <div style="margin-top:8px" data-i18n-html="cmp.foot"><span style="color:var(--mid)">⚠</span> Πρόσεξε ότι εταιρείες <b>διαφορετικών κλάδων</b> δεν αποτιμώνται με τα ίδια κριτήρια:
   ένα P/E 7 σε τράπεζα δεν είναι «φθηνότερο» από ένα P/E 16 σε εταιρεία λογισμικού. Για σύγκριση με τους ομοειδείς,
   δες τη <b>Σελίδα κλάδου</b>.</div>
  </div>
 </div>
 
 <script>
+AX_I18N.add({
+ 'cmp.title':{el:'Σύγκριση εταιρειών — Axion Metrics', en:'Compare companies — Axion Metrics'},
+ 'cmp.h1':{el:'Σύγκριση εταιρειών', en:'Compare companies'},
+ 'cmp.hs1v':{el:'Αποτίμηση', en:'Valuation'},
+ 'cmp.hs2v':{el:'Κερδοφορία', en:'Profitability'}, 'cmp.hs2l':{el:'ROE · περιθώρια', en:'ROE · margins'},
+ 'cmp.hs3v':{el:'Μόχλευση', en:'Leverage'}, 'cmp.hs3l':{el:'καθαρός δανεισμός', en:'net debt'},
+ 'cmp.hs4v':{el:'Μέρισμα', en:'Dividend'}, 'cmp.hs4l':{el:'απόδοση', en:'yield'},
+ 'cmp.search':{el:'Πρόσθεσε εταιρεία…  π.χ. ΟΠΑΠ, JUMBO, ΤΙΤΑΝ', en:'Add a company…  e.g. OPAP, JUMBO, TITAN'},
+ 'cmp.foot':{el:'<span style="color:var(--mid)">⚠</span> Πρόσεξε ότι εταιρείες <b>διαφορετικών κλάδων</b> δεν αποτιμώνται με τα ίδια κριτήρια: ένα P/E 7 σε τράπεζα δεν είναι «φθηνότερο» από ένα P/E 16 σε εταιρεία λογισμικού. Για σύγκριση με τους ομοειδείς, δες τη <b>Σελίδα κλάδου</b>.', en:'<span style="color:var(--mid)">⚠</span> Note that companies from <b>different sectors</b> are not valued by the same criteria: a P/E of 7 for a bank is not “cheaper” than a P/E of 16 for a software company. To compare with peers, see the <b>Sector page</b>.'},
+ 'cmp.selected':{el:'επιλεγμένη', en:'selected'},
+ 'cmp.hintmax':{el:'Έφτασες το μέγιστο ({n} εταιρείες). Αφαίρεσε μία για να προσθέσεις άλλη.', en:'You’ve reached the maximum ({n} companies). Remove one to add another.'},
+ 'cmp.hintcount':{el:'Επιλεγμένες {a} από {b}. Πρόσθεσε τουλάχιστον δύο για σύγκριση.', en:'Selected {a} of {b}. Add at least two to compare.'},
+ 'cmp.empty':{el:'Διάλεξε <b>δύο ή περισσότερες</b> εταιρείες για να ξεκινήσει η σύγκριση.', en:'Choose <b>two or more</b> companies to start comparing.'},
+ 'cmp.h.company':{el:'ΕΤΑΙΡΕΙΑ', en:'COMPANY'},
+ 'cmp.lowbest':{el:'χαμηλό = καλύτερο', en:'lower = better'},
+ 'cmp.highbest':{el:'υψηλό = καλύτερο', en:'higher = better'},
+ 'cmp.met.pe':{el:'P/E', en:'P/E'}, 'cmp.met.pbv':{el:'P/BV', en:'P/BV'}, 'cmp.met.ev':{el:'EV/EBITDA', en:'EV/EBITDA'},
+ 'cmp.met.roe':{el:'ROE', en:'ROE'}, 'cmp.met.dy':{el:'Μερισματική απόδοση', en:'Dividend yield'},
+ 'cmp.met.nde':{el:'Καθαρός δανεισμός / EBITDA', en:'Net debt / EBITDA'},
+ 'cmp.met.gm':{el:'Μικτό περιθώριο', en:'Gross margin'}, 'cmp.met.nm':{el:'Καθαρό περιθώριο', en:'Net margin'},
+ 'cmp.met.cr':{el:'Γενική ρευστότητα', en:'Current ratio'}, 'cmp.met.roa':{el:'ROA', en:'ROA'}
+});
+function L(k){return AX_I18N.t(k);}
+function SEC(n){return AX_I18N.sector(n);}
+function curLang(){return window.AX_I18N?AX_I18N.lang:'el';}
+function LOC(){return curLang()==='en'?'en-US':'el-GR';}
+function metL(k){return L('cmp.met.'+k);}
+
 const COMPANY_PAGE='../company/';
 
 const AXBASIS=(function(){try{var u=new URLSearchParams(location.search).get('basis');var b=u||localStorage.getItem('am-basis')||'annual';return (window.AXION&&window.AXION.meta&&window.AXION.meta.bases.indexOf(b)>-1)?b:'annual';}catch(e){return 'annual';}})();
 const DATA=(window.AXION&&window.AXION.rows&&window.AXION.rows[AXBASIS])||[];
 document.addEventListener('axion:basischange',function(){location.reload();});
 
-/* δειγματικές τιμές για τους επιπλέον δείκτες — ντετερμινιστικά ανά όνομα */
 function h32(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return (h>>>0)/4294967296;}
 DATA.forEach(r=>{const u=k=>h32(r.t+'|'+k);
  r.gm =Math.round((18+u('gm')*44)*10)/10;
@@ -163,17 +191,16 @@ DATA.forEach(r=>{const u=k=>h32(r.t+'|'+k);
 });
 
 const ALLMET=[
- {k:'pe', label:'P/E',       note:'τιμή προς κέρδη',           dir:-1,d:1,negWorst:1},
- {k:'pbv',label:'P/BV',      note:'τιμή προς λογιστική αξία',  dir:-1,d:1,negWorst:1},
- {k:'ev', label:'EV/EBITDA', note:'αξία επιχείρησης προς EBITDA',dir:-1,d:1,negWorst:1},
- {k:'roe',label:'ROE',       note:'απόδοση ιδίων κεφαλαίων',   dir:+1,d:0,pct:true},
- {k:'dy', label:'Μερισματική απόδοση',note:'μέρισμα προς τιμή',dir:+1,d:1,pct:true},
- {k:'nde',label:'Καθαρός δανεισμός / EBITDA',note:'μόχλευση · αρνητικό = καθαρό ταμείο',dir:-1,d:1},
- // --- ενδεικτικοί επιπλέον δείκτες (μη επιλεγμένοι εξ ορισμού) ---
- {k:'gm', label:'Μικτό περιθώριο',   note:'μικτά κέρδη προς πωλήσεις',       dir:+1,d:1,pct:true},
- {k:'nm', label:'Καθαρό περιθώριο',  note:'καθαρά κέρδη προς πωλήσεις',      dir:+1,d:1,pct:true},
- {k:'cr', label:'Γενική ρευστότητα', note:'κυκλοφορούν προς βραχυπρόθεσμες', dir:+1,d:1,x:true},
- {k:'roa',label:'ROA',               note:'απόδοση ενεργητικού',            dir:+1,d:1,pct:true},
+ {k:'pe', dir:-1,d:1,negWorst:1},
+ {k:'pbv',dir:-1,d:1,negWorst:1},
+ {k:'ev', dir:-1,d:1,negWorst:1},
+ {k:'roe',dir:+1,d:0,pct:true},
+ {k:'dy', dir:+1,d:1,pct:true},
+ {k:'nde',dir:-1,d:1},
+ {k:'gm', dir:+1,d:1,pct:true},
+ {k:'nm', dir:+1,d:1,pct:true},
+ {k:'cr', dir:+1,d:1,x:true},
+ {k:'roa',dir:+1,d:1,pct:true},
 ];
 let metSel=['pe','pbv','ev','roe','dy','nde'];
 const MAX=4;
@@ -182,15 +209,10 @@ let picked=[];
 const caps=s=>s.toUpperCase()
  .replace(/Ά/g,'Α').replace(/Έ/g,'Ε').replace(/Ή/g,'Η').replace(/Ί/g,'Ι')
  .replace(/Ό/g,'Ο').replace(/Ύ/g,'Υ').replace(/Ώ/g,'Ω').replace(/Ϊ/g,'Ι').replace(/Ϋ/g,'Υ');
-const fmt=(v,d)=>(v==null||isNaN(v))?'—':v.toLocaleString('el-GR',{minimumFractionDigits:d,maximumFractionDigits:d});
+const fmt=(v,d)=>(v==null||isNaN(v))?'—':v.toLocaleString(LOC(),{minimumFractionDigits:d,maximumFractionDigits:d});
 const fv=(m,v)=>(v==null||isNaN(v))?'—':fmt(v,m.d)+(m.pct?' %':(m.x?'x':''));
-const eur=v=>{if(v==null||isNaN(v))return '—';const m=v/1e6,a=Math.abs(m),d=a<100?2:a<1000?1:0;return m.toLocaleString('el-GR',{minimumFractionDigits:d,maximumFractionDigits:d})+' εκ. €';};
-const q=(a,p)=>{const s=[...a].sort((x,y)=>x-y),i=(s.length-1)*p,lo=Math.floor(i),hi=Math.ceil(i);return s[lo]+(s[hi]-s[lo])*(i-lo);};
 const norm=x=>x.toUpperCase().replace(/[ΆΑ]/g,'Α').replace(/[ΈΕ]/g,'Ε').replace(/[ΉΗ]/g,'Η').replace(/[ΊΪΙ]/g,'Ι').replace(/[ΌΟ]/g,'Ο').replace(/[ΎΫΥ]/g,'Υ').replace(/[ΏΩ]/g,'Ω');
 
-/* Κατάταξη ΜΕΤΑΞΥ των επιλεγμένων εταιρειών (όχι έναντι κλάδου).
-   Καλύτερη τιμή = πράσινο, χειρότερη = κόκκινο, ενδιάμεσες = κεχριμπάρι.
-   Ισοβαθμίες παίρνουν το ίδιο χρώμα. Αν όλες οι τιμές είναι ίσες, όλες ουδέτερες. */
 function rankCls(m, rows, v){
  if(v==null||isNaN(v)) return 'm';
  const vals=rows.map(r=>r[m.k]).filter(x=>x!=null&&!isNaN(x));
@@ -222,7 +244,7 @@ function suggest(){
   const has=picked.includes(r.t), full=picked.length>=MAX&&!has;
   const dis=has||full;
   return `<div class="sitem ${dis?'dis':''}" ${dis?'':`onclick="add('${r.t.replace(/'/g,"\\'")}')"`}>
-    <span>${r.t}</span><span class="sc">${has?'επιλεγμένη':r.s}</span></div>`;
+    <span>${r.t}</span><span class="sc">${has?L('cmp.selected'):SEC(r.s)}</span></div>`;
  }).join('');
  box.classList.add('on');
 }
@@ -244,7 +266,7 @@ function renderMet(){
  document.getElementById('metpick').innerHTML=ALLMET.map(m=>{
    const on=metSel.includes(m.k);
    return `<span class="mchip ${on?'on':''}" onclick="toggleMet('${m.k}')">`+
-     (on?`${m.label} <span class="mx">×</span>`:`<span class="mplus">+</span> ${m.label}`)+`</span>`;
+     (on?`${metL(m.k)} <span class="mx">×</span>`:`<span class="mplus">+</span> ${metL(m.k)}`)+`</span>`;
  }).join('');
 }
 function toggleMet(k){
@@ -260,37 +282,35 @@ function render(){
  chips.innerHTML=picked.map(t=>`<span class="pchip">${t}
    <span class="x" onclick="drop('${t.replace(/'/g,"\\'")}')">×</span></span>`).join('');
  document.getElementById('hint').textContent = picked.length>=MAX
-   ? `Έφτασες το μέγιστο (${MAX} εταιρείες). Αφαίρεσε μία για να προσθέσεις άλλη.`
-   : `Επιλεγμένες ${picked.length} από ${MAX}. Πρόσθεσε τουλάχιστον δύο για σύγκριση.`;
+   ? L('cmp.hintmax').replace('{n}',MAX)
+   : L('cmp.hintcount').replace('{a}',picked.length).replace('{b}',MAX);
 
  if(picked.length<2){
-  out.innerHTML=`<div class="empty">Διάλεξε <b>δύο ή περισσότερες</b> εταιρείες για να ξεκινήσει η σύγκριση.</div>`;
+  out.innerHTML=`<div class="empty">${L('cmp.empty')}</div>`;
   return;
  }
  const rows=picked.map(t=>DATA.find(r=>r.t===t)).filter(Boolean);
- if(rows.length<2){out.innerHTML=`<div class="empty">Διάλεξε <b>δύο ή περισσότερες</b> εταιρείες για να ξεκινήσει η σύγκριση.</div>`;return;}
+ if(rows.length<2){out.innerHTML=`<div class="empty">${L('cmp.empty')}</div>`;return;}
 
- // κεφαλίδα: δείκτες στις στήλες
  const shown=ALLMET.filter(m=>metSel.includes(m.k));
- const th=`<tr><th class="l">ΕΤΑΙΡΕΙΑ</th>`+
-   shown.map(m=>`<th>${caps(m.label)}<span class="dirn">${m.dir<0?'χαμηλό = καλύτερο':'υψηλό = καλύτερο'}</span></th>`).join('')+
+ const th=`<tr><th class="l">${L('cmp.h.company')}</th>`+
+   shown.map(m=>`<th>${caps(metL(m.k))}<span class="dirn">${m.dir<0?L('cmp.lowbest'):L('cmp.highbest')}</span></th>`).join('')+
    `</tr>`;
 
- // γραμμές: μία ανά εταιρεία
  const tb=rows.map(r=>{
   const tds=shown.map(m=>`<td class="${rankCls(m,rows,r[m.k])}">${fv(m,r[m.k])}</td>`).join('');
-  return `<tr><td class="co${r.trading===false?' co-dead':''}"><a href="${COMPANY_PAGE}?tk=${encodeURIComponent(r.tk)}" target="_blank">${r.t}</a>${(r.trading===false&&r.tstatus)?` <span class="tbadge sm ${r.tstatus.type==='delisted'?'t-del':'t-sus'}">${r.tstatus.label}</span>`:''}<small>${r.s}</small></td>${tds}</tr>`;
+  return `<tr><td class="co${r.trading===false?' co-dead':''}"><a href="${COMPANY_PAGE}?tk=${encodeURIComponent(r.tk)}" target="_blank">${r.t}</a>${(r.trading===false&&r.tstatus)?` <span class="tbadge sm ${r.tstatus.type==='delisted'?'t-del':'t-sus'}">${r.tstatus.label}</span>`:''}<small>${SEC(r.s)}</small></td>${tds}</tr>`;
  }).join('');
 
  out.innerHTML =
    `<div class="tablewrap"><table><thead>${th}</thead><tbody>${tb}</tbody></table></div>`;
 }
 
-// αρχική επιλογή για επίδειξη
 picked=['ΟΠΑΠ','JUMBO','ΚΡΙ-ΚΡΙ'].map(function(n){var r=DATA.find(function(x){return x.t===n})||DATA.find(function(x){return x.tk===n});return r?r.t:null;}).filter(Boolean);
 if(picked.length<2 && DATA.length) picked=DATA.slice(0,3).map(function(r){return r.t});
 renderMet();
 render();
+document.addEventListener('axion:langchange',function(){ renderMet(); render(); });
 </script>
 <div id="am-foot"></div>
 <script>window.NAV_ACTIVE=0;window.NAV_CUR="Σύγκριση εταιρειών";</script>

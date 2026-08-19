@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Αναθεωρήσεις δεικτών — Axion Metrics</title>
+<title data-i18n="ix.title">Αναθεωρήσεις δεικτών — Axion Metrics</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&family=Open+Sans:wght@400;600;700;800&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -71,7 +71,7 @@
  /* == ομογενοποίηση: κοινή τυπογραφία επικεφαλίδων == */
  .mast h1,h2,h2.sec{font-family:'Inter',sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.02em}
 
- 
+
  /* navy hero + secbox + picker (όπως στη σελίδα κλάδου) */
  .crumb{font-size:11.5px;color:#9aa7b8;padding:20px 0 0}
  .crumb a{color:var(--accent);text-decoration:none}
@@ -122,6 +122,7 @@
 </style>
 <link rel="stylesheet" href="../assets/chrome.css">
 <script src="../assets/data.js"></script>
+<script src="../assets/i18n.js"></script>
 </head>
 <body>
 <div id="am-nav"></div>
@@ -129,21 +130,21 @@
  <div class="secbox">
     <div class="stripe"></div>
     <div class="hero-in">
-      <h1>Αναθεωρήσεις δεικτών</h1>
+      <h1 data-i18n="ix.h1">Αναθεωρήσεις δεικτών</h1>
       <div class="hero-stats">
-        <div class="hs"><span class="v">Large / Mid Cap</span><span class="l">Δείκτες</span></div>
-        <div class="hs"><span class="v">2020</span><span class="l">ιστορικό</span></div>
+        <div class="hs"><span class="v">Large / Mid Cap</span><span class="l" data-i18n="ix.hs.indices">Δείκτες</span></div>
+        <div class="hs"><span class="v">2020</span><span class="l" data-i18n="ix.hs.history">ιστορικό</span></div>
       </div>
     </div>
   </div>
  <div class="ix-flt">
-  <span class="ix-lb">Δείκτης:</span>
+  <span class="ix-lb" data-i18n="ix.indexlbl">Δείκτης:</span>
   <span class="ix-seg" id="ixSeg">
    <button class="on" data-ix="large" type="button">FTSE/Athex Large Cap</button>
    <button data-ix="mid" type="button">Mid Cap</button>
   </span>
   <select class="ix-yr" id="ixYr">
-   <option value="">Όλα τα έτη</option>
+   <option value="" data-i18n="ix.allyears">Όλα τα έτη</option>
    <option value="2025">2025</option><option value="2024">2024</option><option value="2023">2023</option>
    <option value="2022">2022</option><option value="2021">2021</option><option value="2020">2020</option>
   </select>
@@ -151,22 +152,42 @@
  <div class="ix-list" id="ixList"></div>
 </div>
 <script>
+AX_I18N.add({
+ 'ix.title':{el:'Αναθεωρήσεις δεικτών — Axion Metrics', en:'Index reviews — Axion Metrics'},
+ 'ix.h1':{el:'Αναθεωρήσεις δεικτών', en:'Index reviews'},
+ 'ix.hs.indices':{el:'Δείκτες', en:'Indices'},
+ 'ix.hs.history':{el:'ιστορικό', en:'history'},
+ 'ix.indexlbl':{el:'Δείκτης:', en:'Index:'},
+ 'ix.allyears':{el:'Όλα τα έτη', en:'All years'},
+ 'ix.empty':{el:'Καμία αναθεώρηση για την επιλογή.', en:'No review for this selection.'},
+ 'ix.noin':{el:'καμία εισαγωγή', en:'no additions'},
+ 'ix.noout':{el:'καμία εξαγωγή', en:'no removals'},
+ 'ix.semiannual':{el:'εξαμηνιαία αναθεώρηση', en:'semi-annual review'},
+ 'ix.netchange':{el:'καθαρή μεταβολή', en:'net change'},
+ 'ix.additions':{el:'Εισαγωγές', en:'Additions'},
+ 'ix.removals':{el:'Εξαγωγές', en:'Removals'}
+});
+function L(k){return AX_I18N.t(k);}
+function curLang(){return window.AX_I18N?AX_I18N.lang:'el';}
+function perT(p){return curLang()==='en'?String(p).replace('Ιούνιος','June').replace('Δεκέμβριος','December'):p;}
+
 const INDEX_DATA=(window.AXION&&window.AXION.indexReviews)||{large:[],mid:[],market:[]};
 let ixCur='large', ixYear='';
 function ixRender(){
  const list=INDEX_DATA[ixCur].filter(r=>!ixYear||r.ym.slice(0,4)===ixYear);
  const el=document.getElementById('ixList');
- if(!list.length){el.innerHTML='<div class="ix-note">Καμία αναθεώρηση για την επιλογή.</div>';return;}
+ if(!list.length){el.innerHTML=`<div class="ix-note">${L('ix.empty')}</div>`;return;}
  el.innerHTML=list.map(r=>{
   const net=r.in.length-r.out.length, netTxt=net>0?('+'+net):(net<0?(''+net):'0');
-  const inRows=r.in.length?r.in.map(c=>`<div class="ix-r gin"><span class="ic">＋</span><span class="co">${c[0]}</span><span class="tk">${c[1]}</span></div>`).join(''):'<div class="ix-r none">καμία εισαγωγή</div>';
-  const outRows=r.out.length?r.out.map(c=>`<div class="ix-r rout"><span class="ic">－</span><span class="co">${c[0]}</span><span class="tk">${c[1]}</span></div>`).join(''):'<div class="ix-r none">καμία εξαγωγή</div>';
-  return `<div class="ix-rev"><div class="ix-rh"><span class="rd">${r.period}</span><span class="rt">εξαμηνιαία αναθεώρηση</span><span class="net">καθαρή μεταβολή ${netTxt}</span></div><div class="ix-cols"><div class="ix-col in"><div class="ix-ch gin">▲ Εισαγωγές <span class="n">${r.in.length}</span></div>${inRows}</div><div class="ix-col out"><div class="ix-ch rout">▼ Εξαγωγές <span class="n">${r.out.length}</span></div>${outRows}</div></div></div>`;
+  const inRows=r.in.length?r.in.map(c=>`<div class="ix-r gin"><span class="ic">＋</span><span class="co">${c[0]}</span><span class="tk">${c[1]}</span></div>`).join(''):`<div class="ix-r none">${L('ix.noin')}</div>`;
+  const outRows=r.out.length?r.out.map(c=>`<div class="ix-r rout"><span class="ic">－</span><span class="co">${c[0]}</span><span class="tk">${c[1]}</span></div>`).join(''):`<div class="ix-r none">${L('ix.noout')}</div>`;
+  return `<div class="ix-rev"><div class="ix-rh"><span class="rd">${perT(r.period)}</span><span class="rt">${L('ix.semiannual')}</span><span class="net">${L('ix.netchange')} ${netTxt}</span></div><div class="ix-cols"><div class="ix-col in"><div class="ix-ch gin">▲ ${L('ix.additions')} <span class="n">${r.in.length}</span></div>${inRows}</div><div class="ix-col out"><div class="ix-ch rout">▼ ${L('ix.removals')} <span class="n">${r.out.length}</span></div>${outRows}</div></div></div>`;
  }).join('');
 }
 document.getElementById('ixSeg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;[...e.currentTarget.querySelectorAll('button')].forEach(x=>x.classList.remove('on'));b.classList.add('on');ixCur=b.dataset.ix;ixRender();});
 document.getElementById('ixYr').addEventListener('change',e=>{ixYear=e.target.value;ixRender();});
 ixRender();
+document.addEventListener('axion:langchange',ixRender);
 </script>
 <div id="am-foot"></div>
 <script>window.NAV_ACTIVE=2;window.NAV_CUR="Αναθεωρήσεις δεικτών";</script>

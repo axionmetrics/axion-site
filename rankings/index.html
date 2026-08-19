@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Κατατάξεις — Axion Metrics</title>
+<title data-i18n="rk.title">Κατατάξεις — Axion Metrics</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&family=Open+Sans:wght@400;600;700;800&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -72,7 +72,7 @@
  /* == ομογενοποίηση: κοινή τυπογραφία επικεφαλίδων == */
  .mast h1,h2,h2.sec{font-family:'Inter',sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.02em}
 
- 
+
  /* navy hero + secbox + picker (όπως στη σελίδα κλάδου) */
  .crumb{font-size:11.5px;color:#9aa7b8;padding:20px 0 0}
  .crumb a{color:var(--accent);text-decoration:none}
@@ -96,6 +96,7 @@
 </style>
 <link rel="stylesheet" href="../assets/chrome.css">
 <script src="../assets/data.js"></script>
+<script src="../assets/i18n.js"></script>
 </head>
 <body>
 <div id="am-nav"></div>
@@ -103,11 +104,11 @@
  <div class="secbox">
     <div class="stripe"></div>
     <div class="hero-in">
-      <h1>Κατατάξεις</h1>
+      <h1 data-i18n="rk.h1">Κατατάξεις</h1>
       <div class="hero-stats">
-        <div class="hs"><span class="v">Κατάταξη</span><span class="l">ανά δείκτη</span></div>
-        <div class="hs"><span class="v">Εμβέλεια</span><span class="l">αγορά ή κλάδος</span></div>
-        <div class="hs"><span class="v">Leaderboards</span><span class="l">για όλους τους δείκτες</span></div>
+        <div class="hs"><span class="v" data-i18n="rk.hs1v">Κατάταξη</span><span class="l" data-i18n="rk.hs1l">ανά δείκτη</span></div>
+        <div class="hs"><span class="v" data-i18n="rk.hs2v">Εμβέλεια</span><span class="l" data-i18n="rk.hs2l">αγορά ή κλάδος</span></div>
+        <div class="hs"><span class="v">Leaderboards</span><span class="l" data-i18n="rk.hs3l">για όλους τους δείκτες</span></div>
       </div>
     </div>
   </div>
@@ -117,19 +118,19 @@
 
  <div class="controls">
   <div class="crow">
-   <span class="lbl">Δείκτης</span>
+   <span class="lbl" data-i18n="rk.metric">Δείκτης</span>
    <div id="mchips" style="display:flex;flex-wrap:wrap;gap:7px"></div>
   </div>
   <div class="crow">
-   <span class="lbl">Εμφάνιση</span>
+   <span class="lbl" data-i18n="rk.show">Εμφάνιση</span>
    <div class="seg">
-    <button id="dTop" class="on" onclick="setDir('top')">Κορυφαίες</button>
-    <button id="dBot" onclick="setDir('bottom')">Χειρότερες</button>
+    <button id="dTop" class="on" onclick="setDir('top')" data-i18n="rk.top">Κορυφαίες</button>
+    <button id="dBot" onclick="setDir('bottom')" data-i18n="rk.bottom">Χειρότερες</button>
    </div>
    <div class="seg" style="margin-left:6px">
     <button class="nbtn on" onclick="setN(10)">10</button>
     <button class="nbtn" onclick="setN(20)">20</button>
-    <button class="nbtn" onclick="setN(0)">Όλες</button>
+    <button class="nbtn" onclick="setN(0)" data-i18n="rk.all">Όλες</button>
    </div>
   </div>
  </div>
@@ -137,32 +138,61 @@
  <div class="resbar"><h2 id="rtitle"></h2><span class="meta" id="rmeta"></span></div>
  <div class="tblwrap"><table><thead id="thead"></thead><tbody id="tbody"></tbody></table></div>
 
- <h2 class="sec">Όλες οι κατατάξεις με μια ματιά</h2>
- <div class="sech">Top-5 ανά δείκτη στην τρέχουσα εμβέλεια · κλικ σε κάρτα για πλήρη κατάταξη.</div>
+ <h2 class="sec" data-i18n="rk.glance">Όλες οι κατατάξεις με μια ματιά</h2>
+ <div class="sech" data-i18n="rk.glancesub">Top-5 ανά δείκτη στην τρέχουσα εμβέλεια · κλικ σε κάρτα για πλήρη κατάταξη.</div>
  <div class="cards" id="cards"></div>
 
 </div>
 
 <script>
+AX_I18N.add({
+ 'rk.title':{el:'Κατατάξεις — Axion Metrics', en:'Rankings — Axion Metrics'},
+ 'rk.h1':{el:'Κατατάξεις', en:'Rankings'},
+ 'rk.hs1v':{el:'Κατάταξη', en:'Ranking'}, 'rk.hs1l':{el:'ανά δείκτη', en:'by ratio'},
+ 'rk.hs2v':{el:'Εμβέλεια', en:'Scope'}, 'rk.hs2l':{el:'αγορά ή κλάδος', en:'market or sector'},
+ 'rk.hs3l':{el:'για όλους τους δείκτες', en:'for every ratio'},
+ 'rk.metric':{el:'Δείκτης', en:'Ratio'}, 'rk.show':{el:'Εμφάνιση', en:'Show'},
+ 'rk.top':{el:'Κορυφαίες', en:'Top'}, 'rk.bottom':{el:'Χειρότερες', en:'Bottom'}, 'rk.all':{el:'Όλες', en:'All'},
+ 'rk.glance':{el:'Όλες οι κατατάξεις με μια ματιά', en:'All rankings at a glance'},
+ 'rk.glancesub':{el:'Top-5 ανά δείκτη στην τρέχουσα εμβέλεια · κλικ σε κάρτα για πλήρη κατάταξη.', en:'Top-5 per ratio in the current scope · click a card for the full ranking.'},
+ 'rk.allmarket':{el:'Όλη η αγορά', en:'Entire market'},
+ 'rk.of':{el:'από', en:'of'}, 'rk.median':{el:'διάμεσος', en:'median'},
+ 'rk.h.company':{el:'ΕΤΑΙΡΕΙΑ', en:'COMPANY'}, 'rk.h.sector':{el:'ΚΛΑΔΟΣ', en:'SECTOR'}, 'rk.h.position':{el:'ΘΕΣΗ ΣΤΗΝ ΚΑΤΑΝΟΜΗ', en:'POSITION IN DISTRIBUTION'},
+ 'word.companies':{el:'εταιρείες', en:'companies'},
+ 'word.semesters':{el:'εξάμηνα', en:'semesters'},
+ 'rk.met.pe':{el:'P/E', en:'P/E'}, 'rk.short.pe':{el:'P/E', en:'P/E'},
+ 'rk.met.pbv':{el:'P/BV', en:'P/BV'}, 'rk.short.pbv':{el:'P/BV', en:'P/BV'},
+ 'rk.met.ev':{el:'EV/EBITDA', en:'EV/EBITDA'}, 'rk.short.ev':{el:'EV/EBITDA', en:'EV/EBITDA'},
+ 'rk.met.roe':{el:'ROE', en:'ROE'}, 'rk.short.roe':{el:'ROE', en:'ROE'},
+ 'rk.met.dy':{el:'Μερισματική απόδοση', en:'Dividend yield'}, 'rk.short.dy':{el:'Μέρισμα', en:'Dividend'},
+ 'rk.met.nde':{el:'Καθαρός δανεισμός / EBITDA', en:'Net debt / EBITDA'}, 'rk.short.nde':{el:'Καθ.δαν/EBITDA', en:'NetDebt/EBITDA'}
+});
+function L(k){return AX_I18N.t(k);}
+function SEC(n){return AX_I18N.sector(n);}
+function curLang(){return window.AX_I18N?AX_I18N.lang:'el';}
+function LOC(){return curLang()==='en'?'en-US':'el-GR';}
+function metLabel(k){return L('rk.met.'+k);}
+function metShort(k){return L('rk.short.'+k);}
+
 const COMPANY_PAGE='../company/';
 
 const AXBASIS=(function(){try{var u=new URLSearchParams(location.search).get('basis');var b=u||localStorage.getItem('am-basis')||'annual';return (window.AXION&&window.AXION.meta&&window.AXION.meta.bases.indexOf(b)>-1)?b:'annual';}catch(e){return 'annual';}})();
-const DATA=((window.AXION&&window.AXION.rows&&window.AXION.rows[AXBASIS])||[]).filter(function(r){return r.calculated!==false;}); // εξαίρεση (CALCULATED=NO: διαγραμμένες/σε αναστολή/manual exception) από τις κατατάξεις
+const DATA=((window.AXION&&window.AXION.rows&&window.AXION.rows[AXBASIS])||[]).filter(function(r){return r.calculated!==false;});
 document.addEventListener('axion:basischange',function(){location.reload();});
 
 const MET=[
- {k:'pe', label:'P/E',                 short:'P/E',      dir:-1,d:1,negWorst:1},
- {k:'pbv',label:'P/BV',                short:'P/BV',     dir:-1,d:1,negWorst:1},
- {k:'ev', label:'EV/EBITDA',           short:'EV/EBITDA',dir:-1,d:1,negWorst:1},
- {k:'roe',label:'ROE',                 short:'ROE',      dir:+1,d:0,pct:true},
- {k:'dy', label:'Μερισματική απόδοση', short:'Μέρισμα',  dir:+1,d:1,pct:true},
- {k:'nde',label:'Καθαρός δανεισμός / EBITDA', short:'Καθ.δαν/EBITDA', dir:-1,d:1},
+ {k:'pe', dir:-1,d:1,negWorst:1},
+ {k:'pbv',dir:-1,d:1,negWorst:1},
+ {k:'ev', dir:-1,d:1,negWorst:1},
+ {k:'roe',dir:+1,d:0,pct:true},
+ {k:'dy', dir:+1,d:1,pct:true},
+ {k:'nde',dir:-1,d:1},
 ];
 const SECTORS=[...new Set(DATA.map(r=>r.s))].filter(s=>s&&s!=='—');
 
 let metric='pe', scope=null, dir='top', topN=10;
 
-const fmt=(v,d)=>(v==null||isNaN(v))?'—':v.toLocaleString('el-GR',{minimumFractionDigits:d,maximumFractionDigits:d});
+const fmt=(v,d)=>(v==null||isNaN(v))?'—':v.toLocaleString(LOC(),{minimumFractionDigits:d,maximumFractionDigits:d});
 const fv=(m,v)=>fmt(v,m.d)+(m.pct?' %':'');
 const q=(a,p)=>{const s=[...a].sort((x,y)=>x-y),i=(s.length-1)*p,lo=Math.floor(i),hi=Math.ceil(i);return s[lo]+(s[hi]-s[lo])*(i-lo);};
 const M=k=>MET.find(m=>m.k===k);
@@ -170,7 +200,6 @@ const M=k=>MET.find(m=>m.k===k);
 const scoped=()=> scope? DATA.filter(r=>r.s===scope) : DATA;
 const valid=(m,rows)=> rows.filter(r=> r[m.k]!=null && !isNaN(r[m.k]));
 
-// βαθμολογία 0..1 όπου 1 = καλύτερο (direction-aware)
 function scoreOf(m,rows){
  const vals=rows.map(r=>r[m.k]);
  if(m.negWorst){
@@ -193,10 +222,10 @@ const ZCOL={g:'var(--zg)',m:'var(--zm)',b:'var(--zb)'};
 
 function chips(){
  document.getElementById('mchips').innerHTML=MET.map(m=>
-  `<span class="chip acc ${m.k===metric?'on':''}" onclick="setMetric('${m.k}')">${m.short}</span>`).join('');
+  `<span class="chip acc ${m.k===metric?'on':''}" onclick="setMetric('${m.k}')">${metShort(m.k)}</span>`).join('');
  document.getElementById('schips').innerHTML=
-  `<span class="chip ${scope?'':'on'}" onclick="setScope(null)">Όλη η αγορά</span>`+
-  SECTORS.map(s=>`<span class="chip ${scope===s?'on':''}" onclick="setScope('${s}')">${s}</span>`).join('');
+  `<span class="chip ${scope?'':'on'}" onclick="setScope(null)">${L('rk.allmarket')}</span>`+
+  SECTORS.map(s=>`<span class="chip ${scope===s?'on':''}" onclick="setScope('${s}')">${SEC(s)}</span>`).join('');
 }
 function setMetric(k){metric=k;render();}
 function setScope(s){scope=s;render();}
@@ -211,19 +240,18 @@ function setN(n){topN=n;
 function table(){
  const m=M(metric), rows=valid(m,scoped());
  const score=scoreOf(m,rows), zone=zoneOf(m,rows);
- // ταξινόμηση: καλύτερο πρώτα
  let ranked=[...rows].sort((a,b)=>{ if(m.negWorst){const av=a[m.k],bv=b[m.k],an=av<0,bn=bv<0; if(an!==bn)return an?1:-1; return an? bv-av : av-bv;} return m.dir<0 ? a[m.k]-b[m.k] : b[m.k]-a[m.k]; });
  if(dir==='bottom') ranked.reverse();
  const shown = topN? ranked.slice(0,topN) : ranked;
 
  document.getElementById('rtitle').textContent =
-  (dir==='top'?'Κορυφαίες · ':'Χειρότερες · ')+m.label;
+  L(dir==='top'?'rk.top':'rk.bottom')+' · '+metLabel(metric);
  document.getElementById('rmeta').textContent =
-  `${shown.length} από ${rows.length} εταιρείες · ${scope?scope:'όλη η αγορά'} · διάμεσος ${fv(m,q(rows.map(r=>r[m.k]),.5))}`;
+  `${shown.length} ${L('rk.of')} ${rows.length} ${L('word.companies')} · ${scope?SEC(scope):L('rk.allmarket')} · ${L('rk.median')} ${fv(m,q(rows.map(r=>r[m.k]),.5))}`;
 
  document.getElementById('thead').innerHTML=
-  `<tr><th>#</th><th class="l">ΕΤΑΙΡΕΙΑ</th><th class="l">ΚΛΑΔΟΣ</th>
-   <th class="l">ΘΕΣΗ ΣΤΗΝ ΚΑΤΑΝΟΜΗ</th><th style="text-align:right">${m.short.toUpperCase()}</th></tr>`;
+  `<tr><th>#</th><th class="l">${L('rk.h.company')}</th><th class="l">${L('rk.h.sector')}</th>
+   <th class="l">${L('rk.h.position')}</th><th style="text-align:right">${metShort(metric).toUpperCase()}</th></tr>`;
 
  document.getElementById('tbody').innerHTML=shown.map((r,i)=>{
   const cls=zone(r[m.k]);
@@ -231,8 +259,8 @@ function table(){
   const rank = dir==='top' ? i+1 : rows.length-i;
   return `<tr class="${dir==='top'&&i<3?'top3':''}">
    <td class="rk">${rank}</td>
-   <td class="nm${r.trading===false?' co-dead':''}"><a href="${COMPANY_PAGE}?tk=${encodeURIComponent(r.tk)}" target="_blank">${r.t}</a>${(r.trading===false&&r.tstatus)?` <span class="tbadge sm ${r.tstatus.type==='delisted'?'t-del':'t-sus'}">${r.tstatus.label}</span>`:''}${(AXBASIS==='interim'&&r.interimPartial)?` <span class="tbadge sm t-prov"><b>${r.h1n||1}</b>/2 εξάμηνα</span>`:''}</td>
-   <td class="sc">${r.s}</td>
+   <td class="nm${r.trading===false?' co-dead':''}"><a href="${COMPANY_PAGE}?tk=${encodeURIComponent(r.tk)}" target="_blank">${r.t}</a>${(r.trading===false&&r.tstatus)?` <span class="tbadge sm ${r.tstatus.type==='delisted'?'t-del':'t-sus'}">${r.tstatus.label}</span>`:''}${(AXBASIS==='interim'&&r.interimPartial)?` <span class="tbadge sm t-prov"><b>${r.h1n||1}</b>/2 ${L('word.semesters')}</span>`:''}</td>
+   <td class="sc">${SEC(r.s)}</td>
    <td class="pct"><div class="pbar"><div class="pfill" style="width:${pctv}%;background:${ZCOL[cls]}"></div></div>
      <span class="pnum">${pctv}%</span></td>
    <td class="val ${cls}">${fv(m,r[m.k])}</td></tr>`;
@@ -247,12 +275,13 @@ function cards(){
   const body=top.map((r,i)=>`<div class="brow"><span class="n">${i+1}. ${r.t}</span>
     <span class="v ${zone(r[m.k])}">${fv(m,r[m.k])}</span></div>`).join('');
   return `<div class="card ${m.k===metric?'on':''}" onclick="setMetric('${m.k}')">
-    <div class="bh">${m.label}</div>${body}</div>`;
+    <div class="bh">${metLabel(m.k)}</div>${body}</div>`;
  }).join('');
 }
 
 function render(){chips();table();cards();}
 render();
+document.addEventListener('axion:langchange',render);
 </script>
 <div id="am-foot"></div>
 <script>window.NAV_ACTIVE=2;window.NAV_CUR="Κατατάξεις / League tables";</script>

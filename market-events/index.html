@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Γεγονότα αγοράς — Axion Metrics</title>
+<title data-i18n="me.title">Γεγονότα αγοράς — Axion Metrics</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&family=Open+Sans:wght@400;600;700;800&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -71,7 +71,7 @@
  /* == ομογενοποίηση: κοινή τυπογραφία επικεφαλίδων == */
  .mast h1,h2,h2.sec{font-family:'Inter',sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.02em}
 
- 
+
  /* navy hero + secbox + picker (όπως στη σελίδα κλάδου) */
  .crumb{font-size:11.5px;color:#9aa7b8;padding:20px 0 0}
  .crumb a{color:var(--accent);text-decoration:none}
@@ -124,6 +124,7 @@
 </style>
 <link rel="stylesheet" href="../assets/chrome.css">
 <script src="../assets/data.js"></script>
+<script src="../assets/i18n.js"></script>
 </head>
 <body>
 <div id="am-nav"></div>
@@ -131,59 +132,91 @@
  <div class="secbox">
     <div class="stripe"></div>
     <div class="hero-in">
-      <h1>Γεγονότα αγοράς</h1>
-      <p class="hero-desc">Εταιρικές πράξεις των εισηγμένων — διανομές, μεταβολές κεφαλαίου, εισαγωγές/διαγραφές, αλλαγές δεικτών — χρονολογικά, από το 2020.</p>
+      <h1 data-i18n="me.h1">Γεγονότα αγοράς</h1>
+      <p class="hero-desc" data-i18n="me.desc">Εταιρικές πράξεις των εισηγμένων — διανομές, μεταβολές κεφαλαίου, εισαγωγές/διαγραφές, αλλαγές δεικτών — χρονολογικά, από το 2020.</p>
     </div>
   </div>
  <div class="me-flt">
   <div class="me-chips" id="meChips"></div>
   <div class="me-ctrl">
-   <select id="meSector"><option value="">Όλοι οι κλάδοι</option></select>
-   <select id="meYear"><option value="">Όλα τα έτη</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option><option>2020</option></select>
-   <input id="meSearch" type="text" placeholder="Αναζήτηση εταιρείας ή γεγονότος…" autocomplete="off">
+   <select id="meSector"><option value="" data-i18n="me.allsectors">Όλοι οι κλάδοι</option></select>
+   <select id="meYear"><option value="" data-i18n="me.allyears">Όλα τα έτη</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option><option>2020</option></select>
+   <input id="meSearch" type="text" data-i18n-ph="me.search" placeholder="Αναζήτηση εταιρείας ή γεγονότος…" autocomplete="off">
   </div>
  </div>
  <div class="me-cnt" id="meCnt"></div>
  <div class="me-feed" id="meFeed"></div>
 </div>
 <script>
+AX_I18N.add({
+ 'me.title':{el:'Γεγονότα αγοράς — Axion Metrics', en:'Market events — Axion Metrics'},
+ 'me.h1':{el:'Γεγονότα αγοράς', en:'Market events'},
+ 'me.desc':{el:'Εταιρικές πράξεις των εισηγμένων — διανομές, μεταβολές κεφαλαίου, εισαγωγές/διαγραφές, αλλαγές δεικτών — χρονολογικά, από το 2020.', en:'Corporate actions of the listed companies — distributions, capital changes, listings/delistings, index changes — chronologically, from 2020.'},
+ 'me.allsectors':{el:'Όλοι οι κλάδοι', en:'All sectors'},
+ 'me.allyears':{el:'Όλα τα έτη', en:'All years'},
+ 'me.search':{el:'Αναζήτηση εταιρείας ή γεγονότος…', en:'Search company or event…'},
+ 'me.events':{el:'γεγονότα', en:'events'},
+ 'me.newestfirst':{el:'χρονολογικά, νεότερα πρώτα', en:'chronological, newest first'},
+ 'me.empty':{el:'Κανένα γεγονός δεν ταιριάζει με τα φίλτρα.', en:'No event matches the filters.'},
+ 'me.t.amk':{el:'Μετ.Κεφαλαίου', en:'Capital'},
+ 'me.t.div':{el:'Χρημ.Διανομές', en:'Distributions'},
+ 'me.t.listing':{el:'Εισαγωγές/Διαγραφές', en:'Listings/Delistings'},
+ 'me.t.index':{el:'Δείκτες', en:'Index changes'}
+});
+function L(k){return AX_I18N.t(k);}
+function SEC(n){return AX_I18N.sector(n);}
+function curLang(){return window.AX_I18N?AX_I18N.lang:'el';}
+
 const TYPES={
- amk:{label:'Μετ.Κεφαλαίου',bg:'#e7eefb',tx:'#1E4FA0',bar:'#1E4FA0'},
- div:{label:'Χρημ.Διανομές',bg:'#f7edd8',tx:'#9a6a0c',bar:'#b07d10'},
- listing:{label:'Εισαγωγές/Διαγραφές',bg:'#e6f4ea',tx:'#1f7a3e',bar:'#2f9e52'},
- index:{label:'Δείκτες',bg:'#e8ecf3',tx:'#223c66',bar:'#223c66'}
+ amk:{key:'me.t.amk',bg:'#e7eefb',tx:'#1E4FA0',bar:'#1E4FA0'},
+ div:{key:'me.t.div',bg:'#f7edd8',tx:'#9a6a0c',bar:'#b07d10'},
+ listing:{key:'me.t.listing',bg:'#e6f4ea',tx:'#1f7a3e',bar:'#2f9e52'},
+ index:{key:'me.t.index',bg:'#e8ecf3',tx:'#223c66',bar:'#223c66'}
 };
 const EVENTS=(window.AXION&&window.AXION.marketEvents)||[];
-const MON=['Ιαν','Φεβ','Μαρ','Απρ','Μαι','Ιουν','Ιουλ','Αυγ','Σεπ','Οκτ','Νοε','Δεκ'];
+const MON_EL=['Ιαν','Φεβ','Μαρ','Απρ','Μαι','Ιουν','Ιουλ','Αυγ','Σεπ','Οκτ','Νοε','Δεκ'];
+const MON_EN=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const norm=s=>s.toUpperCase().replace(/[ΆΑ]/g,'Α').replace(/[ΈΕ]/g,'Ε').replace(/[ΉΗ]/g,'Η').replace(/[ΊΪΙ]/g,'Ι').replace(/[ΌΟ]/g,'Ο').replace(/[ΎΫΥ]/g,'Υ').replace(/[ΏΩ]/g,'Ω');
 let active=new Set(Object.keys(TYPES)), fSec='', fYear='', fQ='';
 
 const chipsEl=document.getElementById('meChips');
-chipsEl.innerHTML=Object.entries(TYPES).map(([k,v])=>`<span class="me-chip" data-t="${k}"><span class="dt" style="background:${v.bar}"></span>${v.label}</span>`).join('');
+function buildChips(){
+ chipsEl.innerHTML=Object.entries(TYPES).map(([k,v])=>`<span class="me-chip${active.has(k)?'':' off'}" data-t="${k}"><span class="dt" style="background:${v.bar}"></span>${L(v.key)}</span>`).join('');
+}
+buildChips();
 chipsEl.addEventListener('click',e=>{const c=e.target.closest('.me-chip');if(!c)return;const k=c.dataset.t;if(active.has(k)&&active.size>0){active.delete(k);c.classList.add('off');}else{active.add(k);c.classList.remove('off');}render();});
 
 const secSel=document.getElementById('meSector');
-[...new Set(EVENTS.map(e=>e.s))].sort((a,b)=>a.localeCompare(b,'el')).forEach(s=>{const o=document.createElement('option');o.value=s;o.textContent=s;secSel.appendChild(o);});
+const SECS=[...new Set(EVENTS.map(e=>e.s))].filter(s=>s).sort((a,b)=>a.localeCompare(b,'el'));
+function buildSectorOptions(){
+ const first=secSel.querySelector('option[value=""]');
+ secSel.innerHTML=''; secSel.appendChild(first);
+ SECS.forEach(s=>{const o=document.createElement('option');o.value=s;o.textContent=SEC(s);secSel.appendChild(o);});
+ secSel.value=fSec;
+}
+buildSectorOptions();
 secSel.addEventListener('change',e=>{fSec=e.target.value;render();});
 document.getElementById('meYear').addEventListener('change',e=>{fYear=e.target.value;render();});
 document.getElementById('meSearch').addEventListener('input',e=>{fQ=norm(e.target.value.trim());render();});
 
 function render(){
+ const MON=curLang()==='en'?MON_EN:MON_EL;
  const list=EVENTS.filter(e=>active.has(e.t)&&(!fSec||e.s===fSec)&&(!fYear||e.d.slice(0,4)===fYear)&&(!fQ||norm(e.co+' '+e.tk+' '+e.x).includes(fQ)))
    .sort((a,b)=>b.d.localeCompare(a.d));
- document.getElementById('meCnt').innerHTML=`<b>${list.length}</b> γεγονότα · χρονολογικά, νεότερα πρώτα`;
+ document.getElementById('meCnt').innerHTML=`<b>${list.length}</b> ${L('me.events')} · ${L('me.newestfirst')}`;
  const feed=document.getElementById('meFeed');
- if(!list.length){feed.innerHTML='<div class="me-empty">Κανένα γεγονός δεν ταιριάζει με τα φίλτρα.</div>';return;}
+ if(!list.length){feed.innerHTML=`<div class="me-empty">${L('me.empty')}</div>`;return;}
  let html='', curY='';
  list.forEach(e=>{
   const y=e.d.slice(0,4);
   if(y!==curY){html+=`<div class="me-yr">${y}</div>`;curY=y;}
   const dd=+e.d.slice(8,10), mm=MON[+e.d.slice(5,7)-1], T=TYPES[e.t];
-  html+=`<div class="me-ev"><div class="dc"><b>${dd}</b><span>${mm}</span></div><div class="bar" style="background:${T.bar}"></div><div class="bd"><div class="l1"><span class="co">${e.co}</span><span class="tk">${e.tk}</span><span class="pill" style="color:${T.tx};background:${T.bg}">${T.label}</span></div><div class="ds">${e.x}</div></div><div class="sc">${e.s}</div></div>`;
+  html+=`<div class="me-ev"><div class="dc"><b>${dd}</b><span>${mm}</span></div><div class="bar" style="background:${T.bar}"></div><div class="bd"><div class="l1"><span class="co">${e.co}</span><span class="tk">${e.tk}</span><span class="pill" style="color:${T.tx};background:${T.bg}">${L(T.key)}</span></div><div class="ds">${e.x}</div></div><div class="sc">${SEC(e.s)}</div></div>`;
  });
  feed.innerHTML=html;
 }
 render();
+document.addEventListener('axion:langchange',function(){ buildChips(); buildSectorOptions(); render(); });
 </script>
 <div id="am-foot"></div>
 <script>window.NAV_ACTIVE=2;window.NAV_CUR="Γεγονότα αγοράς";</script>

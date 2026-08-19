@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ευρετήριο κλάδων — Axion Metrics</title>
+<title data-i18n="sectors.title">Ευρετήριο κλάδων — Axion Metrics</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&family=Open+Sans:wght@400;600;700;800&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -60,11 +60,12 @@
  .colist .co:hover{color:var(--accent)}
 
  .foot{font-size:11.5px;color:var(--muted);margin-top:20px;line-height:1.6}
- 
+
 
 </style>
 <link rel="stylesheet" href="../assets/chrome.css">
 <script src="../assets/data.js"></script>
+<script src="../assets/i18n.js"></script>
 </head>
 <body>
 <div id="am-nav"></div>
@@ -72,7 +73,7 @@
  <section class="hero">
     <div class="stripe"></div>
     <div class="hero-in">
-      <h1>Ευρετήριο κλάδων</h1>
+      <h1 data-i18n="sectors.h1">Ευρετήριο κλάδων</h1>
       <div class="statrow" id="summary"></div>
     </div>
   </section>
@@ -80,37 +81,60 @@
  <div class="resbar">
   <span class="cnt" id="cnt"></span>
   <select class="sortsel" id="sort" onchange="render()">
-   <option value="n">Πλήθος εταιρειών</option>
-   <option value="name">Αλφαβητικά</option>
-   <option value="mcap">Κεφαλαιοποίηση</option>
-   <option value="cagr">Ανάπτυξη τζίρου</option>
+   <option value="n" data-i18n="sectors.sort.n">Πλήθος εταιρειών</option>
+   <option value="name" data-i18n="sectors.sort.name">Αλφαβητικά</option>
+   <option value="mcap" data-i18n="sectors.sort.mcap">Κεφαλαιοποίηση</option>
+   <option value="cagr" data-i18n="sectors.sort.cagr">Ανάπτυξη τζίρου</option>
    </select>
  </div>
 
  <div class="grid" id="grid"></div>
 
- <div class="foot">Οι εταιρείες κάθε κλάδου εμφανίζονται κατά φθίνουσα κεφαλαιοποίηση. Κλικ στο όνομα του κλάδου ανοίγει τη σελίδα του· κλικ σε εταιρεία τη σελίδα της. Η «ανάπτυξη τζίρου» είναι ο μέσος ετήσιος ρυθμός αύξησης του κύκλου εργασιών (CAGR) 2020–2025, σταθμισμένος κατά μέγεθος.</div>
+ <div class="foot" data-i18n="sectors.foot">Οι εταιρείες κάθε κλάδου εμφανίζονται κατά φθίνουσα κεφαλαιοποίηση. Κλικ στο όνομα του κλάδου ανοίγει τη σελίδα του· κλικ σε εταιρεία τη σελίδα της. Η «ανάπτυξη τζίρου» είναι ο μέσος ετήσιος ρυθμός αύξησης του κύκλου εργασιών (CAGR) 2020–2025, σταθμισμένος κατά μέγεθος.</div>
 </div>
 
 <script>
+AX_I18N.add({
+ 'sectors.title':{el:'Ευρετήριο κλάδων — Axion Metrics', en:'Sector index — Axion Metrics'},
+ 'sectors.h1':{el:'Ευρετήριο κλάδων', en:'Sector index'},
+ 'sectors.sort.n':{el:'Πλήθος εταιρειών', en:'By company count'},
+ 'sectors.sort.name':{el:'Αλφαβητικά', en:'Alphabetical'},
+ 'sectors.sort.mcap':{el:'Κεφαλαιοποίηση', en:'Market cap'},
+ 'sectors.sort.cagr':{el:'Ανάπτυξη τζίρου', en:'Revenue growth'},
+ 'sectors.foot':{el:'Οι εταιρείες κάθε κλάδου εμφανίζονται κατά φθίνουσα κεφαλαιοποίηση. Κλικ στο όνομα του κλάδου ανοίγει τη σελίδα του· κλικ σε εταιρεία τη σελίδα της. Η «ανάπτυξη τζίρου» είναι ο μέσος ετήσιος ρυθμός αύξησης του κύκλου εργασιών (CAGR) 2020–2025, σταθμισμένος κατά μέγεθος.', en:'Companies in each sector are shown by descending market cap. Clicking the sector name opens its page; clicking a company opens its page. “Revenue growth” is the size-weighted average annual growth rate of turnover (CAGR) 2020–2025.'},
+ 'sectors.revgrowth':{el:'Ανάπτυξη τζίρου', en:'Revenue growth'},
+ 'sectors.mcaplbl':{el:'Κεφ/ποίηση', en:'Market cap'},
+ 'sum.sectors':{el:'Κλάδοι', en:'Sectors'},
+ 'sum.companies':{el:'Εταιρείες', en:'Companies'},
+ 'sum.totmcap':{el:'Συν. κεφαλαιοποίηση', en:'Total market cap'},
+ 'sum.medpe':{el:'Διάμεση P/E', en:'Median P/E'},
+ 'sum.avggrowth':{el:'Μέση ανάπτυξη τζίρου', en:'Avg revenue growth'},
+ 'word.sectors':{el:'κλάδοι', en:'sectors'},
+ 'word.companies':{el:'εταιρείες', en:'companies'},
+ 'word.semesters':{el:'εξάμηνα', en:'semesters'},
+ 'unit.meur':{el:' εκ. €', en:' €M'}
+});
+function L(k){return AX_I18N.t(k);}
+function SEC(n){return AX_I18N.sector(n);}
+function curLang(){return window.AX_I18N?AX_I18N.lang:'el';}
+function LOC(){return curLang()==='en'?'en-US':'el-GR';}
+
 const SECTOR_PAGE='../sector/';
 const COMPANY_PAGE='../company/';
 
-// ίδια δεδομένα-δείγμα με το ευρετήριο εταιρειών
 const AXBASIS=(function(){try{var u=new URLSearchParams(location.search).get('basis');var b=u||localStorage.getItem('am-basis')||'annual';return (window.AXION&&window.AXION.meta&&window.AXION.meta.bases.indexOf(b)>-1)?b:'annual';}catch(e){return 'annual';}})();
-const DATA=((window.AXION&&window.AXION.rows&&window.AXION.rows[AXBASIS])||[]).filter(function(r){return r.calculated!==false;}); // εξαίρεση (CALCULATED=NO) από τη λίστα κλάδων
+const DATA=((window.AXION&&window.AXION.rows&&window.AXION.rows[AXBASIS])||[]).filter(function(r){return r.calculated!==false;});
 document.addEventListener('axion:basischange',function(){location.reload();});
 
-const fmt=(v,d)=>(v==null||isNaN(v))?'—':v.toLocaleString('el-GR',{minimumFractionDigits:d,maximumFractionDigits:d});
-const eur=v=>{if(v==null||isNaN(v))return '—';const m=v/1e6,a=Math.abs(m),d=a<100?2:a<1000?1:0;return m.toLocaleString('el-GR',{minimumFractionDigits:d,maximumFractionDigits:d})+' εκ. €';};
+const fmt=(v,d)=>(v==null||isNaN(v))?'—':v.toLocaleString(LOC(),{minimumFractionDigits:d,maximumFractionDigits:d});
+const eur=v=>{if(v==null||isNaN(v))return '—';const m=v/1e6,a=Math.abs(m),d=a<100?2:a<1000?1:0;return m.toLocaleString(LOC(),{minimumFractionDigits:d,maximumFractionDigits:d})+L('unit.meur');};
 const q=(arr,p)=>{const s=[...arr].sort((a,b)=>a-b),i=(s.length-1)*p,lo=Math.floor(i),hi=Math.ceil(i);return s[lo]+(s[hi]-s[lo])*(i-lo);};
 
-// ---- προσομοιωμένη ανάπτυξη τζίρου (CAGR) ανά εταιρεία, ντετερμινιστική ----
 const h32=s=>{let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return h>>>0;};
 const rng=seed=>{let a=seed>>>0;return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};};
 const SEC_G={'Τράπεζες':6,'Ενέργεια':12,'Βιομηχανία':9,'Καταναλωτικά':7,'Εμπόριο':6,'Κατασκευές':14,'Τεχνολογία':16,'Ακίνητα':8,'Μεταφορές':18,'Υγεία':7};
 const coCagr=r=>{const base=(SEC_G[r.s]??8), rd=rng(h32(r.t)); return base+(rd()-0.5)*8;};
-const CAGR_Y=5; // 2020 -> 2025
+const CAGR_Y=5;
 
 const qn=(a,p)=>{const v=a.filter(x=>x!=null&&!isNaN(x));return v.length?q(v,p):null;};
 const SECTORS=[...new Set(DATA.map(r=>r.s))].filter(s=>s&&s!=='—').map(name=>{
@@ -125,7 +149,6 @@ const SECTORS=[...new Set(DATA.map(r=>r.s))].filter(s=>s&&s!=='—').map(name=>{
    dy:  qn(rows.map(r=>r.dy),.5)};
 });
 
-// στρωμένη κλίμακα κοινή για όλες τις λωρίδες
 const ALLPE=DATA.map(r=>r.pe).filter(x=>x!=null&&!isNaN(x));
 const GLO=Math.min(...ALLPE), GHI=Math.max(...ALLPE);
 
@@ -136,18 +159,18 @@ function card(sec){
    .slice().sort((a,b)=>b.mcap-a.mcap)
    .map(r=>{
      const dead=r.trading===false?' co-dead':'';
-     const dot=(r.trading===false&&r.tstatus)?`<span class="tdot ${r.tstatus.type==='delisted'?'t-del':'t-sus'}" title="${r.tstatus.label}"></span>`:((AXBASIS==='interim'&&r.interimPartial)?`<span class="tdot t-prov" title="${(r.h1n||1)}/2 εξάμηνα"></span>`:'');
+     const dot=(r.trading===false&&r.tstatus)?`<span class="tdot ${r.tstatus.type==='delisted'?'t-del':'t-sus'}" title="${r.tstatus.label}"></span>`:((AXBASIS==='interim'&&r.interimPartial)?`<span class="tdot t-prov" title="${(r.h1n||1)}/2 ${L('word.semesters')}"></span>`:'');
      return `<a class="co${dead}" href="${COMPANY_PAGE}?tk=${encodeURIComponent(r.tk)}" target="_blank"><span class="cn">${dot}${r.t}</span><span class="cm">${eur(r.mcap)}</span></a>`;
    }).join('');
  return `<div class="card">
   <div class="chdr">
    <div class="chead">
-     <a class="cname" href="${encodeURI(SECTOR_PAGE)}" target="_blank">${sec.name}</a>
+     <a class="cname" href="${encodeURI(SECTOR_PAGE)}" target="_blank">${SEC(sec.name)}</a>
      <span class="ccount">${sec.n}</span>
    </div>
    <div class="cmeta">
-     <span>Ανάπτυξη τζίρου <b class="${gc}">${gt}</b></span>
-     <span>Κεφ/ποίηση <b>${eur(sec.mcap)}</b></span>
+     <span>${L('sectors.revgrowth')} <b class="${gc}">${gt}</b></span>
+     <span>${L('sectors.mcaplbl')} <b>${eur(sec.mcap)}</b></span>
    </div>
   </div>
   <div class="colist">${list}</div>
@@ -157,10 +180,10 @@ function card(sec){
 function render(){
  const s=document.getElementById('sort').value;
  let arr=[...SECTORS];
- if(s==='name') arr.sort((a,b)=>a.name.localeCompare(b.name,'el'));
+ if(s==='name') arr.sort((a,b)=>SEC(a.name).localeCompare(SEC(b.name),curLang()==='en'?'en':'el'));
  else arr.sort((a,b)=>b[s]-a[s]);
  document.getElementById('grid').innerHTML=arr.map(card).join('');
- document.getElementById('cnt').textContent=`${SECTORS.length} κλάδοι · ${DATA.length} εταιρείες`;
+ document.getElementById('cnt').textContent=`${SECTORS.length} ${L('word.sectors')} · ${DATA.length} ${L('word.companies')}`;
 }
 
 function summary(){
@@ -169,15 +192,16 @@ function summary(){
  const mkt=(Math.pow(totM/rev0,1/CAGR_Y)-1)*100;
  const gc=mkt>=0?'up':'down', gt=(mkt>=0?'+':'−')+fmt(Math.abs(mkt),1)+'%';
  const cells=[
-  ['<span class="n">'+SECTORS.length+'</span>','Κλάδοι'],
-  ['<span class="n">'+DATA.length+'</span>','Εταιρείες'],
-  ['<span class="n">'+eur(totM)+'</span>','Συν. κεφαλαιοποίηση'],
-  ['<span class="n">'+fmt(q(ALLPE,.5),1)+'</span>','Διάμεση P/E'],
-  ['<span class="n '+gc+'">'+gt+'</span>','Μέση ανάπτυξη τζίρου'],
+  ['<span class="n">'+SECTORS.length+'</span>',L('sum.sectors')],
+  ['<span class="n">'+DATA.length+'</span>',L('sum.companies')],
+  ['<span class="n">'+eur(totM)+'</span>',L('sum.totmcap')],
+  ['<span class="n">'+fmt(q(ALLPE,.5),1)+'</span>',L('sum.medpe')],
+  ['<span class="n '+gc+'">'+gt+'</span>',L('sum.avggrowth')],
  ];
  document.getElementById('summary').innerHTML=cells.map(([n,l])=>`<div class="s">${n}<span class="l">${l}</span></div>`).join('');
 }
 summary(); render();
+document.addEventListener('axion:langchange',function(){ summary(); render(); });
 </script>
 <div id="am-foot"></div>
 <script>window.NAV_ACTIVE=1;window.NAV_CUR="Ευρετήριο κλάδων";</script>

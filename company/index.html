@@ -316,6 +316,7 @@
 @media (prefers-reduced-motion:reduce){.cdot{animation:none}}
 </style>
 <link rel="stylesheet" href="../assets/chrome.css">
+<script src="../assets/i18n.js"></script>
 <script src="../assets/data.js"></script>
 </head>
 <body>
@@ -325,19 +326,19 @@
   <section class="hero">
     <div class="stripe"></div>
     <div class="hero-in">
-      <h1>Εταιρεία</h1>
+      <h1 data-i18n="co.hero.h1">Εταιρεία</h1>
       <div class="hero-stats">
-        <div class="hs"><span class="v">26</span><span class="l">Αριθμοδείκτες</span></div>
-        <div class="hs"><span class="v t">Ιστορικότητα</span><span class="l">από 2020</span></div>
-        <div class="hs"><span class="v t">Ενοποιημένη</span><span class="l">Βάση</span></div>
-        <div class="hs"><span class="v t">Διάμεσος κλάδου</span><span class="l">Σημείο σύγκρισης</span></div>
+        <div class="hs"><span class="v">26</span><span class="l" data-i18n="co.hs.ratios">Αριθμοδείκτες</span></div>
+        <div class="hs"><span class="v t" data-i18n="co.hs.hist">Ιστορικότητα</span><span class="l" data-i18n="co.hs.histl">από 2020</span></div>
+        <div class="hs"><span class="v t" data-i18n="co.hs.cons">Ενοποιημένη</span><span class="l" data-i18n="co.hs.consl">Βάση</span></div>
+        <div class="hs"><span class="v t" data-i18n="co.hs.median">Διάμεσος κλάδου</span><span class="l" data-i18n="co.hs.medianl">Σημείο σύγκρισης</span></div>
       </div>
     </div>
   </section>
   <section class="mast">
-    <button class="qs-open" onclick="qsOpen()" title="Γρήγορη εύρεση εταιρείας">
+    <button class="qs-open" onclick="qsOpen()" title="Γρήγορη εύρεση εταιρείας" data-i18n-title="co.qsopen.title">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-      Επιλογή εταιρείας
+      <span data-i18n="co.qsopen">Επιλογή εταιρείας</span>
     </button>
     <div class="mast-nameline">
       <h1 id="co-name">ALLWYN</h1>
@@ -361,11 +362,11 @@
         <div class="pbody year-body">
           <div class="year-top">
             <div class="panel sub">
-              <div class="phead purple"><i class="ti ti-users-group"></i><h2>Μέτοχοι</h2></div>
+              <div class="phead purple"><i class="ti ti-users-group"></i><h2 data-i18n="co.ph.holders">Μέτοχοι</h2></div>
               <div class="pbody"><div id="own-viz"></div></div>
             </div>
             <div class="panel sub">
-              <div class="phead emerald"><i class="ti ti-world"></i><h2>Θυγατρικές &amp; συμμετοχές</h2></div>
+              <div class="phead emerald"><i class="ti ti-world"></i><h2 data-i18n="co.ph.subs">Θυγατρικές &amp; συμμετοχές</h2></div>
               <div class="pbody">
                 <div id="listed-wrap"></div>
                 <div class="geo-wrap">
@@ -376,7 +377,7 @@
                 </div>
                 <button class="show-all" id="show-all"></button>
                 <div class="subs-full hidden" id="subs-full">
-                  <input class="filter" id="subs-filter" placeholder="Αναζήτηση θυγατρικής ή χώρας…">
+                  <input class="filter" id="subs-filter" placeholder="Αναζήτηση θυγατρικής ή χώρας…" data-i18n-ph="co.subs.ph">
                   <div id="acc"></div>
                 </div>
               </div>
@@ -384,11 +385,11 @@
           </div>
           <div class="glance-row">
             <div class="panel sub p-glance">
-              <div class="phead teal"><i class="ti ti-gauge"></i><h2>Με μια ματιά</h2><span class="hint">έναντι κλάδου</span></div>
+              <div class="phead teal"><i class="ti ti-gauge"></i><h2 data-i18n="co.ph.glance">Με μια ματιά</h2><span class="hint" data-i18n="co.hint.vssec">έναντι κλάδου</span></div>
               <div class="pbody"><div class="sc-grid" id="scorecard"></div></div>
             </div>
             <div class="panel sub p-dist">
-              <div class="phead teal"><i class="ti ti-coin"></i><h2>Χρηματικές διανομές</h2><span class="hint">3ετία</span></div>
+              <div class="phead teal"><i class="ti ti-coin"></i><h2 data-i18n="co.ph.dist">Χρηματικές διανομές</h2><span class="hint" data-i18n="co.hint.3y">3ετία</span></div>
               <div class="pbody" id="distcard"></div>
             </div>
           </div>
@@ -398,19 +399,19 @@
 
     <div class="a-ratios">
       <div class="panel">
-        <div class="phead blue"><i class="ti ti-chart-dots"></i><h2>Δείκτες</h2></div>
+        <div class="phead blue"><i class="ti ti-chart-dots"></i><h2 data-i18n="co.ph.ratios">Δείκτες</h2></div>
         <div class="pbody">
           <div id="ratios"></div>
-          <p class="note"><strong>Διάμεσος κλάδου:</strong> η σύγκριση γίνεται με τη διάμεση («τυπική») τιμή των εταιρειών του κλάδου, όχι με μέσο όρο — έτσι ακραίες τιμές λίγων εταιρειών δεν αλλοιώνουν τη σύγκριση. Οι τράπεζες εξετάζονται χωριστά.</p>
+          <p class="note" data-i18n-html="co.ratios.note"><strong>Διάμεσος κλάδου:</strong> η σύγκριση γίνεται με τη διάμεση («τυπική») τιμή των εταιρειών του κλάδου, όχι με μέσο όρο — έτσι ακραίες τιμές λίγων εταιρειών δεν αλλοιώνουν τη σύγκριση. Οι τράπεζες εξετάζονται χωριστά.</p>
         </div>
       </div>
     </div>
 
     <div class="a-traj">
       <div class="panel">
-        <div class="phead blue"><i class="ti ti-chart-line"></i><h2>Τροχιά μεγεθών</h2></div>
+        <div class="phead blue"><i class="ti ti-chart-line"></i><h2 data-i18n="co.ph.traj">Τροχιά μεγεθών</h2></div>
         <div class="pbody">
-          <div class="mlegend"><span class="ml"><i style="background:#2f80c2"></i>Τζίρος</span><span class="ml"><i style="background:#3f9e6a"></i>EBITDA</span><span class="u">(εκατ. €)</span></div>
+          <div class="mlegend"><span class="ml"><i style="background:#2f80c2"></i><span data-i18n="co.leg.rev">Τζίρος</span></span><span class="ml"><i style="background:#3f9e6a"></i>EBITDA</span><span class="u" data-i18n="co.unit.meur2">(εκατ. €)</span></div>
           <div class="chart-wrap" style="position:relative">
             <div class="chart-host" id="host" role="img" aria-label="Τροχιά μεγέθους 2020-2025 με εταιρικά γεγονότα"></div>
             <div class="tip" id="tip"></div>
@@ -424,6 +425,126 @@
 </main>
 
 <script>
+AX_I18N.add({
+ 'co.hero.h1':{el:'Εταιρεία', en:'Company'},
+ 'co.hs.ratios':{el:'Αριθμοδείκτες', en:'Ratios'},
+ 'co.hs.hist':{el:'Ιστορικότητα', en:'History'}, 'co.hs.histl':{el:'από 2020', en:'since 2020'},
+ 'co.hs.cons':{el:'Ενοποιημένη', en:'Consolidated'}, 'co.hs.consl':{el:'Βάση', en:'Basis'},
+ 'co.hs.median':{el:'Διάμεσος κλάδου', en:'Sector median'}, 'co.hs.medianl':{el:'Σημείο σύγκρισης', en:'Benchmark'},
+ 'co.qsopen':{el:'Επιλογή εταιρείας', en:'Select company'},
+ 'co.qsopen.title':{el:'Γρήγορη εύρεση εταιρείας', en:'Quick company search'},
+ 'co.ph.holders':{el:'Μέτοχοι', en:'Shareholders'},
+ 'co.ph.subs':{el:'Θυγατρικές & συμμετοχές', en:'Subsidiaries & holdings'},
+ 'co.ph.glance':{el:'Με μια ματιά', en:'At a glance'},
+ 'co.hint.vssec':{el:'έναντι κλάδου', en:'vs sector'},
+ 'co.ph.dist':{el:'Χρηματικές διανομές', en:'Cash distributions'},
+ 'co.hint.3y':{el:'3ετία', en:'3-year'},
+ 'co.ph.ratios':{el:'Δείκτες', en:'Ratios'},
+ 'co.ph.traj':{el:'Τροχιά μεγεθών', en:'Size trajectory'},
+ 'co.leg.rev':{el:'Τζίρος', en:'Revenue'},
+ 'co.unit.meur2':{el:'(εκατ. €)', en:'(€M)'},
+ 'co.subs.ph':{el:'Αναζήτηση θυγατρικής ή χώρας…', en:'Search subsidiary or country…'},
+ 'co.ratios.note':{el:'<strong>Διάμεσος κλάδου:</strong> η σύγκριση γίνεται με τη διάμεση («τυπική») τιμή των εταιρειών του κλάδου, όχι με μέσο όρο — έτσι ακραίες τιμές λίγων εταιρειών δεν αλλοιώνουν τη σύγκριση. Οι τράπεζες εξετάζονται χωριστά.', en:'<strong>Sector median:</strong> the comparison uses the median (“typical”) value of the sector’s companies, not the average — so extreme values from a few companies do not distort the comparison. Banks are examined separately.'},
+ 'co.qs.title':{el:'Εύρεση εταιρείας', en:'Find company'},
+ 'co.qs.ph':{el:'Όνομα ή σύμβολο…', en:'Name or symbol…'},
+ 'co.qs.nav':{el:'πλοήγηση', en:'navigate'},
+ 'co.qs.open':{el:'άνοιγμα', en:'open'},
+ 'co.qs.close':{el:'κλείσιμο', en:'close'},
+ 'co.qs.empty':{el:'Καμία εταιρεία δεν ταιριάζει.', en:'No company matches.'},
+ // metrics
+ 'co.m.revenue':{el:'Τζίρος', en:'Revenue'},
+ 'co.m.net_profit':{el:'Καθαρά κέρδη', en:'Net profit'},
+ 'co.m.ebitda':{el:'EBITDA', en:'EBITDA'},
+ 'co.m.mcap':{el:'Κεφαλαιοποίηση', en:'Market cap'},
+ 'co.m.pe':{el:'P/E', en:'P/E'},
+ 'co.m.pbv':{el:'P/BV', en:'P/BV'},
+ 'co.m.total_debt':{el:'Συν. δανεισμός', en:'Total debt'},
+ 'co.m.net_debt':{el:'Καθ. δανεισμός', en:'Net debt'},
+ 'co.msub.revenue':{el:'Κύκλος εργασιών', en:'Turnover'},
+ 'co.msub.net_profit':{el:'μετά φόρων, μητρικής', en:'after tax, parent'},
+ 'co.msub.ebitda':{el:'λειτουργική κερδοφορία', en:'operating profitability'},
+ 'co.msub.mcap':{el:'χρημ. αξία', en:'market value'},
+ 'co.msub.pe':{el:'τιμή / κέρδη', en:'price / earnings'},
+ 'co.msub.pbv':{el:'τιμή / λογιστική αξία', en:'price / book value'},
+ 'co.msub.total_debt':{el:'σύνολο χρέους', en:'total debt'},
+ 'co.msub.net_debt':{el:'χρέος μείον ταμειακά', en:'debt minus cash'},
+ // current band
+ 'co.cband.title':{el:'Τρέχοντα Μεγέθη (τιμή κλεισίματος', en:'Current figures (closing price'},
+ // FAM / event families
+ 'co.fam.capital':{el:'Μετ.Κεφαλαίου', en:'Capital'},
+ 'co.fam.div':{el:'Χρημ.Διανομές', en:'Distributions'},
+ 'co.fam.listing':{el:'Εισαγωγές/Διαγραφές', en:'Listings/Delistings'},
+ 'co.fam.index':{el:'Δείκτες', en:'Index'},
+ 'co.evk.plural':{el:'γεγονότα', en:'events'},
+ // status banners
+ 'co.st.del.head':{el:'Εκτός διαπραγμάτευσης — διαγραμμένη από το Χρηματιστήριο Αθηνών.', en:'Delisted — removed from the Athens Stock Exchange.'},
+ 'co.st.del.tail':{el:'. Τα εμφανιζόμενα στοιχεία είναι ιστορικά.', en:'. The figures shown are historical.'},
+ 'co.st.sus.head':{el:'Σε αναστολή διαπραγμάτευσης', en:'Trading suspended'},
+ 'co.st.sus.since':{el:' από ', en:' since '},
+ 'co.st.sus.detail':{el:'Τα εμφανιζόμενα στοιχεία αφορούν την τελευταία διαθέσιμη περίοδο.', en:'The figures shown are for the last available period.'},
+ // interim banner
+ 'co.h1.pill':{el:'εξάμηνα', en:'semesters'},
+ 'co.h1.of':{el:'από 2 εξάμηνα', en:'of 2 semesters'},
+ 'co.h1.detail':{el:'— διαθέσιμοι οι δείκτες στιγμιότυπου (αποτίμηση, περιθώρια, ρευστότητα, D/E). Η σύγκριση με πέρσι, το Piotroski και οι τάσεις ενεργοποιούνται με το 2ο εξάμηνο.', en:'— snapshot ratios are available (valuation, margins, liquidity, D/E). Year-on-year comparison, the Piotroski score and trends activate with the 2nd semester.'},
+ // chart
+ 'co.chart.events':{el:'Εταιρικά γεγονότα', en:'Corporate events'},
+ 'co.chart.netprofit':{el:'Καθ. κέρδη', en:'Net profit'},
+ 'co.chart.totaldebt':{el:'Συν. δανεισμός', en:'Total debt'},
+ 'co.chart.netdebt':{el:'Καθ. δανεισμός', en:'Net debt'},
+ // subs / geo
+ 'co.geo.entities':{el:'οντότητες', en:'entities'},
+ 'co.geo.countries':{el:'χώρες', en:'countries'},
+ 'co.geo.country':{el:'χώρα', en:'country'},
+ 'co.geo.other':{el:'Λοιπές', en:'Other'},
+ 'co.geo.listed':{el:'εισηγμένη', en:'listed'},
+ 'co.geo.entities_n':{el:'οντότητες', en:'entities'},
+ 'co.geo.showall':{el:'Εμφάνιση όλων', en:'Show all'},
+ 'co.geo.in':{el:' σε ', en:' in '},
+ 'co.geo.hide':{el:'Απόκρυψη πλήρους λίστας', en:'Hide full list'},
+ // ratios table
+ 'co.rt.ratio':{el:'Δείκτης', en:'Ratio'},
+ 'co.rt.desc':{el:'Περιγραφή', en:'Description'},
+ 'co.rt.secmed':{el:'Διάμεσος κλάδου', en:'Sector median'},
+ 'unit.days':{el:' ημ.', en:' d'},
+ // glance
+ 'co.gl.profit':{el:'Κερδοφορία', en:'Profitability'},
+ 'co.gl.growth':{el:'Ανάπτυξη', en:'Growth'},
+ 'co.gl.lev':{el:'Μόχλευση', en:'Leverage'},
+ 'co.gl.liq':{el:'Ρευστότητα', en:'Liquidity'},
+ 'co.gl.b3':{el:'μ.ο. 3ετίας', en:'3-yr avg'},
+ 'co.gl.bp':{el:'περιόδου', en:'period'},
+ 'co.gl.sector':{el:'κλάδος ', en:'sector '},
+ 'co.gl.met.roe':{el:'ROE', en:'ROE'},
+ 'co.gl.met.rev':{el:'Έσοδα', en:'Revenue'},
+ 'co.gl.met.de':{el:'Χρέος/Ίδια', en:'Debt/Equity'},
+ 'co.gl.met.cur':{el:'Γενική', en:'Current'},
+ 'co.gl.r.lossmk':{el:'Ζημιογόνα', en:'Loss-making'},
+ 'co.gl.r.low':{el:'Χαμηλή', en:'Low'},
+ 'co.gl.r.mod':{el:'Μέτρια', en:'Moderate'},
+ 'co.gl.r.high':{el:'Υψηλή', en:'High'},
+ 'co.gl.r.shrink':{el:'Συρρίκνωση', en:'Shrinking'},
+ 'co.gl.r.stag':{el:'Στάσιμη', en:'Stagnant'},
+ 'co.gl.r.steady':{el:'Σταθερή', en:'Steady'},
+ 'co.gl.r.strong':{el:'Ισχυρή', en:'Strong'},
+ 'co.gl.r.negeq':{el:'Αρνητικά ίδια', en:'Negative equity'},
+ 'co.gl.r.adeq':{el:'Επαρκής', en:'Adequate'},
+ 'co.gl.r.marg':{el:'Οριακή', en:'Marginal'},
+ 'co.gl.r.strained':{el:'Πιεσμένη', en:'Strained'},
+ // dist
+ 'co.dist.year':{el:'Χρήση', en:'Year'},
+ 'co.dist.eursh':{el:'€/μτχ', en:'€/sh'},
+ 'co.dist.yield':{el:'Απόδοση', en:'Yield'},
+ 'co.dist.note':{el:'Μέρισμα + επιστροφή κεφαλαίου, αθροιστικά ανά χρήση.', en:'Dividend + capital return, cumulative per year.'},
+ 'co.dist.none':{el:'Δεν διανέμει', en:'No distributions'},
+ 'co.dist.none.s':{el:'Καμία χρηματική διανομή στους μετόχους την τελευταία 3ετία.', en:'No cash distribution to shareholders in the last 3 years.'}
+});
+function L(k){var v=AX_I18N.t(k);return v==null?'':v;}
+function SEC(n){return AX_I18N.sector(n);}
+function curLang(){return window.AX_I18N?AX_I18N.lang:'el';}
+function EN(){return curLang()==='en';}
+function LOC(){return EN()?'en-US':'el-GR';}
+document.addEventListener('axion:langchange',function(){location.reload();});
+
 const AXBASIS=(function(){try{var u=new URLSearchParams(location.search).get('basis');var b=u||localStorage.getItem('am-basis')||'annual';return (window.AXION&&window.AXION.meta&&window.AXION.meta.bases.indexOf(b)>-1)?b:'annual';}catch(e){return 'annual';}})();
 const _AXC=(window.AXION&&window.AXION.companies&&window.AXION.companies[AXBASIS])||[];
 let _tk=new URLSearchParams(location.search).get('tk');
@@ -433,17 +554,18 @@ try{ if(AX&&AX.tk) localStorage.setItem('am-last-company', AX.tk); }catch(e){}
 document.addEventListener('axion:basischange',function(){location.reload();});
 const company = AX ? {ticker:AX.tk,name:AX.name,euronext_name:(AX.en||''),sector:AX.s,latest:AX.latest,years:AX.years,metrics:AX.metrics,current:(AX.current||null)} : {ticker:'',name:'—',euronext_name:'',sector:'',latest:{period:'',type:''},years:[2020,2021,2022,2023,2024,2025],metrics:{revenue:[],net_profit:[],ebitda:[],pe:[],pbv:[],total_debt:[],net_debt:[]}};;
 const METRICS=[
-  {key:'revenue',label:'Τζίρος',sub:'Κύκλος εργασιών',unit:'eur',goodUp:true},
-  {key:'net_profit',label:'Καθαρά κέρδη',sub:'μετά φόρων, μητρικής',unit:'eur',goodUp:true},
-  {key:'ebitda',label:'EBITDA',sub:'λειτουργική κερδοφορία',unit:'eur',goodUp:true},
-  {key:'mcap',label:'Κεφαλαιοποίηση',sub:'χρημ. αξία',unit:'eur',goodUp:null},
- {key:'pe',label:'P/E',sub:'τιμή / κέρδη',unit:'x',goodUp:null},
-  {key:'pbv',label:'P/BV',sub:'τιμή / λογιστική αξία',unit:'x',goodUp:null},
-  {key:'total_debt',label:'Συν. δανεισμός',sub:'σύνολο χρέους',unit:'eur',goodUp:false},
-  {key:'net_debt',label:'Καθ. δανεισμός',sub:'χρέος μείον ταμειακά',unit:'eur',goodUp:false}
+  {key:'revenue',label:L('co.m.revenue'),sub:L('co.msub.revenue'),unit:'eur',goodUp:true},
+  {key:'net_profit',label:L('co.m.net_profit'),sub:L('co.msub.net_profit'),unit:'eur',goodUp:true},
+  {key:'ebitda',label:L('co.m.ebitda'),sub:L('co.msub.ebitda'),unit:'eur',goodUp:true},
+  {key:'mcap',label:L('co.m.mcap'),sub:L('co.msub.mcap'),unit:'eur',goodUp:null},
+ {key:'pe',label:L('co.m.pe'),sub:L('co.msub.pe'),unit:'x',goodUp:null},
+  {key:'pbv',label:L('co.m.pbv'),sub:L('co.msub.pbv'),unit:'x',goodUp:null},
+  {key:'total_debt',label:L('co.m.total_debt'),sub:L('co.msub.total_debt'),unit:'eur',goodUp:false},
+  {key:'net_debt',label:L('co.m.net_debt'),sub:L('co.msub.net_debt'),unit:'eur',goodUp:false}
 ];
-const fMil=v=>{if(v==null||isNaN(v))return '—';const m=v/1e6,a=Math.abs(m),d=a<100?2:a<1000?1:0;return m.toLocaleString('el-GR',{minimumFractionDigits:d,maximumFractionDigits:d});};
-const fX=v=>(v==null||(typeof v==='number'&&isNaN(v)))?'—':v.toLocaleString('el-GR',{minimumFractionDigits:1,maximumFractionDigits:1});
+const fMil=v=>{if(v==null||isNaN(v))return '—';const m=v/1e6,a=Math.abs(m),d=a<100?2:a<1000?1:0;return m.toLocaleString(LOC(),{minimumFractionDigits:d,maximumFractionDigits:d});};
+const fX=v=>(v==null||(typeof v==='number'&&isNaN(v)))?'—':v.toLocaleString(LOC(),{minimumFractionDigits:1,maximumFractionDigits:1});
+const EURSUF=()=>EN()?' €M':' εκ.€';
 const fmt=(v,unit)=>v==null?'—':(unit==='eur'?fMil(v):fX(v));
 function deltaMark(arr,i,goodUp){
   if(i===0||arr[i]==null||arr[i-1]==null) return '';
@@ -469,10 +591,10 @@ document.getElementById('co-sector').textContent=company.sector;
   if(pill){ pill.className='tbadge '+cls; pill.innerHTML=icon+'<span>'+st.label+'</span>'; pill.hidden=false; }
   if(ban){
     var head, detail;
-    if(isDel){ head='Εκτός διαπραγμάτευσης — διαγραμμένη από το Χρηματιστήριο Αθηνών.';
-      detail=(st.note||'')+(st.dateLabel?(' — '+st.dateLabel):'')+'. Τα εμφανιζόμενα στοιχεία είναι ιστορικά.'; }
-    else{ head='Σε αναστολή διαπραγμάτευσης'+(st.dateLabel?(' από '+st.dateLabel):'')+'.';
-      detail='Τα εμφανιζόμενα στοιχεία αφορούν την τελευταία διαθέσιμη περίοδο.'; }
+    if(isDel){ head=L('co.st.del.head');
+      detail=(st.note||'')+(st.dateLabel?(' — '+st.dateLabel):'')+L('co.st.del.tail'); }
+    else{ head=L('co.st.sus.head')+(st.dateLabel?(L('co.st.sus.since')+st.dateLabel):'')+'.';
+      detail=L('co.st.sus.detail'); }
     ban.className='tbanner '+cls;
     ban.innerHTML=icon+'<span><b>'+head+'</b> <span class="thin">'+detail+'</span></span>';
     ban.hidden=false;
@@ -486,9 +608,9 @@ document.getElementById('co-sector').textContent=company.sector;
   if(!partial){ if(pill)pill.hidden=true; if(ban)ban.hidden=true; return; }
   var n=(AX&&AX.h1n)||1;
   var icon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/></svg>';
-  if(pill){ pill.className='tbadge t-prov'; pill.innerHTML='<b>'+n+'</b>/2 εξάμηνα'; pill.hidden=false; }
+  if(pill){ pill.className='tbadge t-prov'; pill.innerHTML='<b>'+n+'</b>/2 '+L('co.h1.pill'); pill.hidden=false; }
   if(ban){ ban.className='tbanner t-prov';
-    ban.innerHTML=icon+'<span><b>'+n+' από 2 εξάμηνα</b> <span class="thin">— διαθέσιμοι οι δείκτες στιγμιότυπου (αποτίμηση, περιθώρια, ρευστότητα, D/E). Η σύγκριση με πέρσι, το Piotroski και οι τάσεις ενεργοποιούνται με το 2ο εξάμηνο.</span></span>';
+    ban.innerHTML=icon+'<span><b>'+n+' '+L('co.h1.of')+'</b> <span class="thin">'+L('co.h1.detail')+'</span></span>';
     ban.hidden=false; }
 })();
 
@@ -496,28 +618,28 @@ const li=company.years.length-1;
 document.getElementById('latest').innerHTML=METRICS.map(m=>{
   const arr=company.metrics[m.key]; if(!arr) return '';
   const v=arr[li];
-  const val=m.unit==='eur'?(v==null?'—':`${fMil(v)}<small> εκ.€</small>`):fX(v);
+  const val=m.unit==='eur'?(v==null?'—':`${fMil(v)}<small>${EURSUF()}</small>`):fX(v);
   return `<div class="metric-item"><div class="k">${m.label}</div><div class="cell"><div class="v">${val}</div></div></div>`;
 }).join('');
 (function(){
   const cb=document.getElementById('current-band'); if(!cb) return;
   const cur=company.current;
   if(!cur||(cur.mcap==null&&cur.pe==null&&cur.pbv==null)){ cb.style.display='none'; return; }
-  const eur=v=>v==null?'—':`${fMil(v)}<small> εκ.€</small>`;
+  const eur=v=>v==null?'—':`${fMil(v)}<small>${EURSUF()}</small>`;
   const xx=v=>(v==null||isNaN(v))?'—':fX(v);
   const item=(k,val)=>`<div class="metric-item"><div class="k">${k}</div><div class="cell"><div class="v">${val}</div></div></div>`;
   const sp='<div class="spacer"></div>';
   const fmtd=s=>{const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(s||'');return m?`${m[3]}/${m[2]}/${m[1]}`:s;};
   const dt=cur.date?` · ${fmtd(cur.date)}`:'';
-  cb.innerHTML=`<div class="cdiv"><span class="ln"></span><span class="ct"><span class="cdot"></span>Τρέχοντα Μεγέθη (τιμή κλεισίματος${dt})</span><span class="ln"></span></div>`+
-   `<div class="latest">${sp}${sp}${sp}${item('Κεφαλαιοποίηση',eur(cur.mcap))}${item('P/E',xx(cur.pe))}${item('P/BV',xx(cur.pbv))}${sp}${sp}</div>`;
+  cb.innerHTML=`<div class="cdiv"><span class="ln"></span><span class="ct"><span class="cdot"></span>${L('co.cband.title')}${dt})</span><span class="ln"></span></div>`+
+   `<div class="latest">${sp}${sp}${sp}${item(L('co.m.mcap'),eur(cur.mcap))}${item('P/E',xx(cur.pe))}${item('P/BV',xx(cur.pbv))}${sp}${sp}</div>`;
 })();
 
 const FAM={
-  capital:{c:'#2f80c2',name:'Μετ.Κεφαλαίου'},
-  div:{c:'#cf7f00',name:'Χρημ.Διανομές'},
-  listing:{c:'#57a5df',name:'Εισαγωγές/Διαγραφές'},
-  index:{c:'#2b4a6b',name:'Δείκτες'}
+  capital:{c:'#2f80c2',name:L('co.fam.capital')},
+  div:{c:'#cf7f00',name:L('co.fam.div')},
+  listing:{c:'#57a5df',name:L('co.fam.listing')},
+  index:{c:'#2b4a6b',name:L('co.fam.index')}
 };
 const EVENTS=(AX&&AX.events)||[];;
 const REV_C='#2f80c2', EB_C='#3f9e6a';
@@ -549,11 +671,11 @@ function addPill(g,x,by,txt,col){
 function ptLabel(x,py,val,d,place){
   const g=el('g',{});
   const _a=Math.abs(val),_d=_a<100?2:_a<1000?1:0;
-  const valStr=val.toLocaleString('el-GR',{minimumFractionDigits:_d,maximumFractionDigits:_d});
+  const valStr=val.toLocaleString(LOC(),{minimumFractionDigits:_d,maximumFractionDigits:_d});
   const nearBy = place==='above'? py-11 : py+16;
   const farBy  = place==='above'? py-28 : py+33;
   addPill(g,x,nearBy,valStr,'#16243d');
-  if(d!==null){ const up=d>=0; addPill(g,x,farBy,(up?'+':'-')+Math.abs(d).toLocaleString('el-GR',{maximumFractionDigits:1})+'%',up?'#2f9e52':'#d64530'); }
+  if(d!==null){ const up=d>=0; addPill(g,x,farBy,(up?'+':'-')+Math.abs(d).toLocaleString(LOC(),{maximumFractionDigits:1})+'%',up?'#2f9e52':'#d64530'); }
   return g;
 }
 
@@ -569,7 +691,7 @@ function metricRow(svg,name,arr,fmtV,color,top,goodUp,showPct){
     const vt=el('text',{x:nx.toFixed(1),y:vy,'text-anchor':'end','font-family':"'Ubuntu Mono'",'font-size':11,fill:'#16243d'}); vt.textContent=vstr; svg.appendChild(vt);
     if(!showPct) continue;
     const d=yoy(arr,gi); if(d===null) continue;
-    const dstr=(d>=0?'+':'-')+Math.abs(d).toLocaleString('el-GR',{maximumFractionDigits:1})+'%';
+    const dstr=(d>=0?'+':'-')+Math.abs(d).toLocaleString(LOC(),{maximumFractionDigits:1})+'%';
     const good=goodUp?d>=0:d<0;
     const dt=el('text',{x:(nx+PCTG).toFixed(1),y:vy,'text-anchor':'end','font-family':"'Ubuntu Mono'",'font-size':8.5,'font-weight':700,fill:good?'#2f9e52':'#d64530'}); dt.textContent=dstr; svg.appendChild(dt);
   }
@@ -588,9 +710,9 @@ function draw(){
 
   lines.forEach(v=>{const y=yOf(v);
     svg.appendChild(el('line',{x1:padL,y1:y,x2:W-padR,y2:y,stroke:'#eaf1f8','stroke-width':1}));
-    const tl=el('text',{x:padL-10,y:y+4,'text-anchor':'end','font-family':"'Ubuntu Mono'",'font-size':10,fill:'#8199b3'}); tl.textContent=(v==null||isNaN(v))?'—':v.toLocaleString('el-GR'); svg.appendChild(tl);
+    const tl=el('text',{x:padL-10,y:y+4,'text-anchor':'end','font-family':"'Ubuntu Mono'",'font-size':10,fill:'#8199b3'}); tl.textContent=(v==null||isNaN(v))?'—':v.toLocaleString(LOC()); svg.appendChild(tl);
   });
-  const evl=el('text',{x:3,y:evLaneY+4,'font-family':"'Open Sans'",'font-size':9,'font-weight':700,fill:'#6b8199'}); evl.textContent='Εταιρικά γεγονότα'; svg.appendChild(evl);
+  const evl=el('text',{x:3,y:evLaneY+4,'font-family':"'Open Sans'",'font-size':9,'font-weight':700,fill:'#6b8199'}); evl.textContent=L('co.chart.events'); svg.appendChild(evl);
 
   const defs=el('defs',{});
   [['grev',REV_C],['geb',EB_C]].forEach(([id,c])=>{
@@ -613,10 +735,10 @@ function draw(){
 
   // secondary metrics as lines below the axis
   const np=company.metrics.net_profit.map(v=>v/1e6);
-  const f0=v=>{if(v==null||isNaN(v))return '—';const a=Math.abs(v),d=a<100?2:a<1000?1:0;return v.toLocaleString('el-GR',{minimumFractionDigits:d,maximumFractionDigits:d});}, fx=v=>(v==null||isNaN(v))?'—':v.toLocaleString('el-GR',{maximumFractionDigits:1});
-  metricRow(svg,'Καθ. κέρδη', np, f0, '#cf7f00', ROWS_TOP, true, true);
-  metricRow(svg,'Συν. δανεισμός', company.metrics.total_debt.map(v=>v/1e6), f0, '#8fc4ee', ROWS_TOP+ROW_H, false, true);
-  metricRow(svg,'Καθ. δανεισμός', company.metrics.net_debt.map(v=>v/1e6), f0, '#2b4a6b', ROWS_TOP+2*ROW_H, false, true);
+  const f0=v=>{if(v==null||isNaN(v))return '—';const a=Math.abs(v),d=a<100?2:a<1000?1:0;return v.toLocaleString(LOC(),{minimumFractionDigits:d,maximumFractionDigits:d});}, fx=v=>(v==null||isNaN(v))?'—':v.toLocaleString(LOC(),{maximumFractionDigits:1});
+  metricRow(svg,L('co.chart.netprofit'), np, f0, '#cf7f00', ROWS_TOP, true, true);
+  metricRow(svg,L('co.chart.totaldebt'), company.metrics.total_debt.map(v=>v/1e6), f0, '#8fc4ee', ROWS_TOP+ROW_H, false, true);
+  metricRow(svg,L('co.chart.netdebt'), company.metrics.net_debt.map(v=>v/1e6), f0, '#2b4a6b', ROWS_TOP+2*ROW_H, false, true);
   metricRow(svg,'P/E', company.metrics.pe, fx, '#57a5df', ROWS_TOP+3*ROW_H, true, false);
   metricRow(svg,'P/BV', company.metrics.pbv, fx, '#2f80c2', ROWS_TOP+4*ROW_H, true, false);
 
@@ -633,7 +755,7 @@ function draw(){
     const ring=el('circle',{cx:x,cy:yOf(rev[li]),r:3.4,fill:'#ffffff',stroke:REV_C,'stroke-width':2}); g.appendChild(ring);
     g.appendChild(el('circle',{cx:x,cy:evLaneY,r:15,fill:'transparent'}));
     g.addEventListener('mouseenter',()=>{
-      let h=`<div class="ty">${single?list[0].date:yr+' · '+list.length+' γεγονότα'}</div>`;
+      let h=`<div class="ty">${single?list[0].date:yr+' · '+list.length+' '+L('co.evk.plural')}</div>`;
       list.forEach(e=>{ h+=`<div class="row"><i style="background:${(FAM[e.fam]||{c:'#8595ad'}).c}"></i><span class="l">${!single?`<span class="d">${e.date}</span> `:''}${e.label}</span></div>`; });
       tip.innerHTML=h; tip.classList.add('on');
       const wr=wrapEl.getBoundingClientRect(), dr=dot.getBoundingClientRect();
@@ -671,7 +793,7 @@ const SIZE_RAMP=['#c2410c','#e2590e','#f0791f','#f5a04c','#f0c07e','#5ea9b4','#8
   const ffObj=ownership.find(h=>h.type==='ευρύ επενδυτικό κοινό');
   const rest=ownership.filter(h=>h!==ffObj).sort((a,b)=>b.pct-a.pct);
   const ord=ffObj?[...rest,ffObj]:rest.slice();
-  const fp=p=>(p==null?0:p).toLocaleString('el-GR',{minimumFractionDigits:1,maximumFractionDigits:1})+'%';
+  const fp=p=>(p==null?0:p).toLocaleString(LOC(),{minimumFractionDigits:1,maximumFractionDigits:1})+'%';
   const R=92, cx=100, cy=100;
   const arc=(a0,a1)=>{
     const x0=cx+R*Math.cos(a0),y0=cy+R*Math.sin(a0),x1=cx+R*Math.cos(a1),y1=cy+R*Math.sin(a1);
@@ -714,32 +836,33 @@ const geoData=(function(){
   const out=all.slice(0,GEO_TOP).map((g,i)=>({c:g.country,label:geoShort[g.country]||g.country,n:g.count,col:SIZE_RAMP[Math.min(i,SIZE_RAMP.length-1)]}));
   if(all.length>GEO_TOP){
     const rest=all.slice(GEO_TOP), rn=rest.reduce((s,g)=>s+(g.count||0),0);
-    out.push({c:`Λοιπές (${rest.length} ${rest.length===1?'χώρα':'χώρες'})`,label:`Λοιπές (${rest.length})`,n:rn,col:GEO_REST_COL,rest:true});
+    out.push({c:`${L('co.geo.other')} (${rest.length} ${rest.length===1?L('co.geo.country'):L('co.geo.countries')})`,label:`${L('co.geo.other')} (${rest.length})`,n:rn,col:GEO_REST_COL,rest:true});
   }
   return out;
 })();
 const geoPct=n=>Math.round(n/subs.total*100);
 document.getElementById('geo-total').textContent=subs.total;
-document.getElementById('geo-sub').innerHTML='οντότητες<br>'+subs.countries+' χώρες';
+document.getElementById('geo-sub').innerHTML=L('co.geo.entities')+'<br>'+subs.countries+' '+L('co.geo.countries');
 document.getElementById('geo-legend').innerHTML=geoData.map(g=>`<div class="lg${g.rest?' rest':''}"><span class="sw" style="background:${g.col}"></span><span class="c">${g.label}</span><span class="n">${g.n}</span><span class="p">${geoPct(g.n)}%</span></div>`).join('');
 new Chart(document.getElementById('geo'),{type:'doughnut',
   data:{labels:geoData.map(g=>g.c),datasets:[{data:geoData.map(g=>g.n),backgroundColor:geoData.map(g=>g.col),borderColor:'#ffffff',borderWidth:3,hoverOffset:5}]},
   options:{cutout:'66%',responsive:true,maintainAspectRatio:false,
     plugins:{legend:{display:false},tooltip:{backgroundColor:'#16243d',borderColor:'#2b4a6b',borderWidth:1,padding:10,callbacks:{label:c=>` ${c.label}: ${c.parsed} (${geoPct(c.parsed)}%)`}}}}
 });
-document.getElementById('listed-wrap').innerHTML=subs.listed.map(l=>`<div class="listed-box"><span class="tag">εισηγμένη</span><span class="ln">${l.name}</span><span class="lp">${(l.stake==null?0:l.stake).toLocaleString('el-GR',{minimumFractionDigits:1,maximumFractionDigits:1})}%</span>${l.exch?`<span class="lx"><i class="ti ti-building-bank"></i>${l.exch}</span>`:''}</div>`).join('');
+document.getElementById('listed-wrap').innerHTML=subs.listed.map(l=>`<div class="listed-box"><span class="tag">${L('co.geo.listed')}</span><span class="ln">${l.name}</span><span class="lp">${(l.stake==null?0:l.stake).toLocaleString(LOC(),{minimumFractionDigits:1,maximumFractionDigits:1})}%</span>${l.exch?`<span class="lx"><i class="ti ti-building-bank"></i>${l.exch}</span>`:''}</div>`).join('');
 
 const acc=document.getElementById('acc');
 acc.innerHTML=subs.byCountry.map(g=>{
-  const named=g.named.map(e=>`<div class="ent" data-name="${e.name.toLowerCase()}"><span class="en">${e.name}${e.listed?'<span class="mini-listed">εισηγμένη</span>':''}<span class="meth">${e.method}</span></span><span class="est">${(e.stake==null?0:e.stake).toLocaleString('el-GR',{minimumFractionDigits:1,maximumFractionDigits:1})}%</span></div>`).join('');
+  const named=g.named.map(e=>`<div class="ent" data-name="${e.name.toLowerCase()}"><span class="en">${e.name}${e.listed?`<span class="mini-listed">${L('co.geo.listed')}</span>`:''}<span class="meth">${e.method}</span></span><span class="est">${(e.stake==null?0:e.stake).toLocaleString(LOC(),{minimumFractionDigits:1,maximumFractionDigits:1})}%</span></div>`).join('');
   const clusters=g.clusters.map(c=>`<div class="ent cluster" data-name="${c.label.toLowerCase()}"><span class="en">+ ${c.n} ${c.label}</span><span class="est">—</span></div>`).join('');
-  return `<div class="acc-group" data-country="${g.country.toLowerCase()}"><div class="acc-head"><span class="cn">${g.country}</span><span><span class="cc">${g.count} οντότητες</span><span class="arr">›</span></span></div><div class="acc-body">${named}${clusters}</div></div>`;
+  return `<div class="acc-group" data-country="${g.country.toLowerCase()}"><div class="acc-head"><span class="cn">${g.country}</span><span><span class="cc">${g.count} ${L('co.geo.entities_n')}</span><span class="arr">›</span></span></div><div class="acc-body">${named}${clusters}</div></div>`;
 }).join('');
 acc.querySelectorAll('.acc-head').forEach(h=>h.onclick=()=>h.parentElement.classList.toggle('open'));
 
 const showBtn=document.getElementById('show-all'),full=document.getElementById('subs-full');
-showBtn.textContent=`Εμφάνιση όλων (${subs.total} σε ${subs.countries} χώρες)`;
-showBtn.onclick=()=>{const hid=full.classList.toggle('hidden');showBtn.textContent=hid?`Εμφάνιση όλων (${subs.total} σε ${subs.countries} χώρες)`:'Απόκρυψη πλήρους λίστας';};
+const showAllTxt=`${L('co.geo.showall')} (${subs.total}${L('co.geo.in')}${subs.countries} ${L('co.geo.countries')})`;
+showBtn.textContent=showAllTxt;
+showBtn.onclick=()=>{const hid=full.classList.toggle('hidden');showBtn.textContent=hid?showAllTxt:L('co.geo.hide');};
 document.getElementById('subs-filter').oninput=e=>{
   const q=e.target.value.trim().toLowerCase();
   acc.querySelectorAll('.acc-group').forEach(g=>{
@@ -752,51 +875,51 @@ document.getElementById('subs-filter').oninput=e=>{
 
 const RATIOS=[
  {cat:'Κερδοφορία',items:[
-   {label:'ROA',en:'Return on Assets',unit:'%',series:[6,7.5,10,9,9.2,9.0],sector:7.2,desc:'Αποδοτικότητα ενεργητικού: καθαρά κέρδη προς σύνολο ενεργητικού· πόσο αποδοτικά αξιοποιούνται τα περιουσιακά στοιχεία.'},
-   {label:'ROE',en:'Return on Equity',unit:'%',series:[18,22,30,26,25,24],sector:18.5,desc:'Αποδοτικότητα ιδίων κεφαλαίων: καθαρά κέρδη προς ίδια κεφάλαια· η απόδοση για τους μετόχους.'},
-   {label:'Απόδ. επενδεδ. κεφαλαίων',en:'Return on Share Capital',unit:'%',series:[12,15,20,18,17.5,17],sector:13,desc:'Αποδοτικότητα επενδεδυμένων κεφαλαίων· κέρδη σε σχέση με τα κεφάλαια που έχουν επενδυθεί στη δραστηριότητα.'},
-   {label:'Μικτό περιθώριο',en:'Gross Profit Margin',unit:'%',series:[42,44,46,45,44.5,44],sector:40,desc:'Μικτό κέρδος προς πωλήσεις· η κερδοφορία πριν από λειτουργικά και λοιπά έξοδα.'},
-   {label:'Καθαρό περιθώριο',en:'Net Profit Margin',unit:'%',series:[12,15,22,19,20.5,20.1],sector:14,desc:'Καθαρά κέρδη μετά φόρων προς πωλήσεις· τελική κερδοφορία ανά ευρώ εσόδων.'},
-   {label:'Περιθώριο EBITDA',en:'EBITDA Margin',unit:'%',series:[30,33,36,35,34.5,34.2],sector:30.5,desc:'EBITDA προς πωλήσεις· λειτουργική κερδοφορία πριν από τόκους, φόρους και αποσβέσεις.'},
+   {label:'ROA',en:'Return on Assets',unit:'%',series:[6,7.5,10,9,9.2,9.0],sector:7.2,desc:'Αποδοτικότητα ενεργητικού: καθαρά κέρδη προς σύνολο ενεργητικού· πόσο αποδοτικά αξιοποιούνται τα περιουσιακά στοιχεία.',den:'Net profit to total assets; how efficiently the company’s assets are put to use.'},
+   {label:'ROE',en:'Return on Equity',unit:'%',series:[18,22,30,26,25,24],sector:18.5,desc:'Αποδοτικότητα ιδίων κεφαλαίων: καθαρά κέρδη προς ίδια κεφάλαια· η απόδοση για τους μετόχους.',den:'Net profit to equity; the return generated for shareholders.'},
+   {label:'Απόδ. επενδεδ. κεφαλαίων',en:'Return on Share Capital',unit:'%',series:[12,15,20,18,17.5,17],sector:13,desc:'Αποδοτικότητα επενδεδυμένων κεφαλαίων· κέρδη σε σχέση με τα κεφάλαια που έχουν επενδυθεί στη δραστηριότητα.',den:'Return on invested capital; profit relative to the capital invested in the business.'},
+   {label:'Μικτό περιθώριο',en:'Gross Profit Margin',unit:'%',series:[42,44,46,45,44.5,44],sector:40,desc:'Μικτό κέρδος προς πωλήσεις· η κερδοφορία πριν από λειτουργικά και λοιπά έξοδα.',den:'Gross profit to sales; profitability before operating and other expenses.'},
+   {label:'Καθαρό περιθώριο',en:'Net Profit Margin',unit:'%',series:[12,15,22,19,20.5,20.1],sector:14,desc:'Καθαρά κέρδη μετά φόρων προς πωλήσεις· τελική κερδοφορία ανά ευρώ εσόδων.',den:'Net profit after tax to sales; final profitability per euro of revenue.'},
+   {label:'Περιθώριο EBITDA',en:'EBITDA Margin',unit:'%',series:[30,33,36,35,34.5,34.2],sector:30.5,desc:'EBITDA προς πωλήσεις· λειτουργική κερδοφορία πριν από τόκους, φόρους και αποσβέσεις.',den:'EBITDA to sales; operating profitability before interest, tax and depreciation.'},
  ]},
  {cat:'Ρευστότητα',items:[
-   {label:'Γενική ρευστότητα',en:'Current Ratio',unit:'x',series:[1.1,1.2,1.3,1.25,1.4,1.5],sector:1.3,desc:'Κυκλοφορούν ενεργητικό προς βραχυπρόθεσμες υποχρεώσεις· κάλυψη των τρεχουσών υποχρεώσεων.'},
-   {label:'Άμεση ρευστότητα',en:'Quick Ratio',unit:'x',series:[0.8,0.9,1.0,0.95,1.05,1.1],sector:0.9,desc:'Κυκλοφορούν μείον αποθέματα, προς βραχυπρόθεσμες υποχρεώσεις· ρευστότητα χωρίς τα αποθέματα.'},
-   {label:'Ταμειακή ρευστότητα',en:'Cash Ratio',unit:'x',series:[0.3,0.4,0.5,0.45,0.5,0.55],sector:0.35,desc:'Διαθέσιμα προς βραχυπρόθεσμες υποχρεώσεις· άμεση κάλυψη με μετρητά.'},
+   {label:'Γενική ρευστότητα',en:'Current Ratio',unit:'x',series:[1.1,1.2,1.3,1.25,1.4,1.5],sector:1.3,desc:'Κυκλοφορούν ενεργητικό προς βραχυπρόθεσμες υποχρεώσεις· κάλυψη των τρεχουσών υποχρεώσεων.',den:'Current assets to short-term liabilities; coverage of current obligations.'},
+   {label:'Άμεση ρευστότητα',en:'Quick Ratio',unit:'x',series:[0.8,0.9,1.0,0.95,1.05,1.1],sector:0.9,desc:'Κυκλοφορούν μείον αποθέματα, προς βραχυπρόθεσμες υποχρεώσεις· ρευστότητα χωρίς τα αποθέματα.',den:'Current assets minus inventory, to short-term liabilities; liquidity excluding inventory.'},
+   {label:'Ταμειακή ρευστότητα',en:'Cash Ratio',unit:'x',series:[0.3,0.4,0.5,0.45,0.5,0.55],sector:0.35,desc:'Διαθέσιμα προς βραχυπρόθεσμες υποχρεώσεις· άμεση κάλυψη με μετρητά.',den:'Cash to short-term liabilities; immediate coverage with cash.'},
  ]},
  {cat:'Φερεγγυότητα',items:[
-   {label:'Χρέος / Ίδια κεφάλαια',en:'Debt-to-Equity',unit:'x',series:[1.2,1.0,0.8,0.9,0.75,0.7],sector:1.1,desc:'Σύνολο υποχρεώσεων προς ίδια κεφάλαια· ο βαθμός μόχλευσης της κεφαλαιακής διάρθρωσης.'},
-   {label:'Κάλυψη τόκων',en:'Interest Coverage',unit:'x',series:[4,6,9,7.5,8.5,9.2],sector:5.5,desc:'Λειτουργικά κέρδη προς χρηματοοικονομικά έξοδα· πόσες φορές καλύπτονται οι τόκοι.'},
+   {label:'Χρέος / Ίδια κεφάλαια',en:'Debt-to-Equity',unit:'x',series:[1.2,1.0,0.8,0.9,0.75,0.7],sector:1.1,desc:'Σύνολο υποχρεώσεων προς ίδια κεφάλαια· ο βαθμός μόχλευσης της κεφαλαιακής διάρθρωσης.',den:'Total liabilities to equity; the leverage of the capital structure.'},
+   {label:'Κάλυψη τόκων',en:'Interest Coverage',unit:'x',series:[4,6,9,7.5,8.5,9.2],sector:5.5,desc:'Λειτουργικά κέρδη προς χρηματοοικονομικά έξοδα· πόσες φορές καλύπτονται οι τόκοι.',den:'Operating profit to financial expenses; how many times interest is covered.'},
  ]},
  {cat:'Δραστηριότητα',items:[
-   {label:'Ημέρες αποθεμάτων',en:'Days Inventory Outstanding',unit:'d',series:[55,50,45,48,44,42],sector:50,desc:'Μέσος χρόνος παραμονής αποθεμάτων· χαμηλότερες τιμές δείχνουν ταχύτερη ρευστοποίηση.'},
-   {label:'Ταχύτητα ενεργητικού',en:'Asset Turnover',unit:'x',series:[0.42,0.48,0.55,0.52,0.56,0.58],sector:0.5,desc:'Πωλήσεις προς σύνολο ενεργητικού· πόσα έσοδα παράγει κάθε ευρώ ενεργητικού.'},
-   {label:'Ταχύτητα ιδίων κεφαλαίων',en:'Equity Turnover',unit:'x',series:[0.9,1.0,1.1,1.05,1.12,1.15],sector:0.95,desc:'Πωλήσεις προς ίδια κεφάλαια· εντατικότητα χρήσης των κεφαλαίων των μετόχων.'},
+   {label:'Ημέρες αποθεμάτων',en:'Days Inventory Outstanding',unit:'d',series:[55,50,45,48,44,42],sector:50,desc:'Μέσος χρόνος παραμονής αποθεμάτων· χαμηλότερες τιμές δείχνουν ταχύτερη ρευστοποίηση.',den:'Average time inventory is held; lower values indicate faster turnover.'},
+   {label:'Ταχύτητα ενεργητικού',en:'Asset Turnover',unit:'x',series:[0.42,0.48,0.55,0.52,0.56,0.58],sector:0.5,desc:'Πωλήσεις προς σύνολο ενεργητικού· πόσα έσοδα παράγει κάθε ευρώ ενεργητικού.',den:'Sales to total assets; how much revenue each euro of assets generates.'},
+   {label:'Ταχύτητα ιδίων κεφαλαίων',en:'Equity Turnover',unit:'x',series:[0.9,1.0,1.1,1.05,1.12,1.15],sector:0.95,desc:'Πωλήσεις προς ίδια κεφάλαια· εντατικότητα χρήσης των κεφαλαίων των μετόχων.',den:'Sales to equity; the intensity of use of shareholders’ capital.'},
  ]},
  {cat:'Αποτίμηση',items:[
-   {label:'EPS',en:'Earnings Per Share',unit:'€',series:[0.65,0.79,1.85,1.28,1.52,1.51],sector:1.1,desc:'Κέρδη ανά μετοχή· καθαρά κέρδη που αναλογούν σε κάθε μετοχή.'},
-   {label:'P/E',en:'Price-to-Earnings',unit:'x',series:[15,18,22,16,12,8.9],sector:10.8,desc:'Τιμή προς κέρδη ανά μετοχή· πόσα πληρώνει η αγορά για κάθε ευρώ κερδών.'},
-   {label:'EV/EBITDA',en:'Enterprise Value / EBITDA',unit:'x',series:[8,9,10,7.5,6.5,6.1],sector:7.4,desc:'Αξία επιχείρησης προς EBITDA· αποτίμηση ανεξάρτητα από κεφαλαιακή διάρθρωση.'},
-   {label:'DPS',en:'Dividend Per Share',unit:'€',series:[0.3,0.55,0.7,0.61,0.6,0.8],sector:0.45,desc:'Μέρισμα ανά μετοχή· ταμειακή διανομή προς τους μετόχους ανά μετοχή.'},
-   {label:'BVPS',en:'Book Value Per Share',unit:'€',series:[3.6,4.1,4.85,5.2,5.6,5.95],sector:4.5,desc:'Λογιστική αξία ανά μετοχή· καθαρή θέση που αναλογεί σε κάθε μετοχή.'},
-   {label:'P/BV',en:'Price-to-Book',unit:'x',series:[1.8,2.1,2.4,1.9,1.7,1.6],sector:2.2,desc:'Τιμή προς λογιστική αξία· πώς αποτιμά η αγορά την καθαρή θέση.'},
-   {label:'Ποσοστό διανομής',en:'Dividend Payout Ratio',unit:'%',series:[40,45,50,48,46,53],sector:45,desc:'Μέρισμα προς καθαρά κέρδη· το ποσοστό των κερδών που διανέμεται.'},
-   {label:'Μερισματική απόδοση',en:'Dividend Yield',unit:'%',series:[3.0,4.0,5.5,4.2,4.5,4.8],sector:3.8,desc:'Μέρισμα ανά μετοχή προς τιμή· η άμεση απόδοση από μερίσματα.'},
+   {label:'EPS',en:'Earnings Per Share',unit:'€',series:[0.65,0.79,1.85,1.28,1.52,1.51],sector:1.1,desc:'Κέρδη ανά μετοχή· καθαρά κέρδη που αναλογούν σε κάθε μετοχή.',den:'Earnings per share; net profit attributable to each share.'},
+   {label:'P/E',en:'Price-to-Earnings',unit:'x',series:[15,18,22,16,12,8.9],sector:10.8,desc:'Τιμή προς κέρδη ανά μετοχή· πόσα πληρώνει η αγορά για κάθε ευρώ κερδών.',den:'Price to earnings per share; how much the market pays for each euro of earnings.'},
+   {label:'EV/EBITDA',en:'Enterprise Value / EBITDA',unit:'x',series:[8,9,10,7.5,6.5,6.1],sector:7.4,desc:'Αξία επιχείρησης προς EBITDA· αποτίμηση ανεξάρτητα από κεφαλαιακή διάρθρωση.',den:'Enterprise value to EBITDA; valuation independent of capital structure.'},
+   {label:'DPS',en:'Dividend Per Share',unit:'€',series:[0.3,0.55,0.7,0.61,0.6,0.8],sector:0.45,desc:'Μέρισμα ανά μετοχή· ταμειακή διανομή προς τους μετόχους ανά μετοχή.',den:'Dividend per share; cash distribution to shareholders per share.'},
+   {label:'BVPS',en:'Book Value Per Share',unit:'€',series:[3.6,4.1,4.85,5.2,5.6,5.95],sector:4.5,desc:'Λογιστική αξία ανά μετοχή· καθαρή θέση που αναλογεί σε κάθε μετοχή.',den:'Book value per share; net worth attributable to each share.'},
+   {label:'P/BV',en:'Price-to-Book',unit:'x',series:[1.8,2.1,2.4,1.9,1.7,1.6],sector:2.2,desc:'Τιμή προς λογιστική αξία· πώς αποτιμά η αγορά την καθαρή θέση.',den:'Price to book value; how the market values net worth.'},
+   {label:'Ποσοστό διανομής',en:'Dividend Payout Ratio',unit:'%',series:[40,45,50,48,46,53],sector:45,desc:'Μέρισμα προς καθαρά κέρδη· το ποσοστό των κερδών που διανέμεται.',den:'Dividend to net profit; the share of earnings distributed.'},
+   {label:'Μερισματική απόδοση',en:'Dividend Yield',unit:'%',series:[3.0,4.0,5.5,4.2,4.5,4.8],sector:3.8,desc:'Μέρισμα ανά μετοχή προς τιμή· η άμεση απόδοση από μερίσματα.',den:'Dividend per share to price; the direct return from dividends.'},
  ]},
  {cat:'Λειτουργικού κόστους',items:[
-   {label:'Κόστος πωλήσεων / πωλήσεις',en:'COGS-to-Sales',unit:'%',series:[58,56,54,55,55.5,56],sector:60,desc:'Κόστος πωληθέντων προς πωλήσεις· η βαρύτητα του άμεσου κόστους παραγωγής.'},
-   {label:'Έξοδα διοίκησης / πωλήσεις',en:'Administrative Expenses Ratio',unit:'%',series:[8,7.5,7,7.2,7,6.8],sector:8,desc:'Έξοδα διοίκησης προς πωλήσεις· η βαρύτητα των διοικητικών εξόδων.'},
-   {label:'Έξοδα διάθεσης / πωλήσεις',en:'Selling / Distribution Expenses',unit:'%',series:[10,9.5,9,9.3,9,8.8],sector:10,desc:'Έξοδα διάθεσης προς πωλήσεις· η βαρύτητα των εξόδων πωλήσεων/διανομής.'},
+   {label:'Κόστος πωλήσεων / πωλήσεις',en:'COGS-to-Sales',unit:'%',series:[58,56,54,55,55.5,56],sector:60,desc:'Κόστος πωληθέντων προς πωλήσεις· η βαρύτητα του άμεσου κόστους παραγωγής.',den:'Cost of goods sold to sales; the weight of direct production cost.'},
+   {label:'Έξοδα διοίκησης / πωλήσεις',en:'Administrative Expenses Ratio',unit:'%',series:[8,7.5,7,7.2,7,6.8],sector:8,desc:'Έξοδα διοίκησης προς πωλήσεις· η βαρύτητα των διοικητικών εξόδων.',den:'Administrative expenses to sales; the weight of administrative costs.'},
+   {label:'Έξοδα διάθεσης / πωλήσεις',en:'Selling / Distribution Expenses',unit:'%',series:[10,9.5,9,9.3,9,8.8],sector:10,desc:'Έξοδα διάθεσης προς πωλήσεις· η βαρύτητα των εξόδων πωλήσεων/διανομής.',den:'Selling expenses to sales; the weight of selling/distribution costs.'},
  ]},
  {cat:'Χρηματοοικονομικής διάρθρωσης',items:[
-   {label:'Δείκτης ιδίων κεφαλαίων',en:'Equity Ratio',unit:'%',series:[40,43,48,46,50,52],sector:45,desc:'Ίδια κεφάλαια προς σύνολο κεφαλαίων· ο βαθμός αυτοχρηματοδότησης της εταιρείας.'},
+   {label:'Δείκτης ιδίων κεφαλαίων',en:'Equity Ratio',unit:'%',series:[40,43,48,46,50,52],sector:45,desc:'Ίδια κεφάλαια προς σύνολο κεφαλαίων· ο βαθμός αυτοχρηματοδότησης της εταιρείας.',den:'Equity to total capital; the degree of self-financing of the company.'},
  ]},
 ];
 const fmtU=(v,u)=>{
   if(v==null||(typeof v==='number'&&isNaN(v))) return '—';
-  if(u==='€') return v.toLocaleString('el-GR',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
-  if(u==='d') return Math.round(v).toLocaleString('el-GR')+' ημ.';
-  return v.toLocaleString('el-GR',{minimumFractionDigits:1,maximumFractionDigits:1})+(u==='%'?'%':'');
+  if(u==='€') return v.toLocaleString(LOC(),{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
+  if(u==='d') return Math.round(v).toLocaleString(LOC())+L('unit.days');
+  return v.toLocaleString(LOC(),{minimumFractionDigits:1,maximumFractionDigits:1})+(u==='%'?'%':'');
 };
 function spark(series){
   const w=84,h=24,p=3,min=Math.min(...series),max=Math.max(...series),rng=(max-min)||1;
@@ -812,10 +935,12 @@ const CATEN={'Κερδοφορία':'Profitability','Ρευστότητα':'Liqu
 ratiosEl.innerHTML=RATIOS.map((c,ci)=>{
   const rows=c.items.map(it=>{
     const yr=it.series.map((v,i)=>`<td class="c-val${i===it.series.length-1?' last':''}">${fmtU(v,it.unit)}</td>`).join('');
-    return `<tr><td class="c-name">${it.label}<span class="en">(${it.en})</span></td><td class="c-desc">${it.desc}</td>${yr}<td class="c-sec">${fmtU(it.sector,it.unit)}</td></tr>`;
+    const nm=EN()?it.en:it.label, nm2=EN()?it.label:it.en, dsc=EN()?(it.den||it.desc):it.desc;
+    return `<tr><td class="c-name">${nm}<span class="en">(${nm2})</span></td><td class="c-desc">${dsc}</td>${yr}<td class="c-sec">${fmtU(it.sector,it.unit)}</td></tr>`;
   }).join('');
   const yhead=YEARS.map(y=>`<th class="y">${y}</th>`).join('');
-  return `<div class="cat"><div class="cat-head"><h3>${c.cat} <span class="caten">(${CATEN[c.cat]||''})</span></h3><span class="arr">›</span></div><div class="cat-body"><div class="rtbl-wrap"><table class="rtbl"><thead><tr><th class="l">Δείκτης</th><th class="l">Περιγραφή</th>${yhead}<th>Διάμεσος κλάδου</th></tr></thead><tbody>${rows}</tbody></table></div></div></div>`;
+  const cn=EN()?(CATEN[c.cat]||c.cat):c.cat, cn2=EN()?c.cat:(CATEN[c.cat]||'');
+  return `<div class="cat"><div class="cat-head"><h3>${cn} <span class="caten">(${cn2})</span></h3><span class="arr">›</span></div><div class="cat-body"><div class="rtbl-wrap"><table class="rtbl"><thead><tr><th class="l">${L('co.rt.ratio')}</th><th class="l">${L('co.rt.desc')}</th>${yhead}<th>${L('co.rt.secmed')}</th></tr></thead><tbody>${rows}</tbody></table></div></div></div>`;
 }).join('');
 ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.classList.toggle('open'));
 
@@ -823,7 +948,7 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
 (function(){
   const G=(AX&&AX.glance)||null;
   const scEl=document.getElementById('scorecard'), dvEl=document.getElementById('distcard');
-  const nf=(v,d)=>(v==null||(typeof v==='number'&&isNaN(v)))?'—':v.toLocaleString('el-GR',{minimumFractionDigits:d===undefined?1:d,maximumFractionDigits:d===undefined?1:d});
+  const nf=(v,d)=>(v==null||(typeof v==='number'&&isNaN(v)))?'—':v.toLocaleString(LOC(),{minimumFractionDigits:d===undefined?1:d,maximumFractionDigits:d===undefined?1:d});
   const sgn=v=>(v==null?'':(v>=0?'+':''));
   if(!G){ if(scEl)scEl.innerHTML=''; if(dvEl)dvEl.innerHTML=''; return; }
   const cards=[];
@@ -832,43 +957,43 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
     const co=G.profit.co, sec=G.profit.sec;
     let t,r;
     if(co==null){t='mid';r='—';}
-    else if(co<0){t='bad';r='Ζημιογόνα';}
-    else if(co<5){t='bad';r='Χαμηλή';}
-    else if(co<12){t='mid';r='Μέτρια';}
-    else {t='good';r='Υψηλή';}
-    cards.push({cat:'Κερδοφορία',basis:'μ.ο. 3ετίας',bc:'b3',tone:t,rating:r,metric:'ROE',main:co==null?'—':nf(co)+'%',sub:'κλάδος '+(sec==null?'—':nf(sec)+'%')});
+    else if(co<0){t='bad';r=L('co.gl.r.lossmk');}
+    else if(co<5){t='bad';r=L('co.gl.r.low');}
+    else if(co<12){t='mid';r=L('co.gl.r.mod');}
+    else {t='good';r=L('co.gl.r.high');}
+    cards.push({cat:L('co.gl.profit'),basis:L('co.gl.b3'),bc:'b3',tone:t,rating:r,metric:L('co.gl.met.roe'),main:co==null?'—':nf(co)+'%',sub:L('co.gl.sector')+(sec==null?'—':nf(sec)+'%')});
   })();
   // Ανάπτυξη — μ.ο. 3ετίας ανάπτυξης εσόδων (απόλυτα όρια· κλάδος μόνο ως αναφορά)
   (function(){
     const co=G.growth.co, sec=G.growth.sec;
     let t,r;
     if(co==null){t='mid';r='—';}
-    else if(co<0){t='bad';r='Συρρίκνωση';}
-    else if(co<3){t='mid';r='Στάσιμη';}
-    else if(co<8){t='good';r='Σταθερή';}
-    else {t='good';r='Ισχυρή';}
-    cards.push({cat:'Ανάπτυξη',basis:'μ.ο. 3ετίας',bc:'b3',tone:t,rating:r,metric:'Έσοδα',main:co==null?'—':sgn(co)+nf(co)+'%',sub:'κλάδος '+(sec==null?'—':sgn(sec)+nf(sec)+'%')});
+    else if(co<0){t='bad';r=L('co.gl.r.shrink');}
+    else if(co<3){t='mid';r=L('co.gl.r.stag');}
+    else if(co<8){t='good';r=L('co.gl.r.steady');}
+    else {t='good';r=L('co.gl.r.strong');}
+    cards.push({cat:L('co.gl.growth'),basis:L('co.gl.b3'),bc:'b3',tone:t,rating:r,metric:L('co.gl.met.rev'),main:co==null?'—':sgn(co)+nf(co)+'%',sub:L('co.gl.sector')+(sec==null?'—':sgn(sec)+nf(sec)+'%')});
   })();
   // Μόχλευση — Χρέος/Ίδια περιόδου (απόλυτα όρια· κλάδος μόνο ως αναφορά)
   (function(){
     const co=G.lev.co, sec=G.lev.sec;
     let t,r;
     if(co==null){t='mid';r='—';}
-    else if(co<0){t='bad';r='Αρνητικά ίδια';}
-    else if(co<=1){t='good';r='Χαμηλή';}
-    else if(co<=2){t='mid';r='Μέτρια';}
-    else {t='bad';r='Υψηλή';}
-    cards.push({cat:'Μόχλευση',basis:'περιόδου',bc:'bp',tone:t,rating:r,metric:'Χρέος/Ίδια',main:co==null?'—':nf(co)+'×',sub:'κλάδος '+(sec==null?'—':nf(sec)+'×')});
+    else if(co<0){t='bad';r=L('co.gl.r.negeq');}
+    else if(co<=1){t='good';r=L('co.gl.r.low');}
+    else if(co<=2){t='mid';r=L('co.gl.r.mod');}
+    else {t='bad';r=L('co.gl.r.high');}
+    cards.push({cat:L('co.gl.lev'),basis:L('co.gl.bp'),bc:'bp',tone:t,rating:r,metric:L('co.gl.met.de'),main:co==null?'—':nf(co)+'×',sub:L('co.gl.sector')+(sec==null?'—':nf(sec)+'×')});
   })();
   // Ρευστότητα — Γενική περιόδου (απόλυτα όρια· κλάδος μόνο ως αναφορά)
   (function(){
     const co=G.liq.co, sec=G.liq.sec;
     let t,r;
     if(co==null){t='mid';r='—';}
-    else if(co>=1.5){t='good';r='Επαρκής';}
-    else if(co>=1){t='mid';r='Οριακή';}
-    else {t='bad';r='Πιεσμένη';}
-    cards.push({cat:'Ρευστότητα',basis:'περιόδου',bc:'bp',tone:t,rating:r,metric:'Γενική',main:co==null?'—':nf(co)+'×',sub:'κλάδος '+(sec==null?'—':nf(sec)+'×')});
+    else if(co>=1.5){t='good';r=L('co.gl.r.adeq');}
+    else if(co>=1){t='mid';r=L('co.gl.r.marg');}
+    else {t='bad';r=L('co.gl.r.strained');}
+    cards.push({cat:L('co.gl.liq'),basis:L('co.gl.bp'),bc:'bp',tone:t,rating:r,metric:L('co.gl.met.cur'),main:co==null?'—':nf(co)+'×',sub:L('co.gl.sector')+(sec==null?'—':nf(sec)+'×')});
   })();
   scEl.innerHTML=cards.map(c=>`<div class="sc-item sc-${c.tone}"><div class="sc-cat">${c.cat}</div><div class="sc-basis ${c.bc}">${c.basis}</div><div class="sc-box"><span class="sc-badge">${c.rating}</span><div class="sc-val"><span class="sc-metric">${c.metric}</span><span class="sc-main">${c.main}</span></div><span class="sc-sub">${c.sub}</span></div></div>`).join('');
   // Χρηματικές διανομές — τελευταία 3ετία
@@ -876,23 +1001,23 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
   const rows=(D.rows||[]).filter(r=>r&&r.dps!=null&&r.dps>1e-9);
   if(D.distributes&&rows.length){
     const rev=rows.slice().reverse();
-    dvEl.innerHTML=`<div class="dv-list"><div class="dv-head"><span>Χρήση</span><span class="r">€/μτχ</span><span class="r">Απόδοση</span></div>${rev.map(r=>`<div class="dv-row"><span class="dv-yr">${r.y}</span><span class="dv-eur">${nf(r.dps,2)}</span><span class="dv-yld">${r.dy==null?'—':nf(r.dy)+'%'}</span></div>`).join('')}<div class="dv-note">Μέρισμα + επιστροφή κεφαλαίου, αθροιστικά ανά χρήση.</div></div>`;
+    dvEl.innerHTML=`<div class="dv-list"><div class="dv-head"><span>${L('co.dist.year')}</span><span class="r">${L('co.dist.eursh')}</span><span class="r">${L('co.dist.yield')}</span></div>${rev.map(r=>`<div class="dv-row"><span class="dv-yr">${r.y}</span><span class="dv-eur">${nf(r.dps,2)}</span><span class="dv-yld">${r.dy==null?'—':nf(r.dy)+'%'}</span></div>`).join('')}<div class="dv-note">${L('co.dist.note')}</div></div>`;
   } else {
-    dvEl.innerHTML=`<div class="dv-empty"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/></svg></div><div class="t">Δεν διανέμει</div><div class="s">Καμία χρηματική διανομή στους μετόχους την τελευταία 3ετία.</div></div>`;
+    dvEl.innerHTML=`<div class="dv-empty"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/></svg></div><div class="t">${L('co.dist.none')}</div><div class="s">${L('co.dist.none.s')}</div></div>`;
   }
 })();
 </script>
 <div class="qs-ov" id="qsOv" onclick="qsClose()"></div>
 <aside class="qs" id="qs" role="dialog" aria-label="Γρήγορη εύρεση εταιρείας">
   <div class="qs-head">
-    <div class="qs-title"><h3>Εύρεση εταιρείας</h3><button class="qs-x" onclick="qsClose()" aria-label="Κλείσιμο">×</button></div>
+    <div class="qs-title"><h3 data-i18n="co.qs.title">Εύρεση εταιρείας</h3><button class="qs-x" onclick="qsClose()" aria-label="Κλείσιμο">×</button></div>
     <label class="qs-field">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-      <input id="qsInput" type="text" placeholder="Όνομα ή σύμβολο…" autocomplete="off">
+      <input id="qsInput" type="text" placeholder="Όνομα ή σύμβολο…" autocomplete="off" data-i18n-ph="co.qs.ph">
     </label>
   </div>
   <div class="qs-body" id="qsBody"></div>
-  <div class="qs-foot"><span><kbd>↑</kbd><kbd>↓</kbd> πλοήγηση</span><span><kbd>Enter</kbd> άνοιγμα</span><span><kbd>Esc</kbd> κλείσιμο</span></div>
+  <div class="qs-foot"><span><kbd>↑</kbd><kbd>↓</kbd> <span data-i18n="co.qs.nav">πλοήγηση</span></span><span><kbd>Enter</kbd> <span data-i18n="co.qs.open">άνοιγμα</span></span><span><kbd>Esc</kbd> <span data-i18n="co.qs.close">κλείσιμο</span></span></div>
 </aside>
 
 <script>
@@ -919,7 +1044,7 @@ function qsRender(){
   const term=qsNorm(document.getElementById('qsInput').value.trim());
   qsRows = term ? QS_DATA.filter(r=>qsNorm(r[0]).includes(term)||qsNorm(r[1]).includes(term)) : QS_DATA;
   const body=document.getElementById('qsBody');
-  if(!qsRows.length){ body.innerHTML='<div class="qs-empty">Καμία εταιρεία δεν ταιριάζει.</div>'; return; }
+  if(!qsRows.length){ body.innerHTML='<div class="qs-empty">'+L('co.qs.empty')+'</div>'; return; }
   if(qsSel>=qsRows.length) qsSel=qsRows.length-1;
   let html='';
   qsRows.forEach((r,i)=>{

@@ -25,8 +25,8 @@
  var NAV_CUR=window.NAV_CUR||(NAV[NAV_ACTIVE]&&NAV[NAV_ACTIVE].items[0][0].el);
 
  var FT={
-   tag:{el:'Θεμελιώδης ανάλυση για 133 εισηγμένες του Χρηματιστηρίου Αθηνών — δείκτες, σύγκριση κλάδου, ποιότητα & δυναμική.',
-        en:'Fundamental analysis for 133 companies listed on the Athens Stock Exchange — ratios, sector comparison, quality & momentum.'},
+   tag:{el:'Θεμελιώδης ανάλυση για εισηγμένες του Χρηματιστηρίου Αθηνών — δείκτες, σύγκριση κλάδου, ποιότητα & δυναμική.',
+        en:'Fundamental analysis for companies listed on the Athens Stock Exchange — ratios, sector comparison, quality & momentum.'},
    c1:{el:'Κλάδοι',en:'Sectors'}, c2:{el:'Εργαλεία',en:'Tools'}, c3:{el:'Πληροφορίες',en:'Information'},
    l_sidx:{el:'Ευρετήριο κλάδων',en:'Sector index'}, l_sec:{el:'Σελίδα κλάδου',en:'Sector page'},
    l_cmp:{el:'Σύγκριση εταιρειών',en:'Compare companies'}, l_rank:{el:'Κατατάξεις',en:'Rankings'},
