@@ -275,8 +275,13 @@ function toggleMet(k){
  renderMet(); render();
 }
 
+/* ---------- persistence επιλεγμένων εταιρειών (localStorage 'am-compare') ---------- */
+function saveSel(){try{var tks=picked.map(function(t){var r=DATA.find(function(x){return x.t===t});return r?r.tk:null;}).filter(Boolean);localStorage.setItem('am-compare',JSON.stringify(tks));}catch(e){}}
+function loadSel(){try{var raw=localStorage.getItem('am-compare');if(!raw)return null;var tks=JSON.parse(raw);if(!Array.isArray(tks))return null;var names=tks.map(function(tk){var r=DATA.find(function(x){return x.tk===tk});return r?r.t:null;}).filter(Boolean).slice(0,MAX);return names.length?names:null;}catch(e){return null;}}
+
 /* ---------- render ---------- */
 function render(){
+ saveSel();
  const out=document.getElementById('out');
  const chips=document.getElementById('picked');
  chips.innerHTML=picked.map(t=>`<span class="pchip">${t}
@@ -306,8 +311,11 @@ function render(){
    `<div class="tablewrap"><table><thead>${th}</thead><tbody>${tb}</tbody></table></div>`;
 }
 
-picked=['ΟΠΑΠ','JUMBO','ΚΡΙ-ΚΡΙ'].map(function(n){var r=DATA.find(function(x){return x.t===n})||DATA.find(function(x){return x.tk===n});return r?r.t:null;}).filter(Boolean);
-if(picked.length<2 && DATA.length) picked=DATA.slice(0,3).map(function(r){return r.t});
+picked=loadSel();
+if(!picked){
+ picked=['ΟΠΑΠ','JUMBO','ΚΡΙ-ΚΡΙ'].map(function(n){var r=DATA.find(function(x){return x.t===n})||DATA.find(function(x){return x.tk===n});return r?r.t:null;}).filter(Boolean);
+ if(picked.length<2 && DATA.length) picked=DATA.slice(0,3).map(function(r){return r.t});
+}
 renderMet();
 render();
 document.addEventListener('axion:langchange',function(){ renderMet(); render(); });
