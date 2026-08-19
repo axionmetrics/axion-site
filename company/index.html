@@ -514,11 +514,12 @@ AX_I18N.add({
  'co.gl.b3':{el:'μ.ο. 3ετίας', en:'3-yr avg'},
  'co.gl.bp':{el:'περιόδου', en:'period'},
  'co.gl.sector':{el:'κλάδος ', en:'sector '},
- 'co.gl.met.roe':{el:'ROE', en:'ROE'},
+ 'co.gl.met.ebt':{el:'Κέρδη προ φόρων', en:'Pre-tax profit'},
  'co.gl.met.rev':{el:'Έσοδα', en:'Revenue'},
  'co.gl.met.de':{el:'Χρέος/Ίδια', en:'Debt/Equity'},
  'co.gl.met.cur':{el:'Γενική', en:'Current'},
  'co.gl.r.lossmk':{el:'Ζημιογόνα', en:'Loss-making'},
+ 'co.gl.r.profit':{el:'Κερδοφόρα', en:'Profitable'},
  'co.gl.r.low':{el:'Χαμηλή', en:'Low'},
  'co.gl.r.mod':{el:'Μέτρια', en:'Moderate'},
  'co.gl.r.high':{el:'Υψηλή', en:'High'},
@@ -954,14 +955,13 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
   const cards=[];
   // Κερδοφορία — ROE μ.ο. 3ετίας (απόλυτα όρια· κλάδος μόνο ως αναφορά)
   (function(){
-    const co=G.profit.co, sec=G.profit.sec;
+    const co=G.profit.co, sec=G.profit.sec;   // co/sec = μ.ο. 3ετίας κερδών προ φόρων (απόλυτο €)
     let t,r;
     if(co==null){t='mid';r='—';}
     else if(co<0){t='bad';r=L('co.gl.r.lossmk');}
-    else if(co<5){t='bad';r=L('co.gl.r.low');}
-    else if(co<12){t='mid';r=L('co.gl.r.mod');}
-    else {t='good';r=L('co.gl.r.high');}
-    cards.push({cat:L('co.gl.profit'),basis:L('co.gl.b3'),bc:'b3',tone:t,rating:r,metric:L('co.gl.met.roe'),main:co==null?'—':nf(co)+'%',sub:L('co.gl.sector')+(sec==null?'—':nf(sec)+'%')});
+    else {t='good';r=L('co.gl.r.profit');}
+    const eurM=v=>(v==null?'—':fMil(v)+EURSUF());
+    cards.push({cat:L('co.gl.profit'),basis:L('co.gl.b3'),bc:'b3',tone:t,rating:r,metric:L('co.gl.met.ebt'),main:eurM(co),sub:L('co.gl.sector')+eurM(sec)});
   })();
   // Ανάπτυξη — μ.ο. 3ετίας ανάπτυξης εσόδων (απόλυτα όρια· κλάδος μόνο ως αναφορά)
   (function(){
