@@ -1,29 +1,79 @@
-
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Axion Metrics — ημερήσια ενημέρωση EOD τιμών στο assets/data.js."""
+"""Axion Metrics — ημερήσια ενημέρωση EOD τιμών στο assets/data.js.
+
+Τραβάει το δημόσιο αρχείο του Euronext Athens (stocks_details), παίρνει την
+κεφαλαιοποίηση κλεισίματος ανά μετοχή, και γράφει το πεδίο `current`
+{mcap, pe, pbv, date} σε κάθε εταιρεία — για τη μπάρα «Τρέχον» της σελίδας εταιρείας.
+
+Σχεδιασμός:
+ - Το mcap λαμβάνεται ΟΛΟΚΛΗΡΟ από το Euronext (σωστός αριθμός μετοχών × τιμή),
+   δεν ξαναϋπολογίζεται με δικό μας αριθμό μετοχών.
+ - P/E  = mcap ÷ καθαρά κέρδη (τελευταία ετήσια)          — ανεξάρτητο μετοχών
+ - P/BV = mcap ÷ ίδια κεφάλαια, όπου ίδια κεφάλαια = ετήσιο mcap ÷ ετήσιο P/BV
+   (το βιβλιακό μέγεθος — ο αριθμός μετοχών απαλείφεται στη διαίρεση).
+ - Αντιστοίχιση Euronext↔δικά μας με το ελληνικό σύμβολο (Symbol == tk).
+ - Ενεργές μόνο (Trading Status = 1)· αλλιώς current=None (η μπάρα κρύβεται).
+
+Τρέχει από GitHub Action (root του repo). Αν αποτύχει το fetch, ΔΕΝ γράφει τίποτα.
+"""
 import json, re, sys, datetime, urllib.request, statistics
 
 URL  = "https://athens.euronext.com/sites/default/files/json_data_files/stocks_details_el.json"
 DATA = "assets/data.js"
 UA   = "Mozilla/5.0 (compatible; AxionMetricsBot/1.0)"
+CLOSE_HOUR_ATH = 18   # ώρα Αθήνας μετά την οποία η σημερινή συνεδρίαση θεωρείται κλεισμένη/εκκαθαρισμένη
+
+def session_date(eu_raw):
+    """Ημερομηνία της τελευταίας ΟΛΟΚΛΗΡΩΜΕΝΗΣ συνεδρίασης του ΧΑΑ — αυτή στην οποία
+    ανήκει το `Last Trading Close` του feed. Βασίζεται στο πότε *παρήχθη* το feed
+    (`lastUpdated`), όχι στην ώρα εκτέλεσης του script· έτσι μια χειροκίνητη/πρόωρη
+    εκτέλεση μέσα στη συνεδρίαση δεν σφραγίζει λάθος (μελλοντική) ημερομηνία."""
+    try:
+        from zoneinfo import ZoneInfo
+        tz=ZoneInfo('Europe/Athens')
+    except Exception:
+        tz=None
+    ts=eu_raw.get('lastUpdated') if isinstance(eu_raw,dict) else None
+    try: ts=int(ts)
+    except (TypeError,ValueError): ts=None
+    if ts is not None:
+        if tz is not None:
+            now=datetime.datetime.fromtimestamp(ts, tz)
+        else:  # χωρίς tz βάση: προσέγγιση Αθήνας = UTC + (3 θέρος / 2 χειμώνας)
+            u=datetime.datetime.utcfromtimestamp(ts); now=u+datetime.timedelta(hours=3 if 4<=u.month<=10 else 2)
+    else:      # τελευταία άμυνα: ώρα εκτέλεσης σε ώρα Αθήνας
+        if tz is not None: now=datetime.datetime.now(tz)
+        else:
+            u=datetime.datetime.utcnow(); now=u+datetime.timedelta(hours=3 if 4<=u.month<=10 else 2)
+    d=now.date()
+    if now.hour < CLOSE_HOUR_ATH:          # η σημερινή συνεδρίαση δεν έχει ολοκληρωθεί → προηγούμενη
+        d-=datetime.timedelta(days=1)
+    while d.weekday()>=5:                   # γύρνα πίσω σε εργάσιμη (Σάββ/Κυρ)
+        d-=datetime.timedelta(days=1)
+    return d.strftime('%Y-%m-%d')
 
 def to_num(v):
+    """Ανθεκτικό parse αριθμού: δέχεται number ή string με ελληνικούς/αγγλικούς διαχωριστές."""
     if v is None: return None
     if isinstance(v,(int,float)): return float(v)
     s=str(v).strip()
     if not s or s in ('-','—','N/A','n/a'): return None
     s=s.replace('\xa0','').replace(' ','').replace('€','')
+    # κράτα μόνο ψηφία και , . -
     s=re.sub(r'[^0-9,.\-]','',s)
     if not s: return None
     if ',' in s and '.' in s:
-        if s.rfind(',')>s.rfind('.'):
+        # ο τελευταίος διαχωριστής είναι το δεκαδικό
+        if s.rfind(',')>s.rfind('.'):      # ευρωπαϊκό: . χιλιάδες, , δεκαδικό
             s=s.replace('.','').replace(',','.')
-        else:
+        else:                               # αγγλικό: , χιλιάδες, . δεκαδικό
             s=s.replace(',','')
     elif ',' in s:
+        # μόνο κόμματα: δεκαδικό αν 1-2 ψηφία στο τέλος & ένα κόμμα, αλλιώς χιλιάδες
         s=s.replace(',','.') if (s.count(',')==1 and re.search(r',\d{1,2}$',s)) else s.replace(',','')
     elif '.' in s:
+        # μόνο τελείες: δεκαδικό αν μία τελεία & 1-2 ψηφία στο τέλος, αλλιώς χιλιάδες (π.χ. 8.288.635.661)
         if not (s.count('.')==1 and re.search(r'\.\d{1,2}$',s)):
             s=s.replace('.','')
     try: return float(s)
@@ -57,8 +107,10 @@ def apply_current(ax, eu, today):
             np_=latest(c.get('metrics',{}).get('net_profit'))
             amc=latest(c.get('metrics',{}).get('mcap'))
             apbv=latest((c.get('ratios',{}).get('pbv') or {}).get('series'))
+            abvps=latest((c.get('ratios',{}).get('bvps') or {}).get('series'))
             eq=(amc/apbv) if (amc and apbv and apbv>0) else None
-            pe =round(mcap/np_,4) if (np_ and np_>0) else None
+            neg_eq=(abvps is not None and abvps<0)
+            pe =round(mcap/np_,4) if (np_ and not neg_eq) else None
             pbv=round(mcap/eq,4)  if (eq  and eq>0)  else None
             c['current']={'mcap':mcap,'pe':pe,'pbv':pbv,'date':today}
             if amc and amc>0: ratios.append(mcap/amc)
@@ -83,16 +135,17 @@ def main():
     if not arr: raise SystemExit("κενό feed Euronext")
     eu=build_eu_map(arr)
     head, ax=load_axion(DATA)
-    today=datetime.datetime.utcnow().strftime('%Y-%m-%d')
+    today=session_date(eu_raw)   # ημερομηνία τελευταίας κλεισμένης συνεδρίασης (όχι ώρα εκτέλεσης)
     n, ratios=apply_current(ax, eu, today)
+    # sanity: το euronext mcap πρέπει να είναι στην ίδια τάξη μεγέθους με το δικό μας
     if ratios:
         med=statistics.median(ratios)
-        print(f"sanity: median(euronext_mcap/annual_mcap)={med:.3f}")
+        print(f"sanity: διάμεσος(euronext_mcap/ετήσιο_mcap)={med:.3f} (αναμένεται ~κοντά στο 1)")
         if med<0.02 or med>50:
-            raise SystemExit(f"ΑΚΥΡΟ: πιθανή αναντιστοιχία μονάδων mcap (ratio={med}).")
+            raise SystemExit(f"ΑΚΥΡΟ: πιθανή αναντιστοιχία μονάδων mcap (ratio={med}). Δεν γράφτηκε τίποτα.")
     if n==0: raise SystemExit("καμία αντιστοίχιση — δεν γράφτηκε τίποτα")
     save_axion(DATA, head, ax)
-    print(f"OK: current updated for {n} companies ({today}).")
+    print(f"ΟΚ: ενημερώθηκε το current για {n} εταιρείες ({today}).")
 
 if __name__=='__main__':
     main()
