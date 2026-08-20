@@ -531,6 +531,11 @@ AX_I18N.add({
  'co.gl.r.adeq':{el:'Επαρκής', en:'Adequate'},
  'co.gl.r.marg':{el:'Οριακή', en:'Marginal'},
  'co.gl.r.strained':{el:'Πιεσμένη', en:'Strained'},
+ 'co.gl.liqNpe':{el:'Ποιότητα ενεργητικού', en:'Asset quality'},
+ 'co.gl.met.npe':{el:'NPE ratio', en:'NPE ratio'},
+ 'co.gl.r.npeLow':{el:'Χαμηλός', en:'Low'},
+ 'co.gl.r.npeMod':{el:'Μέτριος', en:'Moderate'},
+ 'co.gl.r.npeHigh':{el:'Υψηλός', en:'High'},
  // dist
  'co.dist.year':{el:'Χρήση', en:'Year'},
  'co.dist.eursh':{el:'€/μτχ', en:'€/sh'},
@@ -985,15 +990,24 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
     else {t='bad';r=L('co.gl.r.high');}
     cards.push({cat:L('co.gl.lev'),basis:L('co.gl.bp'),bc:'bp',tone:t,rating:r,metric:L('co.gl.met.de'),main:co==null?'—':nf(co)+'×',sub:L('co.gl.sector')+(sec==null?'—':nf(sec)+'×')});
   })();
-  // Ρευστότητα — Γενική περιόδου (απόλυτα όρια· κλάδος μόνο ως αναφορά)
+  // Ρευστότητα — Γενική περιόδου· ΤΡΑΠΕΖΕΣ: Δείκτης ΜΕΑ (kind='npe') αντί γενικής ρευστότητας (απόλυτα όρια· κλάδος μόνο ως αναφορά)
   (function(){
     const co=G.liq.co, sec=G.liq.sec;
     let t,r;
-    if(co==null){t='mid';r='—';}
-    else if(co>=1.5){t='good';r=L('co.gl.r.adeq');}
-    else if(co>=1){t='mid';r=L('co.gl.r.marg');}
-    else {t='bad';r=L('co.gl.r.strained');}
-    cards.push({cat:L('co.gl.liq'),basis:L('co.gl.bp'),bc:'bp',tone:t,rating:r,metric:L('co.gl.met.cur'),main:co==null?'—':nf(co)+'×',sub:L('co.gl.sector')+(sec==null?'—':nf(sec)+'×')});
+    if(G.liq.kind==='npe'){
+      // Δείκτης ΜΕΑ (%): <3% χαμηλός/υγιής, 3–5% μέτριος, >5% υψηλός (κατώφλι ECB «high NPL» = 5%)
+      if(co==null){t='mid';r='—';}
+      else if(co<3){t='good';r=L('co.gl.r.npeLow');}
+      else if(co<5){t='mid';r=L('co.gl.r.npeMod');}
+      else {t='bad';r=L('co.gl.r.npeHigh');}
+      cards.push({cat:L('co.gl.liqNpe'),basis:L('co.gl.bp'),bc:'bp',tone:t,rating:r,metric:L('co.gl.met.npe'),main:co==null?'—':nf(co)+'%',sub:L('co.gl.sector')+(sec==null?'—':nf(sec)+'%')});
+    } else {
+      if(co==null){t='mid';r='—';}
+      else if(co>=1.5){t='good';r=L('co.gl.r.adeq');}
+      else if(co>=1){t='mid';r=L('co.gl.r.marg');}
+      else {t='bad';r=L('co.gl.r.strained');}
+      cards.push({cat:L('co.gl.liq'),basis:L('co.gl.bp'),bc:'bp',tone:t,rating:r,metric:L('co.gl.met.cur'),main:co==null?'—':nf(co)+'×',sub:L('co.gl.sector')+(sec==null?'—':nf(sec)+'×')});
+    }
   })();
   scEl.innerHTML=cards.map(c=>`<div class="sc-item sc-${c.tone}"><div class="sc-cat">${c.cat}</div><div class="sc-basis ${c.bc}">${c.basis}</div><div class="sc-box"><span class="sc-badge">${c.rating}</span><div class="sc-val"><span class="sc-metric">${c.metric}</span><span class="sc-main">${c.main}</span></div><span class="sc-sub">${c.sub}</span></div></div>`).join('');
   // Χρηματικές διανομές — τελευταία 3ετία
