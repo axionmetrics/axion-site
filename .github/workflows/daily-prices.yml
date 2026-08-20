@@ -1,13 +1,12 @@
 name: Ημερήσιες τιμές (EOD)
 
+# Τρέχει αυτόματα μετά το κλείσιμο του ΧΑΑ (Δευ–Παρ) και ενημερώνει το
+# assets/data.js με τις τρέχουσες τιμές/δείκτες από το Euronext Athens.
+# 18:30 UTC = 20:30 (χειμ.) / 21:30 (θερ.) ώρα Ελλάδας — άνετα μετά την εκκαθάριση.
 on:
   schedule:
     - cron: '30 18 * * 1-5'
-  workflow_dispatch: {}
-  push:
-    branches: [ main ]
-    paths:
-      - 'assets/data.js'
+  workflow_dispatch: {}          # χειροκίνητη εκτέλεση (κουμπί «Run workflow») για δοκιμή
 
 permissions:
   contents: write
@@ -22,8 +21,6 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
@@ -32,20 +29,14 @@ jobs:
       - name: Ενημέρωση τρεχουσών τιμών στο data.js
         run: python .github/scripts/daily_prices.py
 
-      - name: Commit & push αν άλλαξε το data.js
+      - name: Commit & push αλλαγές (data.js + snapshots)
         run: |
-          if git diff --quiet -- assets/data.js; then
+          git add assets/data.js snapshots/ 2>/dev/null || true
+          if git diff --cached --quiet; then
             echo "Καμία αλλαγή — δεν έγινε commit."
-            exit 0
+          else
+            git config user.name  "axion-bot"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "daily: EOD τιμές + snapshot $(date -u +%Y-%m-%d)"
+            git push
           fi
-          git config user.name  "axion-bot"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/data.js
-          git commit -m "daily: EOD τιμές $(date -u +%Y-%m-%d)"
-          for i in 1 2 3 4 5; do
-            git fetch origin main
-            if git rebase origin/main && git push; then echo "OK pushed"; exit 0; fi
-            git rebase --abort 2>/dev/null || true
-            echo "retry $i ..."; sleep 5
-          done
-          echo "push failed after retries"; exit 1
