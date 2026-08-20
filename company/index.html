@@ -229,6 +229,8 @@
   .rtbl .c-val{font-family:var(--mono);font-weight:700;color:var(--ink);white-space:nowrap;font-size:16.5px}
   .rtbl .c-val.last{color:var(--ink);font-weight:700}
   .rtbl .c-sec{font-family:var(--mono);color:var(--muted);white-space:nowrap;font-size:16.5px}
+  .rtbl .c-na{text-align:center;font-style:italic;color:var(--muted);font-size:13px;white-space:nowrap}
+  .na-bank{font-style:italic;color:var(--muted);font-size:12px}
   .rtbl thead th.y{font-family:var(--mono);color:var(--cyan);text-transform:none;letter-spacing:0;font-size:16.5px}
   .note{font-size:12px;color:#7a5a12;line-height:1.5;margin-top:14px;padding:11px 14px;background:#fbf1db;border:1px solid #ecd9a6;border-left:3px solid var(--gold);border-radius:8px}
   .note strong{color:var(--gold);font-weight:600}
@@ -411,7 +413,7 @@
       <div class="panel">
         <div class="phead blue"><i class="ti ti-chart-line"></i><h2 data-i18n="co.ph.traj">Τροχιά μεγεθών</h2></div>
         <div class="pbody">
-          <div class="mlegend"><span class="ml"><i style="background:#2f80c2"></i><span data-i18n="co.leg.rev">Τζίρος</span></span><span class="ml"><i style="background:#3f9e6a"></i>EBITDA</span><span class="u" data-i18n="co.unit.meur2">(εκατ. €)</span></div>
+          <div class="mlegend"><span class="ml"><i style="background:#2f80c2"></i><span data-i18n="co.leg.rev">Τζίρος</span></span><span class="ml" id="eb-leg"><i style="background:#3f9e6a"></i>EBITDA</span><span class="u" data-i18n="co.unit.meur2">(εκατ. €)</span></div>
           <div class="chart-wrap" style="position:relative">
             <div class="chart-host" id="host" role="img" aria-label="Τροχιά μεγέθους 2020-2025 με εταιρικά γεγονότα"></div>
             <div class="tip" id="tip"></div>
@@ -455,6 +457,7 @@ AX_I18N.add({
  'co.m.revenue':{el:'Τζίρος', en:'Revenue'},
  'co.m.net_profit':{el:'Καθαρά κέρδη', en:'Net profit'},
  'co.m.ebitda':{el:'EBITDA', en:'EBITDA'},
+ 'co.na.banks':{el:'Not applicable to banks', en:'Not applicable to banks'},
  'co.m.mcap':{el:'Κεφαλαιοποίηση', en:'Market cap'},
  'co.m.pe':{el:'P/E', en:'P/E'},
  'co.m.pbv':{el:'P/BV', en:'P/BV'},
@@ -559,6 +562,10 @@ const AX=(_tk&&_AXC.find(function(c){return c.tk===_tk;}))||_AXC[0]||null;
 try{ if(AX&&AX.tk) localStorage.setItem('am-last-company', AX.tk); }catch(e){}
 document.addEventListener('axion:basischange',function(){location.reload();});
 const company = AX ? {ticker:AX.tk,name:AX.name,euronext_name:(AX.en||''),sector:AX.s,latest:AX.latest,years:AX.years,metrics:AX.metrics,current:(AX.current||null)} : {ticker:'',name:'—',euronext_name:'',sector:'',latest:{period:'',type:''},years:[2020,2021,2022,2023,2024,2025],metrics:{revenue:[],net_profit:[],ebitda:[],pe:[],pbv:[],total_debt:[],net_debt:[]}};;
+const IS_BANK = !!(AX && AX.s==='Τράπεζες');   // banks: EBITDA-family δεν εφαρμόζεται
+const NA_METRIC = new Set(['ebitda']);
+const NA_RATIO  = new Set(['ebitdam','evebitda']);
+if(IS_BANK){var _ebl=document.getElementById('eb-leg'); if(_ebl)_ebl.style.display='none';}
 const METRICS=[
   {key:'revenue',label:L('co.m.revenue'),sub:L('co.msub.revenue'),unit:'eur',goodUp:true},
   {key:'net_profit',label:L('co.m.net_profit'),sub:L('co.msub.net_profit'),unit:'eur',goodUp:true},
@@ -624,7 +631,7 @@ const li=company.years.length-1;
 document.getElementById('latest').innerHTML=METRICS.map(m=>{
   const arr=company.metrics[m.key]; if(!arr) return '';
   const v=arr[li];
-  const val=m.unit==='eur'?(v==null?'—':`${fMil(v)}<small>${EURSUF()}</small>`):fX(v);
+  const val=(IS_BANK&&NA_METRIC.has(m.key))?`<span class="na-bank">${L('co.na.banks')}</span>`:(m.unit==='eur'?(v==null?'—':`${fMil(v)}<small>${EURSUF()}</small>`):fX(v));
   return `<div class="metric-item"><div class="k">${m.label}</div><div class="cell"><div class="v">${val}</div></div></div>`;
 }).join('');
 (function(){
@@ -707,7 +714,7 @@ function draw(){
   const revF=(company.metrics.revenue||[]).map(v=>(v==null?0:v)/1e6);
   const ebF=(company.metrics.ebitda||[]).map(v=>(v==null?0:v)/1e6);
   const s=trajStart;
-  const rev=revF.slice(s,s+WIN), eb=ebF.slice(s,s+WIN);
+  const rev=revF.slice(s,s+WIN), eb=IS_BANK?[]:ebF.slice(s,s+WIN);
   const {yMax,lines}=niceScale(Math.max(...rev,...eb));
   const yOf=v=>plotBottom-(v/yMax)*(plotBottom-plotTop);
 
@@ -731,9 +738,9 @@ function draw(){
   const rd=pathOf(rev,yOf), ed=pathOf(eb,yOf);
   const areaOf=(d,n)=>d+` L ${xOf(n-1)} ${plotBottom} L ${xOf(0)} ${plotBottom} Z`;
   svg.appendChild(el('path',{d:areaOf(rd,rev.length),fill:'url(#grev)'}));
-  svg.appendChild(el('path',{d:areaOf(ed,eb.length),fill:'url(#geb)'}));
+  if(eb.length) svg.appendChild(el('path',{d:areaOf(ed,eb.length),fill:'url(#geb)'}));
   svg.appendChild(el('path',{d:rd,fill:'none',stroke:REV_C,'stroke-width':2,'stroke-linejoin':'round'}));
-  svg.appendChild(el('path',{d:ed,fill:'none',stroke:EB_C,'stroke-width':2,'stroke-linejoin':'round'}));
+  if(eb.length) svg.appendChild(el('path',{d:ed,fill:'none',stroke:EB_C,'stroke-width':2,'stroke-linejoin':'round'}));
 
   // axis baseline + year numbers close to axis
   svg.appendChild(el('line',{x1:padL,y1:plotBottom,x2:W-padR,y2:plotBottom,stroke:'#cfdcea','stroke-width':1}));
@@ -936,13 +943,19 @@ function spark(series){
 }
 const YEARS=company.years;
 const ratiosEl=document.getElementById('ratios');
-(function(){var S=['roa','roe','roic','gm','nm','ebitdam','current','quick','cash','de','icov','dio','atr','etr','eps','pe','evebitda','dps','bvps','pbv','payout','dy','cogs','admin','selling','equityr'],i=0;RATIOS.forEach(function(cat){cat.items.forEach(function(it){var r=AX&&AX.ratios&&AX.ratios[S[i]];if(r){it.series=r.series;it.sector=r.sector;}i++;});});})();
+(function(){var S=['roa','roe','roic','gm','nm','ebitdam','current','quick','cash','de','icov','dio','atr','etr','eps','pe','evebitda','dps','bvps','pbv','payout','dy','cogs','admin','selling','equityr'],i=0;RATIOS.forEach(function(cat){cat.items.forEach(function(it){it.slug=S[i];var r=AX&&AX.ratios&&AX.ratios[S[i]];if(r){it.series=r.series;it.sector=r.sector;}i++;});});})();
 const CATEN={'Κερδοφορία':'Profitability','Ρευστότητα':'Liquidity','Φερεγγυότητα':'Solvency','Δραστηριότητα':'Operation','Αποτίμηση':'Value','Λειτουργικού κόστους':'Operating Cost','Χρηματοοικονομικής διάρθρωσης':'Financial Structure'};
 ratiosEl.innerHTML=RATIOS.map((c,ci)=>{
   const rows=c.items.map(it=>{
-    const yr=it.series.map((v,i)=>`<td class="c-val${i===it.series.length-1?' last':''}">${fmtU(v,it.unit)}</td>`).join('');
     const nm=EN()?it.en:it.label, nm2=EN()?it.label:it.en, dsc=EN()?(it.den||it.desc):it.desc;
-    return `<tr><td class="c-name">${nm}<span class="en">(${nm2})</span></td><td class="c-desc">${dsc}</td>${yr}<td class="c-sec">${fmtU(it.sector,it.unit)}</td></tr>`;
+    let body;
+    if(IS_BANK&&NA_RATIO.has(it.slug)){
+      body=`<td class="c-na" colspan="${it.series.length+1}">${L('co.na.banks')}</td>`;
+    } else {
+      const yr=it.series.map((v,i)=>`<td class="c-val${i===it.series.length-1?' last':''}">${fmtU(v,it.unit)}</td>`).join('');
+      body=`${yr}<td class="c-sec">${fmtU(it.sector,it.unit)}</td>`;
+    }
+    return `<tr><td class="c-name">${nm}<span class="en">(${nm2})</span></td><td class="c-desc">${dsc}</td>${body}</tr>`;
   }).join('');
   const yhead=YEARS.map(y=>`<th class="y">${y}</th>`).join('');
   const cn=EN()?(CATEN[c.cat]||c.cat):c.cat, cn2=EN()?c.cat:(CATEN[c.cat]||'');
