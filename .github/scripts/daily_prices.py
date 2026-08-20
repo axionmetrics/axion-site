@@ -17,10 +17,11 @@
 
 Τρέχει από GitHub Action (root του repo). Αν αποτύχει το fetch, ΔΕΝ γράφει τίποτα.
 """
-import json, re, sys, datetime, urllib.request, statistics
+import json, re, sys, os, datetime, urllib.request, statistics
 
 URL  = "https://athens.euronext.com/sites/default/files/json_data_files/stocks_details_el.json"
 DATA = "assets/data.js"
+SNAP_DIR = "snapshots"   # μόνιμο αρχείο στιγμιότυπων τιμών/μετοχών ανά περίοδο
 UA   = "Mozilla/5.0 (compatible; AxionMetricsBot/1.0)"
 CLOSE_HOUR_ATH = 18   # ώρα Αθήνας μετά την οποία η σημερινή συνεδρίαση θεωρείται κλεισμένη/εκκαθαρισμένη
 
@@ -87,6 +88,7 @@ def build_eu_map(arr):
         st=str(x.get('Trading Status') or '').split('|')[0].strip()
         m[sym]={'mcap':to_num(x.get('Market Capitalisation')),
                 'close':to_num(x.get('Last Trading Close')),
+                'shares':to_num(x.get('Total Number Of Securities')),
                 'st':st,'isin':str(x.get('ISIN') or '').strip()}
     return m
 
@@ -95,6 +97,38 @@ def latest(series):
     for v in reversed(series):
         if isinstance(v,(int,float)): return v
     return None
+
+def _period_label(dstr):
+    """'YYYY-MM-DD' -> 'YYYYH1' (Ιαν–Ιουν) ή 'YYYYH2' (Ιουλ–Δεκ). Το H2 τελειώνει 31/12 = ετήσιο κλείσιμο."""
+    y,m,_=(int(t) for t in dstr.split('-'))
+    return f"{y}H{1 if m<=6 else 2}"
+
+def write_snapshots(eu, today):
+    """Κρατάει «κυλιόμενο» στιγμιότυπο (τιμή/μετοχές/κεφ-ση/ISIN ανά Symbol) της τρέχουσας
+    περιόδου· όταν αλλάξει η περίοδος, ΠΑΓΩΝΕΙ το προηγούμενο σε μόνιμο αρχείο. Έτσι το
+    snapshots/<YYYYH1>.json = δεδομένα 30/6 και snapshots/<YYYYH2>.json = 31/12 (ετήσιο),
+    χωρίς να χρειάζεται να ξέρουμε εκ των προτέρων ποια είναι η τελευταία συνεδρίαση."""
+    try:
+        os.makedirs(SNAP_DIR, exist_ok=True)
+        cur=_period_label(today)
+        data={sym:{'close':v.get('close'),'shares':v.get('shares'),
+                   'mcap':v.get('mcap'),'isin':v.get('isin')}
+              for sym,v in eu.items()
+              if (v.get('close') is not None or v.get('mcap') is not None)}
+        roll=os.path.join(SNAP_DIR,'_rolling.json')
+        if os.path.exists(roll):
+            try: prev=json.load(open(roll,encoding='utf-8'))
+            except Exception: prev=None
+            if prev and prev.get('period') and prev['period']!=cur:
+                frozen=os.path.join(SNAP_DIR,prev['period']+'.json')
+                if not os.path.exists(frozen):
+                    json.dump(prev,open(frozen,'w',encoding='utf-8'),ensure_ascii=False,separators=(',',':'))
+                    print(f"snapshot: πάγωσε {prev['period']} ({prev.get('date')}, {len(prev.get('data',{}))} μετοχές) -> {frozen}")
+        json.dump({'period':cur,'date':today,'data':data},
+                  open(roll,'w',encoding='utf-8'),ensure_ascii=False,separators=(',',':'))
+        print(f"snapshot: rolling {cur} ({today}, {len(data)} μετοχές)")
+    except Exception as ex:
+        print(f"snapshot: ΠΡΟΕΙΔΟΠΟΙΗΣΗ — δεν γράφτηκε ({ex})")
 
 def apply_current(ax, eu, today):
     n=0; ratios=[]
@@ -136,6 +170,7 @@ def main():
     eu=build_eu_map(arr)
     head, ax=load_axion(DATA)
     today=session_date(eu_raw)   # ημερομηνία τελευταίας κλεισμένης συνεδρίασης (όχι ώρα εκτέλεσης)
+    write_snapshots(eu, today)   # αρχείο στιγμιότυπων περιόδου (τέλος 6μήνου/έτους)
     n, ratios=apply_current(ax, eu, today)
     # sanity: το euronext mcap πρέπει να είναι στην ίδια τάξη μεγέθους με το δικό μας
     if ratios:
