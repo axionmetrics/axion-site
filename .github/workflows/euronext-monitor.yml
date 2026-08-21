@@ -1,22 +1,22 @@
 name: Euronext Monitor (εβδομαδιαίο)
- 
+
 # Ανιχνεύει αλλαγές εταιρικών γεγονότων από το Euronext Athens και
 # ΑΝΑΦΕΡΕΙ (Issue + job summary). ΔΕΝ αλλάζει το data.js ούτε το master.
- 
+
 on:
   schedule:
     # Κάθε Παρασκευή 06:00 UTC (~09:00 Αθήνα θέρος / 08:00 χειμώνα)
     - cron: '0 6 * * 5'
   workflow_dispatch: {}
- 
+
 permissions:
   contents: write   # για commit του snapshot
   issues: write     # για δημιουργία Issue αναφοράς
- 
+
 concurrency:
   group: euronext-monitor
   cancel-in-progress: false
- 
+
 jobs:
   monitor:
     runs-on: ubuntu-latest
@@ -24,27 +24,29 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
- 
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
- 
+
       - name: Εγκατάσταση εξαρτήσεων
         run: pip install --quiet beautifulsoup4
- 
+
       - name: Έλεγχος Euronext
         id: run
         run: python .github/scripts/euronext_monitor.py
- 
+
       - name: Commit snapshot + ουρά (αν άλλαξαν)
         run: |
-          if git diff --quiet -- .github/monitor/; then
+          # Stage ΠΡΩΤΑ ώστε να πιάνονται και τα untracked αρχεία (π.χ. το πρώτο snapshot.json)·
+          # το `git diff --quiet` χωρίς staging αγνοεί τα untracked και το baseline δεν γινόταν ποτέ commit.
+          git add -A .github/monitor/
+          if git diff --cached --quiet; then
             echo "Καμία μεταβολή state — χωρίς commit."
             exit 0
           fi
           git config user.name  "axion-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A .github/monitor/
           git commit -m "monitor: snapshot $(date -u +%Y-%m-%d)"
           for i in 1 2 3 4 5; do
             git fetch origin ${{ github.ref_name }}
@@ -55,7 +57,7 @@ jobs:
             echo "retry $i ..."; sleep 5
           done
           echo "push failed after retries"; exit 1
- 
+
       - name: Άνοιγμα Issue αναφοράς (μόνο αν υπάρχουν αλλαγές)
         if: steps.run.outputs.has_changes == 'true'
         env:
