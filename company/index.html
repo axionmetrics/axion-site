@@ -41,7 +41,7 @@
   .mast h1{font-family:var(--disp);font-weight:800;font-size:46px;line-height:1.02;letter-spacing:-.02em;margin:0;color:var(--ink)}
   .mast-meta{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:11px}
   .chip{font-family:var(--mono);font-size:12.5px;font-weight:500;padding:3px 10px;border-radius:6px;background:var(--bl);color:#1f5f97;border:1px solid #b7dbf5}
-  .mast-nameline .sub{font-size:14px;color:var(--muted)}
+  .mast-meta .sub{font-size:14px;color:var(--muted);margin-left:auto;text-align:right}
   .sctag{font-family:var(--sans);font-size:12.5px;font-weight:600;color:#2b4a6b;padding:3px 11px;border-radius:6px;background:#eef5fc;border:1px solid #cfe0f6}
 
   .layout{display:flex;flex-direction:column;gap:20px;margin:20px 0 0}
@@ -346,11 +346,11 @@
       <h1 id="co-name">ALLWYN</h1>
       <span class="tbadge" id="co-status" hidden></span>
       <span class="tbadge" id="co-h1" hidden></span>
-      <span class="sub" id="co-eur">Allwyn AG · Euronext Athens</span>
     </div>
     <div class="mast-meta">
       <span class="chip" id="co-ticker">ALWN</span>
       <span class="sctag" id="co-sector">—</span>
+      <span class="sub" id="co-eur">Allwyn AG · Euronext Athens</span>
     </div>
   </section>
   <div class="tbanner" id="co-banner" hidden></div>
@@ -665,14 +665,19 @@ const host=document.getElementById('host'),tip=document.getElementById('tip'),wr
 const WIN=6; let trajStart=0;
 const xOf=i=>padL+INSET+(W-padL-padR-INSET)*(i/(WIN-1));
 
-function niceScale(maxv){
-  const rawStep=(maxv/5)||1;
+function niceScale(minv,maxv){
+  if(minv==null||isNaN(minv)) minv=0;
+  if(maxv==null||isNaN(maxv)) maxv=1;
+  const span=(maxv-Math.min(0,minv))||1;
+  const rawStep=span/5;
   const mag=Math.pow(10,Math.floor(Math.log10(rawStep)));
   const norm=rawStep/mag;
   let step=norm<=1?1:norm<=2?2:norm<=2.5?2.5:norm<=5?5:10; step*=mag;
-  const yMax=Math.ceil(maxv/step)*step, lines=[];
-  for(let v=0;v<=yMax+step*0.001;v+=step) lines.push(+v.toFixed(6));
-  return {yMax,lines};
+  const yMax=Math.ceil(maxv/step)*step;
+  const yMin=minv<0 ? Math.floor(minv/step)*step : 0;   // περιλαμβάνει αρνητικές τιμές (π.χ. αρνητικό PPI τράπεζας)
+  const lines=[];
+  for(let v=yMin;v<=yMax+step*0.001;v+=step) lines.push(+v.toFixed(6));
+  return {yMin,yMax,lines};
 }
 const pathOf=(arr,yOf)=>{ let d=`M ${xOf(0)} ${yOf(arr[0])}`; arr.forEach((v,i)=>{ if(i) d+=` L ${xOf(i)} ${yOf(v)}`; }); return d; };
 const yoy=(arr,i)=> (i===0||!arr[i-1]) ? null : (arr[i]-arr[i-1])/arr[i-1]*100;
@@ -718,8 +723,10 @@ function draw(){
   const s=trajStart;
   const secF=IS_BANK?ppiF:ebF;   // 2η γραμμή γραφήματος: PPI για τράπεζες, EBITDA για τις υπόλοιπες
   const rev=revF.slice(s,s+WIN), eb=(IS_BANK && !ppiF.some(v=>v!==0) ? [] : secF).slice(s,s+WIN);
-  const {yMax,lines}=niceScale(Math.max(...rev,...eb));
-  const yOf=v=>plotBottom-(v/yMax)*(plotBottom-plotTop);
+  const _all=rev.concat(eb);
+  const {yMin,yMax,lines}=niceScale(Math.min(0,..._all),Math.max(..._all));
+  const yOf=v=>plotBottom-((v-yMin)/((yMax-yMin)||1))*(plotBottom-plotTop);
+  const zeroY=yOf(0);   // βάση αναφοράς: οι περιοχές κλείνουν στο μηδέν (όχι στο κάτω άκρο)
 
   host.innerHTML='';
   const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,role:'img'});
@@ -739,14 +746,14 @@ function draw(){
   });
   svg.appendChild(defs);
   const rd=pathOf(rev,yOf), ed=pathOf(eb,yOf);
-  const areaOf=(d,n)=>d+` L ${xOf(n-1)} ${plotBottom} L ${xOf(0)} ${plotBottom} Z`;
+  const areaOf=(d,n)=>d+` L ${xOf(n-1)} ${zeroY} L ${xOf(0)} ${zeroY} Z`;
   svg.appendChild(el('path',{d:areaOf(rd,rev.length),fill:'url(#grev)'}));
   if(eb.length) svg.appendChild(el('path',{d:areaOf(ed,eb.length),fill:'url(#geb)'}));
   svg.appendChild(el('path',{d:rd,fill:'none',stroke:REV_C,'stroke-width':2,'stroke-linejoin':'round'}));
   if(eb.length) svg.appendChild(el('path',{d:ed,fill:'none',stroke:EB_C,'stroke-width':2,'stroke-linejoin':'round'}));
 
   // axis baseline + year numbers close to axis
-  svg.appendChild(el('line',{x1:padL,y1:plotBottom,x2:W-padR,y2:plotBottom,stroke:'#cfdcea','stroke-width':1}));
+  svg.appendChild(el('line',{x1:padL,y1:zeroY,x2:W-padR,y2:zeroY,stroke:(yMin<0?'#b8c6d8':'#cfdcea'),'stroke-width':(yMin<0?1.4:1)}));
   company.years.slice(s,s+WIN).forEach((yr,li)=>{ const t=el('text',{x:xOf(li),y:yearY,'text-anchor':'middle','font-family':"'Ubuntu Mono'",'font-size':11,fill:'#6b8199'}); t.textContent=yr; svg.appendChild(t); });
 
   // secondary metrics as lines below the axis
