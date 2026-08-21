@@ -458,6 +458,7 @@ AX_I18N.add({
  'co.m.revenue':{el:'Τζίρος', en:'Revenue'},
  'co.m.net_profit':{el:'Καθαρά κέρδη', en:'Net profit'},
  'co.m.ebitda':{el:'EBITDA', en:'EBITDA'},
+ 'co.m.ppi':{el:'Κέρδη προ προβλέψεων', en:'Pre-provision income'},
  'co.na.banks':{el:'Not applicable to banks', en:'Not applicable to banks'},
  'co.m.mcap':{el:'Κεφαλαιοποίηση', en:'Market cap'},
  'co.m.pe':{el:'P/E', en:'P/E'},
@@ -630,10 +631,13 @@ document.getElementById('co-sector').textContent=company.sector;
 
 const li=company.years.length-1;
 document.getElementById('latest').innerHTML=METRICS.map(m=>{
-  const arr=company.metrics[m.key]; if(!arr) return '';
+  // τράπεζες: η θέση του EBITDA στην κάρτα μεγεθών δείχνει «Κέρδη προ προβλέψεων» (PPI) με την τιμή του τελευταίου έτους
+  const bankPPI = IS_BANK && m.key==='ebitda';
+  const arr=company.metrics[bankPPI?'ppi':m.key]; if(!arr) return '';
   const v=arr[li];
-  const val=(IS_BANK&&NA_METRIC.has(m.key))?`<span class="na-bank">${L('co.na.banks')}</span>`:(m.unit==='eur'?(v==null?'—':`${fMil(v)}<small>${EURSUF()}</small>`):fX(v));
-  return `<div class="metric-item"><div class="k">${m.label}</div><div class="cell"><div class="v">${val}</div></div></div>`;
+  const label = bankPPI ? L('co.m.ppi') : m.label;
+  const val=(IS_BANK&&NA_METRIC.has(m.key)&&!bankPPI)?`<span class="na-bank">${L('co.na.banks')}</span>`:(m.unit==='eur'?(v==null?'—':`${fMil(v)}<small>${EURSUF()}</small>`):fX(v));
+  return `<div class="metric-item"><div class="k">${label}</div><div class="cell"><div class="v">${val}</div></div></div>`;
 }).join('');
 (function(){
   const cb=document.getElementById('current-band'); if(!cb) return;
