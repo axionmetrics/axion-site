@@ -346,6 +346,7 @@
       <h1 id="co-name">ALLWYN</h1>
       <span class="tbadge" id="co-status" hidden></span>
       <span class="tbadge" id="co-h1" hidden></span>
+      <span class="tbadge" id="co-corp" hidden></span>
     </div>
     <div class="mast-meta">
       <span class="chip" id="co-ticker">ALWN</span>
@@ -355,6 +356,7 @@
   </section>
   <div class="tbanner" id="co-banner" hidden></div>
   <div class="tbanner" id="co-h1-banner" hidden></div>
+  <div class="tbanner" id="co-corp-banner" hidden></div>
 
   <div class="layout">
 
@@ -628,6 +630,21 @@ document.getElementById('co-sector').textContent=company.sector;
   if(ban){ ban.className='tbanner t-prov';
     ban.innerHTML=icon+'<span><b>'+n+' '+L('co.h1.of')+'</b> <span class="thin">'+L('co.h1.detail')+'</span></span>';
     ban.hidden=false; }
+})();
+
+// «Αλλαγή οντότητας / εταιρική πράξη» — badge + υποσημείωση, τροφοδοτείται από τον master (INDEX ΕΠΙΧΕΙΡΗΣΕΩΝ)
+(function(){
+  var corp=(AX&&AX.corp)||null;
+  var pill=document.getElementById('co-corp'), ban=document.getElementById('co-corp-banner');
+  var text=corp&&(corp.text||corp.note||''), badge=corp&&(corp.badge||'');
+  if(!corp||(!text&&!badge)){ if(pill)pill.hidden=true; if(ban)ban.hidden=true; return; }
+  var icon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><path d="M12 3l9 16H3z"/><line x1="12" y1="9.5" x2="12" y2="14"/><circle cx="12" cy="16.7" r="0.4" fill="currentColor" stroke="none"/></svg>';
+  if(pill&&badge){ pill.className='tbadge t-prov'; pill.innerHTML=icon+'<span>'+badge+'</span>'; pill.hidden=false; }
+  else if(pill){ pill.hidden=true; }
+  if(ban&&text){ ban.className='tbanner t-prov';
+    ban.innerHTML=icon+'<span class="thin">'+text+'</span>';
+    ban.hidden=false; }
+  else if(ban){ ban.hidden=true; }
 })();
 
 const li=company.years.length-1;
