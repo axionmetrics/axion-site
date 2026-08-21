@@ -41,7 +41,7 @@
   .mast h1{font-family:var(--disp);font-weight:800;font-size:46px;line-height:1.02;letter-spacing:-.02em;margin:0;color:var(--ink)}
   .mast-meta{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:11px}
   .chip{font-family:var(--mono);font-size:12.5px;font-weight:500;padding:3px 10px;border-radius:6px;background:var(--bl);color:#1f5f97;border:1px solid #b7dbf5}
-  .mast-meta .sub{font-size:14px;color:var(--muted);margin-left:auto;text-align:right}
+  .mast-meta .sub{font-size:14px;color:var(--muted)}
   .sctag{font-family:var(--sans);font-size:12.5px;font-weight:600;color:#2b4a6b;padding:3px 11px;border-radius:6px;background:#eef5fc;border:1px solid #cfe0f6}
 
   .layout{display:flex;flex-direction:column;gap:20px;margin:20px 0 0}
@@ -496,6 +496,7 @@ AX_I18N.add({
  'co.chart.netprofit':{el:'Καθ. κέρδη', en:'Net profit'},
  'co.chart.totaldebt':{el:'Συν. δανεισμός', en:'Total debt'},
  'co.chart.netdebt':{el:'Καθ. δανεισμός', en:'Net debt'},
+ 'co.chart.npe':{el:'Δείκτης ΜΕΑ', en:'NPE ratio'},
  // subs / geo
  'co.geo.entities':{el:'οντότητες', en:'entities'},
  'co.geo.countries':{el:'χώρες', en:'countries'},
@@ -764,7 +765,12 @@ function draw(){
   const np=company.metrics.net_profit.map(v=>v/1e6);
   const f0=v=>{if(v==null||isNaN(v))return '—';const a=Math.abs(v),d=a<100?2:a<1000?1:0;return v.toLocaleString(LOC(),{minimumFractionDigits:d,maximumFractionDigits:d});}, fx=v=>(v==null||isNaN(v))?'—':v.toLocaleString(LOC(),{maximumFractionDigits:1});
   metricRow(svg,L('co.chart.netprofit'), np, f0, '#cf7f00', ROWS_TOP, true, true);
-  metricRow(svg,L('co.chart.totaldebt'), company.metrics.total_debt.map(v=>v/1e6), f0, '#8fc4ee', ROWS_TOP+ROW_H, false, true);
+  if(IS_BANK){ // τράπεζες: ο «συν. δανεισμός» (πάντα 0) αντικαθίσταται με τον δείκτη ΜΕΑ (NPE %)
+    const fpct=v=>(v==null||isNaN(v))?'—':v.toLocaleString(LOC(),{minimumFractionDigits:1,maximumFractionDigits:1})+'%';
+    metricRow(svg,L('co.chart.npe'), (AX&&AX.ratios&&AX.ratios.npe&&AX.ratios.npe.series)||[], fpct, '#8fc4ee', ROWS_TOP+ROW_H, false, false);
+  } else {
+    metricRow(svg,L('co.chart.totaldebt'), company.metrics.total_debt.map(v=>v/1e6), f0, '#8fc4ee', ROWS_TOP+ROW_H, false, true);
+  }
   metricRow(svg,L('co.chart.netdebt'), company.metrics.net_debt.map(v=>v/1e6), f0, '#2b4a6b', ROWS_TOP+2*ROW_H, false, true);
   metricRow(svg,'P/E', company.metrics.pe, fx, '#57a5df', ROWS_TOP+3*ROW_H, true, false);
   metricRow(svg,'P/BV', company.metrics.pbv, fx, '#2f80c2', ROWS_TOP+4*ROW_H, true, false);
