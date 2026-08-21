@@ -760,6 +760,8 @@ function draw(){
   // axis baseline + year numbers close to axis
   svg.appendChild(el('line',{x1:padL,y1:zeroY,x2:W-padR,y2:zeroY,stroke:(yMin<0?'#b8c6d8':'#cfdcea'),'stroke-width':(yMin<0?1.4:1)}));
   company.years.slice(s,s+WIN).forEach((yr,li)=>{ const t=el('text',{x:xOf(li),y:yearY,'text-anchor':'middle','font-family':"'Ubuntu Mono'",'font-size':11,fill:'#6b8199'}); t.textContent=yr; svg.appendChild(t); });
+  // έντονη διαχωριστική γραμμή ανάμεσα στο γράφημα/έτη και στον πίνακα μεγεθών
+  svg.appendChild(el('line',{x1:0,y1:ROWS_TOP-7,x2:W,y2:ROWS_TOP-7,stroke:'#8299b3','stroke-width':1.8}));
 
   // secondary metrics as lines below the axis
   const np=company.metrics.net_profit.map(v=>v/1e6);
@@ -808,8 +810,15 @@ function draw(){
 
   rev.forEach((v,i)=> svg.appendChild(el('circle',{cx:xOf(i),cy:yOf(v),r:3.4,fill:'#ffffff',stroke:REV_C,'stroke-width':2})));
   eb.forEach((v,i)=> svg.appendChild(el('circle',{cx:xOf(i),cy:yOf(v),r:3.4,fill:'#ffffff',stroke:EB_C,'stroke-width':2})));
-  rev.forEach((v,i)=> svg.appendChild(ptLabel(xOf(i),yOf(v),v,yoy(revF,s+i),'above')));
-  eb.forEach((v,i)=> svg.appendChild(ptLabel(xOf(i),yOf(v),v,yoy(ebF,s+i),'above')));
+  // Όταν τα δύο σημεία μιας χρονιάς είναι κοντά, βάζουμε το label του καθενός σε αντίθετη πλευρά
+  // (ψηλότερο→πάνω, χαμηλότερο→κάτω) ώστε να μην πέφτουν το ένα πάνω στο άλλο. Αλλιώς: πάνω.
+  const CLOSE=32;
+  rev.forEach((v,i)=>{ let place='above';
+    if(eb.length&&eb[i]!=null){ const yr=yOf(v),ye=yOf(eb[i]); if(Math.abs(yr-ye)<CLOSE && yr>ye && yr+33<yearY-2) place='below'; }
+    svg.appendChild(ptLabel(xOf(i),yOf(v),v,yoy(revF,s+i),place)); });
+  eb.forEach((v,i)=>{ let place='above';
+    if(rev[i]!=null){ const ye=yOf(v),yr=yOf(rev[i]); if(Math.abs(yr-ye)<CLOSE && ye>yr && ye+33<yearY-2) place='below'; }
+    svg.appendChild(ptLabel(xOf(i),yOf(v),v,yoy(ebF,s+i),place)); });
   host.appendChild(svg);
 }
 draw();
