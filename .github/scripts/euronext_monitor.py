@@ -52,8 +52,8 @@ QUEUE_PATH = os.path.join(MON_DIR, "events_queue.csv")
 # Στήλες ουράς — ό,τι χρειάζεται το apply_events.py για να χτίσει τη γραμμή
 # ΕΤΑΙΡΙΚΑ ΓΕΓΟΝΟΤΑ (η ανάλυση symbol->όνομα master γίνεται στο apply, από το INDEX).
 QUEUE_COLS = ["detected_on", "euronext_symbol", "euronext_company", "date",
-              "family", "category", "type", "description", "source_title",
-              "needs_detail", "event_key"]
+              "family", "category", "type", "description", "amount_eur",
+              "fiscal_year", "source_title", "needs_detail", "event_key"]
  
 # family -> Κατηγορία (ακριβώς όπως στο master)
 CATEGORY = {
@@ -254,7 +254,8 @@ def _src_date(iso):
     return iso or ""
  
  
-def _ev(sym, comp, date_iso, fam, typ, desc, src, detected_on, needs=False):
+def _ev(sym, comp, date_iso, fam, typ, desc, src, detected_on, needs=False,
+        amount="", fiscal=""):
     key = "%s|%s|%s" % (sym, date_iso, typ)
     return {
         "detected_on": detected_on,
@@ -265,6 +266,10 @@ def _ev(sym, comp, date_iso, fam, typ, desc, src, detected_on, needs=False):
         "category": CATEGORY.get(fam, ""),
         "type": typ,
         "description": desc,
+        # amount_eur -> στήλη M «Ποσό €/μτχ» του master· fiscal_year -> στήλη N «Χρήση».
+        # Μόνο για διανομές (div/capital)· τα άλλα events μένουν κενά.
+        "amount_eur": amount,
+        "fiscal_year": fiscal,
         "source_title": src,
         "needs_detail": "1" if needs else "",
         "event_key": key,
@@ -291,7 +296,14 @@ def build_events(ch, stocks, detected_on):
             fam, typ = "div", "dividend"
             desc = "%s €%s/μετοχή" % (r["type"], price) if price else r["type"]
         src = "%s ΧΡΗΜΑΤΙΚΗ ΔΙΑΝΟΜΗ %s" % (r["company"], _src_date(diso))
-        ev.append(_ev(sym, r["company"], diso, fam, typ, desc, src, detected_on))
+        # amount σε καθαρό αριθμό (τελεία δεκαδικό)· fiscal = χρήση όπως τη δίνει το Euronext
+        _p = (price or "").strip()
+        if "," in _p and "." in _p: amount = _p.replace(".", "").replace(",", ".")
+        elif "," in _p:             amount = _p.replace(",", ".")
+        else:                       amount = _p
+        fiscal = (r.get("fiscal") or "").strip()
+        ev.append(_ev(sym, r["company"], diso, fam, typ, desc, src, detected_on,
+                      amount=amount, fiscal=fiscal))
  
     # Αναστολή / επαναφορά διαπραγμάτευσης
     for sym, o, n in ch["status_changes"]:
