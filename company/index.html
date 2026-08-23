@@ -678,6 +678,8 @@ const FAM={
   index:{c:'#2b4a6b',name:L('co.fam.index')}
 };
 const EVENTS=(AX&&AX.events)||[];;
+// Ποσά €/μτχ στα labels γεγονότων → 3 δεκαδικά (κουκκίδες γραφήματος)
+function fmt3(s){return String(s==null?'':s).replace(/€\s*([0-9][0-9.,]*)/g,function(_,num){var n=parseFloat(num.replace(/\./g,'').replace(',','.'));return isNaN(n)?('€'+num):('€'+n.toLocaleString(LOC(),{minimumFractionDigits:3,maximumFractionDigits:3}));});}
 const REV_C='#2f80c2', EB_C='#3f9e6a';
 
 const NS='http://www.w3.org/2000/svg';
@@ -808,7 +810,7 @@ function draw(){
     g.appendChild(el('circle',{cx:x,cy:evLaneY,r:15,fill:'transparent'}));
     g.addEventListener('mouseenter',()=>{
       let h=`<div class="ty">${single?list[0].date:yr+' · '+list.length+' '+L('co.evk.plural')}</div>`;
-      list.forEach(e=>{ h+=`<div class="row"><i style="background:${(FAM[e.fam]||{c:'#8595ad'}).c}"></i><span class="l">${!single?`<span class="d">${e.date}</span> `:''}${e.label}</span></div>`; });
+      list.forEach(e=>{ h+=`<div class="row"><i style="background:${(FAM[e.fam]||{c:'#8595ad'}).c}"></i><span class="l">${!single?`<span class="d">${e.date}</span> `:''}${fmt3(e.label)}</span></div>`; });
       tip.innerHTML=h; tip.classList.add('on');
       const wr=wrapEl.getBoundingClientRect(), dr=dot.getBoundingClientRect();
       const cx=dr.left-wr.left+dr.width/2, tw=tip.offsetWidth, pad=8;
@@ -1076,7 +1078,7 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
   const rows=(D.rows||[]).filter(r=>r&&r.dps!=null&&r.dps>1e-9);
   if(D.distributes&&rows.length){
     const rev=rows.slice().reverse();
-    dvEl.innerHTML=`<div class="dv-list"><div class="dv-head"><span>${L('co.dist.year')}</span><span class="r">${L('co.dist.eursh')}</span><span class="r">${L('co.dist.yield')}</span></div>${rev.map(r=>`<div class="dv-row"><span class="dv-yr">${r.y}</span><span class="dv-eur">${nf(r.dps,2)}</span><span class="dv-yld">${r.dy==null?'—':nf(r.dy)+'%'}</span></div>`).join('')}<div class="dv-note">${L('co.dist.note')}</div></div>`;
+    dvEl.innerHTML=`<div class="dv-list"><div class="dv-head"><span>${L('co.dist.year')}</span><span class="r">${L('co.dist.eursh')}</span><span class="r">${L('co.dist.yield')}</span></div>${rev.map(r=>`<div class="dv-row"><span class="dv-yr">${r.y}</span><span class="dv-eur">${nf(r.dps,3)}</span><span class="dv-yld">${r.dy==null?'—':nf(r.dy)+'%'}</span></div>`).join('')}<div class="dv-note">${L('co.dist.note')}</div></div>`;
   } else {
     dvEl.innerHTML=`<div class="dv-empty"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/></svg></div><div class="t">${L('co.dist.none')}</div><div class="s">${L('co.dist.none.s')}</div></div>`;
   }
