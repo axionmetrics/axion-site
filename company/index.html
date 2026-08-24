@@ -34,6 +34,10 @@
 
   .mast{padding:34px 0 0}
   .mast-nameline{display:flex;align-items:baseline;flex-wrap:wrap;gap:12px}
+  .co-logo-wrap{display:inline-flex;align-items:center;gap:15px;align-self:center}
+  .co-vrule{width:1px;height:34px;background:var(--line);flex:0 0 auto}
+  .co-logo{height:38px;width:auto;max-width:180px;object-fit:contain;display:block}
+  @media(max-width:600px){.co-logo{height:30px;max-width:130px}.co-vrule{height:27px}}
   .mast-sector{margin-top:9px}
   .ms-cap{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--faint);font-weight:600;margin-bottom:9px}
   .ms-cap span{text-transform:none;letter-spacing:0;font-weight:400}
@@ -344,6 +348,7 @@
     </button>
     <div class="mast-nameline">
       <h1 id="co-name">ALLWYN</h1>
+      <span class="co-logo-wrap" id="co-logo-wrap" hidden><span class="co-vrule"></span><img id="co-logo" class="co-logo" alt=""></span>
       <span class="tbadge" id="co-status" hidden></span>
       <span class="tbadge" id="co-h1" hidden></span>
       <span class="tbadge" id="co-corp" hidden></span>
@@ -594,6 +599,9 @@ function deltaMark(arr,i,goodUp){
 }
 
 document.getElementById('co-name').textContent=company.name;
+// Λογότυπο εταιρείας (μετά το όνομα, με κάθετο διαχωριστικό)· fallback: κρύβεται αν λείπει
+window.AX_LOGO={"ALWN":1,"ΑΣΤΑΚ":2,"ΑΝΔΡΟ":3,"ΑΤΡΑΣΤ":4,"ΑΛΦΑ":5,"AEM":6,"ΑΣΚΟ":7,"ΑΤΤΙΚΑ":8,"ACAG":9,"ΟΤΟΕΛ":10,"ΑΒΕ":11,"BYLOT":12,"ΜΠΡΙΚ":13,"CENER":14,"ΣΕΝΤΡ":15,"CNLCAP":16,"ΕΕΕ":17,"ΣΠΙ":18,"CREDIA":19,"DIMAND":20,"ΝΤΟΤΣΟΦΤ":21,"ΕΧΑΕ":22,"EX":23,"ΦΛΕΞΟ":24,"ΦΡΛΚ":25,"ΦΡΙΓΟ":26,"ΕΛΠΕ":27,"ΙΝΤΕΚ":28,"ΜΠΕΛΑ":29,"ΛΑΜΔΑ":30,"ΛΟΓΟΣ":31,"ΛΟΥΛΗ":32,"ΜΑΣΤΙΧΑ":33,"MTLN":34,"ΜΕΒΑ":35,"ΜΙΓ":36,"ΟΡΙΛΙΝΑ":37,"ΠΕΡΦ":38,"ΠΡΕΜΙΑ":39,"ΠΡΟΦ":40,"ΚΟΥΑΛ":41,"ΚΟΥΕΣ":42,"REALCONS":43,"SOFTWEB":44,"ΣΠΕΙΣ":45,"TITC":46,"ΤΡΕΣΤΑΤΕΣ":47,"ΤΡΑΣΤΟΡ":48,"ΒΙΟΣΚ":49,"ΒΙΝΤΑ":50,"ΒΙΟ":51,"ΑΒΑΞ":52,"ΣΠΥΡ":53,"ΚΟΡΔΕ":54,"ΑΡΑΙΓ":55,"AKTR":56,"ΑΛΜΥ":57,"ΛΑΒΙ":59,"ΑΔΜΗΕ":60,"ΛΕΒΚ":61,"ΜΑΘΙΟ":62,"ΑΤΕΚ":63,"ΜΕΝΤΙ":64,"ΜΙΝ":65,"ΒΙΟΚΑ":66,"ΒΙΟΤ":67,"ΒΟΣΥΣ":68,"ΓΕΚΤΕΡΝΑ":69,"ΓΕΒΚΑ":70,"ΣΑΡ":71,"ΔΑΙΟΣ":72,"ΔΕΗ":73,"ΔΑΑ":74,"ΔΟΜΙΚ":75,"ΠΑΙΡΗ":76,"ΕΒΡΟΦ":77,"ΕΤΕ":78,"ΕΚΤΕΡ":79,"ΕΛΣΤΡ":80,"ΕΛΧΑ":81,"ΕΛΒΕ":82,"ΜΟΥΖΚ":83,"ΕΛΙΝ":84,"ΕΛΛΑΚΤΩΡ":85,"ΙΚΤΙΝ":86,"ΕΛΤΟΝ":87,"ΜΟΤΟ":88,"ΑΑΑΚ":89,"ΛΑΜΨΑ":90,"ΕΥΑΠΣ":91,"ΕΥΔΑΠ":92,"ΕΥΡΩΣ":93,"EVR":94,"ΙΑΤΡ":95,"ΙΛΥΔΑ":96,"ΞΥΛΚ":97,"ΙΝΛΙΦ":98,"ΙΝΤΕΤ":99,"ΙΝΤΚΑ":100,"ΚΑΡΕΛ":101,"ΝΑΥΠ":102,"ΚΡΙ":103,"ΣΑΡΑΝ":104,"ΛΑΝΑΚ":105,"ΜΟΗ":106,"ΜΠΛΕΚΕΔΡΟΣ":107,"NOVAL":108,"ΝΤΟΠΛΕΡ":109,"ΚΕΚΡ":110,"ONYX":111,"ΟΠΤΡΟΝ":112,"ΟΛΘ":113,"ΟΛΠ":114,"ΟΤΕ":115,"ΔΡΟΜΕ":116,"ΠΑΠ":117,"ΠΕΤΡΟ":118,"ΠΛΑΘ":119,"ΠΛΑΚΡ":120,"ΠΡΟΝΤΕΑ":121,"ΠΡΔ":122,"ΡΕΒ":123,"ΣΙΔΜΑ":124,"ΤΖΚΑ":125,"ΤΕΝΕΡΓΑ":126,"ΕΥΡΩΒ":127,"OPTIMA":128,"ΠΕΙΡ":129,"ΦΑΙΣ":130,"ΝΑΚΑΣ":131,"ΦΟΥΝΤΛ":132,"ΧΑΙΔΕ":133};
+(function(){try{var lw=document.getElementById('co-logo-wrap'),lg=document.getElementById('co-logo');var code=lw&&lg&&company&&company.ticker&&window.AX_LOGO[company.ticker];if(code){lg.onload=function(){lw.hidden=false;};lg.onerror=function(){lw.hidden=true;};lg.alt=company.name||'';lg.src='../assets/logos/'+code+'.png';}}catch(e){}})();
 document.title=(company.name&&company.name!=='—'?company.name+' — ':'')+'Axion Metrics';
 document.getElementById('co-ticker').textContent=company.ticker;
 document.getElementById('co-eur').textContent=company.euronext_name+' · Euronext Athens';
