@@ -93,6 +93,7 @@
  }
  function renderBasis(){
    var el=document.getElementById('ambasis'); if(!el) return;
+   if(window.AX_NO_BASIS){ el.innerHTML=''; return; }
    var bases=(window.AXION&&window.AXION.meta&&window.AXION.meta.bases)||['annual'];
    var hasInterim=bases.indexOf('interim')>-1;
    var cur=curBasis(hasInterim);

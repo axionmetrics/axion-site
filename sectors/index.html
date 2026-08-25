@@ -122,7 +122,7 @@ function LOC(){return curLang()==='en'?'en-US':'el-GR';}
 const SECTOR_PAGE='../sector/';
 const COMPANY_PAGE='../company/';
 
-const AXBASIS=(function(){try{var u=new URLSearchParams(location.search).get('basis');var b=u||localStorage.getItem('am-basis')||'annual';return (window.AXION&&window.AXION.meta&&window.AXION.meta.bases.indexOf(b)>-1)?b:'annual';}catch(e){return 'annual';}})();
+const AXBASIS='annual'; /* Ευρετήριο κλάδων: μόνο ετήσια βάση (καμία εξαμηνιαία διάμεσος κλάδου) */
 const DATA=((window.AXION&&window.AXION.rows&&window.AXION.rows[AXBASIS])||[]).filter(function(r){return r.calculated!==false;});
 document.addEventListener('axion:basischange',function(){location.reload();});
 
@@ -204,7 +204,7 @@ summary(); render();
 document.addEventListener('axion:langchange',function(){ summary(); render(); });
 </script>
 <div id="am-foot"></div>
-<script>window.NAV_ACTIVE=1;window.NAV_CUR="Ευρετήριο κλάδων";</script>
+<script>window.NAV_ACTIVE=1;window.NAV_CUR="Ευρετήριο κλάδων";window.AX_NO_BASIS=true;</script>
 <script src="../assets/chrome.js"></script>
 </body>
 </html>
