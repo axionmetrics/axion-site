@@ -55,6 +55,13 @@
  .periodbar{display:flex;align-items:center;gap:11px;margin-bottom:13px;padding-bottom:13px;border-bottom:1px solid var(--line)}
  .periodbar .plbl{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9aa7b8}
  .periodbar .pinfo{font-size:12px;color:var(--muted)}
+ /* mini-block διαχωρισμού Ετήσιο/Εξάμηνο (navy = ετήσιο, πετρόλ = εξάμηνο) */
+ .basis-block{border-radius:12px;padding:12px 18px;color:#fff;text-align:center;margin-top:22px}
+ .basis-block.annual{background:#223c66}
+ .basis-block.interim{background:#0f6f6a}
+ .basis-block .bt{font-family:'Inter',sans-serif;font-weight:800;font-size:15.5px;letter-spacing:.05em;text-transform:uppercase}
+ .basis-block .bd{display:flex;align-items:center;justify-content:center;gap:8px;font-size:11.5px;color:rgba(255,255,255,.82);margin-top:4px}
+ .basis-block .bd .per{font-family:'Ubuntu Mono',monospace;font-weight:700;background:rgba(255,255,255,.16);padding:2px 9px;border-radius:14px;color:#fff}
  tbody td.co .na-tag{display:inline-block;margin-left:7px;font-family:'Open Sans';font-size:10px;font-weight:700;color:#8a7a55;background:#fbf3df;border:1px solid #ecdcb4;border-radius:20px;padding:2px 8px;vertical-align:middle}
  tbody tr.na-co td{color:#9aa7b8}
  .tablewrap{overflow-x:auto;margin-top:8px}
@@ -129,6 +136,8 @@
     </div>
   </section>
 
+ <div id="basisblock" class="basis-block" hidden></div>
+
  <div class="controls">
   <div class="periodbar"><span class="plbl" data-i18n="cmp.period">Περίοδος</span><select id="periodSel" class="periodSel" onchange="setPeriod(this.value)"></select><span class="pinfo" id="perinfo"></span></div>
   <div class="searchwrap">
@@ -169,6 +178,9 @@ AX_I18N.add({
  'cmp.period':{el:'Περίοδος', en:'Period'},
  'cmp.reportedn':{el:'{a} από {b} έχουν ανακοινώσει', en:'{a} of {b} reported'},
  'cmp.nadata':{el:'δεν έχει ανακοινώσει {p}', en:'no {p} results'},
+ 'cmp.basis.annual':{el:'ΕΤΗΣΙΑ ΣΥΓΚΡΙΣΗ', en:'ANNUAL COMPARISON'},
+ 'cmp.basis.interim':{el:'ΕΞΑΜΗΝΙΑΙΑ ΣΥΓΚΡΙΣΗ', en:'INTERIM COMPARISON'},
+ 'cmp.basis.sub':{el:'Σύγκριση σε επιλεγμένη περίοδο', en:'Comparison for the selected period'},
  'cmp.selected':{el:'επιλεγμένη', en:'selected'},
  'cmp.hintmax':{el:'Έφτασες το μέγιστο ({n} εταιρείες). Αφαίρεσε μία για να προσθέσεις άλλη.', en:'You’ve reached the maximum ({n} companies). Remove one to add another.'},
  'cmp.hintcount':{el:'Επιλεγμένες {a} από {b}. Πρόσθεσε τουλάχιστον δύο για σύγκριση.', en:'Selected {a} of {b}. Add at least two to compare.'},
@@ -211,9 +223,18 @@ let PERIOD=loadPeriod();
 let DATA=augment(periodRows(PERIOD).slice());
 function setPeriod(p){ PERIOD=p; try{localStorage.setItem('am-period-'+AXBASIS,p);}catch(e){}
  DATA=augment(periodRows(PERIOD).slice()); renderMet(); render(); }
+// «2025H1» → «6M · 2025» (EN: «H1 · 2025»)· τα ετήσια μένουν ως έχουν
+function periodLabel(p){ if(!p) return ''; var m=/^(\d{4})H1$/.exec(p); if(!m) return p; return (curLang()==='en'?'H1':'6M')+' · '+m[1]; }
+function renderBasisBlock(){
+ const bb=document.getElementById('basisblock'); if(!bb) return;
+ bb.className='basis-block '+AXBASIS; bb.hidden=false;
+ const title=L(AXBASIS==='interim'?'cmp.basis.interim':'cmp.basis.annual');
+ const per=PERIOD?`<span class="per">${periodLabel(PERIOD)}</span>`:'';
+ bb.innerHTML=`<div class="bt">${title}</div>`+(per?`<div class="bd">${L('cmp.basis.sub')} ${per}</div>`:'');
+}
 function fillPeriods(){ const sel=document.getElementById('periodSel'); if(!sel) return;
  if(!PERIODS||!PERIODS.length){ sel.style.display='none'; const pi=document.getElementById('perinfo'); if(pi)pi.textContent=''; return; }
- sel.innerHTML=PERIODS.slice().reverse().map(p=>`<option value="${p}"${p===PERIOD?' selected':''}>${p}</option>`).join('');
+ sel.innerHTML=PERIODS.slice().reverse().map(p=>`<option value="${p}"${p===PERIOD?' selected':''}>${periodLabel(p)}</option>`).join('');
  const pi=document.getElementById('perinfo'); if(pi) pi.textContent=L('cmp.reportedn').replace('{a}',repCount(PERIOD)).replace('{b}',DATA.length);
 }
 
@@ -310,6 +331,7 @@ function loadSel(){try{var raw=localStorage.getItem('am-compare');if(!raw)return
 function render(){
  saveSel();
  fillPeriods();
+ renderBasisBlock();
  const out=document.getElementById('out');
  const chips=document.getElementById('picked');
  chips.innerHTML=picked.map(t=>`<span class="pchip">${t}
@@ -333,7 +355,7 @@ function render(){
    shown.map(m=>`<th>${caps(metL(m.k))}<span class="dirn">${m.dir<0?L('cmp.lowbest'):L('cmp.highbest')}</span></th>`).join('')+
    `</tr>`;
 
- const naTag=`<span class="na-tag">${L('cmp.nadata').replace('{p}',PERIOD||'')}</span>`;
+ const naTag=`<span class="na-tag">${L('cmp.nadata').replace('{p}',periodLabel(PERIOD))}</span>`;
  const tb=rows.map(r=>{
   const na=(r.reported===false);
   const tds=shown.map(m=>`<td class="${na?'neu':rankCls(m,reported,r[m.k])}">${na?'—':fv(m,r[m.k])}</td>`).join('');

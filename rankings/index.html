@@ -29,6 +29,13 @@
  .periodSel{font-family:inherit;font-size:12.5px;font-weight:700;color:var(--text);background:#fff;border:1px solid var(--line);border-radius:9px;padding:7px 30px 7px 13px;cursor:pointer;
    -webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2333425c' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
  .periodSel:focus{outline:none;border-color:var(--accent)}
+ /* mini-block διαχωρισμού Ετήσιο/Εξάμηνο (navy = ετήσιο, πετρόλ = εξάμηνο) */
+ .basis-block{border-radius:12px;padding:12px 18px;color:#fff;text-align:center;margin-top:22px}
+ .basis-block.annual{background:#223c66}
+ .basis-block.interim{background:#0f6f6a}
+ .basis-block .bt{font-family:'Inter',sans-serif;font-weight:800;font-size:15.5px;letter-spacing:.05em;text-transform:uppercase}
+ .basis-block .bd{display:flex;align-items:center;justify-content:center;gap:8px;font-size:11.5px;color:rgba(255,255,255,.82);margin-top:4px}
+ .basis-block .bd .per{font-family:'Ubuntu Mono',monospace;font-weight:700;background:rgba(255,255,255,.16);padding:2px 9px;border-radius:14px;color:#fff}
  tbody tr.na-row td{color:#9aa7b8}
  tbody tr.na-row td.nm a{color:#7a8698}
  tbody tr.na-head td{background:#f4f6f9;border-top:2px solid #e4e8f0;font-size:11.5px;font-weight:700;letter-spacing:.02em;color:#7a8698;padding:9px 10px;text-transform:none}
@@ -125,6 +132,8 @@
       </div>
     </div>
   </div>
+ <div id="basisblock" class="basis-block" hidden></div>
+
  <div class="controls">
   <div class="crow" style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--line)">
    <span class="lbl" data-i18n="rk.period">Περίοδος</span>
@@ -177,6 +186,9 @@ AX_I18N.add({
  'rk.period':{el:'Περίοδος', en:'Period'},
  'rk.notann':{el:'Δεν έχουν ανακοινωθεί ακόμα αποτελέσματα', en:'Results not announced yet'},
  'rk.reportedn':{el:'{a} από {b} έχουν ανακοινώσει', en:'{a} of {b} reported'},
+ 'rk.basis.annual':{el:'ΕΤΗΣΙΑ ΚΑΤΑΤΑΞΗ', en:'ANNUAL RANKING'},
+ 'rk.basis.interim':{el:'ΕΞΑΜΗΝΙΑΙΑ ΚΑΤΑΤΑΞΗ', en:'INTERIM RANKING'},
+ 'rk.basis.sub':{el:'Κατάταξη σε επιλεγμένη περίοδο', en:'Ranking for the selected period'},
  'rk.of':{el:'από', en:'of'}, 'rk.median':{el:'διάμεσος', en:'median'},
  'rk.h.company':{el:'ΕΤΑΙΡΕΙΑ', en:'COMPANY'}, 'rk.h.sector':{el:'ΚΛΑΔΟΣ', en:'SECTOR'}, 'rk.h.position':{el:'ΘΕΣΗ ΣΤΗΝ ΚΑΤΑΝΟΜΗ', en:'POSITION IN DISTRIBUTION'},
  'word.companies':{el:'εταιρείες', en:'companies'},
@@ -278,7 +290,7 @@ function setN(n){topN=n;
 function naBlock(notann){
  if(!notann.length) return '';
  const head=`<tr class="na-head"><td colspan="5" onclick="this.closest('tbody').classList.toggle('na-collapsed')">
-   <div class="hdrow"><span class="nb">${L('rk.notann')}${PERIOD?(' · '+PERIOD):''} · ${notann.length}</span><span class="cv">▾</span></div></td></tr>`;
+   <div class="hdrow"><span class="nb">${L('rk.notann')}${PERIOD?(' · '+periodLabel(PERIOD)):''} · ${notann.length}</span><span class="cv">▾</span></div></td></tr>`;
  const rows=[...notann].sort((a,b)=>a.t.localeCompare(b.t,'el')).map(r=>
    `<tr class="na-row">
      <td class="rk">·</td>
@@ -337,14 +349,23 @@ function cards(){
  }).join('');
 }
 
+// «2025H1» → «6M · 2025» (EN: «H1 · 2025»)· τα ετήσια μένουν ως έχουν
+function periodLabel(p){ if(!p) return ''; var m=/^(\d{4})H1$/.exec(p); if(!m) return p; return (curLang()==='en'?'H1':'6M')+' · '+m[1]; }
+function renderBasisBlock(){
+ const bb=document.getElementById('basisblock'); if(!bb) return;
+ bb.className='basis-block '+AXBASIS; bb.hidden=false;
+ const title=L(AXBASIS==='interim'?'rk.basis.interim':'rk.basis.annual');
+ const per=PERIOD?`<span class="per">${periodLabel(PERIOD)}</span>`:'';
+ bb.innerHTML=`<div class="bt">${title}</div>`+(per?`<div class="bd">${L('rk.basis.sub')} ${per}</div>`:'');
+}
 function fillPeriods(){
  const sel=document.getElementById('periodSel'); if(!sel) return;
  if(!PERIODS||!PERIODS.length){ sel.style.display='none'; const pi=document.getElementById('perinfo'); if(pi)pi.textContent=''; return; }
- sel.innerHTML=PERIODS.slice().reverse().map(p=>`<option value="${p}"${p===PERIOD?' selected':''}>${p}</option>`).join('');
+ sel.innerHTML=PERIODS.slice().reverse().map(p=>`<option value="${p}"${p===PERIOD?' selected':''}>${periodLabel(p)}</option>`).join('');
  const rc=repCount(PERIOD), tot=periodRows(PERIOD).filter(r=>r.calculated!==false).length;
  const pi=document.getElementById('perinfo'); if(pi) pi.textContent=L('rk.reportedn').replace('{a}',rc).replace('{b}',tot);
 }
-function render(){fillPeriods();chips();table();cards();}
+function render(){fillPeriods();renderBasisBlock();chips();table();cards();}
 render();
 document.addEventListener('axion:langchange',render);
 </script>
