@@ -56,7 +56,10 @@
   .a-year,.a-traj,.a-ratios{min-width:0}
   .phead.yr{background:#223c66;display:block;padding:14px 18px 16px}
    .phead.yr .yr-top{display:flex;align-items:center;justify-content:center;gap:9px;margin-bottom:13px}
-   .phead.yr .yr-top h2{font-size:26px;letter-spacing:.10em}
+   .phead.yr .yr-top h2{font-size:23px;letter-spacing:.05em}
+  /* σελίδα 6μήνου: το block μεγεθών + το Εξάμηνο toggle παίρνουν το χρώμα «Πετρόλ» */
+  body.am-view-interim .phead.yr{background:#0f6f6a}
+  body.am-view-interim .site-nav .am-basis .seg button[data-b="interim"].on{background:#0f6f6a}
   .phead.yr i{align-self:center}
   .phead.yr .hint{font-family:var(--disp);font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-left:2px}
   .phead.scr{background:linear-gradient(90deg,#2f80c2,#2b4a6b)}
@@ -138,7 +141,7 @@
   .holder .ht{font-size:11px;color:var(--faint)}
   .holder .hp{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--ink)}
 
-  .yr-note{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:rgba(255,255,255,.74);margin:1px 0 9px;letter-spacing:.01em}
+  .yr-note{display:flex;align-items:center;justify-content:center;gap:6px;font-size:11px;font-weight:600;color:rgba(255,255,255,.78);margin:5px 0 12px;letter-spacing:.01em}
   .yr-note::before{content:"";width:6px;height:6px;border-radius:50%;background:#7fc99a;flex:none;box-shadow:0 0 0 3px rgba(127,201,154,.18)}
   .latest{display:flex;gap:8px}
   .latest .metric-item{flex:1;min-width:0;text-align:center;display:flex;flex-direction:column}
@@ -568,7 +571,9 @@ AX_I18N.add({
  'co.dist.note':{el:'Μέρισμα + επιστροφή κεφαλαίου, αθροιστικά ανά χρήση.', en:'Dividend + capital return, cumulative per year.'},
  'co.dist.none':{el:'Δεν διανέμει', en:'No distributions'},
  'co.dist.none.s':{el:'Καμία χρηματική διανομή στους μετόχους την τελευταία 3ετία.', en:'No cash distribution to shareholders in the last 3 years.'},
- 'co.latest.note':{el:'Στοιχεία τελευταίας ανακοινωμένης περιόδου', en:'Figures for the latest reported period'}
+ 'co.latest.note':{el:'Στοιχεία τελευταίας ανακοινωμένης περιόδου', en:'Figures for the latest reported period'},
+ 'co.basis.annual':{el:'ΕΤΗΣΙΑ', en:'ANNUAL'},
+ 'co.basis.interim':{el:'ΕΞΑΜΗΝΟ', en:'INTERIM'}
 });
 function L(k){var v=AX_I18N.t(k);return v==null?'':v;}
 function SEC(n){return AX_I18N.sector(n);}
@@ -619,10 +624,12 @@ document.title=(company.name&&company.name!=='—'?company.name+' — ':'')+'Axi
 document.getElementById('co-ticker').textContent=company.ticker;
 document.getElementById('co-eur').textContent=company.euronext_name+' · Euronext Athens';
 document.getElementById('co-sector').textContent=company.sector;
-// Δυναμική ετικέτα περιόδου + σημείωση «τελευταία ανακοινωμένη περίοδος» (αντί για hardcoded 2025)
+// Δυναμική ετικέτα «ΕΤΗΣΙΑ/ΕΞΑΜΗΝΟ + περίοδος» + σημείωση + χρωματισμός block/toggle ανά βάση
 (function(){
+  try{ document.body.classList.add('am-view-'+AXBASIS); }catch(e){}
   var per=company.latest&&company.latest.period;
-  var yh=document.getElementById('yr-h'); if(yh&&per) yh.textContent=per;
+  var blabel=L(AXBASIS==='interim'?'co.basis.interim':'co.basis.annual');
+  var yh=document.getElementById('yr-h'); if(yh) yh.textContent=(per?(blabel+' '+per):blabel);
   var yn=document.getElementById('yr-note');
   if(yn&&per){ yn.textContent=L('co.latest.note'); yn.hidden=false; }
 })();
