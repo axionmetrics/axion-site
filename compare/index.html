@@ -49,6 +49,14 @@
  .mchip.on{background:#33425c;border-color:#33425c;color:#fff}
  .mchip .mx{font-size:14px;opacity:.85}
  .mchip .mplus{color:var(--accent);font-size:15px;font-weight:800;line-height:1}
+ .periodSel{font-family:inherit;font-size:12.5px;font-weight:700;color:var(--text);background:#fff;border:1px solid var(--line);border-radius:9px;padding:8px 30px 8px 13px;cursor:pointer;
+   -webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2333425c' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
+ .periodSel:focus{outline:none;border-color:var(--accent)}
+ .periodbar{display:flex;align-items:center;gap:11px;margin-bottom:13px;padding-bottom:13px;border-bottom:1px solid var(--line)}
+ .periodbar .plbl{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9aa7b8}
+ .periodbar .pinfo{font-size:12px;color:var(--muted)}
+ tbody td.co .na-tag{display:inline-block;margin-left:7px;font-family:'Open Sans';font-size:10px;font-weight:700;color:#8a7a55;background:#fbf3df;border:1px solid #ecdcb4;border-radius:20px;padding:2px 8px;vertical-align:middle}
+ tbody tr.na-co td{color:#9aa7b8}
  .tablewrap{overflow-x:auto;margin-top:8px}
 
  /* table */
@@ -122,6 +130,7 @@
   </section>
 
  <div class="controls">
+  <div class="periodbar"><span class="plbl" data-i18n="cmp.period">Περίοδος</span><select id="periodSel" class="periodSel" onchange="setPeriod(this.value)"></select><span class="pinfo" id="perinfo"></span></div>
   <div class="searchwrap">
    <label class="search">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
@@ -157,6 +166,9 @@ AX_I18N.add({
  'cmp.hs4v':{el:'Μέρισμα', en:'Dividend'}, 'cmp.hs4l':{el:'απόδοση', en:'yield'},
  'cmp.search':{el:'Πρόσθεσε εταιρεία…  π.χ. ΟΠΑΠ, JUMBO, ΤΙΤΑΝ', en:'Add a company…  e.g. OPAP, JUMBO, TITAN'},
  'cmp.foot':{el:'<span style="color:var(--mid)">⚠</span> Πρόσεξε ότι εταιρείες <b>διαφορετικών κλάδων</b> δεν αποτιμώνται με τα ίδια κριτήρια: ένα P/E 7 σε τράπεζα δεν είναι «φθηνότερο» από ένα P/E 16 σε εταιρεία λογισμικού. Για σύγκριση με τους ομοειδείς, δες τη <b>Σελίδα κλάδου</b>.', en:'<span style="color:var(--mid)">⚠</span> Note that companies from <b>different sectors</b> are not valued by the same criteria: a P/E of 7 for a bank is not “cheaper” than a P/E of 16 for a software company. To compare with peers, see the <b>Sector page</b>.'},
+ 'cmp.period':{el:'Περίοδος', en:'Period'},
+ 'cmp.reportedn':{el:'{a} από {b} έχουν ανακοινώσει', en:'{a} of {b} reported'},
+ 'cmp.nadata':{el:'δεν έχει ανακοινώσει {p}', en:'no {p} results'},
  'cmp.selected':{el:'επιλεγμένη', en:'selected'},
  'cmp.hintmax':{el:'Έφτασες το μέγιστο ({n} εταιρείες). Αφαίρεσε μία για να προσθέσεις άλλη.', en:'You’ve reached the maximum ({n} companies). Remove one to add another.'},
  'cmp.hintcount':{el:'Επιλεγμένες {a} από {b}. Πρόσθεσε τουλάχιστον δύο για σύγκριση.', en:'Selected {a} of {b}. Add at least two to compare.'},
@@ -179,16 +191,31 @@ function metL(k){return L('cmp.met.'+k);}
 const COMPANY_PAGE='../company/';
 
 const AXBASIS=(function(){try{var u=new URLSearchParams(location.search).get('basis');var b=u||localStorage.getItem('am-basis')||'annual';return (window.AXION&&window.AXION.meta&&window.AXION.meta.bases.indexOf(b)>-1)?b:'annual';}catch(e){return 'annual';}})();
-const DATA=(window.AXION&&window.AXION.rows&&window.AXION.rows[AXBASIS])||[];
 document.addEventListener('axion:basischange',function(){location.reload();});
 
 function h32(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return (h>>>0)/4294967296;}
-DATA.forEach(r=>{const u=k=>h32(r.t+'|'+k);
- r.gm =Math.round((18+u('gm')*44)*10)/10;
- r.nm =Math.round((3 +u('nm')*24)*10)/10;
- r.cr =Math.round((0.8+u('cr')*2.2)*10)/10;
- r.roa=Math.round((2 +u('roa')*15)*10)/10;
-});
+// gm/nm/cr/roa: ενδεικτικές (hash ανά όνομα, ανεξάρτητες περιόδου) — σταθερές σε κάθε snapshot
+function augment(rows){ rows.forEach(r=>{const u=k=>h32(r.t+'|'+k);
+ r.gm =Math.round((18+u('gm')*44)*10)/10; r.nm =Math.round((3 +u('nm')*24)*10)/10;
+ r.cr =Math.round((0.8+u('cr')*2.2)*10)/10; r.roa=Math.round((2 +u('roa')*15)*10)/10; }); return rows; }
+
+// --- επιλογή περιόδου (μέχρι ΚΑΙ την τρέχουσα)· fallback στο legacy snapshot ---
+const RBP=(window.AXION&&window.AXION.rowsByPeriod&&window.AXION.rowsByPeriod[AXBASIS])||null;
+const PERIODS=(RBP&&(window.AXION.meta.periods&&window.AXION.meta.periods[AXBASIS]||Object.keys(RBP)))||null;
+function periodRows(p){ if(RBP&&RBP[p]) return RBP[p]; return (window.AXION&&window.AXION.rows&&window.AXION.rows[AXBASIS])||[]; }
+function repCount(p){ return periodRows(p).filter(function(r){return r.reported!==false;}).length; }
+function pickDefaultPeriod(){ if(!PERIODS||!PERIODS.length) return null; var best=PERIODS[PERIODS.length-1],bestC=-1;
+ for(var i=0;i<PERIODS.length;i++){ var c=repCount(PERIODS[i]); if(c>=bestC){bestC=c;best=PERIODS[i];} } return best; }
+function loadPeriod(){ try{var s=localStorage.getItem('am-period-'+AXBASIS); if(s&&PERIODS&&PERIODS.indexOf(s)>-1) return s;}catch(e){} return pickDefaultPeriod(); }
+let PERIOD=loadPeriod();
+let DATA=augment(periodRows(PERIOD).slice());
+function setPeriod(p){ PERIOD=p; try{localStorage.setItem('am-period-'+AXBASIS,p);}catch(e){}
+ DATA=augment(periodRows(PERIOD).slice()); renderMet(); render(); }
+function fillPeriods(){ const sel=document.getElementById('periodSel'); if(!sel) return;
+ if(!PERIODS||!PERIODS.length){ sel.style.display='none'; const pi=document.getElementById('perinfo'); if(pi)pi.textContent=''; return; }
+ sel.innerHTML=PERIODS.slice().reverse().map(p=>`<option value="${p}"${p===PERIOD?' selected':''}>${p}</option>`).join('');
+ const pi=document.getElementById('perinfo'); if(pi) pi.textContent=L('cmp.reportedn').replace('{a}',repCount(PERIOD)).replace('{b}',DATA.length);
+}
 
 const ALLMET=[
  {k:'pe', dir:-1,d:1,negWorst:1},
@@ -282,6 +309,7 @@ function loadSel(){try{var raw=localStorage.getItem('am-compare');if(!raw)return
 /* ---------- render ---------- */
 function render(){
  saveSel();
+ fillPeriods();
  const out=document.getElementById('out');
  const chips=document.getElementById('picked');
  chips.innerHTML=picked.map(t=>`<span class="pchip">${t}
@@ -294,17 +322,22 @@ function render(){
   out.innerHTML=`<div class="empty">${L('cmp.empty')}</div>`;
   return;
  }
- const rows=picked.map(t=>DATA.find(r=>r.t===t)).filter(Boolean);
- if(rows.length<2){out.innerHTML=`<div class="empty">${L('cmp.empty')}</div>`;return;}
+ const found=picked.map(t=>DATA.find(r=>r.t===t)).filter(Boolean);
+ if(found.length<2){out.innerHTML=`<div class="empty">${L('cmp.empty')}</div>`;return;}
+ // όσες έχουν ανακοινώσει την επιλεγμένη περίοδο πρώτες· όσες όχι, στο τέλος με σημείωση
+ const reported=found.filter(r=>r.reported!==false), notann=found.filter(r=>r.reported===false);
+ const rows=[...reported,...notann];
 
  const shown=ALLMET.filter(m=>metSel.includes(m.k));
  const th=`<tr><th class="l">${L('cmp.h.company')}</th>`+
    shown.map(m=>`<th>${caps(metL(m.k))}<span class="dirn">${m.dir<0?L('cmp.lowbest'):L('cmp.highbest')}</span></th>`).join('')+
    `</tr>`;
 
+ const naTag=`<span class="na-tag">${L('cmp.nadata').replace('{p}',PERIOD||'')}</span>`;
  const tb=rows.map(r=>{
-  const tds=shown.map(m=>`<td class="${rankCls(m,rows,r[m.k])}">${fv(m,r[m.k])}</td>`).join('');
-  return `<tr><td class="co${r.trading===false?' co-dead':''}"><a href="${COMPANY_PAGE}?tk=${encodeURIComponent(r.tk)}" target="_blank">${r.t}</a>${(r.trading===false&&r.tstatus)?` <span class="tbadge sm ${r.tstatus.type==='delisted'?'t-del':'t-sus'}">${r.tstatus.label}</span>`:''}<small>${SEC(r.s)}</small></td>${tds}</tr>`;
+  const na=(r.reported===false);
+  const tds=shown.map(m=>`<td class="${na?'neu':rankCls(m,reported,r[m.k])}">${na?'—':fv(m,r[m.k])}</td>`).join('');
+  return `<tr class="${na?'na-co':''}"><td class="co${r.trading===false?' co-dead':''}"><a href="${COMPANY_PAGE}?tk=${encodeURIComponent(r.tk)}" target="_blank">${r.t}</a>${(r.trading===false&&r.tstatus)?` <span class="tbadge sm ${r.tstatus.type==='delisted'?'t-del':'t-sus'}">${r.tstatus.label}</span>`:''}${na?naTag:''}<small>${SEC(r.s)}</small></td>${tds}</tr>`;
  }).join('');
 
  out.innerHTML =

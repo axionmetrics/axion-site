@@ -26,6 +26,19 @@
  .chip:hover{border-color:#c3d3e8;color:var(--text)}
  .chip.on{background:#33425c;border-color:#33425c;color:#fff}
  .chip.acc.on{background:#33425c;border-color:#33425c}
+ .periodSel{font-family:inherit;font-size:12.5px;font-weight:700;color:var(--text);background:#fff;border:1px solid var(--line);border-radius:9px;padding:7px 30px 7px 13px;cursor:pointer;
+   -webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2333425c' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
+ .periodSel:focus{outline:none;border-color:var(--accent)}
+ tbody tr.na-row td{color:#9aa7b8}
+ tbody tr.na-row td.nm a{color:#7a8698}
+ tbody tr.na-head td{background:#f4f6f9;border-top:2px solid #e4e8f0;font-size:11.5px;font-weight:700;letter-spacing:.02em;color:#7a8698;padding:9px 10px;text-transform:none}
+ tbody tr.na-head td{cursor:pointer}
+ tbody tr.na-head td .nb{display:inline-flex;align-items:center;gap:7px}
+ tbody tr.na-head td .nb::before{content:"";width:7px;height:7px;border-radius:50%;background:#c3ccd8;flex:none}
+ tbody tr.na-head td .cv{margin-left:auto;font-weight:700;color:#9aa7b8;transition:transform .15s}
+ tbody.na-collapsed tr.na-row{display:none}
+ tbody.na-collapsed tr.na-head td .cv{transform:rotate(-90deg)}
+ tbody tr.na-head td .hdrow{display:flex;align-items:center;gap:10px}
  .seg{display:flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;background:#fff}
  .seg button{font-family:inherit;font-size:12.5px;font-weight:600;padding:7px 14px;border:none;background:#fff;color:var(--muted);cursor:pointer}
  .seg button.on{background:#33425c;color:#fff}
@@ -113,6 +126,11 @@
     </div>
   </div>
  <div class="controls">
+  <div class="crow" style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--line)">
+   <span class="lbl" data-i18n="rk.period">Περίοδος</span>
+   <select id="periodSel" class="periodSel" onchange="setPeriod(this.value)"></select>
+   <span class="meta" id="perinfo" style="font-size:12px;color:var(--muted)"></span>
+  </div>
   <div class="picker" id="schips" style="display:flex;flex-wrap:wrap;gap:7px"></div>
  </div>
 
@@ -156,6 +174,9 @@ AX_I18N.add({
  'rk.glance':{el:'Όλες οι κατατάξεις με μια ματιά', en:'All rankings at a glance'},
  'rk.glancesub':{el:'Top-5 ανά δείκτη στην τρέχουσα εμβέλεια · κλικ σε κάρτα για πλήρη κατάταξη.', en:'Top-5 per ratio in the current scope · click a card for the full ranking.'},
  'rk.allmarket':{el:'Όλη η αγορά', en:'Entire market'},
+ 'rk.period':{el:'Περίοδος', en:'Period'},
+ 'rk.notann':{el:'Δεν έχουν ανακοινωθεί ακόμα αποτελέσματα', en:'Results not announced yet'},
+ 'rk.reportedn':{el:'{a} από {b} έχουν ανακοινώσει', en:'{a} of {b} reported'},
  'rk.of':{el:'από', en:'of'}, 'rk.median':{el:'διάμεσος', en:'median'},
  'rk.h.company':{el:'ΕΤΑΙΡΕΙΑ', en:'COMPANY'}, 'rk.h.sector':{el:'ΚΛΑΔΟΣ', en:'SECTOR'}, 'rk.h.position':{el:'ΘΕΣΗ ΣΤΗΝ ΚΑΤΑΝΟΜΗ', en:'POSITION IN DISTRIBUTION'},
  'word.companies':{el:'εταιρείες', en:'companies'},
@@ -177,8 +198,25 @@ function metShort(k){return L('rk.short.'+k);}
 const COMPANY_PAGE='../company/';
 
 const AXBASIS=(function(){try{var u=new URLSearchParams(location.search).get('basis');var b=u||localStorage.getItem('am-basis')||'annual';return (window.AXION&&window.AXION.meta&&window.AXION.meta.bases.indexOf(b)>-1)?b:'annual';}catch(e){return 'annual';}})();
-const DATA=((window.AXION&&window.AXION.rows&&window.AXION.rows[AXBASIS])||[]).filter(function(r){return r.calculated!==false;});
 document.addEventListener('axion:basischange',function(){location.reload();});
+
+// --- επιλογή περιόδου (μέχρι ΚΑΙ την τρέχουσα)· fallback στο legacy snapshot αν λείπει το rowsByPeriod ---
+const RBP=(window.AXION&&window.AXION.rowsByPeriod&&window.AXION.rowsByPeriod[AXBASIS])||null;
+const PERIODS=(RBP&&(window.AXION.meta.periods&&window.AXION.meta.periods[AXBASIS]||Object.keys(RBP)))||null;
+function periodRows(p){ if(RBP&&RBP[p]) return RBP[p]; return (window.AXION&&window.AXION.rows&&window.AXION.rows[AXBASIS])||[]; }
+function repCount(p){ return periodRows(p).filter(function(r){return r.reported!==false && r.calculated!==false;}).length; }
+function pickDefaultPeriod(){
+ if(!PERIODS||!PERIODS.length) return null;
+ var best=PERIODS[PERIODS.length-1], bestC=-1;
+ // η τελευταία περίοδος με τον μέγιστο αριθμό ανακοινώσεων (οι ανακοινώσεις αυξάνουν με τον χρόνο)
+ for(var i=0;i<PERIODS.length;i++){ var c=repCount(PERIODS[i]); if(c>=bestC){ bestC=c; best=PERIODS[i]; } }
+ return best;
+}
+function loadPeriod(){ try{ var s=localStorage.getItem('am-period-'+AXBASIS); if(s&&PERIODS&&PERIODS.indexOf(s)>-1) return s; }catch(e){} return pickDefaultPeriod(); }
+let PERIOD = loadPeriod();
+let DATA = periodRows(PERIOD).filter(function(r){return r.calculated!==false;});
+function setPeriod(p){ PERIOD=p; try{localStorage.setItem('am-period-'+AXBASIS,p);}catch(e){}
+ DATA=periodRows(PERIOD).filter(function(r){return r.calculated!==false;}); render(); }
 
 const MET=[
  {k:'pe', dir:-1,d:1,negWorst:1},
@@ -237,8 +275,25 @@ function setN(n){topN=n;
  document.querySelectorAll('.nbtn').forEach((b,i)=>b.classList.toggle('on',[10,20,0][i]===n));
  render();}
 
+function naBlock(notann){
+ if(!notann.length) return '';
+ const head=`<tr class="na-head"><td colspan="5" onclick="this.closest('tbody').classList.toggle('na-collapsed')">
+   <div class="hdrow"><span class="nb">${L('rk.notann')}${PERIOD?(' · '+PERIOD):''} · ${notann.length}</span><span class="cv">▾</span></div></td></tr>`;
+ const rows=[...notann].sort((a,b)=>a.t.localeCompare(b.t,'el')).map(r=>
+   `<tr class="na-row">
+     <td class="rk">·</td>
+     <td class="nm${r.trading===false?' co-dead':''}"><a href="${COMPANY_PAGE}?tk=${encodeURIComponent(r.tk)}" target="_blank">${r.t}</a></td>
+     <td class="sc">${SEC(r.s)}</td>
+     <td class="pct">—</td>
+     <td class="val">—</td></tr>`).join('');
+ return head+rows;
+}
 function table(){
- const m=M(metric), rows=valid(m,scoped());
+ const m=M(metric);
+ const inscope=scoped();
+ const reported=inscope.filter(r=>r.reported!==false);
+ const notann=inscope.filter(r=>r.reported===false);
+ const rows=valid(m,reported);
  const score=scoreOf(m,rows), zone=zoneOf(m,rows);
  let ranked=[...rows].sort((a,b)=>{ if(m.negWorst){const av=a[m.k],bv=b[m.k],an=av<0,bn=bv<0; if(an!==bn)return an?1:-1; return an? bv-av : av-bv;} return m.dir<0 ? a[m.k]-b[m.k] : b[m.k]-a[m.k]; });
  if(dir==='bottom') ranked.reverse();
@@ -253,7 +308,7 @@ function table(){
   `<tr><th>#</th><th class="l">${L('rk.h.company')}</th><th class="l">${L('rk.h.sector')}</th>
    <th class="l">${L('rk.h.position')}</th><th style="text-align:right">${metShort(metric).toUpperCase()}</th></tr>`;
 
- document.getElementById('tbody').innerHTML=shown.map((r,i)=>{
+ const body=shown.map((r,i)=>{
   const cls=zone(r[m.k]);
   const pctv=Math.round(score(r[m.k])*100);
   const rank = dir==='top' ? i+1 : rows.length-i;
@@ -265,6 +320,9 @@ function table(){
      <span class="pnum">${pctv}%</span></td>
    <td class="val ${cls}">${fv(m,r[m.k])}</td></tr>`;
  }).join('');
+ const tb=document.getElementById('tbody');
+ tb.innerHTML=body+naBlock(notann);
+ tb.classList.toggle('na-collapsed', notann.length>15);
 }
 
 function cards(){
@@ -279,7 +337,14 @@ function cards(){
  }).join('');
 }
 
-function render(){chips();table();cards();}
+function fillPeriods(){
+ const sel=document.getElementById('periodSel'); if(!sel) return;
+ if(!PERIODS||!PERIODS.length){ sel.style.display='none'; const pi=document.getElementById('perinfo'); if(pi)pi.textContent=''; return; }
+ sel.innerHTML=PERIODS.slice().reverse().map(p=>`<option value="${p}"${p===PERIOD?' selected':''}>${p}</option>`).join('');
+ const rc=repCount(PERIOD), tot=periodRows(PERIOD).filter(r=>r.calculated!==false).length;
+ const pi=document.getElementById('perinfo'); if(pi) pi.textContent=L('rk.reportedn').replace('{a}',rc).replace('{b}',tot);
+}
+function render(){fillPeriods();chips();table();cards();}
 render();
 document.addEventListener('axion:langchange',render);
 </script>

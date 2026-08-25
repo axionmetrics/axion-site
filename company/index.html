@@ -138,6 +138,8 @@
   .holder .ht{font-size:11px;color:var(--faint)}
   .holder .hp{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--ink)}
 
+  .yr-note{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:rgba(255,255,255,.74);margin:1px 0 9px;letter-spacing:.01em}
+  .yr-note::before{content:"";width:6px;height:6px;border-radius:50%;background:#7fc99a;flex:none;box-shadow:0 0 0 3px rgba(127,201,154,.18)}
   .latest{display:flex;gap:8px}
   .latest .metric-item{flex:1;min-width:0;text-align:center;display:flex;flex-direction:column}
   .latest .k{font-size:9.5px;color:rgba(255,255,255,.72);font-weight:600;margin-bottom:5px;line-height:1.2;text-transform:uppercase;letter-spacing:.04em}
@@ -377,7 +379,7 @@
 
     <div class="a-year">
       <div class="panel">
-        <div class="phead yr"><div class="yr-top"><i class="ti ti-calendar-stats"></i><h2>2025</h2></div><div class="latest" id="latest"></div><div class="cband" id="current-band"></div></div>
+        <div class="phead yr"><div class="yr-top"><i class="ti ti-calendar-stats"></i><h2 id="yr-h">2025</h2></div><div class="yr-note" id="yr-note" hidden></div><div class="latest" id="latest"></div><div class="cband" id="current-band"></div></div>
         <div class="pbody year-body">
           <div class="year-top">
             <div class="panel sub">
@@ -565,7 +567,8 @@ AX_I18N.add({
  'co.dist.yield':{el:'Απόδοση', en:'Yield'},
  'co.dist.note':{el:'Μέρισμα + επιστροφή κεφαλαίου, αθροιστικά ανά χρήση.', en:'Dividend + capital return, cumulative per year.'},
  'co.dist.none':{el:'Δεν διανέμει', en:'No distributions'},
- 'co.dist.none.s':{el:'Καμία χρηματική διανομή στους μετόχους την τελευταία 3ετία.', en:'No cash distribution to shareholders in the last 3 years.'}
+ 'co.dist.none.s':{el:'Καμία χρηματική διανομή στους μετόχους την τελευταία 3ετία.', en:'No cash distribution to shareholders in the last 3 years.'},
+ 'co.latest.note':{el:'Στοιχεία τελευταίας ανακοινωμένης περιόδου', en:'Figures for the latest reported period'}
 });
 function L(k){var v=AX_I18N.t(k);return v==null?'':v;}
 function SEC(n){return AX_I18N.sector(n);}
@@ -616,6 +619,13 @@ document.title=(company.name&&company.name!=='—'?company.name+' — ':'')+'Axi
 document.getElementById('co-ticker').textContent=company.ticker;
 document.getElementById('co-eur').textContent=company.euronext_name+' · Euronext Athens';
 document.getElementById('co-sector').textContent=company.sector;
+// Δυναμική ετικέτα περιόδου + σημείωση «τελευταία ανακοινωμένη περίοδος» (αντί για hardcoded 2025)
+(function(){
+  var per=company.latest&&company.latest.period;
+  var yh=document.getElementById('yr-h'); if(yh&&per) yh.textContent=per;
+  var yn=document.getElementById('yr-note');
+  if(yn&&per){ yn.textContent=L('co.latest.note'); yn.hidden=false; }
+})();
 (function(){
   var st=(AX&&AX.tstatus)||null, notTrading=!!(AX&&AX.trading===false&&st);
   var pill=document.getElementById('co-status'), ban=document.getElementById('co-banner');
@@ -704,7 +714,7 @@ const NS='http://www.w3.org/2000/svg';
 const el=(n,a={})=>{const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);return e;};
 const W=720,H=418,padL=72,padR=64,evLaneY=20,plotTop=74,plotBottom=232,yearY=248,ROWS_TOP=262,ROW_H=30,INSET=22;
 const host=document.getElementById('host'),tip=document.getElementById('tip'),wrapEl=host.parentElement;
-const WIN=6; let trajStart=0;
+const WIN=6; let trajStart=Math.max(0,((company.years&&company.years.length)||6)-WIN);
 const xOf=i=>padL+INSET+(W-padL-padR-INSET)*(i/(WIN-1));
 
 function niceScale(minv,maxv){
