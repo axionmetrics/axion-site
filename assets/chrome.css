@@ -33,6 +33,7 @@
  .site-nav .am-basis .seg{display:inline-flex;background:rgba(255,255,255,.09);border-radius:8px;padding:3px}
  .site-nav .am-basis .seg button{font-family:Inter,sans-serif;font-size:12.5px;font-weight:600;line-height:1;border:0;background:transparent;color:#cfd6df;padding:6px 12px;border-radius:6px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:.12s;white-space:nowrap}
  .site-nav .am-basis .seg button.on{background:#2f80c2;color:#fff}
+ .site-nav .am-basis .seg button[data-b="interim"].on{background:#0f6f6a}   /* Εξάμηνο = πετρόλ, σε όλες τις σελίδες */
  .site-nav .am-basis .seg button:disabled{color:#7f8794;cursor:default}
  .site-nav .am-basis .seg button:not(.on):not(:disabled):hover{color:#fff;background:rgba(255,255,255,.07)}
  .site-nav .am-basis .soon{font-family:Inter,sans-serif;font-size:8.5px;font-weight:700;letter-spacing:.04em;color:#0f1f38;background:#e6be5b;border-radius:4px;padding:2px 5px}
