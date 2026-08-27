@@ -68,3 +68,7 @@
 .co-dead .co,.co-dead a.co,.co-dead .co a{color:#7c8a9c}
 .tdot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px;vertical-align:middle;flex:none}
 .tdot.t-del{background:#94a3b8}.tdot.t-sus{background:#cf7f00}.tdot.t-prov{background:#8595ad}
+/* ΕΝΙΑΙΟ «Εκτός κάλυψης» (frozen) — ένα amber badge για όλες */
+.tbadge.t-frozen{background:#fdf4e3;color:#b57d00;border-color:#f0d8a6}
+.tbanner.t-frozen{background:#fdf4e3;color:#b57d00;border-color:#f0d8a6}
+.tdot.t-frozen{background:#cf7f00}

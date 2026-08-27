@@ -184,6 +184,8 @@ AX_I18N.add({
  'rk.allmarket':{el:'Όλη η αγορά', en:'Entire market'},
  'rk.period':{el:'Περίοδος', en:'Period'},
  'rk.notann':{el:'Δεν έχουν ενημερωθεί ακόμα αποτελέσματα', en:'Results not updated yet'},
+ 'co.entity.badge':{el:'Εκτός κάλυψης', en:'Out of coverage'},
+ 'rk.frozen':{el:'Εκτός κάλυψης', en:'Out of coverage'},
  'rk.reportedn':{el:'{a} από {b} έχουν ενημερωθεί', en:'{a} of {b} updated'},
  'rk.basis.annual':{el:'ΕΤΗΣΙΑ ΚΑΤΑΤΑΞΗ', en:'ANNUAL RANKING'},
  'rk.basis.interim':{el:'ΕΞΑΜΗΝΙΑΙΑ ΚΑΤΑΤΑΞΗ', en:'INTERIM RANKING'},
@@ -299,6 +301,18 @@ function naBlock(notann){
      <td class="val">—</td></tr>`).join('');
  return head+rows;
 }
+function frozenBlock(){
+ var fz=periodRows(PERIOD).filter(function(r){return r.calculated===false && (!scope||r.s===scope);});
+ if(!fz.length) return '';
+ var head=`<tr class="na-head"><td colspan="5"><div class="hdrow"><span class="nb">${L('rk.frozen')} · ${fz.length}</span></div></td></tr>`;
+ var rows=[...fz].sort((a,b)=>a.t.localeCompare(b.t,'el')).map(function(r){return `<tr class="na-row">
+   <td class="rk">·</td>
+   <td class="nm co-dead"><a href="${COMPANY_PAGE}?tk=${encodeURIComponent(r.tk)}" target="_blank">${r.t}</a> <span class="tbadge sm t-frozen">${L('co.entity.badge')}</span></td>
+   <td class="sc">${SEC(r.s)}</td>
+   <td class="pct">—</td>
+   <td class="val">—</td></tr>`;}).join('');
+ return head+rows;
+}
 function table(){
  const m=M(metric);
  const inscope=scoped();
@@ -332,7 +346,7 @@ function table(){
    <td class="val ${cls}">${fv(m,r[m.k])}</td></tr>`;
  }).join('');
  const tb=document.getElementById('tbody');
- tb.innerHTML=body+naBlock(notann);
+ tb.innerHTML=body+naBlock(notann)+frozenBlock();
  tb.classList.toggle('na-collapsed', notann.length>15);
 }
 

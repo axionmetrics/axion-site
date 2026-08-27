@@ -170,6 +170,7 @@
 
 <script>
 AX_I18N.add({
+ 'co.entity.badge':{el:'Εκτός κάλυψης', en:'Out of coverage'},
  'cmp.title':{el:'Σύγκριση εταιρειών — Axion Metrics', en:'Compare companies — Axion Metrics'},
  'cmp.h1':{el:'Σύγκριση εταιρειών', en:'Compare companies'},
  'cmp.hs1v':{el:'Αποτίμηση', en:'Valuation'},
@@ -362,7 +363,7 @@ function render(){
  const tb=rows.map(r=>{
   const na=(r.reported===false);
   const tds=shown.map(m=>`<td class="${na?'neu':rankCls(m,reported,r[m.k])}">${na?'—':fv(m,r[m.k])}</td>`).join('');
-  return `<tr class="${na?'na-co':''}"><td class="co${r.trading===false?' co-dead':''}"><a href="${COMPANY_PAGE}?tk=${encodeURIComponent(r.tk)}" target="_blank">${r.t}</a>${(r.trading===false&&r.tstatus)?` <span class="tbadge sm ${r.tstatus.type==='delisted'?'t-del':'t-sus'}">${r.tstatus.label}</span>`:''}${na?naTag:''}<small>${SEC(r.s)}</small></td>${tds}</tr>`;
+  return `<tr class="${na?'na-co':''}"><td class="co${r.calculated===false?' co-dead':''}"><a href="${COMPANY_PAGE}?tk=${encodeURIComponent(r.tk)}" target="_blank">${r.t}</a>${(r.calculated===false)?` <span class="tbadge sm t-frozen">${L('co.entity.badge')}</span>`:''}${na?naTag:''}<small>${SEC(r.s)}</small></td>${tds}</tr>`;
  }).join('');
 
  out.innerHTML =

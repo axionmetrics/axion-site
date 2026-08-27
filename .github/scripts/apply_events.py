@@ -37,6 +37,45 @@ IDXSHEET = "INDEX ΕΠΙΧΕΙΡΗΣΕΩΝ"
 COL = dict(aa=1, company=2, ticker=3, date=4, year=5, category=6, family=7,
            type=8, desc=9, status=10, srctitle=11, source=12, amount=13, fiscal=14)
 
+# ── Μηχανισμός TRADING (μόνο η στήλη TRADING EURONEXT + τυπική αιτία) ──────────
+# Ο monitor ανιχνεύει suspension/delisting/resume και τα βάζει ως crit events στην ουρά.
+# Εδώ, ΤΟΠΙΚΑ, εκτός από την καταγραφή στο ΕΤΑΙΡΙΚΑ ΓΕΓΟΝΟΤΑ, ενημερώνουμε ΚΑΙ το flag
+# TRADING EURONEXT (col H) + τη ΣΗΜΕΙΩΣΗ ΟΝΤΟΤΗΤΑΣ με ΤΥΠΟΠΟΙΗΜΕΝΟ δίγλωσσο κείμενο.
+# ΔΕΝ αγγίζουμε ΠΟΤΕ το MANUAL EXCEPTION (editorial, μόνο ο χρήστης).
+STD_SUS = ("Σε αναστολή διαπραγμάτευσης · Στοιχεία παγωμένα στην τελευταία ενημέρωση. "
+           "|| Trading suspended · Figures frozen at the last update.")
+STD_DEL = ("Διαγράφηκε από το Χ.Α. · Στοιχεία παγωμένα στην τελευταία ενημέρωση. "
+           "|| Delisted from the ATHEX · Figures frozen at the last update.")
+STD_NOTES = {STD_SUS, STD_DEL}
+TRADING_TYPES = {"suspension", "delisting", "resume"}
+
+def _index_cols(idx):
+    hcol = tcol = None
+    for c in range(1, idx.max_column + 1):
+        h = norm(idx.cell(3, c).value).upper()
+        if h == "TRADING EURONEXT":     hcol = c
+        elif h == "ΣΗΜΕΙΩΣΗ ΟΝΤΟΤΗΤΑΣ": tcol = c
+    return hcol, tcol
+
+def update_trading(idx, hcol, tcol, greek_tk, typ):
+    """Αγγίζει ΜΟΝΟ TRADING (+ τυπική αιτία). Δεν αγγίζει MANUAL EXCEPTION.
+    Την αιτία τη γράφει/σβήνει μόνο αν είναι κενή ή ήδη τυπική (δεν πατάει editorial)."""
+    for r in range(4, idx.max_row + 1):
+        if norm(idx.cell(r, 3).value).upper() == greek_tk.upper():
+            cur = norm(idx.cell(r, tcol).value) if tcol else ""
+            if typ in ("suspension", "delisting"):
+                if hcol: idx.cell(r, hcol).value = "NO"
+                note = STD_SUS if typ == "suspension" else STD_DEL
+                if tcol and (cur == "" or cur in STD_NOTES):
+                    idx.cell(r, tcol).value = note
+                return (greek_tk, typ, "TRADING=NO")
+            elif typ == "resume":
+                if hcol: idx.cell(r, hcol).value = "YES"
+                if tcol and cur in STD_NOTES:      # καθάρισε ΜΟΝΟ τυπική αιτία, όχι editorial
+                    idx.cell(r, tcol).value = None
+                return (greek_tk, typ, "TRADING=YES")
+    return (greek_tk, typ, "NOT FOUND in INDEX")
+
 
 def norm(s):
     return (str(s).strip() if s is not None else "")
@@ -128,6 +167,9 @@ def main():
     ws = wb[EVSHEET]
     resolver, dbname = build_resolver(wb)
     seen = existing_keys(ws)
+    idx = wb[IDXSHEET]
+    _hcol, _tcol = _index_cols(idx)
+    trading_upd = []
 
     # γραμμή-πρότυπο στυλ = τελευταία γραμμή με δεδομένα
     last = ws.max_row
@@ -152,6 +194,8 @@ def main():
             if not tk:
                 needs.append((sym, "άγνωστο symbol", q.get("description")))
                 continue
+            if fam == "crit" and typ in TRADING_TYPES and not a.dry_run:
+                trading_upd.append(update_trading(idx, _hcol, _tcol, tk, typ))
             if key in seen:
                 skipped.append(key)
                 continue
@@ -197,8 +241,10 @@ def main():
         if mm:
             ws.auto_filter.ref = "%s%s:N%d" % (mm.group(1), mm.group(2), lastdata)
 
-    print("apply_events: added=%d  skipped(dup)=%d  needs_detail=%d"
-          % (added, len(skipped), len(needs)))
+    print("apply_events: added=%d  skipped(dup)=%d  needs_detail=%d  trading_updates=%d"
+          % (added, len(skipped), len(needs), len(trading_upd)))
+    for tu in trading_upd:
+        print("  ⚑ TRADING:", tu)
     for n in needs:
         print("  ! NEEDS:", n)
 

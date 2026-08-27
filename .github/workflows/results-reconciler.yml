@@ -1,0 +1,74 @@
+# results-reconciler.yml
+# Θέση στο repo:  .github/workflows/results-reconciler.yml
+#
+# Ελέγχει ποιες εταιρείες δημοσίευσαν αποτελέσματα περιόδου (ετήσια + 6μηνο)
+# στο Euronext Financial Calendar αλλά ΔΕΝ είναι ακόμη live στο data.js
+# (reported=false). ΔΕΝ αλλάζει master ούτε data.js — μόνο αναφέρει.
+#
+# Λογική issue (χωρίς spam):
+#   • has_new=true  -> ενημερώνει ΕΝΑ σταθερό open issue (label: reconciler),
+#                      ή το δημιουργεί αν δεν υπάρχει.
+#   • has_new=false -> κλείνει το open issue (όλα live).
+name: Results Reconciler (αποτελέσματα περιόδου)
+
+on:
+  schedule:
+    # Τρίτη & Παρασκευή 06:10 UTC (~09:10 Αθήνα θέρος) — λίγο μετά τον monitor.
+    - cron: '10 6 * * 2,5'
+  workflow_dispatch: {}
+
+permissions:
+  issues: write
+  contents: read
+
+concurrency:
+  group: results-reconciler
+  cancel-in-progress: false
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Reconciler (interim + annual)
+        id: run
+        run: |
+          python .github/scripts/results_reconciler.py --both \
+            --cid-map .github/scripts/euronext_cid_map.json \
+            --data-js assets/data.js \
+            --out .github/monitor/reconciler_report.md
+
+      - name: Ενημέρωση / κλείσιμο issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          # Εξασφάλισε το label (αγνόησε αν υπάρχει ήδη)
+          gh label create reconciler --color C6A24E --description "Εκκρεμείς δημοσιεύσεις αποτελεσμάτων" 2>/dev/null || true
+
+          OPEN=$(gh issue list --label reconciler --state open --json number --jq '.[0].number' 2>/dev/null || echo "")
+          TITLE="🎯 Results Reconciler — εκκρεμούν αποτελέσματα περιόδου"
+
+          if [ "${{ steps.run.outputs.has_new }}" = "true" ]; then
+            if [ -n "$OPEN" ]; then
+              gh issue edit "$OPEN" --body-file .github/monitor/reconciler_report.md
+              gh issue comment "$OPEN" --body "🔄 Ανανεώθηκε $(date -u +%Y-%m-%d\ %H:%M)Z — εκκρεμούν **${{ steps.run.outputs.new_count }}**."
+              echo "Updated issue #$OPEN"
+            else
+              gh issue create --title "$TITLE" --body-file .github/monitor/reconciler_report.md --label reconciler
+              echo "Opened new issue"
+            fi
+          else
+            if [ -n "$OPEN" ]; then
+              gh issue comment "$OPEN" --body "✅ Όλες οι δημοσιευμένες εταιρείες είναι live — κλείσιμο."
+              gh issue close "$OPEN"
+              echo "Closed issue #$OPEN"
+            else
+              echo "Καμία εκκρεμότητα, κανένα open issue. ✅"
+            fi
+          fi
