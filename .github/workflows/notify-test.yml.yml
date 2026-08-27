@@ -1,0 +1,23 @@
+# notify-test.yml — δοκιμαστικό GitHub Action για επιβεβαίωση email ειδοποιήσεων.
+# Ανοίγει ένα bot-created issue (γι' αυτό σε ειδοποιεί το GitHub — δικά σου issues δεν σε ειδοποιούν).
+# Τρέξιμο: GitHub → Actions → "Notify test (email)" → Run workflow.
+name: Notify test (email)
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  issues: write
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Άνοιγμα δοκιμαστικού issue (bot)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="✅ Test notification — $(date -u +%Y-%m-%dT%H:%MZ)"
+          BODY="Δοκιμαστικό bot-issue για επιβεβαίωση ότι το GitHub σου στέλνει email ειδοποιήσεων. Αν το έλαβες, το κανάλι δουλεύει — μπορείς να κλείσεις το issue."
+          gh issue create --repo "${{ github.repository }}" --title "$TITLE" --body "$BODY" --label monitor \
+            || gh issue create --repo "${{ github.repository }}" --title "$TITLE" --body "$BODY"
