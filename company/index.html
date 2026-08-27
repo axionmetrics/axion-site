@@ -306,6 +306,7 @@
   .qs-item .tk{font-family:var(--mono);font-size:10.5px;color:var(--faint);flex:none}
   .qs-item.here{background:var(--cyan);color:#fff}
   .qs-item.here .tk{color:rgba(255,255,255,.72)}
+  .qs-item.qs-dead:not(.here)>span:first-child{color:var(--faint)}
   .qs-empty{padding:26px 12px;text-align:center;font-size:12.5px;color:var(--muted)}
   .qs-foot{border-top:1px solid var(--line);padding:9px 14px;font-size:10.5px;color:var(--faint);
     display:flex;gap:12px}
@@ -647,7 +648,7 @@ document.getElementById('co-sector').textContent=company.sector;
   var lab=L('co.entity.badge');
   if(pill){ pill.className='tbadge t-frozen'; pill.innerHTML=icon+'<span>'+lab+'</span>'; pill.hidden=false; }
   if(ban){ ban.className='tbanner t-frozen';
-    ban.innerHTML=icon+'<span><b>'+lab+'</b>'+(txt?(' <span class="thin">'+txt+'</span>'):'')+'</span>';
+    ban.innerHTML=icon+'<span><b>'+lab+'</b>'+(txt?(' · <span class="thin">'+txt+'</span>'):'')+'</span>';
     ban.hidden=false; }
 })();
 
@@ -1130,7 +1131,7 @@ const qsNorm=s=>(s||'').toUpperCase()
 const _qsLatin=function(s){s=s||'';for(var i=0;i<s.length;i++){if(/[A-Za-z]/.test(s[i]))return true;if(/[\u0370-\u03FF\u1F00-\u1FFF]/.test(s[i]))return false;}return false;};
 const _qsKey=s=>qsNorm(s).replace(/^[^A-Za-z\u0370-\u03FF\u1F00-\u1FFF]+/,'');
 const QS_DATA=((window.AXION&&window.AXION.companies&&window.AXION.companies[AXBASIS])||[])
- .map(function(c){return [c.name,c.tk,(c.trading!==false),(c.tstatus||null)];})
+ .map(function(c){return [c.name,c.tk,(c.calculated!==false)];})   // r[2]=live? (false=frozen)
  .sort(function(a,b){
    const la=_qsLatin(a[0]), lb=_qsLatin(b[0]);
    if(la!==lb) return la?-1:1;
@@ -1149,8 +1150,7 @@ function qsRender(){
     const here = r[0]===QS_CURRENT ? ' here' : '';
     const sel  = i===qsSel && !here ? ' sel' : '';
     const dead = r[2]===false ? ' qs-dead' : '';
-    const st   = r[3];
-    const pill = (r[2]===false && st) ? `<span class="tbadge sm ${st.type==='delisted'?'t-del':'t-sus'}">${st.label}</span>` : '';
+    const pill = (r[2]===false) ? `<span class="tbadge sm t-frozen">${L('co.entity.badge')}</span>` : '';
     html+=`<a class="qs-item${here}${sel}${dead}" data-i="${i}" href="${encodeURI(QS_PAGE)}?tk=${encodeURIComponent(r[1])}">
       <span>${r[0]}${pill}</span><span class="tk">${r[1]}</span></a>`;
   });

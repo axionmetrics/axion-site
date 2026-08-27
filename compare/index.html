@@ -296,7 +296,7 @@ function suggest(){
   const has=picked.includes(r.t), full=picked.length>=MAX&&!has;
   const dis=has||full;
   return `<div class="sitem ${dis?'dis':''}" ${dis?'':`onclick="add('${r.t.replace(/'/g,"\\'")}')"`}>
-    <span>${r.t}</span><span class="sc">${has?L('cmp.selected'):SEC(r.s)}</span></div>`;
+    <span>${r.t}${r.calculated===false?` <span class="tbadge sm t-frozen">${L('co.entity.badge')}</span>`:''}</span><span class="sc">${has?L('cmp.selected'):SEC(r.s)}</span></div>`;
  }).join('');
  box.classList.add('on');
 }
