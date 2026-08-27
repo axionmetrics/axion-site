@@ -32,10 +32,10 @@
   .topnav{display:flex;gap:20px;font-size:13px}
   .topnav a{color:var(--muted);text-decoration:none}.topnav a:hover{color:var(--cyan)}
 
-  .mast{padding:34px 0 0;min-height:350px;display:flex;flex-direction:column;justify-content:space-between}
+  .mast{padding:34px 0 0;min-height:393px;display:flex;flex-direction:column;justify-content:space-between}
   .mast-nameline{display:flex;align-items:baseline;flex-wrap:wrap;gap:12px}
   .mast-top{display:flex;flex-direction:column;align-items:flex-start}
-  .mast-logohead{align-self:stretch;display:flex;justify-content:center;align-items:center}
+  .mast-logohead{align-self:stretch;display:flex;justify-content:center;align-items:center;margin-top:22px}
   .co-logo-top{display:block}
   .co-logo{height:72px;width:auto;max-width:440px;object-fit:contain;display:block}
   .co-namerow{display:flex;align-items:baseline;flex-wrap:wrap;gap:12px}
@@ -272,7 +272,7 @@
 @media(max-width:640px){.hero .hero-in{padding:20px 20px}.hero .hs{padding:2px 14px}}
 .qs-open{display:inline-flex;align-items:center;gap:9px;background:linear-gradient(180deg,#3a8fce,#2f80c2);border:none;
     border-radius:11px;padding:12px 18px;font-family:var(--sans);font-size:13px;font-weight:700;color:#fff;cursor:pointer;
-    margin-bottom:22px;box-shadow:0 3px 10px rgba(47,128,194,.28);transition:.14s}
+    margin-bottom:10px;box-shadow:0 3px 10px rgba(47,128,194,.28);transition:.14s}
   .qs-open:hover{background:linear-gradient(180deg,#3f97d8,#2d78b6);box-shadow:0 5px 15px rgba(47,128,194,.36);transform:translateY(-1px)}
   .qs-open kbd{font-family:var(--mono);font-size:10.5px;background:rgba(255,255,255,.16);
     border:1px solid rgba(255,255,255,.28);border-radius:4px;padding:1px 5px;color:rgba(255,255,255,.85)}
@@ -355,6 +355,7 @@
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
       <span data-i18n="co.qsopen">Επιλογή εταιρείας</span>
     </button>
+    <div class="page-basis" id="ambasis-page"></div>
     <div class="mast-logohead">
       <span class="co-logo-top" id="co-logo-wrap" hidden><img id="co-logo" class="co-logo" alt=""></span>
     </div>
@@ -1198,7 +1199,7 @@ qsRender();
 </script>
 
 <div id="am-foot"></div>
-<script>window.NAV_ACTIVE=0;window.NAV_CUR="Σελίδα εταιρείας";</script>
+<script>window.NAV_ACTIVE=0;window.NAV_CUR="Σελίδα εταιρείας";window.AX_NO_BASIS=true;</script>
 <script src="../assets/chrome.js"></script>
 </body>
 </html>
