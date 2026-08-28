@@ -333,6 +333,8 @@
 <link rel="stylesheet" href="../assets/chrome.css">
 <script src="../assets/i18n.js"></script>
 <script src="../assets/data.js"></script>
+<script src="../assets/current.js"></script><!-- τρέχουσες τιμές (μπάρα «Τρέχον») — ανεξάρτητο από το data.js· αν λείπει, η μπάρα απλώς κρύβεται -->
+<script>window.AXION_CURRENT=window.AXION_CURRENT||{};</script>
 </head>
 <body>
 <div id="am-nav"></div>
@@ -591,7 +593,7 @@ try{ if(!_tk){ const _saved=localStorage.getItem('am-last-company'); if(_saved&&
 const AX=(_tk&&_AXC.find(function(c){return c.tk===_tk;}))||_AXC[0]||null;
 try{ if(AX&&AX.tk) localStorage.setItem('am-last-company', AX.tk); }catch(e){}
 document.addEventListener('axion:basischange',function(){location.reload();});
-const company = AX ? {ticker:AX.tk,name:AX.name,euronext_name:(AX.en||''),sector:AX.s,latest:AX.latest,years:AX.years,metrics:AX.metrics,current:(AX.current||null)} : {ticker:'',name:'—',euronext_name:'',sector:'',latest:{period:'',type:''},years:[2020,2021,2022,2023,2024,2025],metrics:{revenue:[],net_profit:[],ebitda:[],pe:[],pbv:[],total_debt:[],net_debt:[]}};;
+const company = AX ? {ticker:AX.tk,name:AX.name,euronext_name:(AX.en||''),sector:AX.s,latest:AX.latest,years:AX.years,metrics:AX.metrics,current:((window.AXION_CURRENT&&window.AXION_CURRENT[AX.tk])||AX.current||null)} : {ticker:'',name:'—',euronext_name:'',sector:'',latest:{period:'',type:''},years:[2020,2021,2022,2023,2024,2025],metrics:{revenue:[],net_profit:[],ebitda:[],pe:[],pbv:[],total_debt:[],net_debt:[]}};;
 const IS_BANK = !!(AX && AX.s==='Τράπεζες');   // banks: EBITDA-family δεν εφαρμόζεται
 const NA_METRIC = new Set(['ebitda']);
 const NA_RATIO  = new Set(['ebitdam','evebitda']);

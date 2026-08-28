@@ -1,7 +1,9 @@
 name: Ημερήσιες τιμές (EOD)
 
 # Τρέχει αυτόματα μετά το κλείσιμο του ΧΑΑ (Δευ–Παρ) και ενημερώνει το
-# assets/data.js με τις τρέχουσες τιμές/δείκτες από το Euronext Athens.
+# assets/current.js με τις τρέχουσες τιμές/δείκτες από το Euronext Athens.
+# ⚠ Γράφει ΜΟΝΟ το current.js (+ snapshots) — ΠΟΤΕ το data.js. Έτσι οι χειροκίνητες
+# ενημερώσεις οικονομικών (γέφυρα → data.js) δεν σβήνουν τη μπάρα «Τρέχον».
 # 18:30 UTC = 20:30 (χειμ.) / 21:30 (θερ.) ώρα Ελλάδας — άνετα μετά την εκκαθάριση.
 on:
   schedule:
@@ -26,12 +28,12 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Ενημέρωση τρεχουσών τιμών στο data.js
+      - name: Ενημέρωση τρεχουσών τιμών στο current.js
         run: python .github/scripts/daily_prices.py
 
-      - name: Commit & push αλλαγές (data.js + snapshots)
+      - name: Commit & push αλλαγές (current.js + snapshots)
         run: |
-          git add assets/data.js snapshots/ 2>/dev/null || true
+          git add assets/current.js snapshots/ 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "Καμία αλλαγή — δεν έγινε commit."
           else

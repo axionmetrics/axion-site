@@ -1,27 +1,33 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Axion Metrics — ημερήσια ενημέρωση EOD τιμών στο assets/data.js.
+"""Axion Metrics — ημερήσια ενημέρωση EOD τιμών στο assets/current.js.
 
 Τραβάει το δημόσιο αρχείο του Euronext Athens (stocks_details), παίρνει την
 κεφαλαιοποίηση κλεισίματος ανά μετοχή, και γράφει το πεδίο `current`
-{mcap, pe, pbv, date} σε κάθε εταιρεία — για τη μπάρα «Τρέχον» της σελίδας εταιρείας.
+{mcap, pe, pbv, date} ανά μετοχή — για τη μπάρα «Τρέχον» της σελίδας εταιρείας.
+
+⚠ ΑΠΟΣΥΝΔΕΣΗ (2026-08): το `current` ΔΕΝ γράφεται πλέον μέσα στο data.js. Γράφεται
+σε ΞΕΧΩΡΙΣΤΟ αρχείο `assets/current.js` (window.AXION_CURRENT = {tk: {...}}). Έτσι:
+ - το βραδινό job αγγίζει ΜΟΝΟ το current.js (ποτέ το data.js),
+ - οι δικές μας ενημερώσεις οικονομικών (γέφυρα → data.js) ΔΕΝ σβήνουν τη μπάρα «Τρέχον».
+Το data.js διαβάζεται ΜΟΝΟ ως είσοδος (καθαρά κέρδη/ίδια κεφάλαια για P/E, P/BV) — δεν τροποποιείται.
 
 Σχεδιασμός:
- - Το mcap λαμβάνεται ΟΛΟΚΛΗΡΟ από το Euronext (σωστός αριθμός μετοχών × τιμή),
-   δεν ξαναϋπολογίζεται με δικό μας αριθμό μετοχών.
+ - Το mcap λαμβάνεται ΟΛΟΚΛΗΡΟ από το Euronext (σωστός αριθμός μετοχών × τιμή).
  - P/E  = mcap ÷ καθαρά κέρδη (τελευταία ετήσια)          — ανεξάρτητο μετοχών
  - P/BV = mcap ÷ ίδια κεφάλαια, όπου ίδια κεφάλαια = ετήσιο mcap ÷ ετήσιο P/BV
    (το βιβλιακό μέγεθος — ο αριθμός μετοχών απαλείφεται στη διαίρεση).
  - Αντιστοίχιση Euronext↔δικά μας με το ελληνικό σύμβολο (Symbol == tk).
- - Ενεργές μόνο (Trading Status = 1)· αλλιώς current=None (η μπάρα κρύβεται).
+ - Ενεργές μόνο (Trading Status = 1)· αλλιώς η μετοχή ΛΕΙΠΕΙ από το current.js (η μπάρα κρύβεται).
 
 Τρέχει από GitHub Action (root του repo). Αν αποτύχει το fetch, ΔΕΝ γράφει τίποτα.
 """
 import json, re, sys, os, datetime, urllib.request, statistics
 
-URL  = "https://athens.euronext.com/sites/default/files/json_data_files/stocks_details_el.json"
-DATA = "assets/data.js"
-SNAP_DIR = "snapshots"   # μόνιμο αρχείο στιγμιότυπων τιμών/μετοχών ανά περίοδο
+URL     = "https://athens.euronext.com/sites/default/files/json_data_files/stocks_details_el.json"
+DATA    = "assets/data.js"        # ΕΙΣΟΔΟΣ μόνο (οικονομικά για P/E, P/BV) — ΔΕΝ γράφεται
+CURRENT = "assets/current.js"     # ΕΞΟΔΟΣ: window.AXION_CURRENT
+SNAP_DIR = "snapshots"            # μόνιμο αρχείο στιγμιότυπων τιμών/μετοχών ανά περίοδο
 UA   = "Mozilla/5.0 (compatible; AxionMetricsBot/1.0)"
 CLOSE_HOUR_ATH = 18   # ώρα Αθήνας μετά την οποία η σημερινή συνεδρίαση θεωρείται κλεισμένη/εκκαθαρισμένη
 
@@ -130,35 +136,39 @@ def write_snapshots(eu, today):
     except Exception as ex:
         print(f"snapshot: ΠΡΟΕΙΔΟΠΟΙΗΣΗ — δεν γράφτηκε ({ex})")
 
-def apply_current(ax, eu, today):
-    n=0; ratios=[]
-    for base in ('annual','interim'):
-        for c in ax.get('companies',{}).get(base,[]) or []:
-            e=eu.get(c.get('tk'))
-            mcap=e['mcap'] if e else None
-            if not e or not mcap or e['st']!='1':
-                c['current']=None; continue
-            np_=latest(c.get('metrics',{}).get('net_profit'))
-            amc=latest(c.get('metrics',{}).get('mcap'))
-            apbv=latest((c.get('ratios',{}).get('pbv') or {}).get('series'))
-            abvps=latest((c.get('ratios',{}).get('bvps') or {}).get('series'))
-            eq=(amc/apbv) if (amc and apbv and apbv>0) else None
-            neg_eq=(abvps is not None and abvps<0)
-            pe =round(mcap/np_,4) if (np_ and not neg_eq) else None
-            pbv=round(mcap/eq,4)  if (eq  and eq>0)  else None
-            c['current']={'mcap':mcap,'pe':pe,'pbv':pbv,'date':today}
-            if amc and amc>0: ratios.append(mcap/amc)
-            n+=1
-    return n, ratios
+def build_current(ax, eu, today):
+    """Χτίζει {tk: {mcap, pe, pbv, date}} για τις ΕΝΕΡΓΕΣ μετοχές. Τα οικονομικά (καθαρά
+    κέρδη/ίδια κεφάλαια) έρχονται από τη βάση `annual` του data.js (κοινά, ανεξάρτητα βάσης).
+    Ανενεργές/μη-αντιστοιχισμένες → ΛΕΙΠΟΥΝ από τον χάρτη (η μπάρα «Τρέχον» κρύβεται)."""
+    out={}; ratios=[]
+    for c in ax.get('companies',{}).get('annual',[]) or []:
+        tk=c.get('tk'); e=eu.get(tk)
+        mcap=e['mcap'] if e else None
+        if not e or not mcap or e['st']!='1':
+            continue
+        np_=latest(c.get('metrics',{}).get('net_profit'))
+        amc=latest(c.get('metrics',{}).get('mcap'))
+        apbv=latest((c.get('ratios',{}).get('pbv') or {}).get('series'))
+        abvps=latest((c.get('ratios',{}).get('bvps') or {}).get('series'))
+        eq=(amc/apbv) if (amc and apbv and apbv>0) else None
+        neg_eq=(abvps is not None and abvps<0)
+        pe =round(mcap/np_,4) if (np_ and not neg_eq) else None
+        pbv=round(mcap/eq,4)  if (eq  and eq>0)  else None
+        out[tk]={'mcap':mcap,'pe':pe,'pbv':pbv,'date':today}
+        if amc and amc>0: ratios.append(mcap/amc)
+    return out, ratios
 
 def load_axion(path):
     txt=open(path,encoding='utf-8').read()
     mm=re.search(r'window\.AXION\s*=\s*(\{.*\})\s*;', txt, re.S)
     if not mm: raise SystemExit("δεν βρέθηκε window.AXION στο "+path)
-    return txt[:mm.start()], json.loads(mm.group(1))
+    return json.loads(mm.group(1))
 
-def save_axion(path, head, ax):
-    body='window.AXION = '+json.dumps(ax,ensure_ascii=False,separators=(',',':'))+';\n'
+def save_current(path, curmap):
+    head=("/* Axion Metrics — τρέχουσες EOD τιμές (μπάρα «Τρέχον»). Παράγεται ΑΥΤΟΜΑΤΑ από το\n"
+          "   .github/scripts/daily_prices.py κάθε βράδυ. ΜΗΝ το επεξεργάζεσαι με το χέρι και ΜΗΝ το\n"
+          "   ξαναγράφει η γέφυρα — είναι ανεξάρτητο από το data.js. */\n")
+    body='window.AXION_CURRENT = '+json.dumps(curmap,ensure_ascii=False,separators=(',',':'))+';\n'
     open(path,'w',encoding='utf-8').write(head+body)
 
 def main():
@@ -168,19 +178,19 @@ def main():
     arr=eu_raw.get('data') if isinstance(eu_raw,dict) else eu_raw
     if not arr: raise SystemExit("κενό feed Euronext")
     eu=build_eu_map(arr)
-    head, ax=load_axion(DATA)
+    ax=load_axion(DATA)          # ΜΟΝΟ ανάγνωση (οικονομικά για P/E, P/BV)
     today=session_date(eu_raw)   # ημερομηνία τελευταίας κλεισμένης συνεδρίασης (όχι ώρα εκτέλεσης)
     write_snapshots(eu, today)   # αρχείο στιγμιότυπων περιόδου (τέλος 6μήνου/έτους)
-    n, ratios=apply_current(ax, eu, today)
+    curmap, ratios=build_current(ax, eu, today)
     # sanity: το euronext mcap πρέπει να είναι στην ίδια τάξη μεγέθους με το δικό μας
     if ratios:
         med=statistics.median(ratios)
         print(f"sanity: διάμεσος(euronext_mcap/ετήσιο_mcap)={med:.3f} (αναμένεται ~κοντά στο 1)")
         if med<0.02 or med>50:
             raise SystemExit(f"ΑΚΥΡΟ: πιθανή αναντιστοιχία μονάδων mcap (ratio={med}). Δεν γράφτηκε τίποτα.")
-    if n==0: raise SystemExit("καμία αντιστοίχιση — δεν γράφτηκε τίποτα")
-    save_axion(DATA, head, ax)
-    print(f"ΟΚ: ενημερώθηκε το current για {n} εταιρείες ({today}).")
+    if not curmap: raise SystemExit("καμία αντιστοίχιση — δεν γράφτηκε τίποτα")
+    save_current(CURRENT, curmap)
+    print(f"ΟΚ: γράφτηκε {CURRENT} για {len(curmap)} εταιρείες ({today}).")
 
 if __name__=='__main__':
     main()

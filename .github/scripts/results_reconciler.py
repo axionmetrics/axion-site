@@ -17,9 +17,16 @@ BASE = "https://athens.euronext.com/en/fin-cal-api"
 ISSUER_URL = "https://athens.euronext.com/en/issuers/{cid}"
 UA = {"User-Agent": "AxionMetrics-Reconciler/1.0 (+https://axionmetrics.gr)"}
 
-INTERIM_TITLES = ("six months results announcement",)
+# Κλειδώνουμε στη ΔΗΜΟΣΙΕΥΣΗ ΤΗΣ ΕΚΘΕΣΗΣ (full report PDF) — αυτό κατεβάζουμε.
+# Πολλές εταιρείες ανακοινώνουν πρώτα (press release) και δημοσιεύουν την έκθεση αργότερα
+# (π.χ. ELVALHALCOR: ανακοίνωση 03.08 / δημοσίευση έκθεσης 04.09). Κρατάμε την πιο πρόσφατη.
+INTERIM_TITLES = ("six months results announcement", "six months financial report publication",
+                  "half year financial report publication", "half-year financial report publication",
+                  "interim financial report publication")
 ANNUAL_TITLES  = ("annual results announcement", "twelve months results announcement",
-                  "annual financial results announcement", "full year results announcement")
+                  "annual financial results announcement", "full year results announcement",
+                  "annual financial report publication", "annual report publication",
+                  "full year financial report publication")
 INTERIM_MONTHS = (7, 8, 9, 10, 11)
 ANNUAL_MONTHS  = (2, 3, 4, 5, 6)
 
@@ -106,18 +113,30 @@ def load_frozen_roster(path, basis, period):
     return sorted({(r.get("t") or r.get("tk")) for r in _rows(path, basis, period)
                    if r.get("calculated") is False})
 
+def load_display_names(path, basis, period):
+    """{ticker -> ΟΝΟΜΑ ΣΤΗ ΒΑΣΗ ΔΕΔΟΜΕΝΩΝ} από data.js — ΜΟΝΟ για εμφάνιση.
+    Δεν συμμετέχει στην αντιστοίχιση (που μένει στο cid) — χρησιμεύει ώστε τα reports
+    να δείχνουν το database name του master, όχι τη συντομευμένη Euronext-εκδοχή του cid_map."""
+    return {r["tk"]: r.get("t") for r in _rows(path, basis, period) if r.get("t")}
+
 # ---------------------------------------------------------------- reconcile
 def reconcile(events, cid2row, reported_tks, basis, period, excluded_tks=None, asof=None):
     excluded_tks = excluded_tks or set(); published = {}
     for ev in events:
         if not ev["cid"] or not is_result(ev["title"], basis): continue
         if event_period(ev, basis) != period: continue
-        if asof and date_key(ev["date"]) > asof.strftime("%Y%m%d"): continue
         row = cid2row.get(ev["cid"])
         if not row or row["tk"] in excluded_tks: continue
         cur = published.get(row["code"])
-        if not cur or date_key(ev["date"]) < date_key(cur["date"]):
+        # Κρατάμε την ΠΙΟ ΠΡΟΣΦΑΤΗ ημ/νία: η δημοσίευση της έκθεσης (full report)
+        # υπερισχύει της απλής ανακοίνωσης αποτελεσμάτων (press release).
+        if not cur or date_key(ev["date"]) > date_key(cur["date"]):
             published[row["code"]] = {**row, "date": ev["date"], "title": ev["title"]}
+    # asof ΜΕΤΑ την επιλογή: αν η (τελική) ημ/νία δημοσίευσης της έκθεσης είναι μελλοντική,
+    # η εταιρεία εξαιρείται — ακόμη κι αν η προγενέστερη ανακοίνωση έχει ήδη περάσει.
+    if asof:
+        cut = asof.strftime("%Y%m%d")
+        published = {k: v for k, v in published.items() if date_key(v["date"]) <= cut}
     pub = sorted(published.values(), key=lambda r: date_key(r["date"]))
     return {"published": pub, "new": [r for r in pub if r["tk"] not in reported_tks]}
 
@@ -138,7 +157,8 @@ def render_report(results, asof, roster):
             L.append("_Όλες live._"); continue
         L += ["| Εταιρεία | Ticker | Δημοσίευση (Euronext) | Euronext |", "|---|---|---|---|"]
         for r in res["new"]:
-            L.append(f"| **{r['code']} · {_short(r['name'])}** | {r['tk']} | {r['date']} | "
+            disp = r.get("disp") or _short(r["name"])  # database name (master), fallback cid_map
+            L.append(f"| **{r['code']} · {disp}** | {r['tk']} | {r['date']} | "
                      f"[issuer ↗]({ISSUER_URL.format(cid=r['cid'])}) |")
     # frozen roster — ΠΑΝΤΑ, για να βλέπουμε ποιες αφήνουμε εκτός
     L += ["", f"## ⏸️ Εκτός κάλυψης (frozen) — δεν παρακολουθούνται · {len(roster)}", ""]
@@ -164,12 +184,18 @@ def step_summary(md):
 def run_basis(basis, period, cid2row, data_js, asof, events_json=None):
     reported = load_reported_from_datajs(data_js, basis, period)
     excluded = load_calc_excluded_from_datajs(data_js, basis, period)
+    names    = load_display_names(data_js, basis, period)   # {tk -> database name}, μόνο για εμφάνιση
     if events_json:
         events = json.load(open(events_json, encoding="utf-8"))
     else:
         events = []
         for ym in period_window(basis, period): events += fetch_month(ym)
-    return reconcile(events, cid2row, reported, basis, period, excluded_tks=excluded, asof=asof)
+    res = reconcile(events, cid2row, reported, basis, period, excluded_tks=excluded, asof=asof)
+    # Εμπλουτισμός ΜΟΝΟ εμφάνισης: database name από το master· fallback στο cid_map name.
+    # (res["new"] μοιράζεται τα ίδια dict-objects με res["published"], άρα καλύπτεται κι αυτό.)
+    for r in res["published"]:
+        r["disp"] = names.get(r["tk"]) or _short(r["name"])
+    return res
 
 def main():
     ap = argparse.ArgumentParser()
