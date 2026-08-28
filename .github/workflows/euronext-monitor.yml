@@ -6,7 +6,7 @@ name: Euronext Monitor (εβδομαδιαίο)
 on:
   schedule:
     # Κάθε Παρασκευή 06:00 UTC (~09:00 Αθήνα θέρος / 08:00 χειμώνα)
-    - cron: '0 6 * * 5'
+    - cron: '23 6 * * 5'
   workflow_dispatch: {}
 
 permissions:
