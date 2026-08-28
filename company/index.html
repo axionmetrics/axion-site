@@ -685,7 +685,9 @@ document.getElementById('co-sector').textContent=company.sector;
   S('meta[property="og:title"]','content',ttl);
   S('meta[name="twitter:title"]','content',ttl);
   S('meta[property="og:url"]','content',url);
-  var s=document.getElementById('co-summary'); if(s) s.textContent=desc;
+  var s=document.getElementById('co-summary');
+  if(s){ s.textContent=desc; }
+  else { document.addEventListener('DOMContentLoaded',function(){var e=document.getElementById('co-summary'); if(e) e.textContent=desc;}); }
 }catch(e){}})();
 // Δυναμική ετικέτα «ΕΤΗΣΙΑ/ΕΞΑΜΗΝΟ + περίοδος» + σημείωση + χρωματισμός block/toggle ανά βάση
 (function(){
