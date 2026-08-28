@@ -73,6 +73,7 @@
   .mast-meta{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:11px}
   .chip{font-family:var(--mono);font-size:12.5px;font-weight:500;padding:3px 10px;border-radius:6px;background:var(--bl);color:#1f5f97;border:1px solid #b7dbf5}
   .mast-meta .sub{font-size:14px;color:var(--muted)}
+  .co-summary{font-size:13.5px;line-height:1.55;color:var(--muted);max-width:660px;margin:13px 0 0}
   .sctag{font-family:var(--sans);font-size:12.5px;font-weight:600;color:#2b4a6b;padding:3px 11px;border-radius:6px;background:#eef5fc;border:1px solid #cfe0f6}
 
   .layout{display:flex;flex-direction:column;gap:20px;margin:20px 0 0}
@@ -411,6 +412,7 @@
         <span class="sctag" id="co-sector">—</span>
         <span class="sub" id="co-eur">Allwyn AG · Euronext Athens</span>
       </div>
+      <p class="co-summary" id="co-summary"></p>
       <div class="tbanner" id="co-banner" hidden></div>
       <div class="tbanner" id="co-h1-banner" hidden></div>
       <div class="tbanner" id="co-corp-banner" hidden></div>
@@ -666,6 +668,26 @@ document.title=(company.name&&company.name!=='—'?company.name+' — ':'')+'Axi
 document.getElementById('co-ticker').textContent=company.ticker;
 document.getElementById('co-eur').textContent=company.euronext_name+' · Euronext Athens';
 document.getElementById('co-sector').textContent=company.sector;
+// SEO ανά εταιρεία: δυναμικό canonical/description/og + περίληψη σε κείμενο (indexable)
+(function(){try{
+  if(!company||!company.name||company.name==='—') return;
+  var C=company, url='https://www.axionmetrics.gr/company/?tk='+encodeURIComponent(C.ticker);
+  function n1(v){return (v==null||isNaN(v))?null:v.toFixed(1).replace('.',',');}
+  var sec=(C.sector&&C.sector!=='—')?(' στον κλάδο '+C.sector):'';
+  var cur=C.current, pe=cur&&n1(cur.pe), pbv=cur&&n1(cur.pbv);
+  var val=(pe||pbv)?(' Με βάση την τιμή κλεισίματος'+(pe?': P/E '+pe:'')+(pbv?(pe?', ':': ')+'P/BV '+pbv:'')+'.'):'';
+  var desc='Η '+C.name+' ('+C.ticker+') είναι εισηγμένη στο Χρηματιστήριο Αθηνών'+sec+'.'+val+' Θεμελιώδης ανάλυση: αριθμοδείκτες αποτίμησης και κερδοφορίας, τροχιά μεγεθών, μέτοχοι και σύγκριση με τον κλάδο.';
+  var ttl=C.name+' ('+C.ticker+') — Θεμελιώδης ανάλυση | Axion Metrics';
+  function S(sel,a,v){var e=document.querySelector(sel); if(e) e.setAttribute(a,v);}
+  var cn=document.querySelector('link[rel="canonical"]'); if(cn) cn.setAttribute('href',url);
+  S('meta[name="description"]','content',desc);
+  S('meta[property="og:description"]','content',desc);
+  S('meta[name="twitter:description"]','content',desc);
+  S('meta[property="og:title"]','content',ttl);
+  S('meta[name="twitter:title"]','content',ttl);
+  S('meta[property="og:url"]','content',url);
+  var s=document.getElementById('co-summary'); if(s) s.textContent=desc;
+}catch(e){}})();
 // Δυναμική ετικέτα «ΕΤΗΣΙΑ/ΕΞΑΜΗΝΟ + περίοδος» + σημείωση + χρωματισμός block/toggle ανά βάση
 (function(){
   try{ document.body.classList.add('am-view-'+AXBASIS); }catch(e){}
