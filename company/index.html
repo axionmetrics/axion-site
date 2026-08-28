@@ -73,7 +73,7 @@
   .mast-meta{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:11px}
   .chip{font-family:var(--mono);font-size:12.5px;font-weight:500;padding:3px 10px;border-radius:6px;background:var(--bl);color:#1f5f97;border:1px solid #b7dbf5}
   .mast-meta .sub{font-size:14px;color:var(--muted)}
-  .co-summary{font-size:13.5px;line-height:1.55;color:var(--muted);max-width:660px;margin:13px 0 0}
+  .co-summary{font-size:11px;line-height:1.5;color:var(--muted);max-width:1180px;margin:30px auto 6px;padding:14px 22px 0;border-top:1px solid var(--line)}
   .sctag{font-family:var(--sans);font-size:12.5px;font-weight:600;color:#2b4a6b;padding:3px 11px;border-radius:6px;background:#eef5fc;border:1px solid #cfe0f6}
 
   .layout{display:flex;flex-direction:column;gap:20px;margin:20px 0 0}
@@ -412,7 +412,6 @@
         <span class="sctag" id="co-sector">—</span>
         <span class="sub" id="co-eur">Allwyn AG · Euronext Athens</span>
       </div>
-      <p class="co-summary" id="co-summary"></p>
       <div class="tbanner" id="co-banner" hidden></div>
       <div class="tbanner" id="co-h1-banner" hidden></div>
       <div class="tbanner" id="co-corp-banner" hidden></div>
@@ -1278,6 +1277,7 @@ document.addEventListener('keydown',e=>{
 qsRender();
 </script>
 
+<p class="co-summary" id="co-summary"></p>
 <div id="am-foot"></div>
 <script>window.NAV_ACTIVE=0;window.NAV_CUR="Σελίδα εταιρείας";window.AX_NO_BASIS=true;</script>
 <script src="../assets/chrome.js"></script>
