@@ -359,6 +359,12 @@
 .cdot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#f4c24e;margin-right:7px;animation:cping 1.8s ease-out infinite}
 @keyframes cping{0%{box-shadow:0 0 0 0 rgba(244,194,78,.7)}70%,100%{box-shadow:0 0 0 8px rgba(244,194,78,0)}}
 @media (prefers-reduced-motion:reduce){.cdot{animation:none}}
+/* μπάρα «Τρέχον»: σε στενές οθόνες ο τίτλος αναδιπλώνεται αντί να κόβεται */
+@media (max-width:480px){
+ .cband .cdiv{flex-wrap:wrap;justify-content:center}
+ .cband .cdiv .ln{display:none}
+ .cband .cdiv .ct{white-space:normal;text-align:center;justify-content:center;flex-wrap:wrap;line-height:1.35;font-size:11px}
+}
 </style>
 <link rel="stylesheet" href="../assets/chrome.css">
 <script src="../assets/i18n.js"></script>
