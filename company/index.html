@@ -307,6 +307,12 @@
   .qs-item.here{background:var(--cyan);color:#fff}
   .qs-item.here .tk{color:rgba(255,255,255,.72)}
   .qs-item.qs-dead:not(.here)>span:first-child{color:var(--faint)}
+  .qs-meta{display:flex;align-items:center;gap:8px;flex:none}
+  .qs-per{font-size:10px;font-weight:700;padding:1px 7px;border-radius:20px;white-space:nowrap;border:1px solid;line-height:1.7}
+  .qs-per.p-fresh{color:#127a3e;background:#e7f6ee;border-color:#bfe6cf}
+  .qs-per.p-cur{color:#3a4b8f;background:#eef1fb;border-color:#d3d9f3}
+  .qs-per.p-old{color:#6b7280;background:#f0f1f3;border-color:#dfe2e7}
+  .qs-item.here .qs-per{box-shadow:0 0 0 1px rgba(255,255,255,.35)}
   .qs-empty{padding:26px 12px;text-align:center;font-size:12.5px;color:var(--muted)}
   .qs-foot{border-top:1px solid var(--line);padding:9px 14px;font-size:10.5px;color:var(--faint);
     display:flex;gap:12px}
@@ -358,7 +364,6 @@
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
       <span data-i18n="co.qsopen">Επιλογή εταιρείας</span>
     </button>
-    <div class="page-basis" id="ambasis-page"></div>
     <div class="mast-logohead">
       <span class="co-logo-top" id="co-logo-wrap" hidden><img id="co-logo" class="co-logo" alt=""></span>
     </div>
@@ -380,6 +385,8 @@
       <div class="tbanner" id="co-corp-banner" hidden></div>
     </div>
   </section>
+
+  <div class="page-basis page-basis-mid" id="ambasis-page" style="margin:32px 0 -9px"></div>
 
   <div class="layout">
 
@@ -1141,6 +1148,34 @@ const QS_DATA=((window.AXION&&window.AXION.companies&&window.AXION.companies[AXB
  });
 let qsSel=0, qsRows=[];
 
+// τελευταία ενημερωμένη περίοδος ανά ticker (από rowsByPeriod, ανεξάρτητα τρέχουσας βάσης)
+const QS_PERIOD=(function(){
+  try{
+    const ax=window.AXION||{}, rbp=ax.rowsByPeriod||{}, ann=rbp.annual||{}, inter=rbp.interim||{};
+    const rs=coll=>{const m={};for(const p in coll){m[p]=new Set((coll[p]||[]).filter(r=>r&&r.reported).map(r=>r.tk));}return m;};
+    const A=rs(ann), I=rs(inter);
+    const ay=Object.keys(A).sort((a,b)=>(+a)-(+b));
+    const ipk=p=>(+p.slice(0,4))*10+(+String(p).slice(5).replace('H',''));
+    const ip=Object.keys(I).sort((a,b)=>ipk(a)-ipk(b));
+    let maxAY=null; for(const y of ay) if(A[y].size) maxAY=+y;
+    const out={};
+    ((ax.companies&&ax.companies.annual)||[]).forEach(c=>{
+      const tk=c.tk; let la=null,li=null;
+      for(const y of ay) if(A[y].has(tk)) la=+y;
+      for(const p of ip) if(I[p].has(tk)) li=p;
+      const cand=[];
+      if(la) cand.push([la*100+12, String(la), false]);
+      if(li) cand.push([(+li.slice(0,4))*100+6, li, true]);
+      if(!cand.length){ out[tk]={label:'—',tier:'p-old'}; return; }
+      cand.sort((a,b)=>a[0]-b[0]);
+      const t=cand[cand.length-1];
+      if(t[2]) out[tk]={label:'H1 '+t[1].slice(0,4), tier:'p-fresh'};
+      else out[tk]={label:t[1], tier:(+t[1]===maxAY?'p-cur':'p-old')};
+    });
+    return out;
+  }catch(e){ return {}; }
+})();
+
 function qsRender(){
   const term=qsNorm(document.getElementById('qsInput').value.trim());
   qsRows = term ? QS_DATA.filter(r=>qsNorm(r[0]).includes(term)||qsNorm(r[1]).includes(term)) : QS_DATA;
@@ -1153,8 +1188,10 @@ function qsRender(){
     const sel  = i===qsSel && !here ? ' sel' : '';
     const dead = r[2]===false ? ' qs-dead' : '';
     const pill = (r[2]===false) ? `<span class="tbadge sm t-frozen">${L('co.entity.badge')}</span>` : '';
+    const _p = QS_PERIOD[r[1]];
+    const per = (r[2]!==false && _p && _p.label!=='—') ? `<span class="qs-per ${_p.tier}">${_p.label}</span>` : '';
     html+=`<a class="qs-item${here}${sel}${dead}" data-i="${i}" href="${encodeURI(QS_PAGE)}?tk=${encodeURIComponent(r[1])}">
-      <span>${r[0]}${pill}</span><span class="tk">${r[1]}</span></a>`;
+      <span>${r[0]}${pill}</span><span class="qs-meta">${per}<span class="tk">${r[1]}</span></span></a>`;
   });
   body.innerHTML=html;
   const el=body.querySelector(`[data-i="${qsSel}"]`);
