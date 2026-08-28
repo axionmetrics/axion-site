@@ -302,7 +302,7 @@
   .qs-ov{position:fixed;inset:0;background:rgba(16,35,59,.34);opacity:0;pointer-events:none;
     transition:opacity .18s;z-index:60}
   .qs-ov.on{opacity:1;pointer-events:auto}
-  .qs{position:fixed;top:0;left:0;bottom:0;width:330px;background:#fff;border-right:1px solid var(--line);
+  .qs{position:fixed;top:0;left:0;bottom:0;width:360px;background:#fff;border-right:1px solid var(--line);
     transform:translateX(-100%);transition:transform .22s cubic-bezier(.4,0,.2,1);z-index:61;
     display:flex;flex-direction:column;box-shadow:2px 0 24px rgba(20,40,80,.10)}
   .qs.on{transform:translateX(0)}
@@ -322,15 +322,16 @@
   .qs-body{flex:1;overflow-y:auto;padding:6px 8px 16px}
   .qs-sec{font-size:9.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--faint);
     padding:12px 10px 5px}
-  .qs-item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 10px;
+  .qs-item{display:flex;align-items:center;gap:9px;padding:8px 10px;
     border-radius:8px;font-size:13.5px;color:var(--text);text-decoration:none;cursor:pointer}
   .qs-item:hover,.qs-item.cur{background:var(--panel2)}
   .qs-item.sel{background:#e9f2fb;color:var(--cyan)}
-  .qs-item .tk{font-family:var(--mono);font-size:10.5px;color:var(--faint);flex:none}
+  .qs-nm{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .qs-tk{font-family:var(--mono);font-size:12.5px;color:var(--faint);flex:none;letter-spacing:.01em}
+  .qs-right{margin-left:auto;flex:none;display:flex;align-items:center;padding-left:8px}
   .qs-item.here{background:var(--cyan);color:#fff}
-  .qs-item.here .tk{color:rgba(255,255,255,.72)}
-  .qs-item.qs-dead:not(.here)>span:first-child{color:var(--faint)}
-  .qs-meta{display:flex;align-items:center;gap:8px;flex:none}
+  .qs-item.here .qs-tk{color:rgba(255,255,255,.78)}
+  .qs-item.qs-dead:not(.here) .qs-nm{color:var(--faint)}
   .qs-per{font-size:10px;font-weight:700;padding:1px 7px;border-radius:20px;white-space:nowrap;border:1px solid;line-height:1.7}
   .qs-per.p-fresh{color:#127a3e;background:#e7f6ee;border-color:#bfe6cf}
   .qs-per.p-cur{color:#3a4b8f;background:#eef1fb;border-color:#d3d9f3}
@@ -1210,11 +1211,13 @@ function qsRender(){
     const here = r[0]===QS_CURRENT ? ' here' : '';
     const sel  = i===qsSel && !here ? ' sel' : '';
     const dead = r[2]===false ? ' qs-dead' : '';
-    const pill = (r[2]===false) ? `<span class="tbadge sm t-frozen">${L('co.entity.badge')}</span>` : '';
     const _p = QS_PERIOD[r[1]];
-    const per = (r[2]!==false && _p && _p.label!=='—') ? `<span class="qs-per ${_p.tier}">${_p.label}</span>` : '';
+    // δεξί τοίχωμα: frozen → σήμανση κατάστασης· αλλιώς → pill τελευταίας περιόδου
+    let right='';
+    if(r[2]===false) right=`<span class="tbadge sm t-frozen">${L('co.entity.badge')}</span>`;
+    else if(_p && _p.label!=='—') right=`<span class="qs-per ${_p.tier}">${_p.label}</span>`;
     html+=`<a class="qs-item${here}${sel}${dead}" data-i="${i}" href="${encodeURI(QS_PAGE)}?tk=${encodeURIComponent(r[1])}">
-      <span>${r[0]}${pill}</span><span class="qs-meta">${per}<span class="tk">${r[1]}</span></span></a>`;
+      <span class="qs-nm">${r[0]}</span><span class="qs-tk">${r[1]}</span><span class="qs-right">${right}</span></a>`;
   });
   body.innerHTML=html;
   const el=body.querySelector(`[data-i="${qsSel}"]`);
