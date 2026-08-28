@@ -135,6 +135,14 @@
  function relocalize(){ buildNav(); renderBasis(); var f=document.querySelector('.site-ft'); if(f) f.outerHTML=footerHTML(); relabelLangBtn(); }
  document.addEventListener('axion:langchange', relocalize);
 
- function init(){ injectStyle(); mount(); buildNav(); renderBasis(); relabelLangBtn(); }
+ function injectAnalytics(){
+   if(document.getElementById('cf-beacon')) return;
+   var s=document.createElement('script');
+   s.id='cf-beacon'; s.defer=true;
+   s.src='https://static.cloudflareinsights.com/beacon.min.js';
+   s.setAttribute('data-cf-beacon','{"token": "a9e573e27dd34f6784b7df2d706c1bee"}');
+   document.head.appendChild(s);
+ }
+ function init(){ injectStyle(); mount(); buildNav(); renderBasis(); relabelLangBtn(); injectAnalytics(); }
  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);} else {init();}
 })();
