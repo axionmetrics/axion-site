@@ -136,11 +136,26 @@ def write_snapshots(eu, today):
     except Exception as ex:
         print(f"snapshot: ΠΡΟΕΙΔΟΠΟΙΗΣΗ — δεν γράφτηκε ({ex})")
 
+def _at(series, i):
+    """Τιμή στη θέση i (ή None) — ανθεκτικό σε λάθος index/τύπο."""
+    try:
+        v=series[i]
+        return v if isinstance(v,(int,float)) else None
+    except (TypeError, IndexError, KeyError):
+        return None
+
 def build_current(ax, eu, today):
-    """Χτίζει {tk: {mcap, pe, pbv, date}} για τις ΕΝΕΡΓΕΣ μετοχές. Τα οικονομικά (καθαρά
-    κέρδη/ίδια κεφάλαια) έρχονται από τη βάση `annual` του data.js (κοινά, ανεξάρτητα βάσης).
+    """Χτίζει {tk: {mcap, pe, pbv, date [, pe_i, pbv_i]}} για τις ΕΝΕΡΓΕΣ μετοχές. Τα ετήσια
+    οικονομικά (καθαρά κέρδη/ίδια κεφάλαια) έρχονται από τη βάση `annual` του data.js.
+
+    Interim variants (pe_i, pbv_i) — για τη ΣΕΛΙΔΑ όταν προβάλλεται η όψη 6μήνου, ΜΟΝΟ όταν
+    το τελευταίο 6μηνο είναι ΠΙΟ πρόσφατο από το τελευταίο ετήσιο (Yi>Ya, δηλ. δημοσιεύτηκε
+    H1 του επόμενου έτους) — αλλιώς τα ετήσια είναι πιο πρόσφατα και η σελίδα κάνει fallback:
+      • pe_i  = mcap ÷ TTM,  TTM (κυλιόμενο 12μηνο) = FY(Yi-1) + H1(Yi) − H1(Yi-1)
+      • pbv_i = mcap ÷ ίδια κεφάλαια 6μήνου, όπου ίδια κεφάλαια = interim_mcap ÷ interim_pbv (30/6).
     Ανενεργές/μη-αντιστοιχισμένες → ΛΕΙΠΟΥΝ από τον χάρτη (η μπάρα «Τρέχον» κρύβεται)."""
     out={}; ratios=[]
+    interim_by_tk={c.get('tk'):c for c in (ax.get('companies',{}).get('interim',[]) or [])}
     for c in ax.get('companies',{}).get('annual',[]) or []:
         tk=c.get('tk'); e=eu.get(tk)
         mcap=e['mcap'] if e else None
@@ -154,7 +169,31 @@ def build_current(ax, eu, today):
         neg_eq=(abvps is not None and abvps<0)
         pe =round(mcap/np_,4) if (np_ and not neg_eq) else None
         pbv=round(mcap/eq,4)  if (eq  and eq>0)  else None
-        out[tk]={'mcap':mcap,'pe':pe,'pbv':pbv,'date':today}
+        rec={'mcap':mcap,'pe':pe,'pbv':pbv,'date':today}
+        # --- interim variants (μόνο όταν το 6μηνο είναι πιο πρόσφατο από το ετήσιο) ---
+        im=interim_by_tk.get(tk)
+        if im:
+            li_a=(c.get('latest',{}) or {}).get('idx'); years_a=c.get('years',[]) or []
+            Ya=_at(years_a, li_a) if li_a is not None else None
+            li_i=(im.get('latest',{}) or {}).get('idx'); years_i=im.get('years',[]) or []
+            Yi=_at(years_i, li_i) if li_i is not None else None
+            if Ya is not None and Yi is not None and Yi>Ya:
+                inp=im.get('metrics',{}).get('net_profit',[]) or []
+                h1c=_at(inp, li_i)
+                pidx=years_i.index(Yi-1) if (Yi-1) in years_i else -1
+                h1p=_at(inp, pidx) if pidx>=0 else None
+                aidx=years_a.index(Yi-1) if (Yi-1) in years_a else -1
+                fy=_at(c.get('metrics',{}).get('net_profit',[]) or [], aidx) if aidx>=0 else None
+                if (h1c not in (None,0)) and (h1p not in (None,0)) and fy is not None:
+                    ttm=fy+h1c-h1p
+                    if ttm!=0: rec['pe_i']=round(mcap/ttm,4)
+                imc=_at(im.get('metrics',{}).get('mcap',[]) or [], li_i)
+                ipbv=_at((im.get('ratios',{}).get('pbv') or {}).get('series',[]) or [], li_i)
+                ibvps=_at((im.get('ratios',{}).get('bvps') or {}).get('series',[]) or [], li_i)
+                eqi=(imc/ipbv) if (imc and ipbv and ipbv>0) else None
+                negi=(ibvps is not None and ibvps<0)
+                if eqi and eqi>0 and not negi: rec['pbv_i']=round(mcap/eqi,4)
+        out[tk]=rec
         if amc and amc>0: ratios.append(mcap/amc)
     return out, ratios
 

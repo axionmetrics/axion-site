@@ -385,6 +385,7 @@
 .cband .cell{background:#2f80c2;border:1px solid #3f92d6}
 .cband .v{color:#fff}.cband .v small{color:rgba(255,255,255,.72)}
 .cband .spacer,.latest .spacer{flex:1;min-width:0}
+.cband .cnote{margin-top:9px;text-align:center;font-size:10px;font-weight:600;color:rgba(255,255,255,.52);letter-spacing:.02em;line-height:1.3}
 .cdot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#f4c24e;margin-right:7px;animation:cping 1.8s ease-out infinite}
 @keyframes cping{0%{box-shadow:0 0 0 0 rgba(244,194,78,.7)}70%,100%{box-shadow:0 0 0 8px rgba(244,194,78,0)}}
 @media (prefers-reduced-motion:reduce){.cdot{animation:none}}
@@ -564,6 +565,8 @@ AX_I18N.add({
  // current band
  'co.cband.title':{el:'Τρέχοντα Μεγέθη', en:'Current figures'},
  'co.cband.sub':{el:'τιμή κλεισίματος', en:'closing price'},
+ 'co.cband.ttm':{el:'P/E σε κυλιόμενο 12μηνο (TTM)', en:'P/E on trailing twelve months (TTM)'},
+ 'co.cband.bvi':{el:'P/BV στα ίδια κεφάλαια 6μήνου', en:'P/BV on interim book value'},
  // FAM / event families
  'co.fam.capital':{el:'Μετ.Κεφαλαίου', en:'Capital'},
  'co.fam.div':{el:'Χρημ.Διανομές', en:'Distributions'},
@@ -778,11 +781,24 @@ document.getElementById('latest').innerHTML=METRICS.map(m=>{
   const eur=v=>v==null?'—':`${fMil(v)}<small>${EURSUF()}</small>`;
   const xx=v=>(v==null||isNaN(v))?'—':fX(v);
   const item=(k,val)=>`<div class="metric-item uni"><div class="k">${k}</div><div class="cell"><div class="v">${val}</div></div></div>`;
-  const sp='<div class="spacer"></div>';
   const fmtd=s=>{const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(s||'');return m?`${m[3]}/${m[2]}/${m[1]}`:s;};
   const dt=cur.date?` · ${fmtd(cur.date)}`:'';
+  // Στο 6μηνο: αν υπάρχει interim variant (δηλ. το 6μηνο είναι ΠΙΟ πρόσφατο από το τελευταίο ετήσιο),
+  // P/E = TTM (κυλιόμενο 12μηνο) & P/BV = ίδια κεφάλαια 6μήνου (30/6). Αλλιώς → fallback στα ετήσια.
+  const isI=(typeof AXBASIS!=='undefined' && AXBASIS==='interim');
+  const usePeI = isI && cur.pe_i!=null;
+  const usePbvI= isI && cur.pbv_i!=null;
+  const peVal  = usePeI ? cur.pe_i : cur.pe;
+  const pbvVal = usePbvI? cur.pbv_i: cur.pbv;
   const clab=`<div class="clab"><div class="t"><span class="cdot"></span>${L('co.cband.title')}</div><div class="s">${L('co.cband.sub')}${dt}</div></div>`;
-  cb.innerHTML=`<div class="latest">${clab}${item(L('co.m.mcap'),eur(cur.mcap))}${item('P/E',xx(cur.pe))}${item('P/BV',xx(cur.pbv))}</div>`;
+  let note='';
+  if(usePeI||usePbvI){
+    const parts=[];
+    if(usePeI) parts.push(L('co.cband.ttm'));
+    if(usePbvI) parts.push(L('co.cband.bvi'));
+    note=`<div class="cnote">${parts.join(' · ')}</div>`;
+  }
+  cb.innerHTML=`<div class="latest">${clab}${item(L('co.m.mcap'),eur(cur.mcap))}${item('P/E',xx(peVal))}${item('P/BV',xx(pbvVal))}</div>${note}`;
 })();
 // «Ζώνη ένωσης» — διακριτικό background πίσω από τα κοινά μεγέθη (Κεφαλαιοποίηση/P·E/P·BV) και στα δύο blocks
 (function(){
