@@ -187,6 +187,7 @@
   .holder .hp{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--ink)}
 
   .union-wash{position:absolute;pointer-events:none;z-index:0;background:rgba(143,196,238,.13);border-radius:12px}
+  .lnote{position:relative;z-index:1;text-align:center;font-size:10px;font-weight:600;color:rgba(255,255,255,.5);letter-spacing:.02em;margin:9px 0 1px;line-height:1.3}
   .phead.yr .latest{position:relative;z-index:1}
   .latest{display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
   .latest .metric-item{min-width:0;text-align:center;display:flex;flex-direction:column}
@@ -449,7 +450,7 @@
 
     <div class="a-year">
       <div class="panel">
-        <div class="phead yr"><div class="union-wash" id="union-wash" hidden></div><div class="yr-top"><h2 id="yr-h">2025</h2><span class="ynote" id="yr-note" hidden></span></div><div class="latest" id="latest"></div><div class="cband" id="current-band"></div></div>
+        <div class="phead yr"><div class="union-wash" id="union-wash" hidden></div><div class="yr-top"><h2 id="yr-h">2025</h2><span class="ynote" id="yr-note" hidden></span></div><div class="latest" id="latest"></div><div class="lnote" id="latest-note" hidden></div><div class="cband" id="current-band"></div></div>
         <div class="pbody year-body">
           <div class="year-top">
             <div class="panel sub">
@@ -774,6 +775,14 @@ document.getElementById('latest').innerHTML=METRICS.map(m=>{
   const uni=(m.key==='mcap'||m.key==='pe'||m.key==='pbv')?' uni':'';
   return `<div class="metric-item${uni}"><div class="k">${label}</div><div class="cell"><div class="v">${val}</div></div></div>`;
 }).join('');
+// Στο 6μηνο, το P/E τελευταίας περιόδου είναι TTM (κυλιόμενο 12μηνο) — διακριτική υποσημείωση όταν υπάρχει τιμή
+(function(){
+  var ln=document.getElementById('latest-note'); if(!ln) return;
+  var isI=(typeof AXBASIS!=='undefined' && AXBASIS==='interim');
+  var pev=company.metrics&&company.metrics.pe?company.metrics.pe[li]:null;
+  if(isI && typeof pev==='number' && !isNaN(pev)){ ln.textContent=L('co.cband.ttm'); ln.hidden=false; }
+  else { ln.hidden=true; }
+})();
 (function(){
   const cb=document.getElementById('current-band'); if(!cb) return;
   const cur=company.current;
