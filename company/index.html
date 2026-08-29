@@ -55,21 +55,27 @@
   .topnav{display:flex;gap:20px;font-size:13px}
   .topnav a{color:var(--muted);text-decoration:none}.topnav a:hover{color:var(--cyan)}
 
-  .mast{padding:34px 0 0;min-height:393px;display:flex;flex-direction:column;justify-content:space-between}
+  .mast{padding:24px 0 0}
+  .mast-bar{display:flex;align-items:center;gap:24px}
   .mast-nameline{display:flex;align-items:baseline;flex-wrap:wrap;gap:12px}
-  .mast-top{display:flex;flex-direction:column;align-items:flex-start}
-  .mast-logohead{align-self:stretch;display:flex;justify-content:center;align-items:center;margin-top:22px}
-  .co-logo-top{display:block}
-  .co-logo{height:72px;width:auto;max-width:440px;object-fit:contain;display:block}
+  .co-logo-top{flex:none;display:flex;align-items:center;justify-content:flex-start;width:200px;padding-right:22px;border-right:1px solid var(--line)}
+  .co-logo{max-height:56px;max-width:176px;width:auto;height:auto;object-fit:contain;display:block}
+  .mast-id{flex:1;min-width:0}
   .co-namerow{display:flex;align-items:baseline;flex-wrap:wrap;gap:12px}
-  .mast-id .tbanner{margin-top:20px;margin-bottom:0}
+  .mast .tbanner{margin-top:18px;margin-bottom:0}
   .tbanner[hidden]{display:none!important}
-  @media(max-width:600px){.co-logo{height:38px;max-width:210px}.mast{min-height:0}.mast-logohead{justify-content:flex-start;margin-top:12px;margin-bottom:8px}}
+  @media(max-width:640px){
+    .mast-bar{flex-wrap:wrap;gap:14px}
+    .co-logo-top{border-right:none;padding-right:0;width:auto;max-width:58%}
+    .co-logo{max-height:42px;max-width:150px}
+    .qs-open{margin-left:auto}
+    .mast-id{flex:1 1 100%;order:3}
+  }
   .mast-sector{margin-top:9px}
   .ms-cap{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--faint);font-weight:600;margin-bottom:9px}
   .ms-cap span{text-transform:none;letter-spacing:0;font-weight:400}
   .eyebrow{font-family:var(--disp);font-weight:600;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--cyan)}
-  .mast h1{font-family:var(--disp);font-weight:800;font-size:46px;line-height:1.02;letter-spacing:-.02em;margin:0;color:var(--ink)}
+  .mast h1{font-family:var(--disp);font-weight:800;font-size:40px;line-height:1.02;letter-spacing:-.02em;margin:0;color:var(--ink)}
   .mast-meta{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:11px}
   .chip{font-family:var(--mono);font-size:12.5px;font-weight:500;padding:3px 10px;border-radius:6px;background:var(--bl);color:#1f5f97;border:1px solid #b7dbf5}
   .mast-meta .sub{font-size:14px;color:var(--muted)}
@@ -314,18 +320,18 @@
 .hero .hs .v.t{font-size:14px;font-weight:700;line-height:1.15}
 .hero .hs .l{font-size:10px;color:#8a95a6;letter-spacing:.02em}
 @media(max-width:640px){.hero .hero-in{padding:20px 20px}.hero .hs{padding:2px 14px}}
-.qs-open{display:inline-flex;align-items:center;gap:9px;background:linear-gradient(180deg,#3a8fce,#2f80c2);border:none;
-    border-radius:11px;padding:12px 18px;font-family:var(--sans);font-size:13px;font-weight:700;color:#fff;cursor:pointer;
-    margin-bottom:10px;box-shadow:0 3px 10px rgba(47,128,194,.28);transition:.14s}
-  .qs-open:hover{background:linear-gradient(180deg,#3f97d8,#2d78b6);box-shadow:0 5px 15px rgba(47,128,194,.36);transform:translateY(-1px)}
+.qs-open{flex:none;display:inline-flex;align-items:center;gap:9px;background:#fff;border:1px solid #cfe0f6;
+    border-radius:11px;padding:10px 16px;font-family:var(--sans);font-size:13px;font-weight:700;color:#2f80c2;cursor:pointer;
+    box-shadow:0 1px 3px rgba(47,128,194,.10);transition:.14s;white-space:nowrap}
+  .qs-open:hover{background:#f4f9fe;border-color:#9fc6ea;box-shadow:0 3px 10px rgba(47,128,194,.16);transform:translateY(-1px)}
   .qs-open kbd{font-family:var(--mono);font-size:10.5px;background:rgba(255,255,255,.16);
     border:1px solid rgba(255,255,255,.28);border-radius:4px;padding:1px 5px;color:rgba(255,255,255,.85)}
   .qs-ov{position:fixed;inset:0;background:rgba(16,35,59,.34);opacity:0;pointer-events:none;
     transition:opacity .18s;z-index:60}
   .qs-ov.on{opacity:1;pointer-events:auto}
-  .qs{position:fixed;top:0;left:0;bottom:0;width:360px;background:#fff;border-right:1px solid var(--line);
-    transform:translateX(-100%);transition:transform .22s cubic-bezier(.4,0,.2,1);z-index:61;
-    display:flex;flex-direction:column;box-shadow:2px 0 24px rgba(20,40,80,.10)}
+  .qs{position:fixed;top:0;right:0;bottom:0;left:auto;width:360px;background:#fff;border-left:1px solid var(--line);
+    transform:translateX(100%);transition:transform .22s cubic-bezier(.4,0,.2,1);z-index:61;
+    display:flex;flex-direction:column;box-shadow:-2px 0 24px rgba(20,40,80,.10)}
   .qs.on{transform:translateX(0)}
   .qs-head{padding:16px 16px 12px;border-bottom:1px solid var(--line)}
   .qs-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:11px}
@@ -411,31 +417,29 @@
     </div>
   </section>
   <section class="mast">
-    <div class="mast-top">
-    <button class="qs-open" onclick="qsOpen()" title="Γρήγορη εύρεση εταιρείας" data-i18n-title="co.qsopen.title">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-      <span data-i18n="co.qsopen">Επιλογή εταιρείας</span>
-    </button>
-    <div class="mast-logohead">
+    <div class="mast-bar">
       <span class="co-logo-top" id="co-logo-wrap" hidden><img id="co-logo" class="co-logo" alt=""></span>
-    </div>
-    </div>
-    <div class="mast-id">
-      <div class="co-namerow">
-        <h1 id="co-name">ALLWYN</h1>
-        <span class="tbadge" id="co-status" hidden></span>
-        <span class="tbadge" id="co-h1" hidden></span>
-        <span class="tbadge" id="co-corp" hidden></span>
+      <div class="mast-id">
+        <div class="co-namerow">
+          <h1 id="co-name">ALLWYN</h1>
+          <span class="tbadge" id="co-status" hidden></span>
+          <span class="tbadge" id="co-h1" hidden></span>
+          <span class="tbadge" id="co-corp" hidden></span>
+        </div>
+        <div class="mast-meta">
+          <span class="chip" id="co-ticker">ALWN</span>
+          <span class="sctag" id="co-sector">—</span>
+          <span class="sub" id="co-eur">Allwyn AG · Euronext Athens</span>
+        </div>
       </div>
-      <div class="mast-meta">
-        <span class="chip" id="co-ticker">ALWN</span>
-        <span class="sctag" id="co-sector">—</span>
-        <span class="sub" id="co-eur">Allwyn AG · Euronext Athens</span>
-      </div>
-      <div class="tbanner" id="co-banner" hidden></div>
-      <div class="tbanner" id="co-h1-banner" hidden></div>
-      <div class="tbanner" id="co-corp-banner" hidden></div>
+      <button class="qs-open" onclick="qsOpen()" title="Γρήγορη εύρεση εταιρείας" data-i18n-title="co.qsopen.title">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <span data-i18n="co.qsopen">Επιλογή εταιρείας</span>
+      </button>
     </div>
+    <div class="tbanner" id="co-banner" hidden></div>
+    <div class="tbanner" id="co-h1-banner" hidden></div>
+    <div class="tbanner" id="co-corp-banner" hidden></div>
   </section>
 
   <div class="page-basis page-basis-mid" id="ambasis-page" style="margin:32px 0 -9px"></div>
