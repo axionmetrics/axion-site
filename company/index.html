@@ -1162,7 +1162,7 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
     let t,r;
     if(G.liq.kind==='npe'){
       // ίδια πηγή/ακρίβεια με την τροχιά (AX.ratios.npe) — αποφυγή διπλής στρογγυλοποίησης (3,75→3,8 vs 3,7)
-      if(AX&&AX.ratios&&AX.ratios.npe&&AX.ratios.npe.series){ const s=AX.ratios.npe.series; co=s[s.length-1]; if(AX.ratios.npe.sector!=null) sec=AX.ratios.npe.sector; }
+      if(AX&&AX.ratios&&AX.ratios.npe&&AX.ratios.npe.series){ const s=AX.ratios.npe.series; const _i=(AX.latest&&AX.latest.idx!=null)?AX.latest.idx:s.length-1; co=s[_i]; if(AX.ratios.npe.sector!=null) sec=AX.ratios.npe.sector; }
       // Δείκτης ΜΕΑ (%): <3% χαμηλός/υγιής, 3–5% μέτριος, >5% υψηλός (κατώφλι ECB «high NPL» = 5%)
       if(co==null){t='mid';r='—';}
       else if(co<3){t='good';r=L('co.gl.r.npeLow');}
