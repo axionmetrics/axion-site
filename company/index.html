@@ -750,7 +750,7 @@ document.getElementById('co-sector').textContent=company.sector;
 // (Η «αλλαγή οντότητας» ενοποιήθηκε στο «Εκτός κάλυψης» παραπάνω) — κρύψε το παλιό corp pill.
 (function(){ var p=document.getElementById('co-corp'); if(p)p.hidden=true; })();
 
-const li=company.years.length-1;
+const li=(company.latest && company.latest.idx!=null) ? company.latest.idx : company.years.length-1;
 document.getElementById('latest').innerHTML=METRICS.map(m=>{
   // τράπεζες: η θέση του EBITDA στην κάρτα μεγεθών δείχνει «Κέρδη προ προβλέψεων» (PPI) με την τιμή του τελευταίου έτους
   const bankPPI = IS_BANK && m.key==='ebitda';
