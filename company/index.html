@@ -182,8 +182,8 @@
 
   .union-wash{position:absolute;pointer-events:none;z-index:0;background:rgba(143,196,238,.13);border-radius:12px}
   .phead.yr .latest{position:relative;z-index:1}
-  .latest{display:flex;gap:8px}
-  .latest .metric-item{flex:1;min-width:0;text-align:center;display:flex;flex-direction:column}
+  .latest{display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
+  .latest .metric-item{min-width:0;text-align:center;display:flex;flex-direction:column}
   .latest .k{font-size:9.5px;color:rgba(255,255,255,.72);font-weight:600;margin-bottom:5px;line-height:1.2;text-transform:uppercase;letter-spacing:.04em}
   .latest .cell{flex:1;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.20);border-radius:9px;padding:9px 6px;display:flex;flex-direction:column;justify-content:center}
   .latest .v{font-family:var(--disp);font-size:18px;font-weight:800;color:#fff;line-height:1.05;white-space:nowrap}
@@ -295,7 +295,10 @@
     .sc-grid{grid-template-columns:repeat(auto-fit,minmax(120px,1fr))}
     .year-top{grid-template-columns:1fr}
     .glance-row{flex-direction:column}
-    .latest{flex-wrap:wrap}.latest .metric-item{flex:1 1 90px}
+    .phead.yr .latest{display:flex;flex-wrap:wrap;gap:8px}
+    .phead.yr .latest .metric-item{flex:1 1 90px}
+    .phead.yr .cband>.latest{margin:0}
+    .phead.yr .cband .clab{flex:1 1 100%;margin-bottom:6px}
     .mast h1{font-size:34px}.topnav{display:none}
   }
   /* ---------- γρήγορη εύρεση εταιρείας ---------- */
@@ -366,8 +369,10 @@
  .mast h1{font-family:'Inter',sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.02em}
 
  
-.cband{background:linear-gradient(180deg,rgba(47,128,194,.16),rgba(47,128,194,.05));border-radius:11px;padding:10px 8px 11px;margin-top:12px;border:1px solid rgba(255,255,255,.10)}
-.cband .clab{flex:3;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.cband{background:linear-gradient(180deg,rgba(47,128,194,.16),rgba(47,128,194,.05));border-radius:11px;padding:10px 9px 11px;margin-top:12px;border:1px solid rgba(255,255,255,.10)}
+/* το εσωτερικό grid «σπάει» έξω από το padding+border του cband (9+1=10px) ώστε οι στήλες να ευθυγραμμίζονται ΑΚΡΙΒΩΣ με το πάνω block */
+.cband>.latest{margin-left:-10px;margin-right:-10px}
+.cband .clab{grid-column:1 / 4;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
 .cband .clab .t{font-size:12.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#8fc4ee;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;line-height:1.2}
 .cband .clab .s{font-size:10.5px;color:rgba(255,255,255,.62);margin-top:3px;font-weight:600}
 .cband .k{color:#bcd9f2}
@@ -773,13 +778,14 @@ document.getElementById('latest').innerHTML=METRICS.map(m=>{
   const fmtd=s=>{const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(s||'');return m?`${m[3]}/${m[2]}/${m[1]}`:s;};
   const dt=cur.date?` · ${fmtd(cur.date)}`:'';
   const clab=`<div class="clab"><div class="t"><span class="cdot"></span>${L('co.cband.title')}</div><div class="s">${L('co.cband.sub')}${dt}</div></div>`;
-  cb.innerHTML=`<div class="latest">${clab}${item(L('co.m.mcap'),eur(cur.mcap))}${item('P/E',xx(cur.pe))}${item('P/BV',xx(cur.pbv))}${sp}${sp}</div>`;
+  cb.innerHTML=`<div class="latest">${clab}${item(L('co.m.mcap'),eur(cur.mcap))}${item('P/E',xx(cur.pe))}${item('P/BV',xx(cur.pbv))}</div>`;
 })();
 // «Ζώνη ένωσης» — διακριτικό background πίσω από τα κοινά μεγέθη (Κεφαλαιοποίηση/P·E/P·BV) και στα δύο blocks
 (function(){
   var head=document.querySelector('.phead.yr'), wash=document.getElementById('union-wash');
   if(!head||!wash) return;
   function place(){
+    if(window.innerWidth<=820){ wash.hidden=true; return; }
     var cells=head.querySelectorAll('.uni .cell');
     if(!cells.length){ wash.hidden=true; return; }
     var pr=head.getBoundingClientRect(), l=1e9,r=-1e9,t=1e9,b=-1e9;
