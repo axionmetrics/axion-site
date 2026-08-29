@@ -78,8 +78,9 @@
 
   .layout{display:flex;flex-direction:column;gap:20px;margin:20px 0 0}
   .a-year,.a-traj,.a-ratios{min-width:0}
-  .phead.yr{background:#223c66;display:block;padding:14px 18px 16px}
-   .phead.yr .yr-top{display:flex;align-items:center;justify-content:center;gap:9px;margin-bottom:13px}
+  .phead.yr{background:#223c66;display:block;padding:14px 18px 16px;position:relative}
+   .phead.yr .yr-top{display:flex;align-items:baseline;justify-content:center;gap:9px;margin-bottom:13px;flex-wrap:wrap}
+   .phead.yr .yr-top .ynote{font-size:13px;font-weight:600;color:rgba(255,255,255,.68);letter-spacing:.01em}
    .phead.yr .yr-top h2{font-size:23px;letter-spacing:.05em}
   /* σελίδα 6μήνου: το block μεγεθών παίρνει το χρώμα «Πετρόλ» (το Εξάμηνο toggle το χρωματίζει το chrome.css σε όλες τις σελίδες) */
   body.am-view-interim .phead.yr{background:#0f6f6a}
@@ -179,8 +180,8 @@
   .holder .ht{font-size:11px;color:var(--faint)}
   .holder .hp{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--ink)}
 
-  .yr-note{display:flex;align-items:center;justify-content:center;gap:6px;font-size:11px;font-weight:600;color:rgba(255,255,255,.78);margin:5px 0 12px;letter-spacing:.01em}
-  .yr-note::before{content:"";width:6px;height:6px;border-radius:50%;background:#7fc99a;flex:none;box-shadow:0 0 0 3px rgba(127,201,154,.18)}
+  .union-wash{position:absolute;pointer-events:none;z-index:0;background:rgba(143,196,238,.13);border-radius:12px}
+  .phead.yr .latest{position:relative;z-index:1}
   .latest{display:flex;gap:8px}
   .latest .metric-item{flex:1;min-width:0;text-align:center;display:flex;flex-direction:column}
   .latest .k{font-size:9.5px;color:rgba(255,255,255,.72);font-weight:600;margin-bottom:5px;line-height:1.2;text-transform:uppercase;letter-spacing:.04em}
@@ -366,9 +367,9 @@
 
  
 .cband{background:linear-gradient(180deg,rgba(47,128,194,.16),rgba(47,128,194,.05));border-radius:11px;padding:10px 8px 11px;margin-top:12px;border:1px solid rgba(255,255,255,.10)}
-.cdiv{display:flex;align-items:center;gap:8px;margin:0 0 8px}
-.cdiv .ln{flex:1;height:1px;background:rgba(255,255,255,.14)}
-.cdiv .ct{font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;color:#8fc4ee;display:flex;align-items:center}
+.cband .clab{flex:3;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.cband .clab .t{font-size:12.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#8fc4ee;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;line-height:1.2}
+.cband .clab .s{font-size:10.5px;color:rgba(255,255,255,.62);margin-top:3px;font-weight:600}
 .cband .k{color:#bcd9f2}
 .cband .cell{background:#2f80c2;border:1px solid #3f92d6}
 .cband .v{color:#fff}.cband .v small{color:rgba(255,255,255,.72)}
@@ -376,11 +377,10 @@
 .cdot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#f4c24e;margin-right:7px;animation:cping 1.8s ease-out infinite}
 @keyframes cping{0%{box-shadow:0 0 0 0 rgba(244,194,78,.7)}70%,100%{box-shadow:0 0 0 8px rgba(244,194,78,0)}}
 @media (prefers-reduced-motion:reduce){.cdot{animation:none}}
-/* μπάρα «Τρέχον»: σε στενές οθόνες ο τίτλος αναδιπλώνεται αντί να κόβεται */
+/* μπάρα «Τρέχον»: σε στενές οθόνες η ετικέτα μικραίνει για να μη σπρώχνει τα κελιά */
 @media (max-width:480px){
- .cband .cdiv{flex-wrap:wrap;justify-content:center}
- .cband .cdiv .ln{display:none}
- .cband .cdiv .ct{white-space:normal;text-align:center;justify-content:center;flex-wrap:wrap;line-height:1.35;font-size:11px}
+ .cband .clab .t{font-size:11px;line-height:1.3}
+ .cband .clab .s{font-size:9.5px}
 }
 </style>
 <link rel="stylesheet" href="../assets/chrome.css">
@@ -439,7 +439,7 @@
 
     <div class="a-year">
       <div class="panel">
-        <div class="phead yr"><div class="yr-top"><i class="ti ti-calendar-stats"></i><h2 id="yr-h">2025</h2></div><div class="yr-note" id="yr-note" hidden></div><div class="latest" id="latest"></div><div class="cband" id="current-band"></div></div>
+        <div class="phead yr"><div class="union-wash" id="union-wash" hidden></div><div class="yr-top"><h2 id="yr-h">2025</h2><span class="ynote" id="yr-note" hidden></span></div><div class="latest" id="latest"></div><div class="cband" id="current-band"></div></div>
         <div class="pbody year-body">
           <div class="year-top">
             <div class="panel sub">
@@ -553,7 +553,8 @@ AX_I18N.add({
  'co.msub.total_debt':{el:'σύνολο χρέους', en:'total debt'},
  'co.msub.net_debt':{el:'χρέος μείον ταμειακά', en:'debt minus cash'},
  // current band
- 'co.cband.title':{el:'Τρέχοντα Μεγέθη (τιμή κλεισίματος', en:'Current figures (closing price'},
+ 'co.cband.title':{el:'Τρέχοντα Μεγέθη', en:'Current figures'},
+ 'co.cband.sub':{el:'τιμή κλεισίματος', en:'closing price'},
  // FAM / event families
  'co.fam.capital':{el:'Μετ.Κεφαλαίου', en:'Capital'},
  'co.fam.div':{el:'Χρημ.Διανομές', en:'Distributions'},
@@ -657,8 +658,8 @@ const NA_RATIO  = new Set(['ebitdam','evebitda']);
 if(IS_BANK){var _ebl=document.getElementById('eb-leg'); if(_ebl)_ebl.innerHTML='<i style="background:#3f9e6a"></i>'+L('co.leg.ppi');}  // τράπεζες: 2η γραμμή = Κέρδη προ προβλέψεων (PPI) αντί EBITDA
 const METRICS=[
   {key:'revenue',label:L('co.m.revenue'),sub:L('co.msub.revenue'),unit:'eur',goodUp:true},
-  {key:'net_profit',label:L('co.m.net_profit'),sub:L('co.msub.net_profit'),unit:'eur',goodUp:true},
   {key:'ebitda',label:L('co.m.ebitda'),sub:L('co.msub.ebitda'),unit:'eur',goodUp:true},
+  {key:'net_profit',label:L('co.m.net_profit'),sub:L('co.msub.net_profit'),unit:'eur',goodUp:true},
   {key:'mcap',label:L('co.m.mcap'),sub:L('co.msub.mcap'),unit:'eur',goodUp:null},
  {key:'pe',label:L('co.m.pe'),sub:L('co.msub.pe'),unit:'x',goodUp:null},
   {key:'pbv',label:L('co.m.pbv'),sub:L('co.msub.pbv'),unit:'x',goodUp:null},
@@ -714,7 +715,7 @@ document.getElementById('co-sector').textContent=company.sector;
   var blabel=L(AXBASIS==='interim'?'co.basis.interim':'co.basis.annual');
   var yh=document.getElementById('yr-h'); if(yh) yh.textContent=(per?(blabel+' '+per):blabel);
   var yn=document.getElementById('yr-note');
-  if(yn&&per){ yn.textContent=L('co.latest.note'); yn.hidden=false; }
+  if(yn&&per){ yn.textContent='('+L('co.latest.note')+')'; yn.hidden=false; }
 })();
 (function(){
   // ΕΝΙΑΙΟ «Εκτός κάλυψης» — frozen (UPDATED=NO): ΕΝΑ badge (#co-status) + ΜΙΑ υποσημείωση (#co-corp-banner)
@@ -758,7 +759,8 @@ document.getElementById('latest').innerHTML=METRICS.map(m=>{
   const v=arr[li];
   const label = bankPPI ? L('co.m.ppi') : m.label;
   const val=(IS_BANK&&NA_METRIC.has(m.key)&&!bankPPI)?`<span class="na-bank">${L('co.na.banks')}</span>`:(m.unit==='eur'?(v==null?'—':`${fMil(v)}<small>${EURSUF()}</small>`):fX(v));
-  return `<div class="metric-item"><div class="k">${label}</div><div class="cell"><div class="v">${val}</div></div></div>`;
+  const uni=(m.key==='mcap'||m.key==='pe'||m.key==='pbv')?' uni':'';
+  return `<div class="metric-item${uni}"><div class="k">${label}</div><div class="cell"><div class="v">${val}</div></div></div>`;
 }).join('');
 (function(){
   const cb=document.getElementById('current-band'); if(!cb) return;
@@ -766,12 +768,32 @@ document.getElementById('latest').innerHTML=METRICS.map(m=>{
   if(!cur||(cur.mcap==null&&cur.pe==null&&cur.pbv==null)){ cb.style.display='none'; return; }
   const eur=v=>v==null?'—':`${fMil(v)}<small>${EURSUF()}</small>`;
   const xx=v=>(v==null||isNaN(v))?'—':fX(v);
-  const item=(k,val)=>`<div class="metric-item"><div class="k">${k}</div><div class="cell"><div class="v">${val}</div></div></div>`;
+  const item=(k,val)=>`<div class="metric-item uni"><div class="k">${k}</div><div class="cell"><div class="v">${val}</div></div></div>`;
   const sp='<div class="spacer"></div>';
   const fmtd=s=>{const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(s||'');return m?`${m[3]}/${m[2]}/${m[1]}`:s;};
   const dt=cur.date?` · ${fmtd(cur.date)}`:'';
-  cb.innerHTML=`<div class="cdiv"><span class="ln"></span><span class="ct"><span class="cdot"></span>${L('co.cband.title')}${dt})</span><span class="ln"></span></div>`+
-   `<div class="latest">${sp}${sp}${sp}${item(L('co.m.mcap'),eur(cur.mcap))}${item('P/E',xx(cur.pe))}${item('P/BV',xx(cur.pbv))}${sp}${sp}</div>`;
+  const clab=`<div class="clab"><div class="t"><span class="cdot"></span>${L('co.cband.title')}</div><div class="s">${L('co.cband.sub')}${dt}</div></div>`;
+  cb.innerHTML=`<div class="latest">${clab}${item(L('co.m.mcap'),eur(cur.mcap))}${item('P/E',xx(cur.pe))}${item('P/BV',xx(cur.pbv))}${sp}${sp}</div>`;
+})();
+// «Ζώνη ένωσης» — διακριτικό background πίσω από τα κοινά μεγέθη (Κεφαλαιοποίηση/P·E/P·BV) και στα δύο blocks
+(function(){
+  var head=document.querySelector('.phead.yr'), wash=document.getElementById('union-wash');
+  if(!head||!wash) return;
+  function place(){
+    var cells=head.querySelectorAll('.uni .cell');
+    if(!cells.length){ wash.hidden=true; return; }
+    var pr=head.getBoundingClientRect(), l=1e9,r=-1e9,t=1e9,b=-1e9;
+    cells.forEach(function(c){var q=c.getBoundingClientRect();l=Math.min(l,q.left);r=Math.max(r,q.right);t=Math.min(t,q.top);b=Math.max(b,q.bottom);});
+    var pad=6;
+    wash.style.left=(l-pr.left-pad)+'px';
+    wash.style.top=(t-pr.top-pad)+'px';
+    wash.style.width=(r-l+pad*2)+'px';
+    wash.style.height=(b-t+pad*2)+'px';
+    wash.hidden=false;
+  }
+  window.addEventListener('load',function(){setTimeout(place,60);});
+  window.addEventListener('resize',place);
+  setTimeout(place,120);
 })();
 
 const FAM={
