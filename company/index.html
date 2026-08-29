@@ -1094,7 +1094,8 @@ function spark(series){
   const L=pts[pts.length-1];
   return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><polyline points="${d}" fill="none" stroke="#2f80c2" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><circle cx="${L[0].toFixed(1)}" cy="${L[1].toFixed(1)}" r="2.4" fill="#2f80c2"/></svg>`;
 }
-const YEARS=company.years;
+const _RLI=(company.latest&&company.latest.idx!=null)?company.latest.idx:company.years.length-1;
+const YEARS=company.years.slice(0,_RLI+1);   // πίνακας δεικτών: μόνο πραγματικά έτη (κόψε την κενή στήλη «μόνο-γεγονότων» CURRENT_YEAR)
 const ratiosEl=document.getElementById('ratios');
 (function(){var S=['roa','roe','roic','gm','nm','ebitdam','current','quick','cash','de','icov','dio','atr','etr','eps','pe','evebitda','dps','bvps','pbv','payout','dy','cogs','admin','selling','equityr'],i=0;RATIOS.forEach(function(cat){cat.items.forEach(function(it){it.slug=S[i];var r=AX&&AX.ratios&&AX.ratios[S[i]];if(r){it.series=r.series;it.sector=r.sector;}i++;});});})();
 const CATEN={'Κερδοφορία':'Profitability','Ρευστότητα':'Liquidity','Φερεγγυότητα':'Solvency','Δραστηριότητα':'Operation','Αποτίμηση':'Value','Λειτουργικού κόστους':'Operating Cost','Χρηματοοικονομικής διάρθρωσης':'Financial Structure'};
@@ -1103,9 +1104,10 @@ ratiosEl.innerHTML=RATIOS.map((c,ci)=>{
     const nm=EN()?it.en:it.label, nm2=EN()?it.label:it.en, dsc=EN()?(it.den||it.desc):it.desc;
     let body;
     if(IS_BANK&&NA_RATIO.has(it.slug)){
-      body=`<td class="c-na" colspan="${it.series.length+1}">${L('co.na.banks')}</td>`;
+      body=`<td class="c-na" colspan="${YEARS.length+1}">${L('co.na.banks')}</td>`;
     } else {
-      const yr=it.series.map((v,i)=>`<td class="c-val${i===it.series.length-1?' last':''}">${fmtU(v,it.unit)}</td>`).join('');
+      const _ser=it.series.slice(0,YEARS.length);   // ίδιο εύρος με τις κεφαλίδες ετών (χωρίς την κενή στήλη 2026)
+      const yr=_ser.map((v,i)=>`<td class="c-val${i===_ser.length-1?' last':''}">${fmtU(v,it.unit)}</td>`).join('');
       body=`${yr}<td class="c-sec">${fmtU(it.sector,it.unit)}</td>`;
     }
     return `<tr><td class="c-name">${nm}<span class="en">(${nm2})</span></td><td class="c-desc">${dsc}</td>${body}</tr>`;
