@@ -141,6 +141,14 @@
 .me-ev .pill{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px}
 .me-ev .ds{font-size:12px;color:#4a5666;margin-top:3px;line-height:1.4}
 .me-ev .sc{flex:none;font-size:10.5px;color:#8a95a6;padding-top:2px;text-align:right;max-width:110px}
+.me-pager{display:flex;align-items:center;justify-content:center;gap:14px;margin:22px 0 4px;flex-wrap:wrap}
+.me-pager:empty{display:none}
+.me-pg-btn{font-family:Inter,sans-serif;font-size:12.5px;font-weight:700;color:var(--phead);background:#fff;border:1px solid var(--line);border-radius:9px;padding:8px 15px;cursor:pointer;transition:.12s}
+.me-pg-btn:hover:not(:disabled){background:#f4f8fd;border-color:#cfe0f6}
+.me-pg-btn:disabled{opacity:.4;cursor:default}
+.me-pg-info{font-size:12.5px;color:var(--muted);font-family:Inter,sans-serif}
+.me-pg-info b{color:var(--text)}
+.me-pg-range{color:#98a2b3;font-family:'Ubuntu Mono',monospace;font-size:11.5px}
 .me-empty{font-size:12.5px;color:var(--muted);padding:20px 0}
 .me-note{font-size:11.5px;color:var(--muted);margin-top:16px;line-height:1.5}
 @media(max-width:560px){.me-ev .sc{display:none}}
@@ -169,6 +177,7 @@
  </div>
  <div class="me-cnt" id="meCnt"></div>
  <div class="me-feed" id="meFeed"></div>
+ <div class="me-pager" id="mePager"></div>
 </div>
 <script>
 AX_I18N.add({
@@ -181,6 +190,9 @@ AX_I18N.add({
  'me.events':{el:'γεγονότα', en:'events'},
  'me.newestfirst':{el:'χρονολογικά, νεότερα πρώτα', en:'chronological, newest first'},
  'me.empty':{el:'Κανένα γεγονός δεν ταιριάζει με τα φίλτρα.', en:'No event matches the filters.'},
+ 'me.page':{el:'Σελίδα', en:'Page'},
+ 'me.prev':{el:'Προηγούμενη', en:'Previous'},
+ 'me.next':{el:'Επόμενη', en:'Next'},
  'me.t.amk':{el:'Μετ.Κεφαλαίου', en:'Capital'},
  'me.t.div':{el:'Χρημ.Διανομές', en:'Distributions'},
  'me.t.listing':{el:'Εισαγωγές/Διαγραφές', en:'Listings/Delistings'},
@@ -201,13 +213,15 @@ const MON_EL=['Ιαν','Φεβ','Μαρ','Απρ','Μαι','Ιουν','Ιουλ'
 const MON_EN=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const norm=s=>s.toUpperCase().replace(/[ΆΑ]/g,'Α').replace(/[ΈΕ]/g,'Ε').replace(/[ΉΗ]/g,'Η').replace(/[ΊΪΙ]/g,'Ι').replace(/[ΌΟ]/g,'Ο').replace(/[ΎΫΥ]/g,'Υ').replace(/[ΏΩ]/g,'Ω');
 let active=new Set(Object.keys(TYPES)), fSec='', fYear='', fQ='';
+let mePage=1; const ME_PER=60;
+function resetRender(){ mePage=1; render(); }
 
 const chipsEl=document.getElementById('meChips');
 function buildChips(){
  chipsEl.innerHTML=Object.entries(TYPES).map(([k,v])=>`<span class="me-chip${active.has(k)?'':' off'}" data-t="${k}"><span class="dt" style="background:${v.bar}"></span>${L(v.key)}</span>`).join('');
 }
 buildChips();
-chipsEl.addEventListener('click',e=>{const c=e.target.closest('.me-chip');if(!c)return;const k=c.dataset.t;if(active.has(k)&&active.size>0){active.delete(k);c.classList.add('off');}else{active.add(k);c.classList.remove('off');}render();});
+chipsEl.addEventListener('click',e=>{const c=e.target.closest('.me-chip');if(!c)return;const k=c.dataset.t;if(active.has(k)&&active.size>0){active.delete(k);c.classList.add('off');}else{active.add(k);c.classList.remove('off');}resetRender();});
 
 const secSel=document.getElementById('meSector');
 const SECS=[...new Set(EVENTS.map(e=>e.s))].filter(s=>s).sort((a,b)=>a.localeCompare(b,'el'));
@@ -218,9 +232,9 @@ function buildSectorOptions(){
  secSel.value=fSec;
 }
 buildSectorOptions();
-secSel.addEventListener('change',e=>{fSec=e.target.value;render();});
-document.getElementById('meYear').addEventListener('change',e=>{fYear=e.target.value;render();});
-document.getElementById('meSearch').addEventListener('input',e=>{fQ=norm(e.target.value.trim());render();});
+secSel.addEventListener('change',e=>{fSec=e.target.value;resetRender();});
+document.getElementById('meYear').addEventListener('change',e=>{fYear=e.target.value;resetRender();});
+document.getElementById('meSearch').addEventListener('input',e=>{fQ=norm(e.target.value.trim());resetRender();});
 
 function render(){
  const MON=curLang()==='en'?MON_EN:MON_EL;
@@ -228,16 +242,35 @@ function render(){
    .sort((a,b)=>b.d.localeCompare(a.d));
  document.getElementById('meCnt').innerHTML=`<b>${list.length}</b> ${L('me.events')} · ${L('me.newestfirst')}`;
  const feed=document.getElementById('meFeed');
- if(!list.length){feed.innerHTML=`<div class="me-empty">${L('me.empty')}</div>`;return;}
+ const pager=document.getElementById('mePager');
+ if(!list.length){feed.innerHTML=`<div class="me-empty">${L('me.empty')}</div>`;if(pager)pager.innerHTML='';return;}
+ const pages=Math.max(1,Math.ceil(list.length/ME_PER));
+ if(mePage>pages)mePage=pages; if(mePage<1)mePage=1;
+ const start=(mePage-1)*ME_PER, pageList=list.slice(start,start+ME_PER);
  let html='', curY='';
- list.forEach(e=>{
+ pageList.forEach(e=>{
   const y=e.d.slice(0,4);
   if(y!==curY){html+=`<div class="me-yr">${y}</div>`;curY=y;}
   const dd=+e.d.slice(8,10), mm=MON[+e.d.slice(5,7)-1], T=TYPES[e.t];
   html+=`<div class="me-ev"><div class="dc"><b>${dd}</b><span>${mm}</span></div><div class="bar" style="background:${T.bar}"></div><div class="bd"><div class="l1"><span class="co">${e.co}</span><span class="tk">${e.tk}</span><span class="pill" style="color:${T.tx};background:${T.bg}">${L(T.key)}</span></div><div class="ds">${e.x}</div></div><div class="sc">${SEC(e.s)}</div></div>`;
  });
  feed.innerHTML=html;
+ renderPager(pages,list.length);
 }
+function renderPager(pages,total){
+ const pager=document.getElementById('mePager'); if(!pager) return;
+ if(pages<=1){ pager.innerHTML=''; return; }
+ const from=(mePage-1)*ME_PER+1, to=Math.min(mePage*ME_PER,total);
+ pager.innerHTML=`<button class="me-pg-btn" ${mePage<=1?'disabled':''} data-pg="prev">‹ ${L('me.prev')}</button>`
+  +`<span class="me-pg-info">${L('me.page')} <b>${mePage}</b> / ${pages} <span class="me-pg-range">(${from}–${to})</span></span>`
+  +`<button class="me-pg-btn" ${mePage>=pages?'disabled':''} data-pg="next">${L('me.next')} ›</button>`;
+}
+document.getElementById('mePager').addEventListener('click',function(e){
+ const b=e.target.closest('.me-pg-btn'); if(!b||b.disabled) return;
+ mePage += (b.dataset.pg==='next'?1:-1);
+ render();
+ const bar=document.getElementById('meCnt'); if(bar) bar.scrollIntoView({behavior:'smooth',block:'start'});
+});
 render();
 document.addEventListener('axion:langchange',function(){ buildChips(); buildSectorOptions(); render(); });
 </script>

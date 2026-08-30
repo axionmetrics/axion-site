@@ -369,7 +369,7 @@ function table(){
    <td class="val ${cls}">${fv(m,r[m.k])}</td></tr>`;
  }).join('');
  const tb=document.getElementById('tbody');
- tb.innerHTML=body+naBlock(notann)+frozenBlock();
+ tb.innerHTML=body+naBlock(notann);
  tb.classList.toggle('na-collapsed', notann.length>15);
 }
 
