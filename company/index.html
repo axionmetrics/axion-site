@@ -64,6 +64,8 @@
   .co-namerow{display:flex;align-items:baseline;flex-wrap:wrap;gap:12px}
   .mast .tbanner{margin-top:18px;margin-bottom:0}
   .tbanner[hidden]{display:none!important}
+  .tbadge.t-caution{background:#eef4fb;color:#3f6390;border-color:#d3e4f5}
+  .tbanner.t-caution{background:#f5f9fd;color:#3f6390;border-color:#dbe8f7}
   @media(max-width:640px){
     .mast-bar{flex-wrap:wrap;gap:14px}
     .co-logo-top{border-right:none;padding-right:0;width:auto;max-width:58%}
@@ -581,6 +583,9 @@ AX_I18N.add({
  'co.st.sus.since':{el:' από ', en:' since '},
  'co.st.sus.detail':{el:'Τα εμφανιζόμενα στοιχεία αφορούν την τελευταία διαθέσιμη περίοδο.', en:'The figures shown are for the last available period.'},
  'co.entity.badge':{el:'Εκτός κάλυψης', en:'Out of coverage'},
+ 'co.echange.badge':{el:'Αλλαγή οντότητας', en:'Entity change'},
+ 'co.echange.text':{el:'Από το {year} η δομή της εταιρείας άλλαξε ουσιωδώς — τα ιστορικά μεγέθη δεν είναι απευθείας συγκρίσιμα με την τρέχουσα οντότητα.', en:'From {year} the company\'s structure changed materially — historical figures are not directly comparable with the current entity.'},
+ 'co.echange.mark':{el:'νέα οντότητα', en:'new entity'},
  // interim banner
  'co.h1.pill':{el:'εξάμηνα', en:'semesters'},
  'co.h1.of':{el:'από 2 εξάμηνα', en:'of 2 semesters'},
@@ -737,14 +742,30 @@ document.getElementById('co-sector').textContent=company.sector;
       ban=document.getElementById('co-corp-banner'),
       oldban=document.getElementById('co-banner');
   if(oldban) oldban.hidden=true;
-  if(!frozen){ if(pill)pill.hidden=true; if(ban)ban.hidden=true; return; }
-  var e=(AX&&AX.enote)||null, txt=e?(e[curLang()]||e.el||''):'';
-  var icon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="7" y="6" width="3.5" height="12" rx="1"/><rect x="13.5" y="6" width="3.5" height="12" rx="1"/></svg>';
-  var lab=L('co.entity.badge');
-  if(pill){ pill.className='tbadge t-frozen'; pill.innerHTML=icon+'<span>'+lab+'</span>'; pill.hidden=false; }
-  if(ban){ ban.className='tbanner t-frozen';
-    ban.innerHTML=icon+'<span><b>'+lab+'</b>'+(txt?(' · <span class="thin">'+txt+'</span>'):'')+'</span>';
-    ban.hidden=false; }
+  var ech=(AX&&AX.echange)||null;
+  if(frozen){
+    var e=(AX&&AX.enote)||null, txt=e?(e[curLang()]||e.el||''):'';
+    var icon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="7" y="6" width="3.5" height="12" rx="1"/><rect x="13.5" y="6" width="3.5" height="12" rx="1"/></svg>';
+    var lab=L('co.entity.badge');
+    if(pill){ pill.className='tbadge t-frozen'; pill.innerHTML=icon+'<span>'+lab+'</span>'; pill.hidden=false; }
+    if(ban){ ban.className='tbanner t-frozen';
+      ban.innerHTML=icon+'<span><b>'+lab+'</b>'+(txt?(' · <span class="thin">'+txt+'</span>'):'')+'</span>';
+      ban.hidden=false; }
+    return;
+  }
+  // Διακριτική «Αλλαγή οντότητας» — συγκρισιμότητα (ΟΧΙ «Εκτός κάλυψης»): αμπέρ, όχι δραματικό
+  if(ech && ech.year){
+    var det=(ech[curLang()]||ech.el||'');
+    var head=L('co.echange.text').replace('{year}', ech.year);
+    var lab2=L('co.echange.badge');
+    var ic2='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M12 4l9 16H3z"/><path d="M12 10v5" stroke-linecap="round"/><circle cx="12" cy="18" r=".6" fill="currentColor" stroke="none"/></svg>';
+    if(pill){ pill.className='tbadge t-caution'; pill.innerHTML=ic2+'<span>'+lab2+'</span>'; pill.hidden=false; }
+    if(ban){ ban.className='tbanner t-caution';
+      ban.innerHTML=ic2+'<span><b>'+head+'</b>'+(det?(' <span class="thin">'+det+'</span>'):'')+'</span>';
+      ban.hidden=false; }
+    return;
+  }
+  if(pill)pill.hidden=true; if(ban)ban.hidden=true;
 })();
 
 // «Ελλιπές 6μηνο» — σήμανση όταν <2 εξάμηνα (μόνο στην προβολή 6μήνου)
@@ -940,6 +961,18 @@ function draw(){
   // axis baseline + year numbers close to axis
   svg.appendChild(el('line',{x1:padL,y1:zeroY,x2:W-padR,y2:zeroY,stroke:(yMin<0?'#b8c6d8':'#cfdcea'),'stroke-width':(yMin<0?1.4:1)}));
   company.years.slice(s,s+WIN).forEach((yr,li)=>{ const t=el('text',{x:xOf(li),y:yearY,'text-anchor':'middle','font-family':"'Ubuntu Mono'",'font-size':11,fill:'#6b8199'}); t.textContent=yr; svg.appendChild(t); });
+  // «Αλλαγή οντότητας» — διακριτικό κάθετο σημάδι στο έτος τομής (τα αριστερά αφορούν την παλιά οντότητα)
+  (function(){
+    var ech=(AX&&AX.echange); if(!ech||!ech.year) return;
+    var yrs=company.years.slice(s,s+WIN); var mi=yrs.indexOf(ech.year), mx=null;
+    if(mi>0) mx=(xOf(mi-1)+xOf(mi))/2;                       // ανάμεσα στο προηγ. έτος και στο έτος αλλαγής
+    else if(mi===0) mx=xOf(0)-INSET*0.55;                    // αρχή παραθύρου
+    else if(ech.year>yrs[yrs.length-1]) mx=(xOf(WIN-1)+(W-padR))/2;  // πέρα από το παράθυρο → δεξί άκρο
+    else return;                                             // πριν το παράθυρο → χωρίς σημάδι
+    var CA='#c8862a';
+    svg.appendChild(el('line',{x1:mx,y1:plotTop-2,x2:mx,y2:yearY-9,stroke:CA,'stroke-width':1.3,'stroke-dasharray':'3 3',opacity:.7}));
+    var tg=el('text',{x:mx,y:plotTop-6,'text-anchor':'middle','font-family':"'Open Sans'",'font-size':8.5,'font-weight':700,fill:CA,opacity:.95}); tg.textContent='▸ '+L('co.echange.mark'); svg.appendChild(tg);
+  })();
   // έντονη διαχωριστική γραμμή ανάμεσα στο γράφημα/έτη και στον πίνακα μεγεθών
   svg.appendChild(el('line',{x1:0,y1:ROWS_TOP-7,x2:W,y2:ROWS_TOP-7,stroke:'#8299b3','stroke-width':1.8}));
 
