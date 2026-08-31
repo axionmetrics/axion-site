@@ -18,14 +18,16 @@
  .site-nav .bar2 a.cur{background:#faf4e2;color:#8a6a12} .site-nav .bar2::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:#e6be5b;transform-origin:center;animation:amRail .5s ease both} .site-nav .bar2 a{animation:amItem .45s ease both} @keyframes amRail{from{transform:scaleX(.15);opacity:0}to{transform:scaleX(1);opacity:1}} @keyframes amItem{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:translateY(0)}} @keyframes amTab{from{transform:translateY(2px)}to{transform:translateY(0)}} @media(prefers-reduced-motion:reduce){.site-nav .bar2::before,.site-nav .bar2 a,.tabs li.on{animation:none}}
  @media(max-width:820px){ .site-nav .bar1{padding:0 16px;display:flex;flex-wrap:wrap;gap:14px} .site-nav .bar2{padding:0 16px} .site-nav .lname{display:none} }
  .site-ft{background:#0f1f38;color:#aebfd8;margin-top:64px}
- .site-ft .in{max-width:1180px;margin:0 auto;padding:36px 22px 24px;display:flex;justify-content:space-between;gap:30px 46px;flex-wrap:wrap}
- .site-ft .fbrand{max-width:300px}
+ .site-ft .in{max-width:1180px;margin:0 auto;padding:36px 22px 24px;display:grid;grid-template-columns:minmax(190px,290px) repeat(4,auto);gap:30px 34px;justify-content:space-between;align-items:start}
+ .site-ft .fbrand{max-width:290px}
  .site-ft .flogo{font-family:Inter,sans-serif;font-weight:900;font-size:20px;color:#fff;letter-spacing:-.03em}
  .site-ft .flogo i{font-style:normal;color:#57a5df}
  .site-ft .ftag{font-size:12px;color:#7d92b6;margin-top:8px;line-height:1.6}
  .site-ft .fcol h4{font-family:Inter,sans-serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#6f86ac;font-weight:700;margin:0 0 11px}
- .site-ft .fcol a{display:block;color:#aebfd8;text-decoration:none;font-size:13px;padding:4px 0}
+ .site-ft .fcol a{display:block;color:#aebfd8;text-decoration:none;font-size:13px;padding:4px 0;white-space:nowrap}
  .site-ft .fcol a:hover{color:#fff}
+ @media(max-width:1080px){ .site-ft .in{grid-template-columns:repeat(4,auto)} .site-ft .fbrand{grid-column:1/-1;max-width:560px} }
+ @media(max-width:760px){ .site-ft .in{grid-template-columns:repeat(2,auto);justify-content:start;gap:26px 44px} }
  .site-ft .fbot{border-top:1px solid #1e3358;font-size:11.5px;color:#6f86ac;text-align:center;max-width:1180px;margin:0 auto;padding:14px 22px 22px}
 
  /* ===== basis toggle (Ετήσια / Εξάμηνο) ===== */

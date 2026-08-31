@@ -8,12 +8,12 @@
  const NAV=[
    {g:{el:'Εταιρείες',en:'Companies'},items:[
      [{el:'Σελίδα εταιρείας',en:'Company page'},'../company/'],
-     [{el:'Σύγκριση εταιρειών',en:'Compare companies'},'../compare/']]},
+     [{el:'Σύγκριση εταιρειών',en:'Compare companies'},'../compare/'],
+     [{el:'Κατατάξεις / League tables',en:'Rankings / League tables'},'../rankings/']]},
    {g:{el:'Κλάδοι',en:'Sectors'},items:[
      [{el:'Ευρετήριο κλάδων',en:'Sector index'},'../sectors/'],
      [{el:'Σελίδα κλάδου',en:'Sector page'},'../sector/']]},
    {g:{el:'Εργαλεία',en:'Tools'},items:[
-     [{el:'Κατατάξεις / League tables',en:'Rankings / League tables'},'../rankings/'],
      [{el:'Αναθεωρήσεις δεικτών',en:'Index reviews'},'../index-reviews/'],
      [{el:'Γεγονότα αγοράς',en:'Market events'},'../market-events/']]},
    {g:{el:'Σχετικά',en:'About'},items:[
@@ -27,12 +27,6 @@
  var FT={
    tag:{el:'Θεμελιώδης ανάλυση για εισηγμένες του Χρηματιστηρίου Αθηνών — δείκτες, σύγκριση κλάδου, ποιότητα & δυναμική.',
         en:'Fundamental analysis for companies listed on the Athens Stock Exchange — ratios, sector comparison, quality & momentum.'},
-   c1:{el:'Κλάδοι',en:'Sectors'}, c2:{el:'Εργαλεία',en:'Tools'}, c3:{el:'Πληροφορίες',en:'Information'},
-   l_sidx:{el:'Ευρετήριο κλάδων',en:'Sector index'}, l_sec:{el:'Σελίδα κλάδου',en:'Sector page'},
-   l_cmp:{el:'Σύγκριση εταιρειών',en:'Compare companies'}, l_rank:{el:'Κατατάξεις',en:'Rankings'},
-   l_rev:{el:'Αναθεωρήσεις δεικτών',en:'Index reviews'}, l_ev:{el:'Γεγονότα αγοράς',en:'Market events'},
-   l_meth:{el:'Μεθοδολογία & δείκτες',en:'Methodology & ratios'}, l_about:{el:'Περί',en:'About'},
-   l_terms:{el:'Όροι χρήσης',en:'Terms of use'},
    bot:{el:'Δεν αποτελεί επενδυτική συμβουλή',en:'Not investment advice'}
  };
  var BASIS={ annual:{el:'Ετήσια',en:'Annual'}, interim:{el:'Εξάμηνο',en:'Interim'},
@@ -42,11 +36,17 @@
  var NAVHTML="<nav class=\"site-nav\">\n <div class=\"bar1\"><a class=\"lock\" href=\"../\"><span class=\"am\">A<i>M</i></span><span class=\"lrule\"></span><span class=\"lname\">AXION<br>METRICS</span></a><ul class=\"tabs\" id=\"navtabs\"></ul><div class=\"am-right\"><div class=\"am-basis\" id=\"ambasis\"></div><button class=\"langtog\" data-langtog aria-label=\"Language\">EN</button></div></div>\n <div class=\"bar2\" id=\"navbar2\"></div>\n</nav>";
 
  function footerHTML(){
+   /* Οι στήλες παράγονται ΑΠΟ ΤΟΝ ΙΔΙΟ πίνακα NAV με το header — καμία χειροκίνητη λίστα,
+      άρα header και footer δεν μπορούν να ξεσυγχρονιστούν. */
+   var cols='';
+   for(var i=0;i<NAV.length;i++){
+     var g=NAV[i], links='';
+     for(var j=0;j<g.items.length;j++){ links+='<a href="'+g.items[j][1]+'">'+esc(L(g.items[j][0]))+'</a>'; }
+     cols+='<div class="fcol"><h4>'+esc(L(g.g))+'</h4>'+links+'</div>';
+   }
    return "<footer class=\"site-ft\"><div class=\"in\">"
      +"<div class=\"fbrand\"><div class=\"flogo\">AXION<i>METRICS</i></div><div class=\"ftag\">"+esc(L(FT.tag))+"</div></div>"
-     +"<div class=\"fcol\"><h4>"+esc(L(FT.c1))+"</h4><a href=\"../sectors/\">"+esc(L(FT.l_sidx))+"</a><a href=\"../sector/\">"+esc(L(FT.l_sec))+"</a><a href=\"../compare/\">"+esc(L(FT.l_cmp))+"</a></div>"
-     +"<div class=\"fcol\"><h4>"+esc(L(FT.c2))+"</h4><a href=\"../rankings/\">"+esc(L(FT.l_rank))+"</a><a href=\"../index-reviews/\">"+esc(L(FT.l_rev))+"</a><a href=\"../market-events/\">"+esc(L(FT.l_ev))+"</a></div>"
-     +"<div class=\"fcol\"><h4>"+esc(L(FT.c3))+"</h4><a href=\"../methodology/\">"+esc(L(FT.l_meth))+"</a><a href=\"../about/\">"+esc(L(FT.l_about))+"</a><a href=\"../terms/\">"+esc(L(FT.l_terms))+"</a></div>"
+     +cols
      +"</div><div class=\"fbot\">© 2026 Axion Metrics · "+esc(L(FT.bot))+" · <a href=\"mailto:info@axionmetrics.gr\" style=\"color:inherit\">info@axionmetrics.gr</a></div></footer>";
  }
 
