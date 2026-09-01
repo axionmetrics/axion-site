@@ -287,6 +287,8 @@
   .rtbl .c-name{text-align:left;font-weight:700;color:var(--ink);white-space:nowrap;font-size:14.5px;text-transform:uppercase}
   .rtbl .c-name .en{display:block;text-transform:none;font-size:11px;font-weight:400;color:var(--faint);letter-spacing:0;margin-top:2px;white-space:normal;max-width:230px}
   .rtbl .c-desc{text-align:left;font-size:12.5px;color:var(--muted);font-weight:400;line-height:1.4;min-width:150px;max-width:230px}
+  .rtbl .c-nt{cursor:help;border-bottom:1px dotted var(--faint)}
+  .rtbl .c-nt sup{font-size:9px;color:var(--gold);margin-left:1px}
   .rtbl .c-dir{text-align:left;font-size:11.5px;color:var(--muted);font-weight:400;line-height:1.4;white-space:nowrap}
   .rtbl .c-dir b{font-family:var(--disp);font-weight:700;color:var(--ink);letter-spacing:.02em}
   .rtbl .c-dir i{font-style:normal;font-weight:700;color:var(--ink);margin-left:3px}
@@ -683,7 +685,7 @@ document.addEventListener('axion:basischange',function(){location.reload();});
 const company = AX ? {ticker:AX.tk,name:AX.name,euronext_name:(AX.en||''),sector:AX.s,latest:AX.latest,years:AX.years,metrics:AX.metrics,current:((window.AXION_CURRENT&&window.AXION_CURRENT[AX.tk])||AX.current||null)} : {ticker:'',name:'—',euronext_name:'',sector:'',latest:{period:'',type:''},years:[2020,2021,2022,2023,2024,2025],metrics:{revenue:[],net_profit:[],ebitda:[],pe:[],pbv:[],total_debt:[],net_debt:[]}};;
 const IS_BANK = !!(AX && AX.s==='Τράπεζες');   // banks: EBITDA-family δεν εφαρμόζεται
 const NA_METRIC = new Set(['ebitda']);
-const NA_RATIO  = new Set(['ebitdam','evebitda']);
+const NA_RATIO  = new Set(['ebitdam','evebitda','gm','cogs','selling']);
 if(IS_BANK){var _ebl=document.getElementById('eb-leg'); if(_ebl)_ebl.innerHTML='<i style="background:#3f9e6a"></i>'+L('co.leg.ppi');}  // τράπεζες: 2η γραμμή = Κέρδη προ προβλέψεων (PPI) αντί EBITDA
 const METRICS=[
   {key:'revenue',label:L('co.m.revenue'),sub:L('co.msub.revenue'),unit:'eur',goodUp:true},
@@ -1204,25 +1206,40 @@ const _RLI=(company.latest&&company.latest.idx!=null)?company.latest.idx:company
 const YEARS=company.years.slice(0,_RLI+1);   // πίνακας δεικτών: μόνο πραγματικά έτη (κόψε την κενή στήλη «μόνο-γεγονότων» CURRENT_YEAR)
 const ratiosEl=document.getElementById('ratios');
 (function(){var S=['roa','roe','roic','gm','nm','ebitdam','current','quick','cash','de','icov','dio','atr','etr','eps','pe','evebitda','dps','bvps','pbv','payout','dy','cogs','admin','selling','equityr'],i=0;RATIOS.forEach(function(cat){cat.items.forEach(function(it){it.slug=S[i];var r=AX&&AX.ratios&&AX.ratios[S[i]];if(r){it.series=r.series;it.sector=r.sector;}i++;});});})();
+// Τράπεζες: η γραμμή «Έξοδα διοίκησης/πωλήσεις» ΕΙΝΑΙ ο δείκτης κόστους/εσόδων
+// (RAW off21 σύνολο λειτ. εξόδων / off18 σύνολο λειτ. εσόδων) — αλλάζει μόνο η ετικέτα.
+const RATIO_BANK={admin:{
+  el:'Δείκτης κόστους / εσόδων', en:'Cost-to-Income Ratio',
+  desc:'Πόσο από κάθε 100 ευρώ εσόδων το τρώνε τα λειτουργικά έξοδα της τράπεζας.',
+  den:'How much of every 100 euros of income the bank\u2019s operating costs consume.',
+  dir:'lo'}};
 function dirCell(d){
   if(!d) return '<td class="c-dir"></td>';
   if(d==='dep') return `<td class="c-dir">${L('co.rt.pref')} <b>${L('co.rt.dep')}</b></td>`;
   const w=(d==='hi')?L('co.rt.hi'):L('co.rt.lo'), a=(d==='hi')?'\u2197':'\u2198';
   return `<td class="c-dir">${L('co.rt.pref')} <b>${w}</b><i>${a}</i></td>`;
 }
+// δείκτες με παρονομαστή τον κύκλο εργασιών — δέχονται υποσημείωση όταν το μέγεθος λείπει σκόπιμα
+const REV_DEP=new Set(['gm','nm','atr','etr','cogs','admin','selling']);
+const FIGN=((company.figNotes||{}).revenue)||{};
+const esc=t=>String(t).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 const CATEN={'Κερδοφορία':'Profitability','Ρευστότητα':'Liquidity','Φερεγγυότητα':'Solvency','Δραστηριότητα':'Operation','Αποτίμηση':'Value','Λειτουργικού κόστους':'Operating Cost','Χρηματοοικονομικής διάρθρωσης':'Financial Structure'};
 ratiosEl.innerHTML=RATIOS.map((c,ci)=>{
   const rows=c.items.map(it=>{
-    const nm=EN()?it.en:it.label, nm2=EN()?it.label:it.en, dsc=EN()?(it.den||it.desc):it.desc;
+    const bo = IS_BANK ? RATIO_BANK[it.slug] : null;
+    const nm = bo ? (EN()?bo.en:bo.el) : (EN()?it.en:it.label);
+    const nm2= bo ? (EN()?bo.el:bo.en) : (EN()?it.label:it.en);
+    const dsc= bo ? (EN()?bo.den:bo.desc) : (EN()?(it.den||it.desc):it.desc);
+    const drc= (IS_BANK&&NA_RATIO.has(it.slug)) ? null : (bo ? bo.dir : it.dir);
     let body;
     if(IS_BANK&&NA_RATIO.has(it.slug)){
       body=`<td class="c-na" colspan="${YEARS.length+1}">${L('co.na.banks')}</td>`;
     } else {
       const _ser=it.series.slice(0,YEARS.length);   // ίδιο εύρος με τις κεφαλίδες ετών (χωρίς την κενή στήλη 2026)
-      const yr=_ser.map((v,i)=>`<td class="c-val${i===_ser.length-1?' last':''}">${fmtU(v,it.unit)}</td>`).join('');
+      const yr=_ser.map((v,i)=>`<td class="c-val${i===_ser.length-1?' last':''}">${(v==null&&REV_DEP.has(it.slug)&&FIGN[String(YEARS[i])])?`<span class="c-nt" title="${esc(EN()?FIGN[String(YEARS[i])].en:FIGN[String(YEARS[i])].el)}">—<sup>*</sup></span>`:fmtU(v,it.unit)}</td>`).join('');
       body=`${yr}<td class="c-sec">${fmtU(it.sector,it.unit)}</td>`;
     }
-    return `<tr><td class="c-name">${nm}<span class="en">(${nm2})</span></td><td class="c-desc">${dsc}</td>${dirCell(it.dir)}${body}</tr>`;
+    return `<tr><td class="c-name">${nm}<span class="en">(${nm2})</span></td><td class="c-desc">${dsc}</td>${dirCell(drc)}${body}</tr>`;
   }).join('');
   const yhead=YEARS.map(y=>`<th class="y">${y}</th>`).join('');
   const cn=EN()?(CATEN[c.cat]||c.cat):c.cat, cn2=EN()?c.cat:(CATEN[c.cat]||'');
