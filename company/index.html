@@ -191,7 +191,7 @@
   .union-wash{position:absolute;pointer-events:none;z-index:0;background:rgba(143,196,238,.13);border-radius:12px}
   .lnote{position:relative;z-index:1;text-align:center;font-size:10px;font-weight:600;color:rgba(255,255,255,.5);letter-spacing:.02em;margin:9px 0 1px;line-height:1.3}
   .phead.yr .latest{position:relative;z-index:1}
-  .latest{display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
+  .latest{display:grid;grid-template-columns:repeat(9,1fr);gap:8px}
   .latest .metric-item{min-width:0;text-align:center;display:flex;flex-direction:column}
   .latest .k{font-size:9.5px;color:rgba(255,255,255,.72);font-weight:600;margin-bottom:5px;line-height:1.2;text-transform:uppercase;letter-spacing:.04em}
   .latest .cell{flex:1;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.20);border-radius:9px;padding:9px 6px;display:flex;flex-direction:column;justify-content:center}
@@ -536,7 +536,7 @@ AX_I18N.add({
  'co.ph.ratios':{el:'Δείκτες', en:'Ratios'},
  'co.ph.traj':{el:'Τροχιά μεγεθών', en:'Size trajectory'},
  'co.leg.rev':{el:'Τζίρος', en:'Revenue'},
- 'co.leg.ppi':{el:'Κέρδη προ προβλέψεων', en:'Pre-provision income'},
+ 'co.leg.ppi':{el:'PPI', en:'PPI'},
  'co.unit.meur2':{el:'(εκατ. €)', en:'(€M)'},
  'co.subs.ph':{el:'Αναζήτηση θυγατρικής ή χώρας…', en:'Search subsidiary or country…'},
  'co.ratios.note':{el:'<strong>Διάμεσος κλάδου:</strong> η σύγκριση γίνεται με τη διάμεση («τυπική») τιμή των εταιρειών του κλάδου, όχι με μέσο όρο — έτσι ακραίες τιμές λίγων εταιρειών δεν αλλοιώνουν τη σύγκριση. Οι τράπεζες εξετάζονται χωριστά.', en:'<strong>Sector median:</strong> the comparison uses the median (“typical”) value of the sector’s companies, not the average — so extreme values from a few companies do not distort the comparison. Banks are examined separately.'},
@@ -550,11 +550,15 @@ AX_I18N.add({
  'co.m.revenue':{el:'Τζίρος', en:'Revenue'},
  'co.m.net_profit':{el:'Καθαρά κέρδη', en:'Net profit'},
  'co.m.ebitda':{el:'EBITDA', en:'EBITDA'},
- 'co.m.ppi':{el:'Κέρδη προ προβλέψεων', en:'Pre-provision income'},
+ 'co.m.ppi':{el:'PPI', en:'PPI'},
  'co.na.banks':{el:'Not applicable to banks', en:'Not applicable to banks'},
  'co.m.mcap':{el:'Κεφαλαιοποίηση', en:'Market cap'},
  'co.m.pe':{el:'P/E', en:'P/E'},
  'co.m.pbv':{el:'P/BV', en:'P/BV'},
+ 'co.m.cash':{el:'Ταμείο', en:'Cash'},
+ 'co.msub.cash':{el:'ταμειακά διαθέσιμα & ισοδύναμα', en:'cash & equivalents'},
+ 'co.m.loans':{el:'Δάνεια', en:'Loans'},
+ 'co.m.deposits':{el:'Καταθέσεις', en:'Deposits'},
  'co.m.total_debt':{el:'Συν. δανεισμός', en:'Total debt'},
  'co.m.net_debt':{el:'Καθ. δανεισμός', en:'Net debt'},
  'co.msub.revenue':{el:'Κύκλος εργασιών', en:'Turnover'},
@@ -681,9 +685,14 @@ const METRICS=[
   {key:'mcap',label:L('co.m.mcap'),sub:L('co.msub.mcap'),unit:'eur',goodUp:null},
  {key:'pe',label:L('co.m.pe'),sub:L('co.msub.pe'),unit:'x',goodUp:null},
   {key:'pbv',label:L('co.m.pbv'),sub:L('co.msub.pbv'),unit:'x',goodUp:null},
+  // Σειρά: Συν. δανεισμός − Ταμείο = Καθ. δανεισμός (η αφαίρεση διαβάζεται αριστερά→δεξιά)
   {key:'total_debt',label:L('co.m.total_debt'),sub:L('co.msub.total_debt'),unit:'eur',goodUp:false},
+  {key:'cash',label:L('co.m.cash'),sub:L('co.msub.cash'),unit:'eur',goodUp:true},
   {key:'net_debt',label:L('co.m.net_debt'),sub:L('co.msub.net_debt'),unit:'eur',goodUp:false}
 ];
+// Τράπεζες: δεν έχουν εταιρικό δανεισμό (§5.1) → οι δύο στήλες δανεισμού αντικαθίστανται
+// από τα δικά τους μεγέθη ισολογισμού. Το Ταμείο μένει Ταμείο.
+const BANK_SWAP={ebitda:{k:'ppi',l:'co.m.ppi'},total_debt:{k:'loans',l:'co.m.loans'},net_debt:{k:'deposits',l:'co.m.deposits'}};
 const fMil=v=>{if(v==null||isNaN(v))return '—';const m=v/1e6,a=Math.abs(m),d=a<100?2:a<1000?1:0;return m.toLocaleString(LOC(),{minimumFractionDigits:d,maximumFractionDigits:d});};
 const fX=v=>(v==null||(typeof v==='number'&&isNaN(v)))?'—':v.toLocaleString(LOC(),{minimumFractionDigits:1,maximumFractionDigits:1});
 const EURSUF=()=>EN()?' €M':' εκ.€';
@@ -787,12 +796,12 @@ document.getElementById('co-sector').textContent=company.sector;
 
 const li=(company.latest && company.latest.idx!=null) ? company.latest.idx : company.years.length-1;
 document.getElementById('latest').innerHTML=METRICS.map(m=>{
-  // τράπεζες: η θέση του EBITDA στην κάρτα μεγεθών δείχνει «Κέρδη προ προβλέψεων» (PPI) με την τιμή του τελευταίου έτους
-  const bankPPI = IS_BANK && m.key==='ebitda';
-  const arr=company.metrics[bankPPI?'ppi':m.key]; if(!arr) return '';
-  const v=arr[li];
-  const label = bankPPI ? L('co.m.ppi') : m.label;
-  const val=(IS_BANK&&NA_METRIC.has(m.key)&&!bankPPI)?`<span class="na-bank">${L('co.na.banks')}</span>`:(m.unit==='eur'?(v==null?'—':`${fMil(v)}<small>${EURSUF()}</small>`):fX(v));
+  // τράπεζες: EBITDA→Κέρδη προ προβλέψεων, Συν. δανεισμός→Δάνεια, Καθ. δανεισμός→Καταθέσεις
+  const sw = IS_BANK ? BANK_SWAP[m.key] : null;
+  const arr = company.metrics[sw?sw.k:m.key] || [];
+  const v = arr[li];
+  const label = sw ? L(sw.l) : m.label;
+  const val=(IS_BANK&&!sw&&NA_METRIC.has(m.key))?`<span class="na-bank">${L('co.na.banks')}</span>`:(m.unit==='eur'?(v==null?'—':`${fMil(v)}<small>${EURSUF()}</small>`):fX(v));
   const uni=(m.key==='mcap'||m.key==='pe'||m.key==='pbv')?' uni':'';
   return `<div class="metric-item${uni}"><div class="k">${label}</div><div class="cell"><div class="v">${val}</div></div></div>`;
 }).join('');
