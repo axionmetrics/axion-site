@@ -278,7 +278,7 @@
   .cat.open .cat-head .arr{transform:rotate(90deg)}
   .cat-body{display:none}.cat.open .cat-body{display:block}
   .rtbl-wrap{overflow-x:auto}
-  .rtbl{width:100%;border-collapse:collapse;min-width:720px;font-size:14px}
+  .rtbl{width:100%;border-collapse:collapse;min-width:820px;font-size:14px}
   .rtbl thead th{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:600;text-align:right;padding:10px 12px;border-bottom:1px solid var(--line);background:#f2f7fc;white-space:nowrap}
   .rtbl thead th.l{text-align:left}
   .rtbl tbody td{padding:10px 12px;border-bottom:1px solid var(--line2);vertical-align:top;text-align:right}
@@ -287,6 +287,9 @@
   .rtbl .c-name{text-align:left;font-weight:700;color:var(--ink);white-space:nowrap;font-size:14.5px;text-transform:uppercase}
   .rtbl .c-name .en{display:block;text-transform:none;font-size:11px;font-weight:400;color:var(--faint);letter-spacing:0;margin-top:2px;white-space:normal;max-width:230px}
   .rtbl .c-desc{text-align:left;font-size:12.5px;color:var(--muted);font-weight:400;line-height:1.4;min-width:150px;max-width:230px}
+  .rtbl .c-dir{text-align:left;font-size:11.5px;color:var(--muted);font-weight:400;line-height:1.4;white-space:nowrap}
+  .rtbl .c-dir b{font-family:var(--disp);font-weight:700;color:var(--ink);letter-spacing:.02em}
+  .rtbl .c-dir i{font-style:normal;font-weight:700;color:var(--ink);margin-left:3px}
   .rtbl .c-val{font-family:var(--mono);font-weight:700;color:var(--ink);white-space:nowrap;font-size:16.5px}
   .rtbl .c-val.last{color:var(--ink);font-weight:700}
   .rtbl .c-sec{font-family:var(--mono);color:var(--muted);white-space:nowrap;font-size:16.5px}
@@ -614,6 +617,10 @@ AX_I18N.add({
  'co.rt.ratio':{el:'Δείκτης', en:'Ratio'},
  'co.rt.desc':{el:'Περιγραφή', en:'Description'},
  'co.rt.secmed':{el:'Διάμεσος κλάδου', en:'Sector median'},
+ 'co.rt.pref':{el:'Επιθυμητό:', en:'Preferred:'},
+ 'co.rt.hi':{el:'ΥΨΗΛΟ', en:'HIGH'},
+ 'co.rt.lo':{el:'ΧΑΜΗΛΟ', en:'LOW'},
+ 'co.rt.dep':{el:'ΕΞΑΡΤΑΤΑΙ', en:'DEPENDS'},
  'unit.days':{el:' ημ.', en:' d'},
  // glance
  'co.gl.profit':{el:'Κερδοφορία', en:'Profitability'},
@@ -1140,44 +1147,44 @@ document.getElementById('subs-filter').oninput=e=>{
 
 const RATIOS=[
  {cat:'Κερδοφορία',items:[
-   {label:'ROA',en:'Return on Assets',unit:'%',series:[6,7.5,10,9,9.2,9.0],sector:7.2,desc:'Αποδοτικότητα ενεργητικού: καθαρά κέρδη προς σύνολο ενεργητικού· πόσο αποδοτικά αξιοποιούνται τα περιουσιακά στοιχεία.',den:'Net profit to total assets; how efficiently the company’s assets are put to use.'},
-   {label:'ROE',en:'Return on Equity',unit:'%',series:[18,22,30,26,25,24],sector:18.5,desc:'Αποδοτικότητα ιδίων κεφαλαίων: καθαρά κέρδη προς ίδια κεφάλαια· η απόδοση για τους μετόχους.',den:'Net profit to equity; the return generated for shareholders.'},
-   {label:'Απόδ. επενδεδ. κεφαλαίων',en:'Return on Share Capital',unit:'%',series:[12,15,20,18,17.5,17],sector:13,desc:'Αποδοτικότητα επενδεδυμένων κεφαλαίων· κέρδη σε σχέση με τα κεφάλαια που έχουν επενδυθεί στη δραστηριότητα.',den:'Return on invested capital; profit relative to the capital invested in the business.'},
-   {label:'Μικτό περιθώριο',en:'Gross Profit Margin',unit:'%',series:[42,44,46,45,44.5,44],sector:40,desc:'Μικτό κέρδος προς πωλήσεις· η κερδοφορία πριν από λειτουργικά και λοιπά έξοδα.',den:'Gross profit to sales; profitability before operating and other expenses.'},
-   {label:'Καθαρό περιθώριο',en:'Net Profit Margin',unit:'%',series:[12,15,22,19,20.5,20.1],sector:14,desc:'Καθαρά κέρδη μετά φόρων προς πωλήσεις· τελική κερδοφορία ανά ευρώ εσόδων.',den:'Net profit after tax to sales; final profitability per euro of revenue.'},
-   {label:'Περιθώριο EBITDA',en:'EBITDA Margin',unit:'%',series:[30,33,36,35,34.5,34.2],sector:30.5,desc:'EBITDA προς πωλήσεις· λειτουργική κερδοφορία πριν από τόκους, φόρους και αποσβέσεις.',den:'EBITDA to sales; operating profitability before interest, tax and depreciation.'},
+   {label:'ROA',en:'Return on Assets',unit:'%',series:[6,7.5,10,9,9.2,9.0],sector:7.2,desc:'Πόσα κερδίζει η εταιρεία από κάθε ευρώ περιουσίας που έχει στα χέρια της.',den:'How much the company earns from every euro of assets it holds.',dir:'hi'},
+   {label:'ROE',en:'Return on Equity',unit:'%',series:[18,22,30,26,25,24],sector:18.5,desc:'Πόσα κερδίζει από κάθε ευρώ που έχουν βάλει οι μέτοχοι.',den:'How much it earns on every euro shareholders have put in.',dir:'hi'},
+   {label:'Απόδ. επενδεδ. κεφαλαίων',en:'Return on Share Capital',unit:'%',series:[12,15,20,18,17.5,17],sector:13,desc:'Απόδοση σε όλα τα κεφάλαια που δουλεύουν στην επιχείρηση, δικά της και δανεικά.',den:'The return on all capital working in the business, its own and borrowed.',dir:'hi'},
+   {label:'Μικτό περιθώριο',en:'Gross Profit Margin',unit:'%',series:[42,44,46,45,44.5,44],sector:40,desc:'Τι μένει από κάθε 100 ευρώ πωλήσεων αφού πληρωθεί το κόστος παραγωγής.',den:'What is left of every 100 euros of sales after production cost is paid.',dir:'hi'},
+   {label:'Καθαρό περιθώριο',en:'Net Profit Margin',unit:'%',series:[12,15,22,19,20.5,20.1],sector:14,desc:'Τι μένει τελικά ως κέρδος από κάθε 100 ευρώ πωλήσεων, μετά από όλα.',den:'What finally remains as profit out of every 100 euros of sales, after everything.',dir:'hi'},
+   {label:'Περιθώριο EBITDA',en:'EBITDA Margin',unit:'%',series:[30,33,36,35,34.5,34.2],sector:30.5,desc:'Πόσο κερδοφόρα είναι η ίδια η λειτουργία, πριν από τόκους, φόρους και αποσβέσεις.',den:'How profitable the operation itself is, before interest, tax and depreciation.',dir:'hi'},
  ]},
  {cat:'Ρευστότητα',items:[
-   {label:'Γενική ρευστότητα',en:'Current Ratio',unit:'x',series:[1.1,1.2,1.3,1.25,1.4,1.5],sector:1.3,desc:'Κυκλοφορούν ενεργητικό προς βραχυπρόθεσμες υποχρεώσεις· κάλυψη των τρεχουσών υποχρεώσεων.',den:'Current assets to short-term liabilities; coverage of current obligations.'},
-   {label:'Άμεση ρευστότητα',en:'Quick Ratio',unit:'x',series:[0.8,0.9,1.0,0.95,1.05,1.1],sector:0.9,desc:'Κυκλοφορούν μείον αποθέματα, προς βραχυπρόθεσμες υποχρεώσεις· ρευστότητα χωρίς τα αποθέματα.',den:'Current assets minus inventory, to short-term liabilities; liquidity excluding inventory.'},
-   {label:'Ταμειακή ρευστότητα',en:'Cash Ratio',unit:'x',series:[0.3,0.4,0.5,0.45,0.5,0.55],sector:0.35,desc:'Διαθέσιμα προς βραχυπρόθεσμες υποχρεώσεις· άμεση κάλυψη με μετρητά.',den:'Cash to short-term liabilities; immediate coverage with cash.'},
+   {label:'Γενική ρευστότητα',en:'Current Ratio',unit:'x',series:[1.1,1.2,1.3,1.25,1.4,1.5],sector:1.3,desc:'Αν φτάνουν τα βραχυπρόθεσμα περιουσιακά της για όσα χρωστά μέσα στον χρόνο. Πολύ υψηλό δείχνει και αδρανή κεφάλαια.',den:'Whether its short-term assets cover what it owes within the year. Very high also points to idle capital.',dir:'dep'},
+   {label:'Άμεση ρευστότητα',en:'Quick Ratio',unit:'x',series:[0.8,0.9,1.0,0.95,1.05,1.1],sector:0.9,desc:'Το ίδιο, αγνοώντας τα αποθέματα — που δεν πουλιούνται πάντα γρήγορα.',den:'The same, ignoring inventory, which does not always sell quickly.',dir:'dep'},
+   {label:'Ταμειακή ρευστότητα',en:'Cash Ratio',unit:'x',series:[0.3,0.4,0.5,0.45,0.5,0.55],sector:0.35,desc:'Πόσο από τα άμεσα χρέη της μπορεί να πληρώσει με μετρητά, τώρα. Υπερβολικά μετρητά όμως μένουν ανεκμετάλλευτα.',den:'How much of its immediate debts it can pay in cash, right now. Excess cash, though, sits unused.',dir:'dep'},
  ]},
  {cat:'Φερεγγυότητα',items:[
-   {label:'Χρέος / Ίδια κεφάλαια',en:'Debt-to-Equity',unit:'x',series:[1.2,1.0,0.8,0.9,0.75,0.7],sector:1.1,desc:'Σύνολο υποχρεώσεων προς ίδια κεφάλαια· ο βαθμός μόχλευσης της κεφαλαιακής διάρθρωσης.',den:'Total liabilities to equity; the leverage of the capital structure.'},
-   {label:'Κάλυψη τόκων',en:'Interest Coverage',unit:'x',series:[4,6,9,7.5,8.5,9.2],sector:5.5,desc:'Λειτουργικά κέρδη προς χρηματοοικονομικά έξοδα· πόσες φορές καλύπτονται οι τόκοι.',den:'Operating profit to financial expenses; how many times interest is covered.'},
+   {label:'Χρέος / Ίδια κεφάλαια',en:'Debt-to-Equity',unit:'x',series:[1.2,1.0,0.8,0.9,0.75,0.7],sector:1.1,desc:'Πόσο στηρίζεται σε δανεικά έναντι δικών της κεφαλαίων. Υψηλό σημαίνει μεγαλύτερο ρίσκο σε δύσκολη χρονιά.',den:'How much it leans on borrowed money versus its own. High means greater risk in a bad year.',dir:'lo'},
+   {label:'Κάλυψη τόκων',en:'Interest Coverage',unit:'x',series:[4,6,9,7.5,8.5,9.2],sector:5.5,desc:'Πόσες φορές τα λειτουργικά κέρδη καλύπτουν τους τόκους των δανείων.',den:'How many times operating profit covers the interest on its loans.',dir:'hi'},
  ]},
  {cat:'Δραστηριότητα',items:[
-   {label:'Ημέρες αποθεμάτων',en:'Days Inventory Outstanding',unit:'d',series:[55,50,45,48,44,42],sector:50,desc:'Μέσος χρόνος παραμονής αποθεμάτων· χαμηλότερες τιμές δείχνουν ταχύτερη ρευστοποίηση.',den:'Average time inventory is held; lower values indicate faster turnover.'},
-   {label:'Ταχύτητα ενεργητικού',en:'Asset Turnover',unit:'x',series:[0.42,0.48,0.55,0.52,0.56,0.58],sector:0.5,desc:'Πωλήσεις προς σύνολο ενεργητικού· πόσα έσοδα παράγει κάθε ευρώ ενεργητικού.',den:'Sales to total assets; how much revenue each euro of assets generates.'},
-   {label:'Ταχύτητα ιδίων κεφαλαίων',en:'Equity Turnover',unit:'x',series:[0.9,1.0,1.1,1.05,1.12,1.15],sector:0.95,desc:'Πωλήσεις προς ίδια κεφάλαια· εντατικότητα χρήσης των κεφαλαίων των μετόχων.',den:'Sales to equity; the intensity of use of shareholders’ capital.'},
+   {label:'Ημέρες αποθεμάτων',en:'Days Inventory Outstanding',unit:'d',series:[55,50,45,48,44,42],sector:50,desc:'Πόσο καιρό μένει το εμπόρευμα στην αποθήκη πριν πουληθεί.',den:'How long goods sit in the warehouse before they are sold.',dir:'lo'},
+   {label:'Ταχύτητα ενεργητικού',en:'Asset Turnover',unit:'x',series:[0.42,0.48,0.55,0.52,0.56,0.58],sector:0.5,desc:'Πόσο τζίρο βγάζει από την περιουσία της. Κρίνεται μόνο έναντι του κλάδου.',den:'How much revenue it generates from its assets. Only meaningful against the sector.',dir:'dep'},
+   {label:'Ταχύτητα ιδίων κεφαλαίων',en:'Equity Turnover',unit:'x',series:[0.9,1.0,1.1,1.05,1.12,1.15],sector:0.95,desc:'Πόσο τζίρο βγάζει από τα κεφάλαια των μετόχων. Υψηλό μπορεί να σημαίνει και υψηλή μόχλευση.',den:'How much revenue it generates from shareholders’ capital. High can also mean high leverage.',dir:'dep'},
  ]},
  {cat:'Αποτίμηση',items:[
-   {label:'EPS',en:'Earnings Per Share',unit:'€',series:[0.65,0.79,1.85,1.28,1.52,1.51],sector:1.1,desc:'Κέρδη ανά μετοχή· καθαρά κέρδη που αναλογούν σε κάθε μετοχή.',den:'Earnings per share; net profit attributable to each share.'},
-   {label:'P/E',en:'Price-to-Earnings',unit:'x',series:[15,18,22,16,12,8.9],sector:10.8,desc:'Τιμή προς κέρδη ανά μετοχή· πόσα πληρώνει η αγορά για κάθε ευρώ κερδών.',den:'Price to earnings per share; how much the market pays for each euro of earnings.'},
-   {label:'EV/EBITDA',en:'Enterprise Value / EBITDA',unit:'x',series:[8,9,10,7.5,6.5,6.1],sector:7.4,desc:'Αξία επιχείρησης προς EBITDA· αποτίμηση ανεξάρτητα από κεφαλαιακή διάρθρωση.',den:'Enterprise value to EBITDA; valuation independent of capital structure.'},
-   {label:'DPS',en:'Dividend Per Share',unit:'€',series:[0.3,0.55,0.7,0.61,0.6,0.8],sector:0.45,desc:'Μέρισμα ανά μετοχή· ταμειακή διανομή προς τους μετόχους ανά μετοχή.',den:'Dividend per share; cash distribution to shareholders per share.'},
-   {label:'BVPS',en:'Book Value Per Share',unit:'€',series:[3.6,4.1,4.85,5.2,5.6,5.95],sector:4.5,desc:'Λογιστική αξία ανά μετοχή· καθαρή θέση που αναλογεί σε κάθε μετοχή.',den:'Book value per share; net worth attributable to each share.'},
-   {label:'P/BV',en:'Price-to-Book',unit:'x',series:[1.8,2.1,2.4,1.9,1.7,1.6],sector:2.2,desc:'Τιμή προς λογιστική αξία· πώς αποτιμά η αγορά την καθαρή θέση.',den:'Price to book value; how the market values net worth.'},
-   {label:'Ποσοστό διανομής',en:'Dividend Payout Ratio',unit:'%',series:[40,45,50,48,46,53],sector:45,desc:'Μέρισμα προς καθαρά κέρδη· το ποσοστό των κερδών που διανέμεται.',den:'Dividend to net profit; the share of earnings distributed.'},
-   {label:'Μερισματική απόδοση',en:'Dividend Yield',unit:'%',series:[3.0,4.0,5.5,4.2,4.5,4.8],sector:3.8,desc:'Μέρισμα ανά μετοχή προς τιμή· η άμεση απόδοση από μερίσματα.',den:'Dividend per share to price; the direct return from dividends.'},
+   {label:'EPS',en:'Earnings Per Share',unit:'€',series:[0.65,0.79,1.85,1.28,1.52,1.51],sector:1.1,desc:'Τα κέρδη της χρονιάς μοιρασμένα σε κάθε μετοχή.',den:'The year’s profit divided across each share.'},
+   {label:'P/E',en:'Price-to-Earnings',unit:'x',series:[15,18,22,16,12,8.9],sector:10.8,desc:'Πόσα χρόνια κερδών πληρώνει η αγορά για τη μετοχή. Χαμηλό μπορεί να σημαίνει ευκαιρία ή δυσπιστία.',den:'How many years of earnings the market pays for the share. Low can mean opportunity or distrust.',dir:'dep'},
+   {label:'EV/EBITDA',en:'Enterprise Value / EBITDA',unit:'x',series:[8,9,10,7.5,6.5,6.1],sector:7.4,desc:'Πόσο κοστίζει όλη η επιχείρηση, μαζί με τα χρέη της, σε σχέση με τα λειτουργικά της κέρδη.',den:'What the whole business costs, debt included, relative to its operating profit.',dir:'dep'},
+   {label:'DPS',en:'Dividend Per Share',unit:'€',series:[0.3,0.55,0.7,0.61,0.6,0.8],sector:0.45,desc:'Πόσα ευρώ μερίσματος αναλογούν σε κάθε μετοχή.',den:'How many euros of dividend fall to each share.'},
+   {label:'BVPS',en:'Book Value Per Share',unit:'€',series:[3.6,4.1,4.85,5.2,5.6,5.95],sector:4.5,desc:'Η λογιστική αξία της εταιρείας μοιρασμένη σε κάθε μετοχή.',den:'The company’s book value divided across each share.'},
+   {label:'P/BV',en:'Price-to-Book',unit:'x',series:[1.8,2.1,2.4,1.9,1.7,1.6],sector:2.2,desc:'Πόσες φορές τη λογιστική της αξία πληρώνει η αγορά. Κάτω από 1 δεν σημαίνει αυτόματα φθηνό.',den:'How many times its book value the market pays. Below 1 does not automatically mean cheap.',dir:'dep'},
+   {label:'Ποσοστό διανομής',en:'Dividend Payout Ratio',unit:'%',series:[40,45,50,48,46,53],sector:45,desc:'Τι ποσοστό των κερδών μοιράζεται ως μέρισμα. Πολύ υψηλό μπορεί να μην είναι βιώσιμο.',den:'What share of profit is handed out as dividend. Very high may not be sustainable.',dir:'dep'},
+   {label:'Μερισματική απόδοση',en:'Dividend Yield',unit:'%',series:[3.0,4.0,5.5,4.2,4.5,4.8],sector:3.8,desc:'Τι αποδίδει το μέρισμα σε σχέση με την τιμή. Πολύ υψηλή συχνά σημαίνει πεσμένη μετοχή.',den:'What the dividend returns relative to the price. Very high often signals a fallen share price.',dir:'dep'},
  ]},
  {cat:'Λειτουργικού κόστους',items:[
-   {label:'Κόστος πωλήσεων / πωλήσεις',en:'COGS-to-Sales',unit:'%',series:[58,56,54,55,55.5,56],sector:60,desc:'Κόστος πωληθέντων προς πωλήσεις· η βαρύτητα του άμεσου κόστους παραγωγής.',den:'Cost of goods sold to sales; the weight of direct production cost.'},
-   {label:'Έξοδα διοίκησης / πωλήσεις',en:'Administrative Expenses Ratio',unit:'%',series:[8,7.5,7,7.2,7,6.8],sector:8,desc:'Έξοδα διοίκησης προς πωλήσεις· η βαρύτητα των διοικητικών εξόδων.',den:'Administrative expenses to sales; the weight of administrative costs.'},
-   {label:'Έξοδα διάθεσης / πωλήσεις',en:'Selling / Distribution Expenses',unit:'%',series:[10,9.5,9,9.3,9,8.8],sector:10,desc:'Έξοδα διάθεσης προς πωλήσεις· η βαρύτητα των εξόδων πωλήσεων/διανομής.',den:'Selling expenses to sales; the weight of selling/distribution costs.'},
+   {label:'Κόστος πωλήσεων / πωλήσεις',en:'COGS-to-Sales',unit:'%',series:[58,56,54,55,55.5,56],sector:60,desc:'Πόσο από κάθε ευρώ πωλήσεων το τρώει το κόστος παραγωγής.',den:'How much of every euro of sales is eaten by production cost.',dir:'lo'},
+   {label:'Έξοδα διοίκησης / πωλήσεις',en:'Administrative Expenses Ratio',unit:'%',series:[8,7.5,7,7.2,7,6.8],sector:8,desc:'Πόσο βαραίνουν τα έξοδα διοίκησης πάνω στον τζίρο.',den:'How heavily administrative costs weigh on turnover.',dir:'lo'},
+   {label:'Έξοδα διάθεσης / πωλήσεις',en:'Selling / Distribution Expenses',unit:'%',series:[10,9.5,9,9.3,9,8.8],sector:10,desc:'Πόσο βαραίνουν τα έξοδα πωλήσεων και διανομής πάνω στον τζίρο.',den:'How heavily selling and distribution costs weigh on turnover.',dir:'lo'},
  ]},
  {cat:'Χρηματοοικονομικής διάρθρωσης',items:[
-   {label:'Δείκτης ιδίων κεφαλαίων',en:'Equity Ratio',unit:'%',series:[40,43,48,46,50,52],sector:45,desc:'Ίδια κεφάλαια προς σύνολο κεφαλαίων· ο βαθμός αυτοχρηματοδότησης της εταιρείας.',den:'Equity to total capital; the degree of self-financing of the company.'},
+   {label:'Δείκτης ιδίων κεφαλαίων',en:'Equity Ratio',unit:'%',series:[40,43,48,46,50,52],sector:45,desc:'Τι μέρος της περιουσίας της είναι πραγματικά δικό της και όχι δανεικό.',den:'What part of its assets is genuinely its own rather than borrowed.',dir:'hi'},
  ]},
 ];
 const fmtU=(v,u)=>{
@@ -1197,6 +1204,12 @@ const _RLI=(company.latest&&company.latest.idx!=null)?company.latest.idx:company
 const YEARS=company.years.slice(0,_RLI+1);   // πίνακας δεικτών: μόνο πραγματικά έτη (κόψε την κενή στήλη «μόνο-γεγονότων» CURRENT_YEAR)
 const ratiosEl=document.getElementById('ratios');
 (function(){var S=['roa','roe','roic','gm','nm','ebitdam','current','quick','cash','de','icov','dio','atr','etr','eps','pe','evebitda','dps','bvps','pbv','payout','dy','cogs','admin','selling','equityr'],i=0;RATIOS.forEach(function(cat){cat.items.forEach(function(it){it.slug=S[i];var r=AX&&AX.ratios&&AX.ratios[S[i]];if(r){it.series=r.series;it.sector=r.sector;}i++;});});})();
+function dirCell(d){
+  if(!d) return '<td class="c-dir"></td>';
+  if(d==='dep') return `<td class="c-dir">${L('co.rt.pref')} <b>${L('co.rt.dep')}</b></td>`;
+  const w=(d==='hi')?L('co.rt.hi'):L('co.rt.lo'), a=(d==='hi')?'\u2197':'\u2198';
+  return `<td class="c-dir">${L('co.rt.pref')} <b>${w}</b><i>${a}</i></td>`;
+}
 const CATEN={'Κερδοφορία':'Profitability','Ρευστότητα':'Liquidity','Φερεγγυότητα':'Solvency','Δραστηριότητα':'Operation','Αποτίμηση':'Value','Λειτουργικού κόστους':'Operating Cost','Χρηματοοικονομικής διάρθρωσης':'Financial Structure'};
 ratiosEl.innerHTML=RATIOS.map((c,ci)=>{
   const rows=c.items.map(it=>{
@@ -1209,11 +1222,11 @@ ratiosEl.innerHTML=RATIOS.map((c,ci)=>{
       const yr=_ser.map((v,i)=>`<td class="c-val${i===_ser.length-1?' last':''}">${fmtU(v,it.unit)}</td>`).join('');
       body=`${yr}<td class="c-sec">${fmtU(it.sector,it.unit)}</td>`;
     }
-    return `<tr><td class="c-name">${nm}<span class="en">(${nm2})</span></td><td class="c-desc">${dsc}</td>${body}</tr>`;
+    return `<tr><td class="c-name">${nm}<span class="en">(${nm2})</span></td><td class="c-desc">${dsc}</td>${dirCell(it.dir)}${body}</tr>`;
   }).join('');
   const yhead=YEARS.map(y=>`<th class="y">${y}</th>`).join('');
   const cn=EN()?(CATEN[c.cat]||c.cat):c.cat, cn2=EN()?c.cat:(CATEN[c.cat]||'');
-  return `<div class="cat"><div class="cat-head"><h3>${cn} <span class="caten">(${cn2})</span></h3><span class="arr">›</span></div><div class="cat-body"><div class="rtbl-wrap"><table class="rtbl"><thead><tr><th class="l">${L('co.rt.ratio')}</th><th class="l">${L('co.rt.desc')}</th>${yhead}<th>${L('co.rt.secmed')}</th></tr></thead><tbody>${rows}</tbody></table></div></div></div>`;
+  return `<div class="cat"><div class="cat-head"><h3>${cn} <span class="caten">(${cn2})</span></h3><span class="arr">›</span></div><div class="cat-body"><div class="rtbl-wrap"><table class="rtbl"><thead><tr><th class="l">${L('co.rt.ratio')}</th><th class="l">${L('co.rt.desc')}</th><th class="l"></th>${yhead}<th>${L('co.rt.secmed')}</th></tr></thead><tbody>${rows}</tbody></table></div></div></div>`;
 }).join('');
 ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.classList.toggle('open'));
 
