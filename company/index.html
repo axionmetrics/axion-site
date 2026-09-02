@@ -197,6 +197,7 @@
   .latest .cell{flex:1;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.20);border-radius:9px;padding:9px 6px;display:flex;flex-direction:column;justify-content:center}
   .latest .v{font-family:var(--disp);font-size:18px;font-weight:800;color:#fff;line-height:1.05;white-space:nowrap}
   .latest .v small{font-family:var(--sans);font-size:10px;font-weight:500;color:rgba(255,255,255,.66)}
+  .latest .v2{font-family:var(--sans);font-size:10px;font-weight:600;color:rgba(255,255,255,.70);margin-top:4px;white-space:nowrap;cursor:help;border-bottom:1px dotted rgba(255,255,255,.35);align-self:center}
   
   .listed-box .lx{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:10.5px;color:#2f7d52;border:1px solid #bfe3ce;border-radius:6px;padding:2px 8px}
   .listed-box .lx i{font-size:12px}
@@ -569,6 +570,8 @@ AX_I18N.add({
  'co.msub.revenue':{el:'Κύκλος εργασιών', en:'Turnover'},
  'co.msub.net_profit':{el:'μετά φόρων, μητρικής', en:'after tax, parent'},
  'co.msub.ebitda':{el:'λειτουργική κερδοφορία', en:'operating profitability'},
+ 'co.m.ebitda.rep':{el:'εταιρείας', en:'company'},
+ 'co.m.ebitda.reptip':{el:'EBITDA όπως το ανακοινώνει η ίδια η εταιρεία. Διαφέρει από το δικό μας γιατί συχνά εξαιρεί έκτακτα ή μη επαναλαμβανόμενα στοιχεία. Εμείς εφαρμόζουμε τον ίδιο τύπο σε όλες τις εταιρείες ώστε να είναι συγκρίσιμες.', en:'EBITDA as reported by the company itself. It differs from ours because it often excludes one-off or non-recurring items. We apply the same formula to every company so the figures stay comparable.'},
  'co.msub.mcap':{el:'χρημ. αξία', en:'market value'},
  'co.msub.pe':{el:'τιμή / κέρδη', en:'price / earnings'},
  'co.msub.pbv':{el:'τιμή / λογιστική αξία', en:'price / book value'},
@@ -812,7 +815,15 @@ document.getElementById('latest').innerHTML=METRICS.map(m=>{
   const label = sw ? L(sw.l) : m.label;
   const val=(IS_BANK&&!sw&&NA_METRIC.has(m.key))?`<span class="na-bank">${L('co.na.banks')}</span>`:(m.unit==='eur'?(v==null?'—':`${fMil(v)}<small>${EURSUF()}</small>`):fX(v));
   const uni=(m.key==='mcap'||m.key==='pe'||m.key==='pbv')?' uni':'';
-  return `<div class="metric-item${uni}"><div class="k">${label}</div><div class="cell"><div class="v">${val}</div></div></div>`;
+  // EBITDA: δεύτερη γραμμή με το δημοσιευμένο/συγκρίσιμο της εταιρείας, όταν αποκλίνει >2%
+  let extra='';
+  if(m.key==='ebitda' && !sw){
+    const rep=(company.metrics.ebitda_rep||[])[li];
+    if(typeof rep==='number' && !isNaN(rep) && typeof v==='number' && v!==0 && Math.abs(rep-v)/Math.abs(v)>0.02){
+      extra=`<div class="v2" title="${String(L('co.m.ebitda.reptip')).replace(/"/g,'&quot;')}">${L('co.m.ebitda.rep')}: ${fMil(rep)}</div>`;
+    }
+  }
+  return `<div class="metric-item${uni}"><div class="k">${label}</div><div class="cell"><div class="v">${val}</div>${extra}</div></div>`;
 }).join('');
 // Στο 6μηνο, το P/E τελευταίας περιόδου είναι TTM (κυλιόμενο 12μηνο) — διακριτική υποσημείωση όταν υπάρχει τιμή
 (function(){
