@@ -155,7 +155,7 @@
     <div class="hero-in">
       <h1 data-i18n="ix.h1">Αναθεωρήσεις δεικτών</h1>
       <div class="hero-stats">
-        <div class="hs"><span class="v">Large / Mid Cap</span><span class="l" data-i18n="ix.hs.indices">Δείκτες</span></div>
+        <div class="hs"><span class="v">Large / Mid / Αγοράς</span><span class="l" data-i18n="ix.hs.indices">Δείκτες</span></div>
         <div class="hs"><span class="v">2020</span><span class="l" data-i18n="ix.hs.history">ιστορικό</span></div>
       </div>
     </div>
@@ -165,10 +165,11 @@
   <span class="ix-seg" id="ixSeg">
    <button class="on" data-ix="large" type="button">FTSE/Athex Large Cap</button>
    <button data-ix="mid" type="button">Mid Cap</button>
+   <button data-ix="market" type="button" data-i18n="ix.market">Δείκτης Αγοράς</button>
   </span>
   <select class="ix-yr" id="ixYr">
    <option value="" data-i18n="ix.allyears">Όλα τα έτη</option>
-   <option value="2025">2025</option><option value="2024">2024</option><option value="2023">2023</option>
+   <option value="2026">2026</option><option value="2025">2025</option><option value="2024">2024</option><option value="2023">2023</option>
    <option value="2022">2022</option><option value="2021">2021</option><option value="2020">2020</option>
   </select>
  </div>
@@ -188,7 +189,8 @@ AX_I18N.add({
  'ix.semiannual':{el:'εξαμηνιαία αναθεώρηση', en:'semi-annual review'},
  'ix.netchange':{el:'καθαρή μεταβολή', en:'net change'},
  'ix.additions':{el:'Εισαγωγές', en:'Additions'},
- 'ix.removals':{el:'Εξαγωγές', en:'Removals'}
+ 'ix.removals':{el:'Εξαγωγές', en:'Removals'},
+ 'ix.market':{el:'Δείκτης Αγοράς', en:'Market Index'}
 });
 function L(k){return AX_I18N.t(k);}
 function curLang(){return window.AX_I18N?AX_I18N.lang:'el';}
