@@ -686,6 +686,16 @@ const AX=(_tk&&_AXC.find(function(c){return c.tk===_tk;}))||_AXC[0]||null;
 try{ if(AX&&AX.tk) localStorage.setItem('am-last-company', AX.tk); }catch(e){}
 document.addEventListener('axion:basischange',function(){location.reload();});
 const company = AX ? {ticker:AX.tk,name:AX.name,euronext_name:(AX.en||''),sector:AX.s,latest:AX.latest,years:AX.years,metrics:AX.metrics,figNotes:(AX.figNotes||null),current:((window.AXION_CURRENT&&window.AXION_CURRENT[AX.tk])||AX.current||null)} : {ticker:'',name:'—',euronext_name:'',sector:'',latest:{period:'',type:''},years:[2020,2021,2022,2023,2024,2025],metrics:{revenue:[],net_profit:[],ebitda:[],pe:[],pbv:[],total_debt:[],net_debt:[]}};;
+// ΔΙΑΝΟΜΕΣ = μέγεθος ΧΡΗΣΗΣ. Δεν υπάρχει «μέρισμα εξαμήνου»: το RATIOS H1 κουβαλά την
+// ετήσια τιμή στη στήλη της χρήσης και 0 στο τρέχον εξάμηνο. Άρα στην όψη 6μήνου τόσο η
+// κάρτα «Χρηματικές διανομές» όσο και οι δείκτες dps/dy/payout διαβάζουν ΠΑΝΤΑ την ετήσια
+// βάση — αλλιώς η κάρτα κόβεται σε 1 γραμμή και το DPS δείχνει ψευδές «0,00 €».
+const AXY=(function(){
+  if(AXBASIS==='annual') return AX;
+  try{ var _L=(window.AXION&&window.AXION.companies&&window.AXION.companies.annual)||[];
+       return (AX&&_L.find(function(c){return c.tk===AX.tk;}))||AX; }catch(e){ return AX; }
+})();
+const DIV_SLUGS_UI=['dps','dy','payout'];
 const IS_BANK = !!(AX && AX.s==='Τράπεζες');   // banks: EBITDA-family δεν εφαρμόζεται
 const NA_METRIC = new Set(['ebitda']);
 const NA_RATIO  = new Set(['ebitdam','evebitda','gm','cogs','selling','dio']);
@@ -1216,7 +1226,19 @@ function spark(series){
 const _RLI=(company.latest&&company.latest.idx!=null)?company.latest.idx:company.years.length-1;
 const YEARS=company.years.slice(0,_RLI+1);   // πίνακας δεικτών: μόνο πραγματικά έτη (κόψε την κενή στήλη «μόνο-γεγονότων» CURRENT_YEAR)
 const ratiosEl=document.getElementById('ratios');
-(function(){var S=['roa','roe','roic','gm','nm','ebitdam','current','quick','cash','de','icov','dio','atr','etr','eps','pe','evebitda','dps','bvps','pbv','payout','dy','cogs','admin','selling','equityr'],i=0;RATIOS.forEach(function(cat){cat.items.forEach(function(it){it.slug=S[i];var r=AX&&AX.ratios&&AX.ratios[S[i]];if(r){it.series=r.series;it.sector=r.sector;}i++;});});})();
+(function(){var S=['roa','roe','roic','gm','nm','ebitdam','current','quick','cash','de','icov','dio','atr','etr','eps','pe','evebitda','dps','bvps','pbv','payout','dy','cogs','admin','selling','equityr'],i=0;
+ // dps/dy/payout: ετήσιες τιμές, χαρτογραφημένες ΑΝΑ ΕΤΟΣ πάνω στις στήλες της τρέχουσας όψης
+ var _dv={};
+ if(AXY&&AXY!==AX&&AXY.ratios&&AXY.years){
+   DIV_SLUGS_UI.forEach(function(sl){ var r=AXY.ratios[sl]; if(!r||!r.series) return;
+     var m={}; AXY.years.forEach(function(y,j){ m[y]=r.series[j]; });
+     _dv[sl]={m:m,sector:r.sector}; });
+ }
+ RATIOS.forEach(function(cat){cat.items.forEach(function(it){it.slug=S[i];
+   var d=_dv[S[i]];
+   if(d){ it.series=company.years.map(function(y){ var v=d.m[y]; return v===undefined?null:v; }); it.sector=d.sector; }
+   else { var r=AX&&AX.ratios&&AX.ratios[S[i]]; if(r){it.series=r.series;it.sector=r.sector;} }
+   i++;});});})();
 // Τράπεζες: η γραμμή «Έξοδα διοίκησης/πωλήσεις» ΕΙΝΑΙ ο δείκτης κόστους/εσόδων
 // (RAW off21 σύνολο λειτ. εξόδων / off18 σύνολο λειτ. εσόδων) — αλλάζει μόνο η ετικέτα.
 const RATIO_BANK={admin:{
@@ -1321,7 +1343,7 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
   })();
   scEl.innerHTML=cards.map(c=>`<div class="sc-item sc-${c.tone}"><div class="sc-cat">${c.cat}</div><div class="sc-basis ${c.bc}">${c.basis}</div><div class="sc-box"><span class="sc-badge">${c.rating}</span><div class="sc-val"><span class="sc-metric">${c.metric}</span><span class="sc-main">${c.main}</span></div><span class="sc-sub">${c.sub}</span></div></div>`).join('');
   // Χρηματικές διανομές — ενοποιημένος πίνακας: Μερίσματα (ανά χρήση) + Επιστροφές κεφ. (ανά έτος πληρωμής)
-  const D=G.dist||{distributes:false,rows:[]};
+  const D=((AXY&&AXY.glance&&AXY.glance.dist)||(G&&G.dist))||{distributes:false,rows:[]};
   // Μερίσματα ανά χρήση (dps δείκτης) — dividend-only στο νέο μοντέλο
   const divBy={}, dyBy={};
   (D.rows||[]).forEach(r=>{ if(r&&r.dps!=null&&r.dps>1e-9){ divBy[r.y]=r.dps; dyBy[r.y]=(r.dy==null?null:r.dy); } });
