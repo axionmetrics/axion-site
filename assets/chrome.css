@@ -96,3 +96,31 @@
  .am-upd .chips{flex-wrap:nowrap;overflow-x:auto;padding-bottom:3px;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
  .am-upd a.chip{flex:none}
  .am-upd a.chip:hover{transform:none}}
+
+/* ===== ΤΙΤΛΟΣ ΣΕΛΙΔΑΣ — λιτή γραμμή (B1). Αντικαθιστά την παλιά κάρτα με stripe.
+   Στόχος ΜΟΝΟ το πρώτο παιδί του .wrap (.secbox/.hero/.mast) — είναι πάντα το
+   block τίτλου. Το .secbox της σελίδας κλάδου και το .mast της σελίδας εταιρείας
+   ΔΕΝ είναι πρώτα παιδιά, οπότε δεν επηρεάζονται. ===== */
+.wrap>.secbox:first-child,.wrap>.hero:first-child,.wrap>.mast:first-child{
+  background:none;border:0;border-radius:0;box-shadow:none;overflow:visible;margin:0;padding:0}
+.wrap>.secbox:first-child>.stripe,.wrap>.hero:first-child>.stripe,.wrap>.mast:first-child>.stripe{display:none}
+.wrap>.secbox:first-child>.hero-in,.wrap>.hero:first-child>.hero-in,.wrap>.mast:first-child>.hero-in{
+  display:flex;align-items:baseline;flex-wrap:wrap;gap:0 18px;
+  padding:22px 0 13px;border-bottom:1px solid #e7ebf1}
+.wrap>.secbox:first-child>.hero-in>h1,.wrap>.hero:first-child>.hero-in>h1,.wrap>.mast:first-child>.hero-in>h1{
+  flex:none;margin:0;font-family:Inter,sans-serif;font-weight:800;text-transform:uppercase;
+  font-size:19px;letter-spacing:.05em;line-height:1.2;color:#1b2740}
+/* όλα τα hero-stats φεύγουν — και τα διακοσμητικά και τα πραγματικά */
+.wrap>.secbox:first-child .hero-stats,.wrap>.hero:first-child .hero-stats,.wrap>.mast:first-child .hero-stats,
+.wrap>.secbox:first-child .statrow,.wrap>.hero:first-child .statrow,.wrap>.mast:first-child .statrow{display:none}
+/* η περιγραφή, όπου υπάρχει, πάει δίπλα στον τίτλο */
+.wrap>.secbox:first-child>.hero-in>.hero-in-desc,
+.wrap>.secbox:first-child>.hero-in>.hero-desc,.wrap>.hero:first-child>.hero-in>.hero-desc,.wrap>.mast:first-child>.hero-in>.hero-desc,
+.wrap>.secbox:first-child>.hero-in>.sub,.wrap>.hero:first-child>.hero-in>.sub,.wrap>.mast:first-child>.hero-in>.sub{
+  flex:1 1 340px;margin:0;max-width:none;font-size:12.5px;line-height:1.5;color:#98a3b4}
+/* σελίδες κειμένου (.mast): το επόμενο μπλοκ είναι κείμενο χωρίς δικό του margin */
+.wrap>.mast:first-child{margin-bottom:15px}
+@media(max-width:640px){
+ .wrap>.secbox:first-child>.hero-in,.wrap>.hero:first-child>.hero-in,.wrap>.mast:first-child>.hero-in{
+   padding:18px 0 12px;gap:0 12px}
+ .wrap>.secbox:first-child>.hero-in>h1,.wrap>.hero:first-child>.hero-in>h1,.wrap>.mast:first-child>.hero-in>h1{font-size:17px}}
