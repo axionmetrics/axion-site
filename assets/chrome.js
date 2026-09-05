@@ -33,7 +33,7 @@
    soon:{el:'σύντομα',en:'soon'}, soonT:{el:'Σύντομα διαθέσιμο',en:'Coming soon'},
    aria:{el:'Βάση δεδομένων',en:'Data basis'} };
 
- var NAVHTML="<nav class=\"site-nav\">\n <div class=\"bar1\"><a class=\"lock\" href=\"../\"><span class=\"am\">A<i>M</i></span><span class=\"lrule\"></span><span class=\"lname\">AXION<br>METRICS</span></a><ul class=\"tabs\" id=\"navtabs\"></ul><div class=\"am-right\"><div class=\"am-basis\" id=\"ambasis\"></div><button class=\"langtog\" data-langtog aria-label=\"Language\">EN</button></div></div>\n <div class=\"bar2\" id=\"navbar2\"></div>\n</nav>";
+ var NAVHTML="<nav class=\"site-nav\">\n <div class=\"bar1\"><a class=\"lock\" href=\"../\"><span class=\"am\">A<i>M</i></span><span class=\"lrule\"></span><span class=\"lname\">AXION<br>METRICS</span></a><ul class=\"tabs\" id=\"navtabs\"></ul><div class=\"am-right\"><div class=\"am-basis\" id=\"ambasis\"></div><button class=\"langtog\" data-langtog aria-label=\"Language\">EN</button></div></div>\n <div class=\"bar2\" id=\"navbar2\"></div>\n</nav>\n<div class=\"am-upd\" id=\"amupd\" hidden></div>";
 
  function footerHTML(){
    /* Οι στήλες παράγονται ΑΠΟ ΤΟΝ ΙΔΙΟ πίνακα NAV με το header — καμία χειροκίνητη λίστα,
@@ -118,6 +118,34 @@
    var page=document.getElementById('ambasis-page');
    if(page){ page.innerHTML=basisSegHTML(cur,hasInterim); wireBasis(page,cur); }
  }
+
+ /* ===== λωρίδα «Νέα αποτελέσματα» =====
+    Πηγή: AXION.updates (γέφυρα) — οι 10 τελευταίες ΔΗΜΟΣΙΕΥΣΕΙΣ που έχουν
+    ενσωματωθεί, με ημερομηνία δημοσίευσης έκθεσης από το Euronext.
+    Το tag περιόδου είναι ΑΓΓΛΙΚΟ και στις δύο γλώσσες (6M 2026 / YR 2026). */
+ var UPD_T={el:'Νέα αποτελέσματα',en:'New results'};
+ function updPeriod(u){
+   if(u.basis==='interim') return {cls:'p-h1',txt:'6M '+String(u.period).replace(/H1$/,'')};
+   return {cls:'p-yr',txt:'YR '+u.period};
+ }
+ function updDate(iso){
+   var p=String(iso).split('-'); if(p.length!==3) return '';
+   return parseInt(p[2],10)+'/'+parseInt(p[1],10);
+ }
+ function renderUpdates(){
+   var el=document.getElementById('amupd'); if(!el) return;
+   var U=(window.AXION&&window.AXION.updates)||[];
+   if(!U.length){ el.hidden=true; el.innerHTML=''; return; }
+   var chips=U.map(function(u){
+     var pr=updPeriod(u), nm=u.name||u.tk;
+     return '<a class="chip" href="../company/?tk='+encodeURIComponent(u.tk)+'&basis='+u.basis+'">'
+          + '<span class="co">'+esc(nm)+'</span>'
+          + '<span class="per '+pr.cls+'">'+esc(pr.txt)+'</span>'
+          + '<span class="dt">'+updDate(u.date)+'</span></a>';
+   }).join('');
+   el.innerHTML='<div class="uhd"><span class="t">'+esc(L(UPD_T))+'</span></div><div class="chips">'+chips+'</div>';
+   el.hidden=false;
+ }
  function relabelLangBtn(){
    var b=document.querySelector('.langtog[data-langtog]');
    if(b) b.textContent=(curLang()==='en'?'ΕΛ':'EN');
@@ -132,7 +160,7 @@
      document.dispatchEvent(new CustomEvent('axion:langchange',{detail:{lang:nl}}));
    }
  });
- function relocalize(){ buildNav(); renderBasis(); var f=document.querySelector('.site-ft'); if(f) f.outerHTML=footerHTML(); relabelLangBtn(); }
+ function relocalize(){ buildNav(); renderBasis(); renderUpdates(); var f=document.querySelector('.site-ft'); if(f) f.outerHTML=footerHTML(); relabelLangBtn(); }
  document.addEventListener('axion:langchange', relocalize);
 
  function injectAnalytics(){
@@ -143,6 +171,6 @@
    s.setAttribute('data-cf-beacon','{"token": "a9e573e27dd34f6784b7df2d706c1bee"}');
    document.head.appendChild(s);
  }
- function init(){ injectStyle(); mount(); buildNav(); renderBasis(); relabelLangBtn(); injectAnalytics(); }
+ function init(){ injectStyle(); mount(); buildNav(); renderBasis(); renderUpdates(); relabelLangBtn(); injectAnalytics(); }
  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);} else {init();}
 })();
