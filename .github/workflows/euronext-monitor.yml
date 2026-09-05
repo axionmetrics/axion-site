@@ -58,14 +58,43 @@ jobs:
           done
           echo "push failed after retries"; exit 1
 
+      # ΔΙΟΡΘΩΣΗ 2026-09-05: το Issue δημιουργούνταν ΧΩΡΙΣ label και ΧΩΡΙΣ assignee,
+      # οπότε δεν έφτανε ειδοποίηση (Issues #3 στις 28/08 και #5 στις 04/09 έμειναν
+      # απαρατήρητα). Τρεις αλλαγές:
+      #   1. Το label «monitor» δημιουργείται αν λείπει — πριν, το `--label monitor`
+      #      αποτύγχανε και το `2>/dev/null` έκρυβε το σφάλμα.
+      #   2. Το Issue ανατίθεται στον κάτοχο του repo· ο assignee ειδοποιείται ΠΑΝΤΑ,
+      #      ανεξάρτητα από ρυθμίσεις watch.
+      #   3. `always()` ώστε η ειδοποίηση να φεύγει ακόμη κι αν αποτύχει το commit,
+      #      και ΚΑΜΙΑ απόκρυψη σφαλμάτων — αν δεν φτιαχτεί το Issue, το job κοκκινίζει
+      #      και το GitHub στέλνει email αποτυχίας.
       - name: Άνοιγμα Issue αναφοράς (μόνο αν υπάρχουν αλλαγές)
-        if: steps.run.outputs.has_changes == 'true'
+        if: always() && steps.run.outputs.has_changes == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
+          OWNER: ${{ github.repository_owner }}
         run: |
+          set -euo pipefail
           TITLE="🛰️ Euronext Monitor — $(date -u +%Y-%m-%d): εντοπίστηκαν αλλαγές"
-          gh issue create \
+
+          # Το label μπορεί να μην υπάρχει ακόμη — φτιάξ' το (αθόρυβα αν υπάρχει ήδη).
+          gh label create monitor --color 1D76DB \
+            --description "Αυτόματες αναφορές Euronext Monitor" || true
+
+          # Το @mention μπαίνει ΜΕΣΑ στο σώμα: ειδοποιεί σίγουρα και δεν μπορεί να
+          # αποτύχει σαν κλήση API (σε αντίθεση με το --assignee).
+          BODY="$RUNNER_TEMP/issue_body.md"   # εκτός repo, να μη μείνει αδέσποτο αρχείο
+          printf '@%s\n\n' "$OWNER" > "$BODY"
+          cat .github/monitor/last_report.md >> "$BODY"
+
+          URL=$(gh issue create \
             --title "$TITLE" \
-            --body-file .github/monitor/last_report.md \
-            --label "monitor" 2>/dev/null \
-          || gh issue create --title "$TITLE" --body-file .github/monitor/last_report.md
+            --body-file "$BODY" \
+            --label monitor)
+          echo "Δημιουργήθηκε: $URL"
+          echo "Δημιουργήθηκε Issue: $URL" >> "$GITHUB_STEP_SUMMARY"
+
+          # Δεύτερο δίχτυ: ανάθεση. Αν ο owner είναι οργανισμός θα αποτύχει —
+          # δεν ρίχνει το job, το @mention έχει ήδη κάνει τη δουλειά.
+          gh issue edit "$URL" --add-assignee "$OWNER" \
+            || echo "::warning::Απέτυχε η ανάθεση στον $OWNER (το @mention ισχύει)"

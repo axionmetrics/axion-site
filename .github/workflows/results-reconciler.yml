@@ -43,9 +43,14 @@ jobs:
             --data-js assets/data.js \
             --out .github/monitor/reconciler_report.md
 
+      # ΔΙΟΡΘΩΣΗ 2026-09-05: ίδιο πρόβλημα με τον Euronext Monitor — το Issue και τα
+      # σχόλια δημιουργούνταν χωρίς @mention/assignee, οπότε δεν έφτανε ειδοποίηση
+      # (το #4 της 28/08 έμεινε απαρατήρητο). Προστέθηκε @mention στο σώμα και στα
+      # σχόλια ανανέωσης — ειδοποιεί σίγουρα και δεν μπορεί να αποτύχει σαν API call.
       - name: Ενημέρωση / κλείσιμο issue
         env:
           GH_TOKEN: ${{ github.token }}
+          OWNER: ${{ github.repository_owner }}
         run: |
           set -e
           # Εξασφάλισε το label (αγνόησε αν υπάρχει ήδη)
@@ -54,14 +59,19 @@ jobs:
           OPEN=$(gh issue list --label reconciler --state open --json number --jq '.[0].number' 2>/dev/null || echo "")
           TITLE="🎯 Results Reconciler — εκκρεμούν αποτελέσματα περιόδου"
 
+          BODY="$RUNNER_TEMP/issue_body.md"
+          printf '@%s\n\n' "$OWNER" > "$BODY"
+          cat .github/monitor/reconciler_report.md >> "$BODY"
+
           if [ "${{ steps.run.outputs.has_new }}" = "true" ]; then
             if [ -n "$OPEN" ]; then
-              gh issue edit "$OPEN" --body-file .github/monitor/reconciler_report.md
-              gh issue comment "$OPEN" --body "🔄 Ανανεώθηκε $(date -u +%Y-%m-%d\ %H:%M)Z — εκκρεμούν **${{ steps.run.outputs.new_count }}**."
+              gh issue edit "$OPEN" --body-file "$BODY"
+              gh issue comment "$OPEN" --body "@$OWNER 🔄 Ανανεώθηκε $(date -u +%Y-%m-%d\ %H:%M)Z — εκκρεμούν **${{ steps.run.outputs.new_count }}**."
               echo "Updated issue #$OPEN"
             else
-              gh issue create --title "$TITLE" --body-file .github/monitor/reconciler_report.md --label reconciler
-              echo "Opened new issue"
+              URL=$(gh issue create --title "$TITLE" --body-file "$BODY" --label reconciler)
+              gh issue edit "$URL" --add-assignee "$OWNER" || echo "::warning::Απέτυχε η ανάθεση (το @mention ισχύει)"
+              echo "Opened new issue: $URL"
             fi
           else
             if [ -n "$OPEN" ]; then
