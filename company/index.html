@@ -685,7 +685,7 @@ try{ if(!_tk){ const _saved=localStorage.getItem('am-last-company'); if(_saved&&
 const AX=(_tk&&_AXC.find(function(c){return c.tk===_tk;}))||_AXC[0]||null;
 try{ if(AX&&AX.tk) localStorage.setItem('am-last-company', AX.tk); }catch(e){}
 document.addEventListener('axion:basischange',function(){location.reload();});
-const company = AX ? {ticker:AX.tk,name:AX.name,euronext_name:(AX.en||''),sector:AX.s,latest:AX.latest,years:AX.years,metrics:AX.metrics,figNotes:(AX.figNotes||null),current:((window.AXION_CURRENT&&window.AXION_CURRENT[AX.tk])||AX.current||null)} : {ticker:'',name:'—',euronext_name:'',sector:'',latest:{period:'',type:''},years:[2020,2021,2022,2023,2024,2025],metrics:{revenue:[],net_profit:[],ebitda:[],pe:[],pbv:[],total_debt:[],net_debt:[]}};;
+const company = AX ? {ticker:AX.tk,name:AX.name,euronext_name:(AX.en||''),sector:AX.s,latest:AX.latest,years:AX.years,metrics:AX.metrics,figNotes:(AX.figNotes||null),byNature:(AX.bynature||null),current:((window.AXION_CURRENT&&window.AXION_CURRENT[AX.tk])||AX.current||null)} : {ticker:'',name:'—',euronext_name:'',sector:'',latest:{period:'',type:''},years:[2020,2021,2022,2023,2024,2025],metrics:{revenue:[],net_profit:[],ebitda:[],pe:[],pbv:[],total_debt:[],net_debt:[]}};;
 // ΔΙΑΝΟΜΕΣ = μέγεθος ΧΡΗΣΗΣ. Δεν υπάρχει «μέρισμα εξαμήνου»: το RATIOS H1 κουβαλά την
 // ετήσια τιμή στη στήλη της χρήσης και 0 στο τρέχον εξάμηνο. Άρα στην όψη 6μήνου τόσο η
 // κάρτα «Χρηματικές διανομές» όσο και οι δείκτες dps/dy/payout διαβάζουν ΠΑΝΤΑ την ετήσια
@@ -1255,6 +1255,12 @@ function dirCell(d){
 // δείκτες με παρονομαστή τον κύκλο εργασιών — δέχονται υποσημείωση όταν το μέγεθος λείπει σκόπιμα
 const REV_DEP=new Set(['gm','nm','atr','etr','cogs','admin','selling']);
 const FIGN=((company.figNotes||{}).revenue)||{};
+// §29.3 «κατά είδος» (ΔΛΠ 1): οι γραμμές κόστους/μικτού/διοίκησης/διάθεσης δεν υπάρχουν στην
+// κατάσταση αποτελεσμάτων. Οι παύλες παίρνουν αστερίσκο με επεξήγηση, ώστε να μη διαβάζονται
+// ως «δεν το μετρήσαμε».
+const BYN=company.byNature||null;
+const BYN_SL=new Set(BYN?(BYN.slugs||[]):[]);
+function bynText(){ return BYN?(EN()?(BYN.en||BYN.el):(BYN.el||BYN.en)):''; }
 const esc=t=>String(t).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 const CATEN={'Κερδοφορία':'Profitability','Ρευστότητα':'Liquidity','Φερεγγυότητα':'Solvency','Δραστηριότητα':'Operation','Αποτίμηση':'Value','Λειτουργικού κόστους':'Operating Cost','Χρηματοοικονομικής διάρθρωσης':'Financial Structure'};
 ratiosEl.innerHTML=RATIOS.map((c,ci)=>{
@@ -1269,8 +1275,8 @@ ratiosEl.innerHTML=RATIOS.map((c,ci)=>{
       body=`<td class="c-na" colspan="${YEARS.length+1}">${L('co.na.banks')}</td>`;
     } else {
       const _ser=it.series.slice(0,YEARS.length);   // ίδιο εύρος με τις κεφαλίδες ετών (χωρίς την κενή στήλη 2026)
-      const yr=_ser.map((v,i)=>`<td class="c-val${i===_ser.length-1?' last':''}">${(v==null&&REV_DEP.has(it.slug)&&FIGN[String(YEARS[i])])?`<span class="c-nt" title="${esc(EN()?FIGN[String(YEARS[i])].en:FIGN[String(YEARS[i])].el)}">—<sup>*</sup></span>`:fmtU(v,it.unit)}</td>`).join('');
-      body=`${yr}<td class="c-sec">${fmtU(it.sector,it.unit)}</td>`;
+      const yr=_ser.map((v,i)=>`<td class="c-val${i===_ser.length-1?' last':''}">${(v==null&&REV_DEP.has(it.slug)&&FIGN[String(YEARS[i])])?`<span class="c-nt" title="${esc(EN()?FIGN[String(YEARS[i])].en:FIGN[String(YEARS[i])].el)}">—<sup>*</sup></span>`:(v==null&&BYN_SL.has(it.slug))?`<span class="c-nt" title="${esc(bynText())}">—<sup>*</sup></span>`:fmtU(v,it.unit)}</td>`).join('');
+      body=`${yr}<td class="c-sec">${BYN_SL.has(it.slug)?`<span class="c-nt" title="${esc(bynText())}">—<sup>*</sup></span>`:fmtU(it.sector,it.unit)}</td>`;
     }
     return `<tr><td class="c-name">${nm}<span class="en">(${nm2})</span></td><td class="c-desc">${dsc}</td>${dirCell(drc)}${body}</tr>`;
   }).join('');
