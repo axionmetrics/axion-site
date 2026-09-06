@@ -1276,7 +1276,7 @@ ratiosEl.innerHTML=RATIOS.map((c,ci)=>{
     } else {
       const _ser=it.series.slice(0,YEARS.length);   // ίδιο εύρος με τις κεφαλίδες ετών (χωρίς την κενή στήλη 2026)
       const yr=_ser.map((v,i)=>`<td class="c-val${i===_ser.length-1?' last':''}">${(v==null&&REV_DEP.has(it.slug)&&FIGN[String(YEARS[i])])?`<span class="c-nt" title="${esc(EN()?FIGN[String(YEARS[i])].en:FIGN[String(YEARS[i])].el)}">—<sup>*</sup></span>`:(v==null&&BYN_SL.has(it.slug))?`<span class="c-nt" title="${esc(bynText())}">—<sup>*</sup></span>`:fmtU(v,it.unit)}</td>`).join('');
-      body=`${yr}<td class="c-sec">${BYN_SL.has(it.slug)?`<span class="c-nt" title="${esc(bynText())}">—<sup>*</sup></span>`:fmtU(it.sector,it.unit)}</td>`;
+      body=`${yr}<td class="c-sec">${fmtU(it.sector,it.unit)}</td>`;
     }
     return `<tr><td class="c-name">${nm}<span class="en">(${nm2})</span></td><td class="c-desc">${dsc}</td>${dirCell(drc)}${body}</tr>`;
   }).join('');
