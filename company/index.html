@@ -1232,12 +1232,12 @@ const ratiosEl=document.getElementById('ratios');
  if(AXY&&AXY!==AX&&AXY.ratios&&AXY.years){
    DIV_SLUGS_UI.forEach(function(sl){ var r=AXY.ratios[sl]; if(!r||!r.series) return;
      var m={}; AXY.years.forEach(function(y,j){ m[y]=r.series[j]; });
-     _dv[sl]={m:m,sector:r.sector}; });
+     _dv[sl]={m:m,sector:r.sector,secna:r.secna}; });
  }
  RATIOS.forEach(function(cat){cat.items.forEach(function(it){it.slug=S[i];
    var d=_dv[S[i]];
-   if(d){ it.series=company.years.map(function(y){ var v=d.m[y]; return v===undefined?null:v; }); it.sector=d.sector; }
-   else { var r=AX&&AX.ratios&&AX.ratios[S[i]]; if(r){it.series=r.series;it.sector=r.sector;} }
+   if(d){ it.series=company.years.map(function(y){ var v=d.m[y]; return v===undefined?null:v; }); it.sector=d.sector; it.secna=d.secna; }
+   else { var r=AX&&AX.ratios&&AX.ratios[S[i]]; if(r){it.series=r.series;it.sector=r.sector;it.secna=r.secna;} }
    i++;});});})();
 // Τράπεζες: η γραμμή «Έξοδα διοίκησης/πωλήσεις» ΕΙΝΑΙ ο δείκτης κόστους/εσόδων
 // (RAW off21 σύνολο λειτ. εξόδων / off18 σύνολο λειτ. εσόδων) — αλλάζει μόνο η ετικέτα.
@@ -1261,6 +1261,14 @@ const FIGN=((company.figNotes||{}).revenue)||{};
 const BYN=company.byNature||null;
 const BYN_SL=new Set(BYN?(BYN.slugs||[]):[]);
 function bynText(){ return BYN?(EN()?(BYN.en||BYN.el):(BYN.el||BYN.en)):''; }
+// §29.4: η διάμεσος κλάδου λείπει επειδή ΚΑΝΕΝΑΣ στον κλάδο δεν δημοσιεύει το μέγεθος
+// (π.χ. μικτό περιθώριο στα Ακίνητα, 0/12 — όλες οι ΑΕΕΑΠ συντάσσουν κατά είδος· ή γενική
+// ρευστότητα στις τράπεζες). Σκέτη παύλα θα διαβαζόταν ως «δεν το υπολογίσαμε».
+function secNaText(n){
+  return EN()
+    ? ('No sector median: this figure is not reported by any of the '+n+' listed companies in the sector.')
+    : ('Δεν υπάρχει διάμεσος κλάδου: το μέγεθος δεν δημοσιεύεται από καμία από τις '+n+' εισηγμένες του κλάδου.');
+}
 const esc=t=>String(t).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 const CATEN={'Κερδοφορία':'Profitability','Ρευστότητα':'Liquidity','Φερεγγυότητα':'Solvency','Δραστηριότητα':'Operation','Αποτίμηση':'Value','Λειτουργικού κόστους':'Operating Cost','Χρηματοοικονομικής διάρθρωσης':'Financial Structure'};
 ratiosEl.innerHTML=RATIOS.map((c,ci)=>{
@@ -1276,7 +1284,7 @@ ratiosEl.innerHTML=RATIOS.map((c,ci)=>{
     } else {
       const _ser=it.series.slice(0,YEARS.length);   // ίδιο εύρος με τις κεφαλίδες ετών (χωρίς την κενή στήλη 2026)
       const yr=_ser.map((v,i)=>`<td class="c-val${i===_ser.length-1?' last':''}">${(v==null&&REV_DEP.has(it.slug)&&FIGN[String(YEARS[i])])?`<span class="c-nt" title="${esc(EN()?FIGN[String(YEARS[i])].en:FIGN[String(YEARS[i])].el)}">—<sup>*</sup></span>`:(v==null&&BYN_SL.has(it.slug))?`<span class="c-nt" title="${esc(bynText())}">—<sup>*</sup></span>`:fmtU(v,it.unit)}</td>`).join('');
-      body=`${yr}<td class="c-sec">${fmtU(it.sector,it.unit)}</td>`;
+      body=`${yr}<td class="c-sec">${(it.sector==null&&it.secna)?`<span class="c-nt" title="${esc(secNaText(it.secna))}">—<sup>*</sup></span>`:fmtU(it.sector,it.unit)}</td>`;
     }
     return `<tr><td class="c-name">${nm}<span class="en">(${nm2})</span></td><td class="c-desc">${dsc}</td>${dirCell(drc)}${body}</tr>`;
   }).join('');
