@@ -209,7 +209,7 @@ AX_I18N.add({
  'rk.glancesub':{el:'Top-5 ανά δείκτη στην τρέχουσα εμβέλεια · κλικ σε κάρτα για πλήρη κατάταξη.', en:'Top-5 per ratio in the current scope · click a card for the full ranking.'},
  'rk.allmarket':{el:'Όλη η αγορά', en:'Entire market'},
  'rk.period':{el:'Περίοδος', en:'Period'},
- 'rk.notann':{el:'Δεν έχουν ενημερωθεί ακόμα αποτελέσματα', en:'Results not updated yet'},
+ 'rk.notann':{el:'Εταιρείες χωρίς ακόμη ενημερωμένα αποτελέσματα {p}', en:'Companies with no updated results yet for {p}'},
  'co.entity.badge':{el:'Εκτός κάλυψης', en:'Out of coverage'},
  'rk.frozen':{el:'Εκτός κάλυψης', en:'Out of coverage'},
  'rk.reportedn':{el:'{a} από {b} έχουν ενημερωθεί', en:'{a} of {b} updated'},
@@ -347,7 +347,7 @@ function setN(n){topN=n;
 function naBlock(notann){
  if(!notann.length) return '';
  const head=`<tr class="na-head"><td colspan="5" onclick="this.closest('tbody').classList.toggle('na-collapsed')">
-   <div class="hdrow"><span class="nb">${L('rk.notann')}${PERIOD?(' · '+periodLabel(PERIOD)):''} · ${notann.length}</span><span class="cv">▾</span></div></td></tr>`;
+   <div class="hdrow"><span class="nb">${L('rk.notann').replace(PERIOD?'{p}':' {p}', PERIOD?periodPlain(PERIOD):'')}: ${notann.length}</span><span class="cv">▾</span></div></td></tr>`;
  const rows=[...notann].sort((a,b)=>a.t.localeCompare(b.t,'el')).map(r=>
    `<tr class="na-row">
      <td class="rk">·</td>
@@ -443,6 +443,8 @@ function cards(){
 
 // «2025H1» → «6M · 2025» (EN: «H1 · 2025»)· τα ετήσια μένουν ως έχουν
 function periodLabel(p){ if(!p) return ''; var m=/^(\d{4})H1$/.exec(p); if(!m) return p; return (curLang()==='en'?'H1':'6M')+' · '+m[1]; }
+// ίδιο, χωρίς την τελεία — για κείμενο μέσα σε πρόταση («… 6M 2026: 100»)
+function periodPlain(p){ return periodLabel(p).replace(' · ',' '); }
 function renderBasisBlock(){
  const bb=document.getElementById('basisblock'); if(!bb) return;
  bb.className='basis-block '+AXBASIS; bb.hidden=false;
