@@ -55,19 +55,31 @@ def parse_items(items_html):
                     "title": ti.group(1).strip() if ti else ""})
     return out
 
-def fetch_month(ym, max_pages=25):
-    seen, rows = set(), []
+def fetch_month(ym, max_pages=80):
+    """Σελιδοποίηση fin-cal (§32).
+
+    Το API δεν επιστρέφει hasNextPage ΚΑΙ οι σελίδες επικαλύπτονται: υπάρχουν σελίδες
+    εξ ολοκλήρου διπλές ενώ οι ΕΠΟΜΕΝΕΣ έχουν νέα δεδομένα. Το παλιό `if fresh==0: break`
+    έσπαγε εκεί κι έχανε τον υπόλοιπο μήνα (Ιούλιος 2026: 15 από τα 125 events — γι' αυτό
+    δεν καταγράφηκαν ποτέ οι δημοσιεύσεις 29–31/07 των μεγάλων κεφαλαιοποιήσεων).
+
+    Πραγματικό τέλος: το API κλειδώνει στην τελευταία σελίδα και επιστρέφει για πάντα
+    τα ίδια στοιχεία → σωστό κριτήριο = «η σελίδα είναι ίδια με την προηγούμενη».
+    """
+    seen, rows, prev = set(), [], None
     for p in range(max_pages):
         try: js = _get(f"{BASE}?date={ym}&page={p}")
         except Exception as e: sys.stderr.write(f"[warn] {ym} p{p}: {e}\n"); break
         items = parse_items(js.get("itemsHtml", ""))
         if not items: break
-        fresh = 0
+        cur = []
         for it in items:
             k = (it["cid"], it["date"], it["title"])
+            cur.append(k)
             if k in seen: continue
-            seen.add(k); rows.append(it); fresh += 1
-        if fresh == 0: break
+            seen.add(k); rows.append(it)
+        if prev is not None and cur == prev: break     # η σελίδα «κόλλησε» → τέλος μήνα
+        prev = cur
     return rows
 
 # ---------------------------------------------------------------- helpers
