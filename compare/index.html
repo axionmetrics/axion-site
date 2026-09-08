@@ -219,13 +219,20 @@ AX_I18N.add({
  'cmp.met.roe':{el:'ROE', en:'ROE'}, 'cmp.met.dy':{el:'Μερισματική απόδοση', en:'Dividend yield'},
  'cmp.met.nde':{el:'Καθαρός δανεισμός / EBITDA', en:'Net debt / EBITDA'},
  'cmp.met.gm':{el:'Μικτό περιθώριο', en:'Gross margin'}, 'cmp.met.nm':{el:'Καθαρό περιθώριο', en:'Net margin'},
- 'cmp.met.cr':{el:'Γενική ρευστότητα', en:'Current ratio'}, 'cmp.met.roa':{el:'ROA', en:'ROA'}
+ 'cmp.met.cr':{el:'Γενική ρευστότητα', en:'Current ratio'}, 'cmp.met.roa':{el:'ROA', en:'ROA'},
+ 'cmp.dy.annual':{el:'ΕΤΗΣΙΑ {y}', en:'ANNUAL {y}'}
 });
 function L(k){return AX_I18N.t(k);}
 function SEC(n){return AX_I18N.sector(n);}
 function curLang(){return window.AX_I18N?AX_I18N.lang:'el';}
 function LOC(){return curLang()==='en'?'en-US':'el-GR';}
 function metL(k){return L('cmp.met.'+k);}
+// §34 — chip περιόδου δίπλα στον δείκτη: «ΕΤΗΣΙΑ 2025» για τα μερίσματα, «6M» για τα υπόλοιπα
+function metTag(k){
+ if(AXBASIS!=='interim') return '';
+ if(k==='dy') return DY_YEAR?` <span class="h1c yr">${L('cmp.dy.annual').replace('{y}',DY_YEAR)}</span>`:'';
+ return ' <span class="h1c">6M</span>';
+}
 
 const COMPANY_PAGE='../company/';
 
@@ -243,13 +250,34 @@ const RBP=(window.AXION&&window.AXION.rowsByPeriod&&window.AXION.rowsByPeriod[AX
 const PERIODS=(RBP&&(window.AXION.meta.periods&&window.AXION.meta.periods[AXBASIS]||Object.keys(RBP)))||null;
 function periodRows(p){ if(RBP&&RBP[p]) return RBP[p]; return (window.AXION&&window.AXION.rows&&window.AXION.rows[AXBASIS])||[]; }
 function repCount(p){ return periodRows(p).filter(function(r){return r.reported!==false;}).length; }
-function pickDefaultPeriod(){ if(!PERIODS||!PERIODS.length) return null; var best=PERIODS[PERIODS.length-1],bestC=-1;
- for(var i=0;i<PERIODS.length;i++){ var c=repCount(PERIODS[i]); if(c>=bestC){bestC=c;best=PERIODS[i];} } return best; }
+function pickDefaultPeriod(){ if(!PERIODS||!PERIODS.length) return null;
+ // §34 — η ΤΕΛΕΥΤΑΙΑ περίοδος με έστω ΜΙΑ ανακοίνωση (ΟΧΙ η πολυπληθέστερη): στο 6μηνο
+ // η πολυπληθέστερη ήταν το 2025H1, όπου P/E, EV/EBITDA και καθ.δανεισμός/EBITDA είναι
+ // TTM χωρίς προηγούμενο εξάμηνο — όλη η στήλη έβγαινε «—».
+ for(var i=PERIODS.length-1;i>=0;i--){ if(repCount(PERIODS[i])>0) return PERIODS[i]; }
+ return PERIODS[PERIODS.length-1]; }
 function loadPeriod(){ try{var s=localStorage.getItem('am-period-'+AXBASIS); if(s&&PERIODS&&PERIODS.indexOf(s)>-1) return s;}catch(e){} return pickDefaultPeriod(); }
+// §34 — ΜΕΡΙΣΜΑΤΑ = ετήσιο μέγεθος (ίδιο με κατατάξεις/σελίδα εταιρείας §28.6).
+let DY_YEAR=null;
+function withAnnualDY(rows){
+ if(AXBASIS!=='interim') return rows;
+ try{
+  var RA=(window.AXION&&window.AXION.rowsByPeriod&&window.AXION.rowsByPeriod.annual)||null;
+  if(!RA) return rows;
+  var ps=(window.AXION.meta&&window.AXION.meta.periods&&window.AXION.meta.periods.annual)||Object.keys(RA);
+  var per=null;
+  for(var i=ps.length-1;i>=0;i--){ var rr=RA[ps[i]]||[]; if(rr.some(function(x){return x.dy!=null;})){ per=ps[i]; break; } }
+  if(!per) return rows;
+  var m={}; (RA[per]||[]).forEach(function(x){ m[x.tk]=x.dy; });
+  DY_YEAR=per;
+  rows.forEach(function(r){ r.dy=(m[r.tk]===undefined?null:m[r.tk]); });
+  return rows;
+ }catch(e){ return rows; }
+}
 let PERIOD=loadPeriod();
-let DATA=augment(periodRows(PERIOD).slice());
+let DATA=augment(withAnnualDY(periodRows(PERIOD).map(function(r){var c={};for(var k in r)c[k]=r[k];return c;})));
 function setPeriod(p){ PERIOD=p; try{localStorage.setItem('am-period-'+AXBASIS,p);}catch(e){}
- DATA=augment(periodRows(PERIOD).slice()); renderMet(); render(); }
+ DATA=augment(withAnnualDY(periodRows(PERIOD).map(function(r){var c={};for(var k in r)c[k]=r[k];return c;}))); renderMet(); render(); }
 // «2025H1» → «6M · 2025» (EN: «H1 · 2025»)· τα ετήσια μένουν ως έχουν
 function periodLabel(p){ if(!p) return ''; var m=/^(\d{4})H1$/.exec(p); if(!m) return p; return (curLang()==='en'?'H1':'6M')+' · '+m[1]; }
 function renderBasisBlock(){
@@ -379,7 +407,7 @@ function render(){
 
  const shown=ALLMET.filter(m=>metSel.includes(m.k));
  const th=`<tr><th class="l">${L('cmp.h.company')}</th>`+
-   shown.map(m=>`<th>${caps(metL(m.k))}<span class="dirn">${m.dir<0?L('cmp.lowbest'):L('cmp.highbest')}</span></th>`).join('')+
+   shown.map(m=>`<th>${caps(metL(m.k))}${metTag(m.k)}<span class="dirn">${m.dir<0?L('cmp.lowbest'):L('cmp.highbest')}</span></th>`).join('')+
    `</tr>`;
 
  const naTag=`<span class="na-tag">${L('cmp.nadata').replace('{p}',periodLabel(PERIOD))}</span>`;

@@ -31,7 +31,8 @@
  };
  var BASIS={ annual:{el:'Ετήσια',en:'Annual'}, interim:{el:'Εξάμηνο',en:'Interim'},
    soon:{el:'σύντομα',en:'soon'}, soonT:{el:'Σύντομα διαθέσιμο',en:'Coming soon'},
-   aria:{el:'Βάση δεδομένων',en:'Data basis'} };
+   aria:{el:'Βάση δεδομένων',en:'Data basis'},
+   annualOnly:{el:'Ετήσια στοιχεία',en:'Annual figures'} };
 
  var NAVHTML="<nav class=\"site-nav\">\n <div class=\"bar1\"><a class=\"lock\" href=\"../\"><span class=\"am\">A<i>M</i></span><span class=\"lrule\"></span><span class=\"lname\">AXION<br>METRICS</span></a><ul class=\"tabs\" id=\"navtabs\"></ul><div class=\"am-right\"><div class=\"am-basis\" id=\"ambasis\"></div><button class=\"langtog\" data-langtog aria-label=\"Language\">EN</button></div></div>\n <div class=\"bar2\" id=\"navbar2\"></div>\n</nav>\n<div class=\"am-upd\" id=\"amupd\" hidden></div>";
 
@@ -114,7 +115,16 @@
    var hasInterim=bases.indexOf('interim')>-1;
    var cur=curBasis(hasInterim);
    var nav=document.getElementById('ambasis');
-   if(nav){ if(window.AX_NO_BASIS){ nav.innerHTML=''; } else { nav.innerHTML=basisSegHTML(cur,hasInterim); wireBasis(nav,cur); } }
+   // §35 — ΠΡΟΣΟΧΗ: το AX_NO_BASIS σημαίνει «όχι διακόπτης ΣΤΟ NAV» — οι περισσότερες
+   // σελίδες τον μεταφέρουν στο σώμα (#ambasis-page). Η στατική ένδειξη μπαίνει ΜΟΝΟ με
+   // ρητό AX_ANNUAL_ONLY (Κλάδοι/Κλάδος): συνειδητή απόφαση ότι τα εξαμηνιαία δεν έχουν
+   // νόημα σε επίπεδο κλάδου — το λέμε, αντί να αφήνουμε τον χρήστη να μαντεύει.
+   // Τα «Γεγονότα αγοράς» / «Αναθεωρήσεις δεικτών» ΔΕΝ παίρνουν ένδειξη: είναι
+   // χρονολόγια γεγονότων, δεν είναι ούτε ετήσια ούτε εξαμηνιαία μεγέθη.
+   if(nav){ if(window.AX_NO_BASIS){
+              nav.innerHTML = window.AX_ANNUAL_ONLY
+                ? '<span class="fixedbasis">'+esc(L(BASIS.annualOnly))+'</span>' : '';
+            } else { nav.innerHTML=basisSegHTML(cur,hasInterim); wireBasis(nav,cur); } }
    var page=document.getElementById('ambasis-page');
    if(page){ page.innerHTML=basisSegHTML(cur,hasInterim); wireBasis(page,cur); }
  }

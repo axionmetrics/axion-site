@@ -105,6 +105,9 @@
  .card{border:1px solid var(--line);border-radius:12px;padding:14px 16px;cursor:pointer;transition:.12s;min-width:0}
  .card:hover{border-color:#c3d3e8;box-shadow:0 6px 18px rgba(30,79,160,.07)}
  .card.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+ .card.na{border-style:dashed;cursor:default}
+ tr.na-full td{padding:6px 0 14px;border-bottom:1px solid var(--line)}
+ .card.na:hover{border-color:var(--line);box-shadow:none}
  .card .bh{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9aa7b8;margin-bottom:8px}
  .brow{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #eef1f6;font-size:12.5px}
  .brow:last-child{border-bottom:none}
@@ -213,6 +216,14 @@ AX_I18N.add({
  'rk.basis.annual':{el:'ΕΤΗΣΙΑ ΚΑΤΑΤΑΞΗ', en:'ANNUAL RANKING'},
  'rk.basis.interim':{el:'ΕΞΑΜΗΝΙΑΙΑ ΚΑΤΑΤΑΞΗ', en:'INTERIM RANKING'},
  'rk.basis.sub':{el:'Κατάταξη σε επιλεγμένη περίοδο', en:'Ranking for the selected period'},
+ // §34 — όψη 6μήνου
+ 'rk.na.t':{el:'Μη Διαθέσιμο', en:'Not available'},
+ 'rk.na.ttm':{el:'Στο 6μηνο ο δείκτης είναι TTM (κυλιόμενο 12μηνο) — χρειάζεται προηγούμενο εξάμηνο.',
+             en:'In the interim view this ratio is TTM — it requires a prior half-year.'},
+ 'rk.na.none':{el:'Δεν υπάρχουν τιμές για την επιλεγμένη περίοδο.', en:'No values for the selected period.'},
+ 'rk.dy.annual':{el:'ΕΤΗΣΙΑ {y}', en:'ANNUAL {y}'},
+ 'rk.dy.annual.note':{el:'Τα μερίσματα είναι ετήσιο μέγεθος — δεν αλλάζουν με την όψη εξαμήνου.',
+                      en:'Dividends are an annual figure — they do not change with the interim view.'},
  'rk.of':{el:'από', en:'of'}, 'rk.median':{el:'διάμεσος', en:'median'},
  'rk.h.company':{el:'ΕΤΑΙΡΕΙΑ', en:'COMPANY'}, 'rk.h.sector':{el:'ΚΛΑΔΟΣ', en:'SECTOR'}, 'rk.h.position':{el:'ΘΕΣΗ ΣΤΗΝ ΚΑΤΑΝΟΜΗ', en:'POSITION IN DISTRIBUTION'},
  'word.companies':{el:'εταιρείες', en:'companies'},
@@ -243,16 +254,38 @@ function periodRows(p){ if(RBP&&RBP[p]) return RBP[p]; return (window.AXION&&win
 function repCount(p){ return periodRows(p).filter(function(r){return r.reported!==false && r.calculated!==false;}).length; }
 function pickDefaultPeriod(){
  if(!PERIODS||!PERIODS.length) return null;
- var best=PERIODS[PERIODS.length-1], bestC=-1;
- // η τελευταία περίοδος με τον μέγιστο αριθμό ανακοινώσεων (οι ανακοινώσεις αυξάνουν με τον χρόνο)
- for(var i=0;i<PERIODS.length;i++){ var c=repCount(PERIODS[i]); if(c>=bestC){ bestC=c; best=PERIODS[i]; } }
- return best;
+ // §34 — η ΤΕΛΕΥΤΑΙΑ περίοδος με έστω ΜΙΑ ανακοίνωση. ΟΧΙ η πολυπληθέστερη:
+ // στο 6μηνο αυτό διάλεγε το 2025H1 (128 έναντι 25), όπου P/E, EV/EBITDA και
+ // καθ.δανεισμός/EBITDA είναι ΑΔΥΝΑΤΟΝ να υπολογιστούν (TTM χωρίς προηγούμενο
+ // εξάμηνο) — ο επισκέπτης έβλεπε 3 από τις 6 κατατάξεις χωρίς εξήγηση.
+ for(var i=PERIODS.length-1;i>=0;i--){ if(repCount(PERIODS[i])>0) return PERIODS[i]; }
+ return PERIODS[PERIODS.length-1];
 }
 function loadPeriod(){ try{ var s=localStorage.getItem('am-period-'+AXBASIS); if(s&&PERIODS&&PERIODS.indexOf(s)>-1) return s; }catch(e){} return pickDefaultPeriod(); }
+// §34 — ΜΕΡΙΣΜΑΤΑ: ετήσιο μέγεθος. Το RATIOS H1 κρατά την τιμή της ΧΡΗΣΗΣ, οπότε στην
+// τρέχουσα (ημιτελή) χρήση είναι 0 για όλες — η κατάταξη «Μερισματική απόδοση» θα ήταν
+// άδεια στο 2026H1 και παραπλανητικά «εξαμηνιαία» στο 2025H1. Διαβάζουμε από την ΕΤΗΣΙΑ
+// βάση, όπως και οι «Χρηματικές διανομές» της σελίδας εταιρείας (§28.6).
+let DY_YEAR=null;
+function withAnnualDY(rows){
+ if(AXBASIS!=='interim') return rows;
+ try{
+  var RA=(window.AXION&&window.AXION.rowsByPeriod&&window.AXION.rowsByPeriod.annual)||null;
+  if(!RA) return rows;
+  var ps=(window.AXION.meta&&window.AXION.meta.periods&&window.AXION.meta.periods.annual)||Object.keys(RA);
+  var per=null;
+  for(var i=ps.length-1;i>=0;i--){ var rr=RA[ps[i]]||[]; if(rr.some(function(x){return x.dy!=null;})){ per=ps[i]; break; } }
+  if(!per) return rows;
+  var m={}; (RA[per]||[]).forEach(function(x){ m[x.tk]=x.dy; });
+  DY_YEAR=per;
+  return rows.map(function(r){ var c={}; for(var k in r) c[k]=r[k];
+   c.dy=(m[r.tk]===undefined?null:m[r.tk]); return c; });
+ }catch(e){ return rows; }
+}
 let PERIOD = loadPeriod();
-let DATA = periodRows(PERIOD).filter(function(r){return r.calculated!==false;});
+let DATA = withAnnualDY(periodRows(PERIOD).filter(function(r){return r.calculated!==false;}));
 function setPeriod(p){ PERIOD=p; try{localStorage.setItem('am-period-'+AXBASIS,p);}catch(e){}
- DATA=periodRows(PERIOD).filter(function(r){return r.calculated!==false;}); render(); }
+ DATA=withAnnualDY(periodRows(PERIOD).filter(function(r){return r.calculated!==false;})); render(); }
 
 const MET=[
  {k:'pe', dir:-1,d:1,negWorst:1},
@@ -347,14 +380,15 @@ function table(){
  if(dir==='bottom') ranked.reverse();
  const shown = topN? ranked.slice(0,topN) : ranked;
 
- document.getElementById('rtitle').textContent =
-  L(dir==='top'?'rk.top':'rk.bottom')+' · '+metLabel(metric);
- document.getElementById('rmeta').textContent =
-  `${shown.length} ${L('rk.of')} ${rows.length} ${L('word.companies')} · ${scope?SEC(scope):L('rk.allmarket')} · ${L('rk.median')} ${fv(m,q(rows.map(r=>r[m.k]),.5))}`;
+ document.getElementById('rtitle').innerHTML =
+  (L(dir==='top'?'rk.top':'rk.bottom')+' · '+metLabel(metric))+metTag(metric);   // λεξικό, όχι input
+ document.getElementById('rmeta').textContent = rows.length
+  ? `${shown.length} ${L('rk.of')} ${rows.length} ${L('word.companies')} · ${scope?SEC(scope):L('rk.allmarket')} · ${L('rk.median')} ${fv(m,q(rows.map(r=>r[m.k]),.5))}`
+  : `${scope?SEC(scope):L('rk.allmarket')} · ${L('rk.na.t')}`;
 
  document.getElementById('thead').innerHTML=
   `<tr><th>#</th><th class="l">${L('rk.h.company')}</th><th class="l">${L('rk.h.sector')}</th>
-   <th class="l">${L('rk.h.position')}</th><th style="text-align:right">${metShort(metric).toUpperCase()}</th></tr>`;
+   <th class="l">${L('rk.h.position')}</th><th style="text-align:right">${metShort(metric).toUpperCase()}${metTag(metric)}</th></tr>`;
 
  const body=shown.map((r,i)=>{
   const cls=zone(r[m.k]);
@@ -369,19 +403,39 @@ function table(){
    <td class="val ${cls}">${fv(m,r[m.k])}</td></tr>`;
  }).join('');
  const tb=document.getElementById('tbody');
- tb.innerHTML=body+naBlock(notann);
+ // §34 — δείκτης χωρίς καμία τιμή στην περίοδο: «Μη Διαθέσιμο» αντί για άδειο πίνακα
+ // (πριν έδειχνε «0 από 0 εταιρείες» και κενό σώμα, χωρίς καμία εξήγηση).
+ const naRow = rows.length ? '' :
+   `<tr class="na-full"><td colspan="5">${naBody(metric)}</td></tr>`;
+ tb.innerHTML=naRow+body+naBlock(notann);
  tb.classList.toggle('na-collapsed', notann.length>15);
 }
 
+// §34 — δείκτες που στο 6μηνο είναι TTM: χωρίς προηγούμενο εξάμηνο δεν ορίζονται.
+const TTM_I=new Set(['pe','ev','nde']);
+const isI=()=>AXBASIS==='interim';
+// chip δίπλα στον τίτλο του δείκτη: «ΕΤΗΣΙΑ 2025» για τα μερίσματα, «6M» για τα υπόλοιπα
+function metTag(k){
+ if(!isI()) return '';
+ if(k==='dy') return DY_YEAR?` <span class="h1c yr">${L('rk.dy.annual').replace('{y}',DY_YEAR)}</span>`:'';
+ return ' <span class="h1c">6M</span>';
+}
+function naBody(k){
+ const why=(isI()&&TTM_I.has(k))?L('rk.na.ttm'):L('rk.na.none');
+ return `<div class="na-box"><span class="na-tag">N/A</span>
+   <div class="na-t">${L('rk.na.t')}</div><div class="na-s">${why}</div></div>`;
+}
 function cards(){
  document.getElementById('cards').innerHTML=MET.map(m=>{
   const rows=valid(m,scoped());
+  if(!rows.length) return `<div class="card na" onclick="setMetric('${m.k}')">
+    <div class="bh">${metLabel(m.k)}${metTag(m.k)}</div>${naBody(m.k)}</div>`;
   const zone=zoneOf(m,rows);
   const top=[...rows].sort((a,b)=>{ if(m.negWorst){const av=a[m.k],bv=b[m.k],an=av<0,bn=bv<0; if(an!==bn)return an?1:-1; return an? bv-av : av-bv;} return m.dir<0? a[m.k]-b[m.k] : b[m.k]-a[m.k]; }).slice(0,5);
   const body=top.map((r,i)=>`<div class="brow"><span class="n">${i+1}. ${r.t}</span>
     <span class="v ${zone(r[m.k])}">${fv(m,r[m.k])}</span></div>`).join('');
   return `<div class="card ${m.k===metric?'on':''}" onclick="setMetric('${m.k}')">
-    <div class="bh">${metLabel(m.k)}</div>${body}</div>`;
+    <div class="bh">${metLabel(m.k)}${metTag(m.k)}</div>${body}</div>`;
  }).join('');
 }
 
