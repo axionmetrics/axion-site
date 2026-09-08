@@ -281,7 +281,11 @@ let DATA=augment(withAnnualDY(periodRows(PERIOD).map(function(r){var c={};for(va
 function setPeriod(p){ PERIOD=p; try{localStorage.setItem('am-period-'+AXBASIS,p);}catch(e){}
  DATA=augment(withAnnualDY(periodRows(PERIOD).map(function(r){var c={};for(var k in r)c[k]=r[k];return c;}))); renderMet(); render(); }
 // «2025H1» → «6M · 2025» (EN: «H1 · 2025»)· τα ετήσια μένουν ως έχουν
-function periodLabel(p){ if(!p) return ''; var m=/^(\d{4})H1$/.exec(p); if(!m) return p; return (curLang()==='en'?'H1':'6M')+' · '+m[1]; }
+// §34.6 — «6M» ΚΑΙ ΣΤΙΣ ΔΥΟ ΓΛΩΣΣΕΣ, όπως τα chip των δεικτών και η λωρίδα «Νέα
+// αποτελέσματα» (§28.3). Πριν έγραφε «H1» στα αγγλικά και συνυπήρχε με «P/E 6M 2026».
+function periodLabel(p){ if(!p) return ''; var m=/^(\d{4})H1$/.exec(p); if(!m) return p; return '6M · '+m[1]; }
+// χωρίς την τελεία — για κείμενο μέσα σε πρόταση («Δεν έχει ενημερωθεί 6M 2026»)
+function periodPlain(p){ return periodLabel(p).replace(' · ',' '); }
 function renderBasisBlock(){
  const bb=document.getElementById('basisblock'); if(!bb) return;
  bb.className='basis-block '+AXBASIS; bb.hidden=false;
@@ -412,7 +416,7 @@ function render(){
    shown.map(m=>`<th>${caps(metL(m.k))}${metTag(m.k)}<span class="dirn">${m.dir<0?L('cmp.lowbest'):L('cmp.highbest')}</span></th>`).join('')+
    `</tr>`;
 
- const naTag=`<span class="na-tag">${L('cmp.nadata').replace('{p}',periodLabel(PERIOD))}</span>`;
+ const naTag=`<span class="na-tag">${L('cmp.nadata').replace('{p}',periodPlain(PERIOD))}</span>`;
  const tb=rows.map(r=>{
   const na=(r.reported===false);
   const tds=shown.map(m=>`<td class="${na?'neu':rankCls(m,reported,r[m.k])}">${na?'—':fv(m,r[m.k])}</td>`).join('');
