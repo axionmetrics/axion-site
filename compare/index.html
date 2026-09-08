@@ -231,7 +231,9 @@ function metL(k){return L('cmp.met.'+k);}
 function metTag(k){
  if(AXBASIS!=='interim') return '';
  if(k==='dy') return DY_YEAR?` <span class="h1c yr">${L('cmp.dy.annual').replace('{y}',DY_YEAR)}</span>`:'';
- return ' <span class="h1c">6M</span>';
+ // «6M 2026» — με το έτος της επιλεγμένης περιόδου, όπως και το «ΕΤΗΣΙΑ 2025»
+ var y=(PERIOD||'').slice(0,4);
+ return ` <span class="h1c">6M${y?' '+y:''}</span>`;
 }
 
 const COMPANY_PAGE='../company/';
