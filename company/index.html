@@ -299,6 +299,13 @@
   .rtbl .c-na{text-align:center;font-style:italic;color:var(--muted);font-size:13px;white-space:nowrap}
   .na-bank{font-style:italic;color:var(--muted);font-size:12px}
   .rtbl thead th.y{font-family:var(--mono);color:var(--cyan);text-transform:none;letter-spacing:0;font-size:16.5px}
+  /* §31 — σήμανση όψης 6μήνου. Το chip παίρνει το font-size του κειμένου δίπλα του. */
+  .h1c{display:inline-block;font-family:'Open Sans',system-ui,sans-serif;font-weight:800;font-size:inherit;line-height:1;letter-spacing:.02em;background:#e4f0ef;color:#0b5a56;border-radius:3px;padding:2px 4px;vertical-align:baseline}
+  .phead .h1c{background:rgba(255,255,255,.18);color:#fff;margin-left:8px}
+  .h1c[hidden]{display:none}
+  /* στοιβαγμένο πάνω από το έτος: ίδιο μέγεθος, μηδενικό κόστος σε πλάτος */
+  .rtbl thead th.y .h1c{display:block;width:max-content;margin:0 0 3px auto;padding:2px 5px}
+  @media (prefers-color-scheme:dark){.h1c{background:#123c39;color:#7fd9d0}}
   .note{font-size:12px;color:#7a5a12;line-height:1.5;margin-top:14px;padding:11px 14px;background:#fbf1db;border:1px solid #ecd9a6;border-left:3px solid var(--gold);border-radius:8px}
   .note strong{color:var(--gold);font-weight:600}
 
@@ -489,7 +496,7 @@
               <div class="pbody"><div class="sc-grid" id="scorecard"></div></div>
             </div>
             <div class="panel sub p-dist">
-              <div class="phead teal"><i class="ti ti-coin"></i><h2 data-i18n="co.ph.dist">Χρηματικές διανομές</h2><span class="hint" data-i18n="co.hint.3y">3ετία</span></div>
+              <div class="phead teal"><i class="ti ti-coin"></i><h2 data-i18n="co.ph.dist">Χρηματικές διανομές</h2><span class="hint"><span class="h1mark" hidden data-i18n="co.dist.annual">ΕΤΗΣΙΑ ΣΤΟΙΧΕΙΑ</span><span class="h1mark" hidden> · </span><span data-i18n="co.hint.3y">3ετία</span></span></div>
               <div class="pbody" id="distcard"></div>
             </div>
           </div>
@@ -499,7 +506,7 @@
 
     <div class="a-ratios">
       <div class="panel">
-        <div class="phead blue"><i class="ti ti-chart-dots"></i><h2 data-i18n="co.ph.ratios">Δείκτες</h2></div>
+        <div class="phead blue"><i class="ti ti-chart-dots"></i><h2 data-i18n="co.ph.ratios">Δείκτες</h2><span class="h1c h1mark" hidden>6M</span></div>
         <div class="pbody">
           <div id="ratios"></div>
           <p class="note" data-i18n-html="co.ratios.note"><strong>Διάμεσος κλάδου:</strong> η σύγκριση γίνεται με τη διάμεση («τυπική») τιμή των εταιρειών του κλάδου, όχι με μέσο όρο — έτσι ακραίες τιμές λίγων εταιρειών δεν αλλοιώνουν τη σύγκριση. Οι τράπεζες εξετάζονται χωριστά.</p>
@@ -509,7 +516,7 @@
 
     <div class="a-traj">
       <div class="panel">
-        <div class="phead blue"><i class="ti ti-chart-line"></i><h2 data-i18n="co.ph.traj">Τροχιά μεγεθών</h2></div>
+        <div class="phead blue"><i class="ti ti-chart-line"></i><h2 data-i18n="co.ph.traj">Τροχιά μεγεθών</h2><span class="h1c h1mark" hidden>6M</span></div>
         <div class="pbody">
           <div class="mlegend"><span class="ml"><i style="background:#2f80c2"></i><span data-i18n="co.leg.rev">Τζίρος</span></span><span class="ml" id="eb-leg"><i style="background:#3f9e6a"></i>EBITDA</span><span class="u" data-i18n="co.unit.meur2">(εκατ. €)</span></div>
           <div class="chart-wrap" style="position:relative">
@@ -634,6 +641,9 @@ AX_I18N.add({
  'co.gl.liq':{el:'Ρευστότητα', en:'Liquidity'},
  'co.gl.b3':{el:'μ.ο. 3ετίας', en:'3-yr avg'},
  'co.gl.bp':{el:'περιόδου', en:'period'},
+ // §31 — δυναμική ετικέτα βάσης στην όψη 6μήνου: λέει ΠΟΣΕΣ και ΠΟΙΕΣ περίοδοι μπήκαν
+ 'co.gl.b6n':{el:'μ.ο. {n} εξαμήνων', en:'{n}-half avg'},
+ 'co.gl.b6na':{el:'απαιτεί δύο εξάμηνα', en:'needs two half-years'},
  'co.gl.sector':{el:'κλάδος ', en:'sector '},
  'co.gl.met.ebt':{el:'Κέρδη προ φόρων', en:'Pre-tax profit'},
  'co.gl.met.rev':{el:'Έσοδα', en:'Revenue'},
@@ -664,6 +674,8 @@ AX_I18N.add({
  'co.dist.divsh':{el:'Μέρισμα', en:'Dividend'},
  'co.dist.capsh':{el:'Επιστρ. κεφ.', en:'Capital ret.'},
  'co.dist.yield':{el:'Απόδοση', en:'Yield'},
+ 'co.dist.annual':{el:'ΕΤΗΣΙΑ ΣΤΟΙΧΕΙΑ', en:'ANNUAL FIGURES'},
+ 'co.dist.annualNote':{el:'Οι διανομές είναι πάντα ετήσιες — δεν αλλάζουν με την όψη εξαμήνου.', en:'Distributions are always annual — they do not change with the interim view.'},
  'co.dist.note':{el:'Μέρισμα ανά χρήση· επιστροφές κεφαλαίου ανά έτος πληρωμής.', en:'Dividend per fiscal year; capital returns per payment year.'},
  'co.dist.none':{el:'Δεν διανέμει', en:'No distributions'},
  'co.dist.none.s':{el:'Καμία χρηματική διανομή στους μετόχους την τελευταία 3ετία.', en:'No cash distribution to shareholders in the last 3 years.'},
@@ -690,6 +702,9 @@ const company = AX ? {ticker:AX.tk,name:AX.name,euronext_name:(AX.en||''),sector
 // ετήσια τιμή στη στήλη της χρήσης και 0 στο τρέχον εξάμηνο. Άρα στην όψη 6μήνου τόσο η
 // κάρτα «Χρηματικές διανομές» όσο και οι δείκτες dps/dy/payout διαβάζουν ΠΑΝΤΑ την ετήσια
 // βάση — αλλιώς η κάρτα κόβεται σε 1 γραμμή και το DPS δείχνει ψευδές «0,00 €».
+const IS_H1=(AXBASIS==='interim');
+try{if(IS_H1)document.querySelectorAll('.h1mark').forEach(function(e){e.hidden=false;});}catch(e){}
+const H1C='<span class="h1c">6M</span>';
 const AXY=(function(){
   if(AXBASIS==='annual') return AX;
   try{ var _L=(window.AXION&&window.AXION.companies&&window.AXION.companies.annual)||[];
@@ -999,7 +1014,9 @@ function draw(){
 
   // axis baseline + year numbers close to axis
   svg.appendChild(el('line',{x1:padL,y1:zeroY,x2:W-padR,y2:zeroY,stroke:(yMin<0?'#b8c6d8':'#cfdcea'),'stroke-width':(yMin<0?1.4:1)}));
-  company.years.slice(s,s+WIN).forEach((yr,li)=>{ const t=el('text',{x:xOf(li),y:yearY,'text-anchor':'middle','font-family':"'Ubuntu Mono'",'font-size':11,fill:'#6b8199'}); t.textContent=yr; svg.appendChild(t); });
+  company.years.slice(s,s+WIN).forEach((yr,li)=>{ const t=el('text',{x:xOf(li),y:yearY,'text-anchor':'middle','font-family':"'Ubuntu Mono'",'font-size':11,fill:'#6b8199'});
+    if(IS_H1){ const a=el('tspan',{fill:'#0b5a56','font-weight':700}); a.textContent='6M '; t.appendChild(a); const b=el('tspan',{}); b.textContent=yr; t.appendChild(b); }
+    else t.textContent=yr; svg.appendChild(t); });
   // «Αλλαγή οντότητας» — διακριτικό κάθετο σημάδι στο έτος τομής (τα αριστερά αφορούν την παλιά οντότητα)
   (function(){
     var ech=(AX&&AX.echange); if(!ech||!ech.year) return;
@@ -1288,9 +1305,9 @@ ratiosEl.innerHTML=RATIOS.map((c,ci)=>{
     }
     return `<tr><td class="c-name">${nm}<span class="en">(${nm2})</span></td><td class="c-desc">${dsc}</td>${dirCell(drc)}${body}</tr>`;
   }).join('');
-  const yhead=YEARS.map(y=>`<th class="y">${y}</th>`).join('');
+  const yhead=YEARS.map(y=>`<th class="y">${IS_H1?H1C:''}${y}</th>`).join('');
   const cn=EN()?(CATEN[c.cat]||c.cat):c.cat, cn2=EN()?c.cat:(CATEN[c.cat]||'');
-  return `<div class="cat"><div class="cat-head"><h3>${cn} <span class="caten">(${cn2})</span></h3><span class="arr">›</span></div><div class="cat-body"><div class="rtbl-wrap"><table class="rtbl"><thead><tr><th class="l">${L('co.rt.ratio')}</th><th class="l">${L('co.rt.desc')}</th><th class="l"></th>${yhead}<th>${L('co.rt.secmed')}</th></tr></thead><tbody>${rows}</tbody></table></div></div></div>`;
+  return `<div class="cat"><div class="cat-head"><h3>${cn} <span class="caten">(${cn2})</span></h3><span class="arr">›</span></div><div class="cat-body"><div class="rtbl-wrap"><table class="rtbl"><thead><tr><th class="l">${L('co.rt.ratio')}</th><th class="l">${L('co.rt.desc')}</th><th class="l"></th>${yhead}<th>${L('co.rt.secmed')}${IS_H1?' '+H1C:''}</th></tr></thead><tbody>${rows}</tbody></table></div></div></div>`;
 }).join('');
 ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.classList.toggle('open'));
 
@@ -1302,6 +1319,20 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
   const sgn=v=>(v==null?'':(v>=0?'+':''));
   if(!G){ if(scEl)scEl.innerHTML=''; if(dvEl)dvEl.innerHTML=''; return; }
   const cards=[];
+  // §31 — ετικέτα βάσης. Στο 6μηνο δεν υπάρχουν ποτέ 3 περίοδοι (102/133 έχουν μία,
+  //        25 έχουν δύο), οπότε το «μ.ο. 3ετίας» θα ήταν ψευδές: λέμε τι μπήκε πραγματικά.
+  const h1y=y=>'6M '+y;
+  const basisAvg=o=>{ if(!IS_H1) return L('co.gl.b3');
+    const n=(o&&o.n)||0;
+    if(n>=2) return L('co.gl.b6n').replace('{n}',n);
+    if(n===1&&o.p!=null) return h1y(o.p);
+    return '—'; };
+  const basisGrowth=o=>{ if(!IS_H1) return L('co.gl.b3');
+    const n=(o&&o.n)||0;
+    if(n>=2) return L('co.gl.b6n').replace('{n}',n);
+    if(n===1&&o.p0!=null&&o.p1!=null) return '6M '+String(o.p1).slice(2)+' / 6M '+String(o.p0).slice(2);
+    return '—'; };
+  const basisPer=o=>(IS_H1?((o&&o.p!=null)?h1y(o.p):'—'):L('co.gl.bp'));
   // Κερδοφορία — ROE μ.ο. 3ετίας (απόλυτα όρια· κλάδος μόνο ως αναφορά)
   (function(){
     const co=G.profit.co, sec=G.profit.sec;   // co/sec = μ.ο. 3ετίας κερδών προ φόρων (απόλυτο €)
@@ -1310,7 +1341,7 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
     else if(co<0){t='bad';r=L('co.gl.r.lossmk');}
     else {t='good';r=L('co.gl.r.profit');}
     const eurM=v=>(v==null?'—':fMil(v)+EURSUF());
-    cards.push({cat:L('co.gl.profit'),basis:L('co.gl.b3'),bc:'b3',tone:t,rating:r,metric:L('co.gl.met.ebt'),main:eurM(co),sub:L('co.gl.sector')+eurM(sec)});
+    cards.push({cat:L('co.gl.profit'),basis:basisAvg(G.profit),bc:'b3',tone:t,rating:r,metric:L('co.gl.met.ebt'),main:eurM(co),sub:L('co.gl.sector')+eurM(sec)});
   })();
   // Ανάπτυξη — μ.ο. 3ετίας ανάπτυξης εσόδων (απόλυτα όρια· κλάδος μόνο ως αναφορά)
   (function(){
@@ -1321,7 +1352,8 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
     else if(co<3){t='mid';r=L('co.gl.r.stag');}
     else if(co<8){t='good';r=L('co.gl.r.steady');}
     else {t='good';r=L('co.gl.r.strong');}
-    cards.push({cat:L('co.gl.growth'),basis:L('co.gl.b3'),bc:'b3',tone:t,rating:r,metric:L('co.gl.met.rev'),main:co==null?'—':sgn(co)+nf(co)+'%',sub:L('co.gl.sector')+(sec==null?'—':sgn(sec)+nf(sec)+'%')});
+    cards.push({cat:L('co.gl.growth'),basis:basisGrowth(G.growth),bc:'b3',tone:t,rating:r,metric:L('co.gl.met.rev'),main:co==null?'—':sgn(co)+nf(co)+'%',
+      sub:(IS_H1&&co==null)?L('co.gl.b6na'):L('co.gl.sector')+(sec==null?'—':sgn(sec)+nf(sec)+'%')});
   })();
   // Μόχλευση — Χρέος/Ίδια περιόδου (απόλυτα όρια· κλάδος μόνο ως αναφορά)
   (function(){
@@ -1332,7 +1364,7 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
     else if(co<=1){t='good';r=L('co.gl.r.low');}
     else if(co<=2){t='mid';r=L('co.gl.r.mod');}
     else {t='bad';r=L('co.gl.r.high');}
-    cards.push({cat:L('co.gl.lev'),basis:L('co.gl.bp'),bc:'bp',tone:t,rating:r,metric:L('co.gl.met.de'),main:co==null?'—':nf(co)+'×',sub:L('co.gl.sector')+(sec==null?'—':nf(sec)+'×')});
+    cards.push({cat:L('co.gl.lev'),basis:basisPer(G.lev),bc:'bp',tone:t,rating:r,metric:L('co.gl.met.de'),main:co==null?'—':nf(co)+'×',sub:L('co.gl.sector')+(sec==null?'—':nf(sec)+'×')});
   })();
   // Ρευστότητα — Γενική περιόδου· ΤΡΑΠΕΖΕΣ: Δείκτης ΜΕΑ (kind='npe') αντί γενικής ρευστότητας (απόλυτα όρια· κλάδος μόνο ως αναφορά)
   (function(){
@@ -1346,13 +1378,13 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
       else if(co<3){t='good';r=L('co.gl.r.npeLow');}
       else if(co<5){t='mid';r=L('co.gl.r.npeMod');}
       else {t='bad';r=L('co.gl.r.npeHigh');}
-      cards.push({cat:L('co.gl.liqNpe'),basis:L('co.gl.bp'),bc:'bp',tone:t,rating:r,metric:L('co.gl.met.npe'),main:co==null?'—':nf(co)+'%',sub:L('co.gl.sector')+(sec==null?'—':nf(sec)+'%')});
+      cards.push({cat:L('co.gl.liqNpe'),basis:basisPer(G.liq),bc:'bp',tone:t,rating:r,metric:L('co.gl.met.npe'),main:co==null?'—':nf(co)+'%',sub:L('co.gl.sector')+(sec==null?'—':nf(sec)+'%')});
     } else {
       if(co==null){t='mid';r='—';}
       else if(co>=1.5){t='good';r=L('co.gl.r.adeq');}
       else if(co>=1){t='mid';r=L('co.gl.r.marg');}
       else {t='bad';r=L('co.gl.r.strained');}
-      cards.push({cat:L('co.gl.liq'),basis:L('co.gl.bp'),bc:'bp',tone:t,rating:r,metric:L('co.gl.met.cur'),main:co==null?'—':nf(co)+'×',sub:L('co.gl.sector')+(sec==null?'—':nf(sec)+'×')});
+      cards.push({cat:L('co.gl.liq'),basis:basisPer(G.liq),bc:'bp',tone:t,rating:r,metric:L('co.gl.met.cur'),main:co==null?'—':nf(co)+'×',sub:L('co.gl.sector')+(sec==null?'—':nf(sec)+'×')});
     }
   })();
   scEl.innerHTML=cards.map(c=>`<div class="sc-item sc-${c.tone}"><div class="sc-cat">${c.cat}</div><div class="sc-basis ${c.bc}">${c.basis}</div><div class="sc-box"><span class="sc-badge">${c.rating}</span><div class="sc-val"><span class="sc-metric">${c.metric}</span><span class="sc-main">${c.main}</span></div><span class="sc-sub">${c.sub}</span></div></div>`).join('');
@@ -1369,7 +1401,7 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
   if(yrs.length){
     const head=`<span class="dvh hb">${L('co.dist.yr')}</span><span class="dvh hb r mh">${L('co.dist.divsh')}</span><span class="dvh hb r dvpr">${L('co.dist.yield')}</span><span class="dvh hb r dvpl ch">${L('co.dist.capsh')}</span>`;
     const body=yrs.map((y,i)=>{ const lc=(i===yrs.length-1)?' lastrow':''; return `<span class="dvc dv-yr${lc}">${y}</span><span class="dvc dv-eur r${lc}">${divBy[y]==null?'—':nf(divBy[y],3)}</span><span class="dvc dv-yld r dvpr${lc}">${dyBy[y]==null?'—':nf(dyBy[y])+'%'}</span><span class="dvc dv-cap r dvpl${lc}">${capBy[y]==null?'—':nf(capBy[y],3)}</span>`; }).join('');
-    dvEl.innerHTML=`<div class="dv-list"><div class="dv-grid" style="grid-template-rows:repeat(${yrs.length+1},auto)"><i class="dv-rule"></i>${head}${body}</div><div class="dv-note">${L('co.dist.note')}</div></div>`;
+    dvEl.innerHTML=`<div class="dv-list"><div class="dv-grid" style="grid-template-rows:repeat(${yrs.length+1},auto)"><i class="dv-rule"></i>${head}${body}</div><div class="dv-note">${L('co.dist.note')}${IS_H1?' <b>'+L('co.dist.annualNote')+'</b>':''}</div></div>`;
   } else {
     dvEl.innerHTML=`<div class="dv-empty"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/></svg></div><div class="t">${L('co.dist.none')}</div><div class="s">${L('co.dist.none.s')}</div></div>`;
   }
