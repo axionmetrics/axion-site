@@ -864,9 +864,15 @@ const li=(company.latest && company.latest.idx!=null) ? company.latest.idx : com
 // §45 — κατάσταση EBITDA για την τελευταία χρήση. ΑΝΟΧΗ 0,05 %: κάτω από αυτό η διαφορά είναι
 // στρογγυλοποίηση (ο τύπος μας δίνει ακριβή ευρώ, ο πίνακας της εταιρείας χιλιάδες), όχι άλλο μέγεθος.
 const EB_TOL=0.0005;
+// §45.7 ΦΡΟΥΡΟΣ ΣΧΗΜΑΤΟΣ. Αν το data.js προέρχεται από ΠΑΛΙΑ γέφυρα, το `ebitda_rep` λείπει
+// ΕΝΤΕΛΩΣ. Χωρίς αυτόν τον έλεγχο κάθε εταιρεία θα έπεφτε στο 'own' και η σελίδα θα έλεγε
+// «δεν δημοσιεύει EBITDA» για ΟΛΕΣ — ενώ ο αριθμός που δείχνει είναι το δημοσιευμένο.
+// Η νέα γέφυρα εκπέμπει ΠΑΝΤΑ το κλειδί (έστω γεμάτο null), άρα η απουσία = παλιό σχήμα.
+const EB_SCHEMA_OK = !!(company.metrics && 'ebitda_rep' in company.metrics);
 const EB_STATE=(function(){
   const has=v=>typeof v==='number'&&!isNaN(v);
   const own=(company.metrics.ebitda||[])[li];
+  if(!EB_SCHEMA_OK) return has(own) ? {s:'legacy',own:own} : {s:'na'};
   const rep=(company.metrics.ebitda_rep||[])[li];
   const kind=(company.metrics.ebitda_kind||[])[li]||null;
   if(!has(own)&&!has(rep)) return {s:'na'};
@@ -904,6 +910,8 @@ document.getElementById('latest').innerHTML=METRICS.map(m=>{
              +`<div class="ebb b"><div class="ebl1">${L('co.eb.calc')}</div><div class="ebl2 ax">AXION</div><div class="ebn d">${money(eb.own)}</div></div>`;
       }else if(eb.s==='same'){
         inner=`<div class="ebb s"><div class="ebl1">${L('co.eb.pub')}</div><div class="ebl2">${kindLab(eb.kind)}</div><div class="ebn">${money(eb.rep)}</div></div>`;
+      }else if(eb.s==='legacy'){ // παλιό data.js — ΔΕΝ ξέρουμε ποιο από τα δύο είναι· καμία ετικέτα
+        inner=`<div class="ebb s"><div class="ebn">${money(eb.own)}</div></div>`;
       }else{ // 'own' — η εταιρεία δεν δημοσιεύει
         inner=`<div class="ebb s"><div class="ebl1">${L('co.eb.calc')}</div><div class="ebl2 ax">AXION</div><div class="ebn">${money(eb.own)}</div></div>`;
       }
@@ -917,7 +925,8 @@ document.getElementById('latest').innerHTML=METRICS.map(m=>{
 (function(){
   const el=document.getElementById('eb-strip'); if(!el) return;
   const eb=EB_STATE;
-  if(eb.s==='na'){ el.hidden=true; return; }
+  if(eb.s==='na'||eb.s==='legacy'){ el.hidden=true; return; }   // §45.7 — σιωπή αντί για λάθος ισχυρισμό
+  if(eb.s==='legacy') return;
   let html='', ok=false;
   if(eb.s==='same'){ html=L('co.eb.s.same'); ok=true; }
   else if(eb.s==='own'){ html=L('co.eb.s.own'); }
