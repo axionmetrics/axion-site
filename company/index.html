@@ -191,7 +191,27 @@
   .union-wash{position:absolute;pointer-events:none;z-index:0;background:rgba(143,196,238,.13);border-radius:12px}
   .lnote{position:relative;z-index:1;text-align:center;font-size:10px;font-weight:600;color:rgba(255,255,255,.5);letter-spacing:.02em;margin:9px 0 1px;line-height:1.3}
   .phead.yr .latest{position:relative;z-index:1}
-  .latest{display:grid;grid-template-columns:repeat(9,1fr);gap:8px}
+  .latest{display:grid;grid-template-columns:repeat(9,1fr);gap:8px;align-items:start}
+  /* §45 — μπλοκ EBITDA: δημοσιευμένο / υπολογισμένο. ΜΟΝΟ αυτό το πλακίδιο ψηλώνει· τα υπόλοιπα
+     κρατούν το φυσικό τους ύψος (align-items:start). Η εξήγηση ζει ΑΠΟΚΛΕΙΣΤΙΚΑ στη λωρίδα. */
+  .latest .ebx{text-align:center}
+  .latest .ebb{padding:5px 4px 6px}
+  .latest .ebb.t{background:rgba(255,255,255,.17);border:1px solid rgba(255,255,255,.22);border-radius:8px 8px 2px 2px}
+  .latest .ebb.b{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-top:none;border-radius:2px 2px 8px 8px}
+  .latest .ebb.s{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.20);border-radius:9px;padding:7px 4px 8px}
+  .latest .ebl1{font-family:var(--sans);font-size:7.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.68);line-height:1.1}
+  .latest .ebl2{font-family:var(--sans);font-size:7.5px;font-weight:600;color:rgba(255,255,255,.48);line-height:1.15;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .latest .ebl2.ax{font-weight:800;letter-spacing:.1em;color:rgba(255,255,255,.55)}
+  .latest .ebn{font-family:var(--disp);font-size:16px;font-weight:800;color:#fff;line-height:1.1;white-space:nowrap;margin-top:3px}
+  .latest .ebn.d{color:rgba(255,255,255,.88)}
+  .latest .ebn small{font-family:var(--sans);font-size:9px;font-weight:500;color:rgba(255,255,255,.62)}
+  .ebstrip{position:relative;z-index:1;margin:11px -18px -16px;background:rgba(0,0,0,.17);padding:10px 18px 12px;
+           font-size:11px;color:rgba(255,255,255,.64);line-height:1.55;text-align:center}
+  .ebstrip b{color:rgba(255,255,255,.88);font-weight:700}
+  .ebstrip.ok{color:rgba(180,226,197,.82)} .ebstrip.ok b{color:rgba(200,240,215,.95)}
+  .ebstrip .kt{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+   background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.18);border-radius:4px;padding:2px 6px;margin:0 3px;color:rgba(255,255,255,.82)}
+  .ebstrip[hidden]{display:none}
   .latest .metric-item{min-width:0;text-align:center;display:flex;flex-direction:column}
   .latest .k{font-size:9.5px;color:rgba(255,255,255,.72);font-weight:600;margin-bottom:5px;line-height:1.2;text-transform:uppercase;letter-spacing:.04em}
   .latest .cell{flex:1;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.20);border-radius:9px;padding:9px 6px;display:flex;flex-direction:column;justify-content:center}
@@ -464,7 +484,7 @@
 
     <div class="a-year">
       <div class="panel">
-        <div class="phead yr"><div class="union-wash" id="union-wash" hidden></div><div class="yr-top"><h2 id="yr-h">2025</h2><span class="ynote" id="yr-note" hidden></span></div><div class="latest" id="latest"></div><div class="lnote" id="latest-note" hidden></div><div class="cband" id="current-band"></div></div>
+        <div class="phead yr"><div class="union-wash" id="union-wash" hidden></div><div class="yr-top"><h2 id="yr-h">2025</h2><span class="ynote" id="yr-note" hidden></span></div><div class="latest" id="latest"></div><div class="ebstrip" id="eb-strip" hidden></div><div class="lnote" id="latest-note" hidden></div><div class="cband" id="current-band"></div></div>
         <div class="pbody year-body">
           <div class="year-top">
             <div class="panel sub">
@@ -562,6 +582,18 @@ AX_I18N.add({
  'co.m.revenue':{el:'Τζίρος', en:'Revenue'},
  'co.m.net_profit':{el:'Καθαρά κέρδη', en:'Net profit'},
  'co.m.ebitda':{el:'EBITDA', en:'EBITDA'},
+ // §45 — EBITDA: δημοσιευμένο έναντι υπολογισμένου
+ 'co.eb.pub':{el:'Δημοσιευμένο', en:'Reported'},
+ 'co.eb.calc':{el:'Υπολογισμένο', en:'Calculated'},
+ 'co.eb.plain':{el:'(κανονικό)', en:'(standard)'},
+ 'co.eb.s.same':{el:'✓ Ο <b>υπολογισμός Axion</b> αναπαράγει ακριβώς το δημοσιευμένο EBITDA της εταιρείας.', en:'✓ The <b>Axion calculation</b> reproduces the reported EBITDA exactly.'},
+ 'co.eb.s.own':{el:'<b>Η εταιρεία δεν δημοσιεύει EBITDA.</b> Ο αριθμός είναι <b>υπολογισμός Axion</b> με τον ίδιο τύπο που εφαρμόζεται σε όλες τις εισηγμένες: κέρδη προ φόρων + τόκοι − χρηματοοικονομικά έσοδα + αποσβέσεις.', en:'<b>The company does not report EBITDA.</b> This figure is an <b>Axion calculation</b> using the same formula applied to every listed company: pre-tax profit + interest − financial income + depreciation.'},
+ 'co.eb.s.plain':{el:'Και τα δύο είναι <b>κανονικό EBITDA</b>. Η διαφορά προκύπτει από τον τρόπο δόμησης: η εταιρεία ξεκινά συνήθως από το λειτουργικό αποτέλεσμα, ο <b>υπολογισμός Axion</b> από τα κέρδη προ φόρων — άρα διαφέρουν κατά στοιχεία όπως τα αποτελέσματα συγγενών και οι αποσβέσεις επιχορηγήσεων.', en:'Both are <b>standard EBITDA</b>. The difference comes from how each is built: the company typically starts from operating profit, the <b>Axion calculation</b> from pre-tax profit — so they differ by items such as results of associates and amortisation of grants.'},
+ 'co.eb.s.kind':{el:'Η εταιρεία δημοσιεύει EBITDA {k} — {w}. Το <b>υπολογισμένο Axion</b> εφαρμόζει τον ίδιο τύπο σε όλες τις εισηγμένες και είναι αυτό που χρησιμοποιείται στις κατατάξεις και στις διαμέσους κλάδου.', en:'The company reports EBITDA {k} — {w}. The <b>Axion calculation</b> applies the same formula to every listed company and is what feeds the rankings and sector medians.'},
+ 'co.eb.w.val':{el:'<b>εξαιρεί κέρδη ή ζημιές από αναπροσαρμογή σε εύλογη αξία</b>', en:'<b>it excludes fair-value revaluation gains and losses</b>'},
+ 'co.eb.w.adj':{el:'<b>εξαιρεί έκτακτα ή μη επαναλαμβανόμενα στοιχεία</b>', en:'<b>it excludes one-off or non-recurring items</b>'},
+ 'co.eb.w.met':{el:'<b>απομονώνει το αποτέλεσμα εμπορεύματος</b>', en:'<b>it isolates the commodity result</b>'},
+ 'co.eb.w.gen':{el:'<b>ακολουθεί διαφορετικό ορισμό από τον δικό μας</b>', en:'<b>it follows a different definition from ours</b>'},
  'co.m.ppi':{el:'PPI', en:'PPI'},
  'co.na.banks':{el:'Not applicable to banks', en:'Not applicable to banks'},
  'co.m.mcap':{el:'Κεφαλαιοποίηση', en:'Market cap'},
@@ -829,6 +861,27 @@ document.getElementById('co-sector').textContent=company.sector;
 (function(){ var p=document.getElementById('co-corp'); if(p)p.hidden=true; })();
 
 const li=(company.latest && company.latest.idx!=null) ? company.latest.idx : company.years.length-1;
+// §45 — κατάσταση EBITDA για την τελευταία χρήση. ΑΝΟΧΗ 0,05 %: κάτω από αυτό η διαφορά είναι
+// στρογγυλοποίηση (ο τύπος μας δίνει ακριβή ευρώ, ο πίνακας της εταιρείας χιλιάδες), όχι άλλο μέγεθος.
+const EB_TOL=0.0005;
+const EB_STATE=(function(){
+  const has=v=>typeof v==='number'&&!isNaN(v);
+  const own=(company.metrics.ebitda||[])[li];
+  const rep=(company.metrics.ebitda_rep||[])[li];
+  const kind=(company.metrics.ebitda_kind||[])[li]||null;
+  if(!has(own)&&!has(rep)) return {s:'na'};
+  if(!has(rep)) return {s:'own',own:own};
+  if(!has(own)) return {s:'same',rep:rep,kind:kind};
+  const d=Math.abs(own-rep)/Math.max(Math.abs(rep),1);
+  return d<=EB_TOL ? {s:'same',rep:rep,own:own,kind:kind} : {s:'diff',rep:rep,own:own,kind:kind};
+})();
+function EB_WHY(k){
+  const t=String(k||'').toLowerCase();
+  if(t.indexOf('αποτιμ')>=0) return 'co.eb.w.val';
+  if(t.indexOf('προσαρμ')>=0) return 'co.eb.w.adj';
+  if(t.indexOf('μετάλλ')>=0||t.indexOf('a-ebitda')>=0) return 'co.eb.w.met';
+  return 'co.eb.w.gen';
+}
 document.getElementById('latest').innerHTML=METRICS.map(m=>{
   // τράπεζες: EBITDA→Κέρδη προ προβλέψεων, Συν. δανεισμός→Δάνεια, Καθ. δανεισμός→Καταθέσεις
   const sw = IS_BANK ? BANK_SWAP[m.key] : null;
@@ -837,11 +890,43 @@ document.getElementById('latest').innerHTML=METRICS.map(m=>{
   const label = sw ? L(sw.l) : m.label;
   const val=(IS_BANK&&!sw&&NA_METRIC.has(m.key))?`<span class="na-bank">${L('co.na.banks')}</span>`:(m.unit==='eur'?(v==null?'—':`${fMil(v)}<small>${EURSUF()}</small>`):fX(v));
   const uni=(m.key==='mcap'||m.key==='pe'||m.key==='pbv')?' uni':'';
-  // §42: το EBITDA είναι πλέον ΤΟ ΔΗΜΟΣΙΕΥΜΕΝΟ της εταιρείας (fallback στον δικό μας
-  // υπολογισμό μόνο όπου δεν δημοσιεύεται). Δεν υπάρχει δεύτερη γραμμή σύγκρισης.
+  // §45 — EBITDA: δύο μεγέθη. Το `metrics.ebitda` είναι Ο ΔΙΚΟΣ ΜΑΣ υπολογισμός (τροφοδοτεί
+  // κατατάξεις/δείκτες), το `ebitda_rep` ό,τι ΑΝΑΚΟΙΝΩΣΕ η εταιρεία, το `ebitda_kind` τι είδους.
+  // Η εξήγηση ΔΕΝ μπαίνει εδώ — πάει αποκλειστικά στη λωρίδα (#eb-strip).
+  if(m.key==='ebitda' && !sw && !(IS_BANK&&NA_METRIC.has(m.key))){
+    const eb=EB_STATE;
+    if(eb.s!=='na'){
+      const money=x=>`${fMil(x)}<small>${EURSUF()}</small>`;
+      const kindLab=k=>k?`(${k})`:L('co.eb.plain');
+      let inner;
+      if(eb.s==='diff'){
+        inner=`<div class="ebb t"><div class="ebl1">${L('co.eb.pub')}</div><div class="ebl2">${kindLab(eb.kind)}</div><div class="ebn">${money(eb.rep)}</div></div>`
+             +`<div class="ebb b"><div class="ebl1">${L('co.eb.calc')}</div><div class="ebl2 ax">AXION</div><div class="ebn d">${money(eb.own)}</div></div>`;
+      }else if(eb.s==='same'){
+        inner=`<div class="ebb s"><div class="ebl1">${L('co.eb.pub')}</div><div class="ebl2">${kindLab(eb.kind)}</div><div class="ebn">${money(eb.rep)}</div></div>`;
+      }else{ // 'own' — η εταιρεία δεν δημοσιεύει
+        inner=`<div class="ebb s"><div class="ebl1">${L('co.eb.calc')}</div><div class="ebl2 ax">AXION</div><div class="ebn">${money(eb.own)}</div></div>`;
+      }
+      return `<div class="metric-item"><div class="k">${label}</div><div class="ebx">${inner}</div></div>`;
+    }
+  }
   let extra='';
   return `<div class="metric-item${uni}"><div class="k">${label}</div><div class="cell"><div class="v">${val}</div>${extra}</div></div>`;
 }).join('');
+// §45 — η λωρίδα εξήγησης κάτω από τη μπάρα
+(function(){
+  const el=document.getElementById('eb-strip'); if(!el) return;
+  const eb=EB_STATE;
+  if(eb.s==='na'){ el.hidden=true; return; }
+  let html='', ok=false;
+  if(eb.s==='same'){ html=L('co.eb.s.same'); ok=true; }
+  else if(eb.s==='own'){ html=L('co.eb.s.own'); }
+  else if(eb.kind){
+    html=L('co.eb.s.kind').replace('{k}',`<span class="kt">${eb.kind}</span>`).replace('{w}',L(EB_WHY(eb.kind)));
+  }else{ html=L('co.eb.s.plain'); }
+  el.className='ebstrip'+(ok?' ok':'');
+  el.innerHTML=html; el.hidden=false;
+})();
 // Στο 6μηνο, το P/E τελευταίας περιόδου είναι TTM (κυλιόμενο 12μηνο) — διακριτική υποσημείωση όταν υπάρχει τιμή
 (function(){
   var ln=document.getElementById('latest-note'); if(!ln) return;
