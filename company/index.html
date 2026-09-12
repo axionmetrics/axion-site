@@ -484,7 +484,7 @@
 
     <div class="a-year">
       <div class="panel">
-        <div class="phead yr"><div class="union-wash" id="union-wash" hidden></div><div class="yr-top"><h2 id="yr-h">2025</h2><span class="ynote" id="yr-note" hidden></span></div><div class="latest" id="latest"></div><div class="ebstrip" id="eb-strip" hidden></div><div class="lnote" id="latest-note" hidden></div><div class="cband" id="current-band"></div></div>
+        <div class="phead yr"><div class="union-wash" id="union-wash" hidden></div><div class="yr-top"><h2 id="yr-h">2025</h2><span class="ynote" id="yr-note" hidden></span></div><div class="latest" id="latest"></div><div class="lnote" id="latest-note" hidden></div><div class="ebstrip" id="eb-strip" hidden></div><div class="cband" id="current-band"></div></div>
         <div class="pbody year-body">
           <div class="year-top">
             <div class="panel sub">
@@ -587,6 +587,8 @@ AX_I18N.add({
  'co.eb.calc':{el:'Υπολογισμένο', en:'Calculated'},
  'co.eb.plain':{el:'(κανονικό)', en:'(standard)'},
  'co.eb.s.same':{el:'✓ Ο <b>υπολογισμός Axion</b> αναπαράγει ακριβώς το δημοσιευμένο EBITDA της εταιρείας.', en:'✓ The <b>Axion calculation</b> reproduces the reported EBITDA exactly.'},
+ 'co.eb.s.near':{el:'✓ Ο <b>υπολογισμός Axion</b> συμφωνεί με το δημοσιευμένο EBITDA της εταιρείας (διαφορά <b>{d}%</b> — δόμηση, όχι άλλο μέγεθος).', en:'✓ The <b>Axion calculation</b> agrees with the company\u2019s reported EBITDA (<b>{d}%</b> apart — a matter of construction, not a different measure).'},
+ 'co.eb.s.reponly':{el:'Ο αριθμός είναι το <b>δημοσιευμένο</b> EBITDA της εταιρείας. Για αυτή την εταιρεία δεν υπολογίζουμε δικό μας EBITDA — ο ενιαίος τύπος δεν έχει νόημα στη δομή της.', en:'This figure is the company\u2019s <b>reported</b> EBITDA. We do not compute our own EBITDA for this company \u2014 the standard formula is not meaningful for its structure.'},
  'co.eb.s.own':{el:'<b>Η εταιρεία δεν δημοσιεύει EBITDA.</b> Ο αριθμός είναι <b>υπολογισμός Axion</b> με τον ίδιο τύπο που εφαρμόζεται σε όλες τις εισηγμένες: κέρδη προ φόρων + τόκοι − χρηματοοικονομικά έσοδα + αποσβέσεις.', en:'<b>The company does not report EBITDA.</b> This figure is an <b>Axion calculation</b> using the same formula applied to every listed company: pre-tax profit + interest − financial income + depreciation.'},
  'co.eb.s.plain':{el:'Και τα δύο είναι <b>κανονικό EBITDA</b>. Η διαφορά προκύπτει από τον τρόπο δόμησης: η εταιρεία ξεκινά συνήθως από το λειτουργικό αποτέλεσμα, ο <b>υπολογισμός Axion</b> από τα κέρδη προ φόρων — άρα διαφέρουν κατά στοιχεία όπως τα αποτελέσματα συγγενών και οι αποσβέσεις επιχορηγήσεων.', en:'Both are <b>standard EBITDA</b>. The difference comes from how each is built: the company typically starts from operating profit, the <b>Axion calculation</b> from pre-tax profit — so they differ by items such as results of associates and amortisation of grants.'},
  'co.eb.s.kind':{el:'Η εταιρεία δημοσιεύει EBITDA {k} — {w}. Το <b>υπολογισμένο Axion</b> εφαρμόζει τον ίδιο τύπο σε όλες τις εισηγμένες και είναι αυτό που χρησιμοποιείται στις κατατάξεις και στις διαμέσους κλάδου.', en:'The company reports EBITDA {k} — {w}. The <b>Axion calculation</b> applies the same formula to every listed company and is what feeds the rankings and sector medians.'},
@@ -861,9 +863,16 @@ document.getElementById('co-sector').textContent=company.sector;
 (function(){ var p=document.getElementById('co-corp'); if(p)p.hidden=true; })();
 
 const li=(company.latest && company.latest.idx!=null) ? company.latest.idx : company.years.length-1;
-// §45 — κατάσταση EBITDA για την τελευταία χρήση. ΑΝΟΧΗ 0,05 %: κάτω από αυτό η διαφορά είναι
-// στρογγυλοποίηση (ο τύπος μας δίνει ακριβή ευρώ, ο πίνακας της εταιρείας χιλιάδες), όχι άλλο μέγεθος.
-const EB_TOL=0.0005;
+// §45 — κατάσταση EBITDA για την τελευταία χρήση.
+// ΔΥΟ κατώφλια, γιατί απαντούν σε ΔΙΑΦΟΡΕΤΙΚΑ ερωτήματα:
+//   EB_TOL (5 %)        → «δείχνουμε ΕΝΑ ή ΔΥΟ νούμερα;» Κάτω από 5 % δεν υπάρχει λόγος να
+//                          δει ο αναγνώστης δύο σχεδόν ίδιους αριθμούς (απόφαση χρήστη).
+//   EB_TOL_EXACT (0,05%) → «τι ΛΕΕΙ η λωρίδα;» Μόνο εδώ επιτρέπεται ο ισχυρισμός «ακριβώς»
+//                          (ο τύπος μας δίνει ευρώ, ο πίνακας της εταιρείας χιλιάδες).
+// Το δεύτερο κατώφλι υπάρχει ΕΠΕΙΔΗ μεγάλωσε το πρώτο: με 5 % ανοχή, μια διαφορά 4,99 %
+// θα διαφήμιζε «αναπαράγει ακριβώς» — ψευδής ισχυρισμός πάνω σε σωστή απόφαση εμφάνισης.
+const EB_TOL=0.05;
+const EB_TOL_EXACT=0.0005;
 // §45.7 ΦΡΟΥΡΟΣ ΣΧΗΜΑΤΟΣ. Αν το data.js προέρχεται από ΠΑΛΙΑ γέφυρα, το `ebitda_rep` λείπει
 // ΕΝΤΕΛΩΣ. Χωρίς αυτόν τον έλεγχο κάθε εταιρεία θα έπεφτε στο 'own' και η σελίδα θα έλεγε
 // «δεν δημοσιεύει EBITDA» για ΟΛΕΣ — ενώ ο αριθμός που δείχνει είναι το δημοσιευμένο.
@@ -877,9 +886,11 @@ const EB_STATE=(function(){
   const kind=(company.metrics.ebitda_kind||[])[li]||null;
   if(!has(own)&&!has(rep)) return {s:'na'};
   if(!has(rep)) return {s:'own',own:own};
-  if(!has(own)) return {s:'same',rep:rep,kind:kind};
+  // ΜΟΝΟ δημοσιευμένο: για holdings/ΑΕΕΧ δεν ορίζεται δικός μας EBITDA (κενός τύπος off27).
+  // ΔΕΝ είναι 'same' — δεν υπάρχει τίποτα να «συμφωνήσει».
+  if(!has(own)) return {s:'reponly',rep:rep,kind:kind};
   const d=Math.abs(own-rep)/Math.max(Math.abs(rep),1);
-  return d<=EB_TOL ? {s:'same',rep:rep,own:own,kind:kind} : {s:'diff',rep:rep,own:own,kind:kind};
+  return d<=EB_TOL ? {s:'same',rep:rep,own:own,kind:kind,d:d} : {s:'diff',rep:rep,own:own,kind:kind,d:d};
 })();
 function EB_WHY(k){
   const t=String(k||'').toLowerCase();
@@ -908,7 +919,7 @@ document.getElementById('latest').innerHTML=METRICS.map(m=>{
       if(eb.s==='diff'){
         inner=`<div class="ebb t"><div class="ebl1">${L('co.eb.pub')}</div><div class="ebl2">${kindLab(eb.kind)}</div><div class="ebn">${money(eb.rep)}</div></div>`
              +`<div class="ebb b"><div class="ebl1">${L('co.eb.calc')}</div><div class="ebl2 ax">AXION</div><div class="ebn d">${money(eb.own)}</div></div>`;
-      }else if(eb.s==='same'){
+      }else if(eb.s==='same'||eb.s==='reponly'){
         inner=`<div class="ebb s"><div class="ebl1">${L('co.eb.pub')}</div><div class="ebl2">${kindLab(eb.kind)}</div><div class="ebn">${money(eb.rep)}</div></div>`;
       }else if(eb.s==='legacy'){ // παλιό data.js — ΔΕΝ ξέρουμε ποιο από τα δύο είναι· καμία ετικέτα
         inner=`<div class="ebb s"><div class="ebn">${money(eb.own)}</div></div>`;
@@ -928,7 +939,16 @@ document.getElementById('latest').innerHTML=METRICS.map(m=>{
   if(eb.s==='na'||eb.s==='legacy'){ el.hidden=true; return; }   // §45.7 — σιωπή αντί για λάθος ισχυρισμό
   if(eb.s==='legacy') return;
   let html='', ok=false;
-  if(eb.s==='same'){ html=L('co.eb.s.same'); ok=true; }
+  if(eb.s==='same'){
+    // «ακριβώς» ΜΟΝΟ σε επίπεδο στρογγυλοποίησης· αλλιώς λέμε το ποσοστό.
+    if(eb.d!=null && eb.d>EB_TOL_EXACT){
+      // κάτω από 1 % το ένα δεκαδικό ψεύδεται προς τα πάνω (0,05 % → «0,1 %») → δύο δεκαδικά
+      const dp=(eb.d*100).toFixed(eb.d<0.01?2:1);
+      html=L('co.eb.s.near').replace('{d}', curLang()==='el'?dp.replace('.',','):dp);
+    }else{ html=L('co.eb.s.same'); }
+    ok=true;
+  }
+  else if(eb.s==='reponly'){ html=L('co.eb.s.reponly'); }
   else if(eb.s==='own'){ html=L('co.eb.s.own'); }
   else if(eb.kind){
     html=L('co.eb.s.kind').replace('{k}',`<span class="kt">${eb.kind}</span>`).replace('{w}',L(EB_WHY(eb.kind)));
