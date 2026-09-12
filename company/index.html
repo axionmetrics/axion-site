@@ -907,14 +907,23 @@ document.getElementById('latest').innerHTML=METRICS.map(m=>{
     if(eb.s!=='na'){
       const money=x=>`${fMil(x)}<small>${EURSUF()}</small>`;
       const kindLab=k=>k?`(${k})`:L('co.eb.plain');
+      // ΕΝΤΟΣ ΑΝΟΧΗΣ ('same') και ΠΑΛΙΟ ΣΧΗΜΑ ('legacy'): ΣΚΕΤΟΣ ΑΡΙΘΜΟΣ, σε **κανονικό**
+      // πλακίδιο (.cell/.v) — πανομοιότυπο με ΤΖΙΡΟ/ΚΑΘΑΡΑ ΚΕΡΔΗ. Καμία ετικέτα προέλευσης:
+      // όταν τα δύο μεγέθη συμφωνούν, η απόδοση σε πηγή δεν πληροφορεί (απόφαση χρήστη).
+      // Η ετικέτα κερδίζει τη θέση της ΜΟΝΟ όταν ο αριθμός θα παρανοηθεί ως προς την πηγή:
+      // 'diff' (δύο μεγέθη), 'own' (δικός μας, δεν δημοσιεύει), 'reponly' (δημοσιευμένος,
+      // δεν υπολογίζουμε). Παρενέργεια: μια εταιρεία εντός ανοχής με **προσαρμοσμένο**
+      // δημοσιευμένο EBITDA (σήμερα μόνο η 17 COCA COLA) δεν φέρει πια αυτή την ένδειξη.
+      if(eb.s==='same'||eb.s==='legacy'){
+        const one=(eb.s==='legacy')?eb.own:eb.rep;
+        return `<div class="metric-item"><div class="k">${label}</div><div class="cell"><div class="v">${money(one)}</div></div></div>`;
+      }
       let inner;
       if(eb.s==='diff'){
         inner=`<div class="ebb t"><div class="ebl1">${L('co.eb.pub')}</div><div class="ebl2">${kindLab(eb.kind)}</div><div class="ebn">${money(eb.rep)}</div></div>`
              +`<div class="ebb b"><div class="ebl1">${L('co.eb.calc')}</div><div class="ebl2 ax">AXION</div><div class="ebn d">${money(eb.own)}</div></div>`;
-      }else if(eb.s==='same'||eb.s==='reponly'){
+      }else if(eb.s==='reponly'){ // δημοσιευμένο, χωρίς δικό μας υπολογισμό (holdings/ΑΕΕΧ)
         inner=`<div class="ebb s"><div class="ebl1">${L('co.eb.pub')}</div><div class="ebl2">${kindLab(eb.kind)}</div><div class="ebn">${money(eb.rep)}</div></div>`;
-      }else if(eb.s==='legacy'){ // παλιό data.js — ΔΕΝ ξέρουμε ποιο από τα δύο είναι· καμία ετικέτα
-        inner=`<div class="ebb s"><div class="ebn">${money(eb.own)}</div></div>`;
       }else{ // 'own' — η εταιρεία δεν δημοσιεύει
         inner=`<div class="ebb s"><div class="ebl1">${L('co.eb.calc')}</div><div class="ebl2 ax">AXION</div><div class="ebn">${money(eb.own)}</div></div>`;
       }
