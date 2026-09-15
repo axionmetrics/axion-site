@@ -592,6 +592,7 @@ AX_I18N.add({
  'co.eb.w.val':{el:'<b>εξαιρεί κέρδη ή ζημιές από αναπροσαρμογή σε εύλογη αξία</b>', en:'<b>it excludes fair-value revaluation gains and losses</b>'},
  'co.eb.w.adj':{el:'<b>εξαιρεί έκτακτα ή μη επαναλαμβανόμενα στοιχεία</b>', en:'<b>it excludes one-off or non-recurring items</b>'},
  'co.eb.w.met':{el:'<b>απομονώνει το αποτέλεσμα εμπορεύματος</b>', en:'<b>it isolates the commodity result</b>'},
+ 'co.eb.w.fx':{el:'<b>εξαιρεί τις συναλλαγματικές διαφορές</b>', en:'<b>it excludes foreign-exchange differences</b>'},
  'co.eb.w.gen':{el:'<b>ακολουθεί διαφορετικό ορισμό από τον δικό μας</b>', en:'<b>it follows a different definition from ours</b>'},
  'co.m.ppi':{el:'PPI', en:'PPI'},
  'co.na.banks':{el:'Not applicable to banks', en:'Not applicable to banks'},
@@ -889,6 +890,10 @@ function EB_WHY(k){
   if(t.indexOf('αποτιμ')>=0) return 'co.eb.w.val';
   if(t.indexOf('προσαρμ')>=0) return 'co.eb.w.adj';
   if(t.indexOf('μετάλλ')>=0||t.indexOf('a-ebitda')>=0) return 'co.eb.w.met';
+  // §61 — 101 ΚΑΡΕΛΙΑΣ: το EBITDA της ορίζεται «προ συναλλαγματικών διαφορών», που κατά
+  // τον §26.7.2 μένουν ΜΕΣΑ στο δικό μας. Χωρίς αυτόν τον κλάδο η λωρίδα θα έπεφτε στο
+  // γενικό «άλλος ορισμός» — αληθές αλλά άχρηστο, ενώ ο λόγος είναι συγκεκριμένος.
+  if(t.indexOf('συναλλαγμ')>=0) return 'co.eb.w.fx';
   return 'co.eb.w.gen';
 }
 document.getElementById('latest').innerHTML=METRICS.map(m=>{
@@ -1380,6 +1385,12 @@ const FIGN=((company.figNotes||{}).revenue)||{};
 // ως «δεν το μετρήσαμε».
 const BYN=company.byNature||null;
 const BYN_SL=new Set(BYN?(BYN.slugs||[]):[]);
+// §66 — Η ΣΗΜΕΙΩΣΗ ΕΙΝΑΙ ΑΝΑ ΕΤΟΣ. Η μορφή της κατάστασης αλλάζει μέσα στη σειρά: η
+// 20 DIMAND συντάσσει «κατά λειτουργία» 2020-2021 και «κατά είδος» 2022-2025. Το `cells`
+// δίνει πίνακα boolean ανά δείκτη, ευθυγραμμισμένο με τα έτη· το `slugs` μένει ως εφεδρεία
+// για παλιό data.js (εκεί ίσχυε αδιακρίτως για όλες τις χρήσεις).
+const BYN_CE=(BYN&&BYN.cells)||null;
+function bynAt(slug,i){ return BYN_CE ? !!((BYN_CE[slug]||[])[i]) : BYN_SL.has(slug); }
 function bynText(){ return BYN?(EN()?(BYN.en||BYN.el):(BYN.el||BYN.en)):''; }
 // §29.4: η διάμεσος κλάδου λείπει επειδή ΚΑΝΕΝΑΣ στον κλάδο δεν δημοσιεύει το μέγεθος
 // (π.χ. μικτό περιθώριο στα Ακίνητα, 0/12 — όλες οι ΑΕΕΑΠ συντάσσουν κατά είδος· ή γενική
@@ -1403,7 +1414,7 @@ ratiosEl.innerHTML=RATIOS.map((c,ci)=>{
       body=`<td class="c-na" colspan="${YEARS.length+1}">${L('co.na.banks')}</td>`;
     } else {
       const _ser=it.series.slice(0,YEARS.length);   // ίδιο εύρος με τις κεφαλίδες ετών (χωρίς την κενή στήλη 2026)
-      const yr=_ser.map((v,i)=>`<td class="c-val${i===_ser.length-1?' last':''}">${(v==null&&REV_DEP.has(it.slug)&&FIGN[String(YEARS[i])])?`<span class="c-nt" title="${esc(EN()?FIGN[String(YEARS[i])].en:FIGN[String(YEARS[i])].el)}">—<sup>*</sup></span>`:(v==null&&BYN_SL.has(it.slug))?`<span class="c-nt" title="${esc(bynText())}">—<sup>*</sup></span>`:fmtU(v,it.unit)}</td>`).join('');
+      const yr=_ser.map((v,i)=>`<td class="c-val${i===_ser.length-1?' last':''}">${(v==null&&REV_DEP.has(it.slug)&&FIGN[String(YEARS[i])])?`<span class="c-nt" title="${esc(EN()?FIGN[String(YEARS[i])].en:FIGN[String(YEARS[i])].el)}">—<sup>*</sup></span>`:(v==null&&bynAt(it.slug,i))?`<span class="c-nt" title="${esc(bynText())}">—<sup>*</sup></span>`:fmtU(v,it.unit)}</td>`).join('');
       body=`${yr}<td class="c-sec">${(it.sector==null&&it.secna)?`<span class="c-nt" title="${esc(secNaText(it.secna))}">—<sup>*</sup></span>`:fmtU(it.sector,it.unit)}</td>`;
     }
     return `<tr><td class="c-name">${nm}<span class="en">(${nm2})</span></td><td class="c-desc">${dsc}</td>${dirCell(drc)}${body}</tr>`;
