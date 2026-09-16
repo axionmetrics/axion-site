@@ -300,7 +300,15 @@
   .mini-listed{font-size:9px;text-transform:uppercase;letter-spacing:.04em;font-weight:700;color:#1f6b45;background:#cdeedd;padding:1px 6px;border-radius:4px}
 
   .cat{border:1px solid var(--line);border-radius:12px;margin-bottom:10px;overflow:hidden;background:var(--panel)}
-  .cat-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 18px;cursor:pointer;background:var(--panel2)}
+  /* §72 — ΟΝΟΜΑΤΑ ΔΕΙΚΤΩΝ ΣΤΗΝ ΚΛΕΙΣΤΗ ΚΕΦΑΛΙΔΑ. Η στοίχιση γίνεται flex-start ώστε το
+     βελάκι να μένει στη γραμμή του τίτλου όταν τα chips πέφτουν σε δεύτερη σειρά. */
+  .cat-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:13px 18px;cursor:pointer;background:var(--panel2)}
+  .cat-head .hd{min-width:0;flex:1}
+  .cat-chips{margin-top:7px;display:flex;flex-wrap:wrap;gap:5px}
+  .cat-chip{font-family:var(--sans);font-size:10.5px;font-weight:600;color:#4a688a;background:#eaf3fb;
+            border:1px solid #dbe9f6;border-radius:999px;padding:2px 8px;white-space:nowrap}
+  /* ανοιχτή κατηγορία: τα ονόματα τα δείχνει ο ίδιος ο πίνακας — η επανάληψη θα ήταν θόρυβος */
+  .cat.open .cat-chips{display:none}
   .cat-head:hover{background:#eef5fc}
   .cat-head h3{font-family:var(--disp);font-size:15px;font-weight:700;color:var(--ink);text-transform:uppercase;letter-spacing:.03em}
   .cat-head h3 .caten{text-transform:none;letter-spacing:0;font-size:12px;font-weight:400;color:var(--muted)}
@@ -1461,7 +1469,15 @@ ratiosEl.innerHTML=RATIOS.map((c,ci)=>{
   }).join('');
   const yhead=YEARS.map(y=>`<th class="y">${IS_H1?H1C:''}${y}</th>`).join('');
   const cn=EN()?(CATEN[c.cat]||c.cat):c.cat, cn2=EN()?c.cat:(CATEN[c.cat]||'');
-  return `<div class="cat"><div class="cat-head"><h3>${cn} <span class="caten">(${cn2})</span></h3><span class="arr">›</span></div><div class="cat-body"><div class="rtbl-wrap"><table class="rtbl"><thead><tr><th class="l">${L('co.rt.ratio')}</th><th class="l">${L('co.rt.desc')}</th><th class="l"></th>${yhead}<th>${L('co.rt.secmed')}${IS_H1?' '+H1C:''}</th></tr></thead><tbody>${rows}</tbody></table></div></div></div>`;
+  // §72 — chips με τα ονόματα των δεικτών της κατηγορίας, ορατά ΜΟΝΟ όσο είναι κλειστή.
+  // Ίδια ανάλυση ονόματος με τις γραμμές του πίνακα: τραπεζική παράκαμψη όπου υπάρχει.
+  // Παραλείπονται οι δείκτες που δεν ισχύουν στις τράπεζες — η γραμμή τους στον πίνακα
+  // γράφει «δεν ισχύει», οπότε ένα chip θα υποσχόταν κάτι που δεν βρίσκει ο αναγνώστης.
+  const chips=c.items.filter(it=>!(IS_BANK&&NA_RATIO.has(it.slug))).map(it=>{
+    const bo = IS_BANK ? RATIO_BANK[it.slug] : null;
+    return `<span class="cat-chip">${bo?(EN()?bo.en:bo.el):(EN()?it.en:it.label)}</span>`;
+  }).join('');
+  return `<div class="cat"><div class="cat-head"><div class="hd"><h3>${cn} <span class="caten">(${cn2})</span></h3>${chips?`<div class="cat-chips">${chips}</div>`:''}</div><span class="arr">›</span></div><div class="cat-body"><div class="rtbl-wrap"><table class="rtbl"><thead><tr><th class="l">${L('co.rt.ratio')}</th><th class="l">${L('co.rt.desc')}</th><th class="l"></th>${yhead}<th>${L('co.rt.secmed')}${IS_H1?' '+H1C:''}</th></tr></thead><tbody>${rows}</tbody></table></div></div></div>`;
 }).join('');
 ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.classList.toggle('open'));
 
