@@ -38,6 +38,7 @@
     --hblue:#2f80c2; --hpurple:#2b4a6b;
     --white:#FFFFFF; --ink:#16243d; --text:#2b3a4a; --muted:#6b8199; --faint:#8199b3;
     --cyan:#2f80c2; --purple:#57a5df; --orange:#e08600; --green:#3f9e6a;
+    --fnm:#f2b268;   /* §68 — δείκτες υποσημειώσεων στη σκούρα ζώνη μεγεθών (ελαφρύ πορτοκαλί) */
     --gold:#cf7f00; --blue:#2f80c2; --teal:#57a5df;
     --up:#2f9e52; --down:#d64530; --flat:#8199b3;
     --b2:#57a5df; --b3:#8fc4ee; --bl:#d7ecfb;
@@ -205,14 +206,23 @@
   .latest .ebn{font-family:var(--disp);font-size:16px;font-weight:800;color:#fff;line-height:1.1;white-space:nowrap;margin-top:3px}
   .latest .ebn.d{color:rgba(255,255,255,.88)}
   .latest .ebn small{font-family:var(--sans);font-size:9px;font-weight:500;color:rgba(255,255,255,.62)}
+  /* §68 — Η λωρίδα φιλοξενεί ΠΟΛΛΕΣ υποσημειώσεις, αριθμημένες. Με δύο και πάνω σειρές
+     το κεντραρισμένο κείμενο γίνεται δυσανάγνωστο: στοίχιση ΑΡΙΣΤΕΡΑ, ο αριθμός σε δική
+     του στήλη ώστε οι επεξηγήσεις να ξεκινούν όλες από την ίδια κάθετη. */
   .ebstrip{position:relative;z-index:1;margin:11px -18px -16px;background:rgba(0,0,0,.17);padding:10px 18px 12px;
-           font-size:11px;color:rgba(255,255,255,.64);line-height:1.55;text-align:center}
+           font-size:11px;color:rgba(255,255,255,.64);line-height:1.55;text-align:left}
+  .ebstrip .fn{display:grid;grid-template-columns:13px 1fr;gap:8px;align-items:start}
+  .ebstrip .fn+.fn{margin-top:7px}
+  .ebstrip .fnn{font-family:var(--disp);font-size:10.5px;font-weight:800;color:var(--fnm);text-align:right;line-height:1.55}
   .ebstrip b{color:rgba(255,255,255,.88);font-weight:700}
   .ebstrip .kt{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
    background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.18);border-radius:4px;padding:2px 6px;margin:0 3px;color:rgba(255,255,255,.82)}
   .ebstrip[hidden]{display:none}
   .latest .metric-item{min-width:0;text-align:center;display:flex;flex-direction:column}
   .latest .k{font-size:9.5px;color:rgba(255,255,255,.72);font-weight:600;margin-bottom:5px;line-height:1.2;text-transform:uppercase;letter-spacing:.04em}
+  /* §68 — ο δείκτης δίπλα στον τίτλο του πλακιδίου· baseline+top αντί για vertical-align:super
+     ώστε να μην ψηλώσει η γραμμή του τίτλου (τα πλακίδια είναι align-items:start). */
+  .latest .k .fnm{font-size:8.5px;font-weight:800;color:var(--fnm);vertical-align:baseline;position:relative;top:-.4em;margin-left:2px;letter-spacing:0}
   .latest .cell{flex:1;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.20);border-radius:9px;padding:9px 6px;display:flex;flex-direction:column;justify-content:center}
   .latest .v{font-family:var(--disp);font-size:18px;font-weight:800;color:#fff;line-height:1.05;white-space:nowrap}
   .latest .v small{font-family:var(--sans);font-size:10px;font-weight:500;color:rgba(255,255,255,.66)}
@@ -594,6 +604,8 @@ AX_I18N.add({
  'co.eb.w.met':{el:'<b>απομονώνει το αποτέλεσμα εμπορεύματος</b>', en:'<b>it isolates the commodity result</b>'},
  'co.eb.w.fx':{el:'<b>εξαιρεί τις συναλλαγματικές διαφορές</b>', en:'<b>it excludes foreign-exchange differences</b>'},
  'co.eb.w.gen':{el:'<b>ακολουθεί διαφορετικό ορισμό από τον δικό μας</b>', en:'<b>it follows a different definition from ours</b>'},
+ // §68 — ΚΑΘΑΡΑ ΚΕΡΔΗ έναντι ΚΕΡΔΩΝ ΜΕΤΑ ΦΟΡΩΝ. Εμφανίζεται ΜΟΝΟ όταν τα δύο διαφέρουν.
+ 'co.np.s.mi':{el:'Τα καθαρά κέρδη (ή ζημίες) είναι όσα αναλογούν στους μετόχους της μητρικής, χωρίς το μερίδιο <b>«μη ελεγχουσών συμμετοχών σε θυγατρικές»</b>.', en:'Net profit (or loss) is the share attributable to the parent company\u2019s shareholders, excluding the share of <b>non-controlling interests in subsidiaries</b>.'},
  'co.m.ppi':{el:'PPI', en:'PPI'},
  'co.na.banks':{el:'Not applicable to banks', en:'Not applicable to banks'},
  'co.m.mcap':{el:'Κεφαλαιοποίηση', en:'Market cap'},
@@ -896,12 +908,48 @@ function EB_WHY(k){
   if(t.indexOf('συναλλαγμ')>=0) return 'co.eb.w.fx';
   return 'co.eb.w.gen';
 }
+// §68 — ΥΠΟΣΗΜΕΙΩΣΕΙΣ ΤΗΣ ΖΩΝΗΣ ΜΕΓΕΘΩΝ. ΜΙΑ λίστα, αριθμημένη 1..n με τη σειρά που
+// εμφανίζονται τα πλακίδια· ο ίδιος αριθμός μπαίνει ΣΤΟ πλακίδιο και μπροστά από την
+// επεξήγηση. Η αρίθμηση είναι ΔΥΝΑΜΙΚΗ — δεν είναι σταθερό «1=EBITDA, 2=καθαρά κέρδη»:
+// στη συνήθη περίπτωση η υποσημείωση του EBITDA λείπει ('same') και τότε τα καθαρά κέρδη
+// γίνονται 1. Σταθεροί αριθμοί θα άφηναν κενά («υπάρχει 2, πού είναι το 1;»).
+const FN=(function(){
+  const out=[];
+  // (α) EBITDA — σιωπή σε 'na' / 'legacy' / 'same' (§45): όταν η σελίδα δείχνει ΕΝΑ νούμερο
+  //     δεν υπάρχει διαφορά να εξηγηθεί.
+  const eb=EB_STATE;
+  if(!(eb.s==='na'||eb.s==='legacy'||eb.s==='same')){
+    let html;
+    if(eb.s==='reponly'){ html=L('co.eb.s.reponly'); }
+    else if(eb.s==='own'){ html=L('co.eb.s.own'); }
+    else if(eb.kind){ html=L('co.eb.s.kind').replace('{k}',`<span class="kt">${eb.kind}</span>`).replace('{w}',L(EB_WHY(eb.kind))); }
+    else { html=L('co.eb.s.plain'); }
+    out.push({key:'ebitda',html:html});
+  }
+  // (β) ΚΑΘΑΡΑ ΚΕΡΔΗ — ΜΟΝΟ όταν διαφέρουν από τα «κέρδη μετά φόρων» του ομίλου, δηλαδή
+  //     όταν υπάρχουν μη ελέγχουσες συμμετοχές. Χωρίς αυτόν τον έλεγχο η υποσημείωση θα
+  //     φορτωνόταν και στις ~100 εταιρείες χωρίς θυγατρικές μειοψηφίας, όπου δεν λέει τίποτα.
+  //     ΦΡΟΥΡΟΣ ΣΧΗΜΑΤΟΣ: παλιό data.js δεν έχει `pat` → σιωπή, όχι ψευδής υποσημείωση.
+  //     ΚΑΤΩΦΛΙ = Η ΙΔΙΑ Η ΟΘΟΝΗ: συγκρίνουμε τα δύο μεγέθη ΟΠΩΣ ΤΥΠΩΝΟΝΤΑΙ (fMil, εκ.€).
+  //     Η υποσημείωση απαντά σε μια απορία που γεννιέται μόνο όταν ο αναγνώστης δει τον
+  //     δικό μας αριθμό δίπλα στον δημοσιευμένο και διαφέρουν· αν η διαφορά χάνεται στη
+  //     στρογγυλοποίηση (π.χ. 95.255.000 έναντι 95.256.000 → 95,26 και τα δύο) δεν υπάρχει
+  //     απορία. Σταθερό ποσοστιαίο κατώφλι θα ήταν αυθαίρετο — η οθόνη είναι το αληθινό.
+  const hasn=v=>typeof v==='number'&&!isNaN(v);
+  const _np=(company.metrics.net_profit||[])[li], _pat=(company.metrics.pat||[])[li];
+  if(hasn(_np)&&hasn(_pat)&&fMil(_np)!==fMil(_pat)){
+    out.push({key:'net_profit',html:L('co.np.s.mi')});
+  }
+  return out;
+})();
+const FN_N=(function(){ const o={}; FN.forEach(function(f,i){ o[f.key]=i+1; }); return o; })();
+function FNMARK(key){ const n=key?FN_N[key]:0; return n?`<sup class="fnm">${n}</sup>`:''; }
 document.getElementById('latest').innerHTML=METRICS.map(m=>{
   // τράπεζες: EBITDA→Κέρδη προ προβλέψεων, Συν. δανεισμός→Δάνεια, Καθ. δανεισμός→Καταθέσεις
   const sw = IS_BANK ? BANK_SWAP[m.key] : null;
   const arr = company.metrics[sw?sw.k:m.key] || [];
   const v = arr[li];
-  const label = sw ? L(sw.l) : m.label;
+  const label = (sw ? L(sw.l) : m.label) + FNMARK(sw?null:m.key);
   const val=(IS_BANK&&!sw&&NA_METRIC.has(m.key))?`<span class="na-bank">${L('co.na.banks')}</span>`:(m.unit==='eur'?(v==null?'—':`${fMil(v)}<small>${EURSUF()}</small>`):fX(v));
   const uni=(m.key==='mcap'||m.key==='pe'||m.key==='pbv')?' uni':'';
   // §45 — EBITDA: δύο μεγέθη. Το `metrics.ebitda` είναι Ο ΔΙΚΟΣ ΜΑΣ υπολογισμός (τροφοδοτεί
@@ -940,23 +988,15 @@ document.getElementById('latest').innerHTML=METRICS.map(m=>{
 }).join('');
 // §45 — η λωρίδα εξήγησης κάτω από τη μπάρα
 (function(){
+  // §68 — η λωρίδα ζωγραφίζει τη λίστα FN. Ό,τι αποφασίστηκε για το ΑΝ υπάρχει υποσημείωση
+  // ζει στο FN (παραπάνω)· εδώ μένει μόνο η απόδοση. Καμία υποσημείωση → κρυφή λωρίδα.
   const el=document.getElementById('eb-strip'); if(!el) return;
-  const eb=EB_STATE;
-  // ΣΙΩΠΗ σε τρεις καταστάσεις:
-  //   'na'     — δεν υπάρχει κανένα μέγεθος
-  //   'legacy' — παλιό data.js, δεν ξέρουμε ποιο είναι ποιο (§45.7)
-  //   'same'   — εντός ανοχής: η σελίδα δείχνει ΕΝΑ νούμερο, άρα δεν υπάρχει διαφορά να
-  //              εξηγηθεί. Μια λωρίδα εδώ θα τραβούσε το μάτι σε μη-θέμα (απόφαση χρήστη).
-  if(eb.s==='na'||eb.s==='legacy'||eb.s==='same'){ el.hidden=true; return; }
-  // Φτάνοντας εδώ, η λωρίδα ΠΑΝΤΑ εξηγεί κάτι: 'reponly', 'own' ή 'diff'.
-  let html;
-  if(eb.s==='reponly'){ html=L('co.eb.s.reponly'); }
-  else if(eb.s==='own'){ html=L('co.eb.s.own'); }
-  else if(eb.kind){
-    html=L('co.eb.s.kind').replace('{k}',`<span class="kt">${eb.kind}</span>`).replace('{w}',L(EB_WHY(eb.kind)));
-  }else{ html=L('co.eb.s.plain'); }
+  if(!FN.length){ el.hidden=true; return; }
   el.className='ebstrip';
-  el.innerHTML=html; el.hidden=false;
+  el.innerHTML=FN.map(function(f,i){
+    return `<div class="fn"><span class="fnn">${i+1}</span><span class="fnt">${f.html}</span></div>`;
+  }).join('');
+  el.hidden=false;
 })();
 // Στο 6μηνο, το P/E τελευταίας περιόδου είναι TTM (κυλιόμενο 12μηνο) — διακριτική υποσημείωση όταν υπάρχει τιμή
 (function(){
