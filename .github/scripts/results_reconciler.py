@@ -27,6 +27,13 @@ ANNUAL_TITLES  = ("annual results announcement", "twelve months results announce
                   "annual financial results announcement", "full year results announcement",
                   "annual financial report publication", "annual report publication",
                   "full year financial report publication")
+# §69 — ΤΑΞΗ ΤΙΤΛΟΥ. Η «report publication» είναι η δημοσίευση της ΕΚΘΕΣΗΣ (το PDF που
+# κατεβάζουμε)· η «results announcement» είναι το press release που προηγείται. Όταν μια
+# εταιρεία έχει και τα δύο, μετράει ΜΟΝΟ η έκθεση.
+REPORT_MARK = "report publication"
+def title_rank(title):
+    return 2 if REPORT_MARK in (title or "").lower() else 1
+
 INTERIM_MONTHS = (7, 8, 9, 10, 11)
 ANNUAL_MONTHS  = (2, 3, 4, 5, 6)
 
@@ -132,23 +139,48 @@ def load_display_names(path, basis, period):
     return {r["tk"]: r.get("t") for r in _rows(path, basis, period) if r.get("t")}
 
 # ---------------------------------------------------------------- reconcile
+def pick_publication(evs, cut):
+    """Η ημ/νία δημοσίευσης ΜΙΑΣ εταιρείας, ανάμεσα σε πολλές εγγραφές ημερολογίου.
+
+    ΔΥΟ ΑΞΟΝΕΣ, με αυτή τη σειρά:
+
+    1) ΤΑΞΗ ΤΙΤΛΟΥ. Αν υπάρχει έστω μία «report publication», η «results announcement»
+       αγνοείται εντελώς — περιμένουμε την έκθεση, αυτήν κατεβάζουμε.
+       (26 ELVALHALCOR: ανακοίνωση 03.08 / δημοσίευση έκθεσης 04.09 → 04.09.)
+
+    2) ΜΕΣΑ ΣΤΗΝ ΙΔΙΑ ΤΑΞΗ: η πιο πρόσφατη **ΠΕΡΑΣΜΕΝΗ** ημερομηνία. Μια μελλοντική
+       εγγραφή ΔΕΝ σκεπάζει περασμένη του ίδιου τίτλου.
+
+    Η διαφορά με τον παλιό κανόνα («κράτα πάντα την τελευταία, μετά πέτα τις μελλοντικές»):
+    το Euronext γράφει καμιά φορά το ΙΔΙΟ γεγονός δύο φορές. Στην 39 PREMIA, 6μηνο 2026,
+    υπήρχαν «Six Months Financial Report Publication» στις 15.09 ΚΑΙ στις 21.09. Ο παλιός
+    κανόνας κρατούσε τη 21.09, το φίλτρο μελλοντικών την έκοβε, και η εταιρεία εξαφανιζόταν
+    ενώ είχε ήδη δημοσιεύσει στις 15.09.
+
+    Επιστρέφει None όταν η ανώτερη τάξη έχει ΜΟΝΟ μελλοντικές ημερομηνίες — η έκθεση δεν
+    έχει βγει ακόμη. (14 CENERGY, 6μηνο 2026: ανακοίνωση 04.08, έκθεση 16.09· στις 15/09
+    σωστά ΔΕΝ μετριέται, κι ας έχει περάσει η ανακοίνωση.)
+    """
+    top  = max(title_rank(e["title"]) for e in evs)
+    same = [e for e in evs if title_rank(e["title"]) == top]
+    past = [e for e in same if (not cut or date_key(e["date"]) <= cut)]
+    if not past: return None
+    return max(past, key=lambda e: date_key(e["date"]))
+
 def reconcile(events, cid2row, reported_tks, basis, period, excluded_tks=None, asof=None):
-    excluded_tks = excluded_tks or set(); published = {}
+    excluded_tks = excluded_tks or set()
+    cut = asof.strftime("%Y%m%d") if asof else None
+    cand = {}
     for ev in events:
         if not ev["cid"] or not is_result(ev["title"], basis): continue
         if event_period(ev, basis) != period: continue
         row = cid2row.get(ev["cid"])
         if not row or row["tk"] in excluded_tks: continue
-        cur = published.get(row["code"])
-        # Κρατάμε την ΠΙΟ ΠΡΟΣΦΑΤΗ ημ/νία: η δημοσίευση της έκθεσης (full report)
-        # υπερισχύει της απλής ανακοίνωσης αποτελεσμάτων (press release).
-        if not cur or date_key(ev["date"]) > date_key(cur["date"]):
-            published[row["code"]] = {**row, "date": ev["date"], "title": ev["title"]}
-    # asof ΜΕΤΑ την επιλογή: αν η (τελική) ημ/νία δημοσίευσης της έκθεσης είναι μελλοντική,
-    # η εταιρεία εξαιρείται — ακόμη κι αν η προγενέστερη ανακοίνωση έχει ήδη περάσει.
-    if asof:
-        cut = asof.strftime("%Y%m%d")
-        published = {k: v for k, v in published.items() if date_key(v["date"]) <= cut}
+        cand.setdefault(row["code"], (row, []))[1].append(ev)
+    published = {}
+    for code, (row, evs) in cand.items():
+        best = pick_publication(evs, cut)
+        if best: published[code] = {**row, "date": best["date"], "title": best["title"]}
     pub = sorted(published.values(), key=lambda r: date_key(r["date"]))
     return {"published": pub, "new": [r for r in pub if r["tk"] not in reported_tks]}
 
