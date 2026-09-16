@@ -795,21 +795,117 @@ document.getElementById('co-name').textContent=company.name;
 // Λογότυπο εταιρείας (μετά το όνομα, με κάθετο διαχωριστικό)· fallback: κρύβεται αν λείπει
 window.AX_LOGO={"ALWN":1,"ΑΣΤΑΚ":2,"ΑΝΔΡΟ":3,"ΑΤΡΑΣΤ":4,"ΑΛΦΑ":5,"AEM":6,"ΑΣΚΟ":7,"ΑΤΤΙΚΑ":8,"ACAG":9,"ΟΤΟΕΛ":10,"ΑΒΕ":11,"BYLOT":12,"ΜΠΡΙΚ":13,"CENER":14,"ΣΕΝΤΡ":15,"CNLCAP":16,"ΕΕΕ":17,"ΣΠΙ":18,"CREDIA":19,"DIMAND":20,"ΝΤΟΤΣΟΦΤ":21,"ΕΧΑΕ":22,"EX":23,"ΦΛΕΞΟ":24,"ΦΡΛΚ":25,"ΦΡΙΓΟ":26,"ΕΛΠΕ":27,"ΙΝΤΕΚ":28,"ΜΠΕΛΑ":29,"ΛΑΜΔΑ":30,"ΛΟΓΟΣ":31,"ΛΟΥΛΗ":32,"ΜΑΣΤΙΧΑ":33,"MTLN":34,"ΜΕΒΑ":35,"ΜΙΓ":36,"ΟΡΙΛΙΝΑ":37,"ΠΕΡΦ":38,"ΠΡΕΜΙΑ":39,"ΠΡΟΦ":40,"ΚΟΥΑΛ":41,"ΚΟΥΕΣ":42,"REALCONS":43,"SOFTWEB":44,"ΣΠΕΙΣ":45,"TITC":46,"ΤΡΕΣΤΑΤΕΣ":47,"ΤΡΑΣΤΟΡ":48,"ΒΙΟΣΚ":49,"ΒΙΝΤΑ":50,"ΒΙΟ":51,"ΑΒΑΞ":52,"ΣΠΥΡ":53,"ΚΟΡΔΕ":54,"ΑΡΑΙΓ":55,"AKTR":56,"ΑΛΜΥ":57,"ΛΑΒΙ":59,"ΑΔΜΗΕ":60,"ΛΕΒΚ":61,"ΜΑΘΙΟ":62,"ΑΤΕΚ":63,"ΜΕΝΤΙ":64,"ΜΙΝ":65,"ΒΙΟΚΑ":66,"ΒΙΟΤ":67,"ΒΟΣΥΣ":68,"ΓΕΚΤΕΡΝΑ":69,"ΓΕΒΚΑ":70,"ΣΑΡ":71,"ΔΑΙΟΣ":72,"ΔΕΗ":73,"ΔΑΑ":74,"ΔΟΜΙΚ":75,"ΠΑΙΡΗ":76,"ΕΒΡΟΦ":77,"ΕΤΕ":78,"ΕΚΤΕΡ":79,"ΕΛΣΤΡ":80,"ΕΛΧΑ":81,"ΕΛΒΕ":82,"ΜΟΥΖΚ":83,"ΕΛΙΝ":84,"ΕΛΛΑΚΤΩΡ":85,"ΙΚΤΙΝ":86,"ΕΛΤΟΝ":87,"ΜΟΤΟ":88,"ΑΑΑΚ":89,"ΛΑΜΨΑ":90,"ΕΥΑΠΣ":91,"ΕΥΔΑΠ":92,"ΕΥΡΩΣ":93,"EVR":94,"ΙΑΤΡ":95,"ΙΛΥΔΑ":96,"ΞΥΛΚ":97,"ΙΝΛΙΦ":98,"ΙΝΤΕΤ":99,"ΙΝΤΚΑ":100,"ΚΑΡΕΛ":101,"ΝΑΥΠ":102,"ΚΡΙ":103,"ΣΑΡΑΝ":104,"ΛΑΝΑΚ":105,"ΜΟΗ":106,"ΜΠΛΕΚΕΔΡΟΣ":107,"NOVAL":108,"ΝΤΟΠΛΕΡ":109,"ΚΕΚΡ":110,"ONYX":111,"ΟΠΤΡΟΝ":112,"ΟΛΘ":113,"ΟΛΠ":114,"ΟΤΕ":115,"ΔΡΟΜΕ":116,"ΠΑΠ":117,"ΠΕΤΡΟ":118,"ΠΛΑΘ":119,"ΠΛΑΚΡ":120,"ΠΡΟΝΤΕΑ":121,"ΠΡΔ":122,"ΡΕΒ":123,"ΣΙΔΜΑ":124,"ΤΖΚΑ":125,"ΤΕΝΕΡΓΑ":126,"ΕΥΡΩΒ":127,"OPTIMA":128,"ΠΕΙΡ":129,"ΦΑΙΣ":130,"ΝΑΚΑΣ":131,"ΦΟΥΝΤΛ":132,"ΧΑΙΔΕ":133};
 (function(){try{var lw=document.getElementById('co-logo-wrap'),lg=document.getElementById('co-logo'),hr=document.getElementById('co-hrule');var code=lw&&lg&&company&&company.ticker&&window.AX_LOGO[company.ticker];if(code){lg.onload=function(){lw.hidden=false;if(hr)hr.hidden=false;};lg.onerror=function(){lw.hidden=true;if(hr)hr.hidden=true;};lg.alt=company.name||'';lg.src='../assets/logos/'+code+'.png';}}catch(e){}})();
-document.title=(company.name&&company.name!=='—'?company.name+' — ':'')+'Axion Metrics';
+// (ο τίτλος τίθεται στο §73 παρακάτω — και για τη γενική περίπτωση χωρίς εταιρεία)
+if(!(company&&company.name&&company.name!=='—')) document.title='Axion Metrics';
 document.getElementById('co-ticker').textContent=company.ticker;
 document.getElementById('co-eur').textContent=company.euronext_name+' · Euronext Athens';
 document.getElementById('co-sector').textContent=company.sector;
-// SEO ανά εταιρεία: δυναμικό canonical/description/og + περίληψη σε κείμενο (indexable)
+// §73 — SEO ΑΝΑ ΕΤΑΙΡΕΙΑ. Τρία πράγματα: canonical/og, ο ΤΙΤΛΟΣ, και η ΠΕΡΙΛΗΨΗ σε ορατό
+// κείμενο. Τεκμήριο από το Search Console (16/09/2026): κάθε ερώτημα που μας φέρνει είναι
+// «όνομα εταιρείας + μετοχή/μέρισμα» (πρδ μετοχη · ευαθ μετοχη · αραιγ μετοχη · ιντκα
+// μερισμα), ενώ 242 εμφανίσεις έδωσαν 4 κλικ σε μέσες θέσεις 5-8 — δηλαδή ο τίτλος δεν
+// απαντούσε στο ερώτημα. Και 89 από τις 133 εμφανίζονταν ΜΟΝΟ με λατινικό όνομα, ενώ ο
+// κόσμος πληκτρολογεί ελληνικά.
 (function(){try{
   if(!company||!company.name||company.name==='—') return;
   var C=company, url='https://www.axionmetrics.gr/company/?tk='+encodeURIComponent(C.ticker);
-  function n1(v){return (v==null||isNaN(v))?null:v.toFixed(1).replace('.',',');}
-  var sec=(C.sector&&C.sector!=='—')?(' στον κλάδο '+C.sector):'';
-  var cur=C.current, pe=cur&&n1(cur.pe), pbv=cur&&n1(cur.pbv);
-  var val=(pe||pbv)?(' Με βάση την τιμή κλεισίματος'+(pe?': P/E '+pe:'')+(pbv?(pe?', ':': ')+'P/BV '+pbv:'')+'.'):'';
-  var desc='Η '+C.name+' ('+C.ticker+') είναι εισηγμένη στο Χρηματιστήριο Αθηνών'+sec+'.'+val+' Θεμελιώδης ανάλυση: αριθμοδείκτες αποτίμησης και κερδοφορίας, τροχιά μεγεθών, μέτοχοι και σύγκριση με τον κλάδο.';
-  var ttl=C.name+' ('+C.ticker+') — Θεμελιώδης ανάλυση | Axion Metrics';
-  function S(sel,a,v){var e=document.querySelector(sel); if(e) e.setAttribute(a,v);}
+  var li=(C.latest&&C.latest.idx!=null)?C.latest.idx:((C.years&&C.years.length-1)||0);
+  var M=C.metrics||{};
+  var num=function(v){return (typeof v==='number'&&!isNaN(v))?v:null;};
+  var at=function(k){var a=M[k]; return (a&&a.length>li)?num(a[li]):null;};
+  var eur=function(v){return fMil(v)+(EN()?'m':' εκατ. €');};
+  var x1=function(v){return (v==null||isNaN(v))?null:v.toLocaleString(LOC(),{minimumFractionDigits:1,maximumFractionDigits:1});};
+  // ΠΡΟΣΟΧΗ: ένωση σε επίπεδο στοιχείων. Regex πάνω στο τελικό κείμενο σπάει στο ελληνικό
+  // δεκαδικό κόμμα («83,89 εκατ. €») και αφήνει προτάσεις χωρίς «και».
+  var join=function(a){ if(a.length<2) return a[0]||''; return a.slice(0,-1).join(', ')+(EN()?' and ':' και ')+a[a.length-1]; };
+
+  // ── ΟΝΟΜΑ 2: η ελληνική (ή λατινική) επωνυμία, καθαρισμένη από νομική μορφή και
+  //    περιγραφικό προσδιορισμό, κομμένη σε ΑΚΕΡΑΙΕΣ ΛΕΞΕΙΣ έως 30 χαρακτήρες — αλλιώς
+  //    τίτλοι σαν «ΕΒΡΟΦΑΡΜΑ ΒΙΟΜΗΧΑΝΙΑ ΓΑΛΑΚΤΟΣ ΑΝΩΝΥΜΗ ΒΙΟΜΗΧΑΝΙΚΗ & ΕΜΠΟΡΙΚΗ ΕΤΑΙΡΕΙΑ».
+  var LEG=/\s*(ΑΝΩΝΥΜ[ΗΟ]Σ?\s+ΕΤΑΙΡ[ΕΙ]?[ΙΑ]Α?|Α\.?Ε\.?Ε\.?Α\.?Π|Α\.?Ε\.?Ε\.?Χ|Α\.?Ε\.?Π\.?Ε\.?Υ|Α\.?Ε\.?Β\.?Ε|Α\.?Β\.?Ε\.?Ε|Α\.?Ξ\.?Ε|Α\.?Ε|S\.?A|PLC|LTD|A\.?G|N\.?V)\.?\s*$/i;
+  // γενικοί όροι που μένουν κρεμασμένοι μετά την κοπή («ΕΛΒΑΛΧΑΛΚΟΡ ΕΛΛΗΝΙΚΗ»)
+  // ΠΡΟΣΟΧΗ: το \w της JS είναι ΜΟΝΟ ASCII — δεν πιάνει ελληνικές καταλήξεις. Χρήση \S*.
+  var GEN=/^(ΕΛΛΗΝΙΚ\S*|ΒΙΟΜΗΧΑΝΙ\S*|ΕΜΠΟΡΙΚ\S*|ΓΕΝΙΚ[ΗΟ]Σ?|ΑΝΩΝΥΜ\S*|ΕΤΑΙΡ\S*|ΤΕΧΝΙΚ\S*|ΝΑΥΤΙΛΙΑΚ\S*|ΞΕΝΟΔΟΧΕΙΑΚ\S*|ΕΙΣΑΓΩΓΙΚ\S*|ΚΑΙ|&)$/i;
+  function norm(t){ return String(t||'').toUpperCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^A-ZΑ-Ω0-9]/g,''); }
+  function alt2(){
+    var t=String(C.euronext_name||'').split(/\s+[-–—]\s+/)[0].trim();
+    t=t.replace(LEG,'').replace(LEG,'').replace(/[\s,.·]+$/,'').trim();
+    if(!t) return '';
+    var w=t.split(/\s+/), out=w[0];
+    for(var k=1;k<w.length;k++){ if((out+' '+w[k]).length>30) break; out+=' '+w[k]; }
+    var ww=out.split(/\s+/);
+    while(ww.length>1 && GEN.test(ww[ww.length-1])) ww.pop();
+    out=ww.join(' ');
+    var a=norm(out), b=norm(C.name);
+    return (a && a!==b && b.indexOf(a)<0 && a.indexOf(b)<0) ? out : '';
+  }
+  var A=alt2(), both=C.name+(A?' / '+A:'');
+
+  // ── ΤΙΤΛΟΣ: και τα δύο ονόματα, το σύμβολο, και οι λέξεις που όντως πληκτρολογούνται.
+  var ttl = EN()
+    ? both+' ('+C.ticker+') — share, results & financial ratios'
+    : both+' ('+C.ticker+') — μετοχή, αποτελέσματα & αριθμοδείκτες';
+
+  // ── ΜΕΓΕΘΗ ΤΕΛΕΥΤΑΙΑΣ ΠΕΡΙΟΔΟΥ
+  var isI=(typeof AXBASIS!=='undefined'&&AXBASIS==='interim');
+  var per=(C.latest&&C.latest.period)||'';
+  var pw = EN() ? (isI?('in H1 '+per):('in FY '+per))
+                : (isI?('το α΄ εξάμηνο '+per):('τη χρήση '+per));
+  var rev=at('revenue'), np=at('net_profit'), eb=at('ebitda'), ppi=at('ppi'), nd=at('net_debt'), eqr=null;
+  var cur=C.current||{}, mc=num(cur.mcap)!=null?num(cur.mcap):at('mcap');
+  var _pe=num(isI&&cur.pe_i!=null?cur.pe_i:cur.pe);
+  var pe=(_pe!=null&&_pe>0)?x1(_pe):null;      // αρνητικό P/E (ζημιογόνος) δεν πληροφορεί — έξω
+  var pbv=x1(num(isI&&cur.pbv_i!=null?cur.pbv_i:cur.pbv));
+
+  var sec=(C.sector&&C.sector!=='—')?C.sector:'';
+  var P=[];
+  P.push(EN()
+    ? (C.name+' ('+C.ticker+') is listed on the Athens Stock Exchange'+(sec?', in the '+sec+' sector':'')+'.')
+    : ('Η '+C.name+' ('+C.ticker+') είναι εισηγμένη στο Χρηματιστήριο Αθηνών'+(sec?', στον κλάδο '+sec:'')+'.'));
+
+  // Τράπεζες: δεν ορίζεται EBITDA (§5.1) — στη θέση του τα κέρδη προ προβλέψεων.
+  var f=[];
+  if(rev!=null) f.push(EN()?('revenue of '+eur(rev)):((IS_BANK?'τα συνολικά έσοδα ':'ο κύκλος εργασιών ')+eur(rev)));
+  if(!IS_BANK&&eb!=null) f.push(EN()?('EBITDA of '+eur(eb)):('το EBITDA '+eur(eb)));
+  if(IS_BANK&&ppi!=null) f.push(EN()?('pre-provision income of '+eur(ppi)):('τα κέρδη προ προβλέψεων '+eur(ppi)));
+  // ζημιά: γράφεται ως ζημιά, όχι ως «καθαρά κέρδη -3,26»
+  if(np!=null) f.push(np<0 ? (EN()?('a net loss of '+eur(-np)):('ζημιές '+eur(-np)))
+                           : (EN()?('net profit of '+eur(np)):('τα καθαρά κέρδη '+eur(np))));
+  if(f.length){
+    // το «ήταν» μπαίνει μετά το ΠΡΩΤΟ στοιχείο, όποιο κι αν είναι αυτό
+    var f2=f.slice(); if(!EN()){ var m0=f2[0].match(/^(.*?)(\s[^\s]*\d.*)$/); if(m0) f2[0]=m0[1]+' ήταν'+m0[2]; }
+    P.push(EN() ? ('The company reported '+join(f2)+' '+pw+'.')
+                : (pw.charAt(0).toUpperCase()+pw.slice(1)+' '+join(f2)+'.'));
+  }
+  if(!IS_BANK&&nd!=null) P.push(nd<0
+    ? (EN()?('It holds net cash of '+eur(-nd)+'.'):('Διαθέτει καθαρό ταμείο '+eur(-nd)+'.'))
+    : (EN()?('Net debt stood at '+eur(nd)+'.'):('Ο καθαρός δανεισμός διαμορφώθηκε σε '+eur(nd)+'.')));
+
+  var v=[];
+  if(mc!=null) v.push(EN()?('a market capitalisation of '+eur(mc)):('κεφαλαιοποίηση '+eur(mc)));
+  if(pe) v.push(EN()?('a P/E of '+pe):('δείκτη P/E '+pe));
+  if(pbv) v.push(EN()?('a P/BV of '+pbv):('δείκτη P/BV '+pbv));
+  if(v.length) P.push(EN()
+    ? ('At the latest closing price it has '+join(v)+'.')
+    : ('Με βάση την τελευταία τιμή κλεισίματος έχει '+join(v)+'.'));
+
+  P.push(EN()
+    ? 'This page covers the company’s financial results and financial statements, 26 financial ratios benchmarked against its sector, the trajectory of its figures since 2020, its main shareholders, subsidiaries, dividends and corporate events.'
+    : 'Στη σελίδα θα βρείτε τα οικονομικά αποτελέσματα και τις οικονομικές καταστάσεις της εταιρείας, 26 αριθμοδείκτες με σύγκριση έναντι του κλάδου, την τροχιά των μεγεθών από το 2020, τους βασικούς μετόχους, τις θυγατρικές, τα μερίσματα και τα εταιρικά γεγονότα.');
+  var summary=P.join(' ');
+
+  // ── META DESCRIPTION: πιο σφιχτή από την περίληψη, με τους ίδιους όρους.
+  var dbits=[];
+  if(rev!=null) dbits.push((EN()?'revenue ':'κύκλος εργασιών ')+eur(rev));
+  if(np!=null)  dbits.push(np<0 ? ((EN()?'net loss ':'ζημιές ')+eur(-np)) : ((EN()?'net profit ':'καθαρά κέρδη ')+eur(np)));
+  if(pe) dbits.push('P/E '+pe);
+  if(pbv) dbits.push('P/BV '+pbv);
+  var desc = EN()
+    ? (both+' ('+C.ticker+'): financial results '+per+(dbits.length?' — '+dbits.join(', '):'')+'. Ratios, dividends, shareholders and sector comparison'+(sec?' in '+sec:'')+'.')
+    : (both+' ('+C.ticker+'): οικονομικά αποτελέσματα '+per+(dbits.length?' — '+dbits.join(', '):'')+'. Αριθμοδείκτες, μερίσματα, μέτοχοι και σύγκριση με τον κλάδο'+(sec?' '+sec:'')+'.');
+
+  function S(sel,a,val){var e=document.querySelector(sel); if(e) e.setAttribute(a,val);}
+  document.title=ttl;
   var cn=document.querySelector('link[rel="canonical"]'); if(cn) cn.setAttribute('href',url);
   S('meta[name="description"]','content',desc);
   S('meta[property="og:description"]','content',desc);
@@ -817,9 +913,8 @@ document.getElementById('co-sector').textContent=company.sector;
   S('meta[property="og:title"]','content',ttl);
   S('meta[name="twitter:title"]','content',ttl);
   S('meta[property="og:url"]','content',url);
-  var s=document.getElementById('co-summary');
-  if(s){ s.textContent=desc; }
-  else { document.addEventListener('DOMContentLoaded',function(){var e=document.getElementById('co-summary'); if(e) e.textContent=desc;}); }
+  function fill(){var e=document.getElementById('co-summary'); if(e) e.textContent=summary;}
+  if(document.getElementById('co-summary')) fill(); else document.addEventListener('DOMContentLoaded',fill);
 }catch(e){}})();
 // Δυναμική ετικέτα «ΕΤΗΣΙΑ/ΕΞΑΜΗΝΟ + περίοδος» + σημείωση + χρωματισμός block/toggle ανά βάση
 (function(){
