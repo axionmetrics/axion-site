@@ -1615,7 +1615,9 @@ const QS_PERIOD=(function(){
       if(!cand.length){ out[tk]={label:'—',tier:'p-old'}; return; }
       cand.sort((a,b)=>a[0]-b[0]);
       const t=cand[cand.length-1];
-      if(t[2]) out[tk]={label:'H1 '+t[1].slice(0,4), tier:'p-fresh'};
+      // §71 — «6M», όχι «H1»: η υπόλοιπη σελίδα (λωρίδα, γράφημα, πίνακες δεικτών) και οι
+      // σελίδες κατατάξεων/σύγκρισης γράφουν ήδη 6M· το pill της λίστας ήταν το τελευταίο «H1».
+      if(t[2]) out[tk]={label:'6M '+t[1].slice(0,4), tier:'p-fresh'};
       else out[tk]={label:t[1], tier:(+t[1]===maxAY?'p-cur':'p-old')};
     });
     return out;
