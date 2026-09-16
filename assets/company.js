@@ -802,9 +802,12 @@ function draw(){
   rev.forEach((v,i)=>{ if(v==null)return; let place='above';
     if(eb.length&&eb[i]!=null){ const yr=yOf(v),ye=yOf(eb[i]); if(Math.abs(yr-ye)<CLOSE && yr>ye && yr+33<yearY-2) place='below'; }
     svg.appendChild(ptLabel(xOf(i),yOf(v),v,yoy(revF,s+i),place)); });
+  // §78 — Η 2η γραμμή ΤΙΜΕΣ από `secF`, άρα και η ΜΕΤΑΒΟΛΗ από `secF`. Το `yoy(ebF,…)`
+  // ήταν καρφωμένο στο EBITDA· στις τράπεζες το EBITDA είναι παντού κενό, οπότε η μεταβολή
+  // έβγαινε null και η γραμμή PPI εμφανιζόταν χωρίς κανένα ποσοστό ανά έτος.
   eb.forEach((v,i)=>{ if(v==null)return; let place='above';
     if(rev[i]!=null){ const ye=yOf(v),yr=yOf(rev[i]); if(Math.abs(yr-ye)<CLOSE && ye>yr && ye+33<yearY-2) place='below'; }
-    svg.appendChild(ptLabel(xOf(i),yOf(v),v,yoy(ebF,s+i),place)); });
+    svg.appendChild(ptLabel(xOf(i),yOf(v),v,yoy(secF,s+i),place)); });
   host.appendChild(svg);
 }
 draw();
