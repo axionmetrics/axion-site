@@ -10,7 +10,7 @@
      [{el:'Σελίδα εταιρείας',en:'Company page'},'/company/'],
      [{el:'Σύγκριση εταιρειών',en:'Compare companies'},'/compare/'],
      [{el:'Κατατάξεις / League tables',en:'Rankings / League tables'},'/rankings/'],
-     [{el:'Εταιρικά αποτελέσματα',en:'Company results'},'/apotelesmata/']]},
+     [{el:'Τελευταία αποτελέσματα',en:'Latest results'},'/apotelesmata/']]},
    {g:{el:'Κλάδοι',en:'Sectors'},items:[
      [{el:'Ευρετήριο κλάδων',en:'Sector index'},'/sectors/'],
      [{el:'Σελίδα κλάδου',en:'Sector page'},'/sector/']]},
