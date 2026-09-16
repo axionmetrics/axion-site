@@ -171,7 +171,8 @@ document.addEventListener('axion:langchange',function(){location.reload();});
 
 const AXBASIS=(function(){try{var u=new URLSearchParams(location.search).get('basis');var b=u||localStorage.getItem('am-basis')||'annual';return (window.AXION&&window.AXION.meta&&window.AXION.meta.bases.indexOf(b)>-1)?b:'annual';}catch(e){return 'annual';}})();
 const _AXC=(window.AXION&&window.AXION.companies&&window.AXION.companies[AXBASIS])||[];
-let _tk=new URLSearchParams(location.search).get('tk');
+// §75 — στις στατικές σελίδες /etaireia/<slug>/ δεν υπάρχει ?tk=· το κέλυφος ψήνει AX_TK.
+let _tk=new URLSearchParams(location.search).get('tk')||window.AX_TK||null;
 try{ if(!_tk){ const _saved=localStorage.getItem('am-last-company'); if(_saved&&_AXC.find(function(c){return c.tk===_saved;})) _tk=_saved; } }catch(e){}
 const AX=(_tk&&_AXC.find(function(c){return c.tk===_tk;}))||_AXC[0]||null;
 try{ if(AX&&AX.tk) localStorage.setItem('am-last-company', AX.tk); }catch(e){}
@@ -224,7 +225,7 @@ function deltaMark(arr,i,goodUp){
 document.getElementById('co-name').textContent=company.name;
 // Λογότυπο εταιρείας (μετά το όνομα, με κάθετο διαχωριστικό)· fallback: κρύβεται αν λείπει
 window.AX_LOGO={"ALWN":1,"ΑΣΤΑΚ":2,"ΑΝΔΡΟ":3,"ΑΤΡΑΣΤ":4,"ΑΛΦΑ":5,"AEM":6,"ΑΣΚΟ":7,"ΑΤΤΙΚΑ":8,"ACAG":9,"ΟΤΟΕΛ":10,"ΑΒΕ":11,"BYLOT":12,"ΜΠΡΙΚ":13,"CENER":14,"ΣΕΝΤΡ":15,"CNLCAP":16,"ΕΕΕ":17,"ΣΠΙ":18,"CREDIA":19,"DIMAND":20,"ΝΤΟΤΣΟΦΤ":21,"ΕΧΑΕ":22,"EX":23,"ΦΛΕΞΟ":24,"ΦΡΛΚ":25,"ΦΡΙΓΟ":26,"ΕΛΠΕ":27,"ΙΝΤΕΚ":28,"ΜΠΕΛΑ":29,"ΛΑΜΔΑ":30,"ΛΟΓΟΣ":31,"ΛΟΥΛΗ":32,"ΜΑΣΤΙΧΑ":33,"MTLN":34,"ΜΕΒΑ":35,"ΜΙΓ":36,"ΟΡΙΛΙΝΑ":37,"ΠΕΡΦ":38,"ΠΡΕΜΙΑ":39,"ΠΡΟΦ":40,"ΚΟΥΑΛ":41,"ΚΟΥΕΣ":42,"REALCONS":43,"SOFTWEB":44,"ΣΠΕΙΣ":45,"TITC":46,"ΤΡΕΣΤΑΤΕΣ":47,"ΤΡΑΣΤΟΡ":48,"ΒΙΟΣΚ":49,"ΒΙΝΤΑ":50,"ΒΙΟ":51,"ΑΒΑΞ":52,"ΣΠΥΡ":53,"ΚΟΡΔΕ":54,"ΑΡΑΙΓ":55,"AKTR":56,"ΑΛΜΥ":57,"ΛΑΒΙ":59,"ΑΔΜΗΕ":60,"ΛΕΒΚ":61,"ΜΑΘΙΟ":62,"ΑΤΕΚ":63,"ΜΕΝΤΙ":64,"ΜΙΝ":65,"ΒΙΟΚΑ":66,"ΒΙΟΤ":67,"ΒΟΣΥΣ":68,"ΓΕΚΤΕΡΝΑ":69,"ΓΕΒΚΑ":70,"ΣΑΡ":71,"ΔΑΙΟΣ":72,"ΔΕΗ":73,"ΔΑΑ":74,"ΔΟΜΙΚ":75,"ΠΑΙΡΗ":76,"ΕΒΡΟΦ":77,"ΕΤΕ":78,"ΕΚΤΕΡ":79,"ΕΛΣΤΡ":80,"ΕΛΧΑ":81,"ΕΛΒΕ":82,"ΜΟΥΖΚ":83,"ΕΛΙΝ":84,"ΕΛΛΑΚΤΩΡ":85,"ΙΚΤΙΝ":86,"ΕΛΤΟΝ":87,"ΜΟΤΟ":88,"ΑΑΑΚ":89,"ΛΑΜΨΑ":90,"ΕΥΑΠΣ":91,"ΕΥΔΑΠ":92,"ΕΥΡΩΣ":93,"EVR":94,"ΙΑΤΡ":95,"ΙΛΥΔΑ":96,"ΞΥΛΚ":97,"ΙΝΛΙΦ":98,"ΙΝΤΕΤ":99,"ΙΝΤΚΑ":100,"ΚΑΡΕΛ":101,"ΝΑΥΠ":102,"ΚΡΙ":103,"ΣΑΡΑΝ":104,"ΛΑΝΑΚ":105,"ΜΟΗ":106,"ΜΠΛΕΚΕΔΡΟΣ":107,"NOVAL":108,"ΝΤΟΠΛΕΡ":109,"ΚΕΚΡ":110,"ONYX":111,"ΟΠΤΡΟΝ":112,"ΟΛΘ":113,"ΟΛΠ":114,"ΟΤΕ":115,"ΔΡΟΜΕ":116,"ΠΑΠ":117,"ΠΕΤΡΟ":118,"ΠΛΑΘ":119,"ΠΛΑΚΡ":120,"ΠΡΟΝΤΕΑ":121,"ΠΡΔ":122,"ΡΕΒ":123,"ΣΙΔΜΑ":124,"ΤΖΚΑ":125,"ΤΕΝΕΡΓΑ":126,"ΕΥΡΩΒ":127,"OPTIMA":128,"ΠΕΙΡ":129,"ΦΑΙΣ":130,"ΝΑΚΑΣ":131,"ΦΟΥΝΤΛ":132,"ΧΑΙΔΕ":133};
-(function(){try{var lw=document.getElementById('co-logo-wrap'),lg=document.getElementById('co-logo'),hr=document.getElementById('co-hrule');var code=lw&&lg&&company&&company.ticker&&window.AX_LOGO[company.ticker];if(code){lg.onload=function(){lw.hidden=false;if(hr)hr.hidden=false;};lg.onerror=function(){lw.hidden=true;if(hr)hr.hidden=true;};lg.alt=company.name||'';lg.src='../assets/logos/'+code+'.png';}}catch(e){}})();
+(function(){try{var lw=document.getElementById('co-logo-wrap'),lg=document.getElementById('co-logo'),hr=document.getElementById('co-hrule');var code=lw&&lg&&company&&company.ticker&&window.AX_LOGO[company.ticker];if(code){lg.onload=function(){lw.hidden=false;if(hr)hr.hidden=false;};lg.onerror=function(){lw.hidden=true;if(hr)hr.hidden=true;};lg.alt=company.name||'';lg.src='/assets/logos/'+code+'.png';}}catch(e){}})();
 // (ο τίτλος τίθεται στο §73 παρακάτω — και για τη γενική περίπτωση χωρίς εταιρεία)
 if(!(company&&company.name&&company.name!=='—')) document.title='Axion Metrics';
 document.getElementById('co-ticker').textContent=company.ticker;
@@ -238,7 +239,11 @@ document.getElementById('co-sector').textContent=company.sector;
 // κόσμος πληκτρολογεί ελληνικά.
 (function(){try{
   if(!company||!company.name||company.name==='—') return;
-  var C=company, url='https://www.axionmetrics.gr/company/?tk='+encodeURIComponent(C.ticker);
+  var C=company;
+  // §75 — κανονική διεύθυνση = η στατική σελίδα. Το `?tk=` μένει ζωντανό αλλά δηλώνει
+  // ότι η κανονική του έκδοση είναι η /etaireia/<slug>/, ώστε να μη μετρηθούν δύο φορές.
+  var url='https://www.axionmetrics.gr/'+(C.slug?('etaireia/'+C.slug+'/')
+                                                :('company/?tk='+encodeURIComponent(C.ticker)));
   var li=(C.latest&&C.latest.idx!=null)?C.latest.idx:((C.years&&C.years.length-1)||0);
   var M=C.metrics||{};
   var num=function(v){return (typeof v==='number'&&!isNaN(v))?v:null;};
@@ -324,6 +329,14 @@ document.getElementById('co-sector').textContent=company.sector;
     : 'Στη σελίδα θα βρείτε τα οικονομικά αποτελέσματα και τις οικονομικές καταστάσεις της εταιρείας, 26 αριθμοδείκτες με σύγκριση έναντι του κλάδου, την τροχιά των μεγεθών από το 2020, τους βασικούς μετόχους, τις θυγατρικές, τα μερίσματα και τα εταιρικά γεγονότα.');
   var summary=P.join(' ');
 
+  // §75 — ΜΙΑ ΠΗΓΗ ΓΙΑ ΤΟ ΕΛΛΗΝΙΚΟ ΚΕΙΜΕΝΟ. Η γέφυρα το χτίζει (co_seo) και το στέλνει
+  // στο data.js ως `seo`· το ίδιο κείμενο ψήνεται και στις στατικές σελίδες. Έτσι ό,τι
+  // βλέπει ο Google χωρίς JavaScript ταυτίζεται με ό,τι βλέπει μετά.
+  // Τα ΑΓΓΛΙΚΑ μένουν εδώ: η αγγλική όψη δεν έχει δική της διεύθυνση, άρα δεν είναι
+  // περιουσιακό στοιχείο αναζήτησης — είναι διευκόλυνση οθόνης.
+  var _S=(!EN() && C.seo && C.seo.summary) ? C.seo : null;
+  if(_S) summary=_S.summary;
+
   // ── META DESCRIPTION: πιο σφιχτή από την περίληψη, με τους ίδιους όρους.
   var dbits=[];
   if(rev!=null) dbits.push((EN()?'revenue ':'κύκλος εργασιών ')+eur(rev));
@@ -334,6 +347,14 @@ document.getElementById('co-sector').textContent=company.sector;
     ? (both+' ('+C.ticker+'): financial results '+per+(dbits.length?' — '+dbits.join(', '):'')+'. Ratios, dividends, shareholders and sector comparison'+(sec?' in '+sec:'')+'.')
     : (both+' ('+C.ticker+'): οικονομικά αποτελέσματα '+per+(dbits.length?' — '+dbits.join(', '):'')+'. Αριθμοδείκτες, μερίσματα, μέτοχοι και σύγκριση με τον κλάδο'+(sec?' '+sec:'')+'.');
 
+  if(_S){ ttl=_S.title; desc=_S.desc; }
+  // η αποτίμηση μπαίνει ΜΟΝΟ στην απόδοση (το current.js αλλάζει κάθε βράδυ· αν ψηνόταν
+  // στο HTML, το νυχτερινό Action θα ξανάγραφε 133 αρχεία καθημερινά)
+  if(_S && v.length){
+    var _t=' Στη σελίδα θα βρείτε', _i=summary.indexOf(_t);
+    var _vs='Με βάση την τελευταία τιμή κλεισίματος έχει '+join(v)+'.';
+    summary = (_i>0) ? (summary.slice(0,_i)+' '+_vs+summary.slice(_i)) : (summary+' '+_vs);
+  }
   function S(sel,a,val){var e=document.querySelector(sel); if(e) e.setAttribute(a,val);}
   document.title=ttl;
   var cn=document.querySelector('link[rel="canonical"]'); if(cn) cn.setAttribute('href',url);
@@ -620,7 +641,16 @@ function niceScale(minv,maxv){
   return {yMin,yMax,lines};
 }
 const pathOf=(arr,yOf)=>{ let d='',started=false; arr.forEach((v,i)=>{ if(v==null)return; d+=(started?' L ':'M ')+xOf(i)+' '+yOf(v); started=true; }); return d; };
-const yoy=(arr,i)=> (i===0||arr[i]==null||!arr[i-1]) ? null : (arr[i]-arr[i-1])/arr[i-1]*100;
+// §76 — ΜΕΤΑΒΟΛΗ ΜΕ ΑΡΝΗΤΙΚΗ ΒΑΣΗ. Η διαίρεση με ΠΡΟΣΗΜΑΣΜΕΝΗ βάση αντιστρέφει το
+// πρόσημο όταν το προηγούμενο μέγεθος είναι αρνητικό: η 8 ATTICA GROUP πήγε από ζημιές
+// 13,2 εκατ. σε κέρδη 17,1 εκατ. και η σελίδα έγραφε −229,3 %. Χειρότερα, ζημιά που
+// ΜΙΚΡΑΙΝΕΙ (−49,4 → −13,2) έβγαινε −73,3 % με κόκκινο, δηλαδή βελτίωση παρουσιαζόταν ως
+// επιδείνωση. 404 από τα 4.655 ζεύγη του site (8,7 %) είχαν αρνητική βάση.
+//
+// ΚΑΝΟΝΑΣ: μέγεθος = |Δ| / |προηγούμενο| · πρόσημο και χρώμα από την ΠΡΑΓΜΑΤΙΚΗ φορά της
+// μεταβολής (Δ), όχι από το πηλίκο. Είναι η σύμβαση που ήδη εφάρμοζε η `deltaMark`.
+const yoy=(arr,i)=> (i===0||arr[i]==null||arr[i-1]==null||!arr[i-1]) ? null
+                  : (arr[i]-arr[i-1])/Math.abs(arr[i-1])*100;
 function addPill(g,x,by,txt,col){
   const w=Math.max(30, txt.length*5.9 + 10);
   const lx=Math.min(Math.max(x,w/2+4),W-w/2-4);

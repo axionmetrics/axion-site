@@ -1,3 +1,15 @@
+// §75.3 — ΕΝΑΣ τρόπος να φτιάχνεται σύνδεσμος προς σελίδα εταιρείας, για ΟΛΕΣ τις σελίδες.
+// Προτιμά τη στατική διεύθυνση /etaireia/<slug>/· αν το data.js είναι παλιό (χωρίς slug),
+// πέφτει στο ?tk= που εξακολουθεί να δουλεύει.
+window.AX_CO=function(tk,basis){
+  try{
+    var L=(window.AXION&&window.AXION.companies&&window.AXION.companies.annual)||[];
+    for(var i=0;i<L.length;i++) if(L[i].tk===tk&&L[i].slug)
+      return '/etaireia/'+L[i].slug+'/'+(basis?('?basis='+basis):'');
+  }catch(e){}
+  return '/company/?tk='+encodeURIComponent(tk)+(basis?('&basis='+basis):'');
+};
+
 /* Axion Metrics — i18n engine (GR/EN). Κοινό για όλες τις σελίδες.
    Χρήση: data-i18n="key" (textContent), data-i18n-html, data-i18n-ph (placeholder),
    data-i18n-title. Κάθε σελίδα δηλώνει το λεξικό της με AX_I18N.add({...}).

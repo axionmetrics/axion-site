@@ -7,19 +7,19 @@
 
  const NAV=[
    {g:{el:'Εταιρείες',en:'Companies'},items:[
-     [{el:'Σελίδα εταιρείας',en:'Company page'},'../company/'],
-     [{el:'Σύγκριση εταιρειών',en:'Compare companies'},'../compare/'],
-     [{el:'Κατατάξεις / League tables',en:'Rankings / League tables'},'../rankings/']]},
+     [{el:'Σελίδα εταιρείας',en:'Company page'},'/company/'],
+     [{el:'Σύγκριση εταιρειών',en:'Compare companies'},'/compare/'],
+     [{el:'Κατατάξεις / League tables',en:'Rankings / League tables'},'/rankings/']]},
    {g:{el:'Κλάδοι',en:'Sectors'},items:[
-     [{el:'Ευρετήριο κλάδων',en:'Sector index'},'../sectors/'],
-     [{el:'Σελίδα κλάδου',en:'Sector page'},'../sector/']]},
+     [{el:'Ευρετήριο κλάδων',en:'Sector index'},'/sectors/'],
+     [{el:'Σελίδα κλάδου',en:'Sector page'},'/sector/']]},
    {g:{el:'Εργαλεία',en:'Tools'},items:[
-     [{el:'Αναθεωρήσεις δεικτών',en:'Index reviews'},'../index-reviews/'],
-     [{el:'Γεγονότα αγοράς',en:'Market events'},'../market-events/']]},
+     [{el:'Αναθεωρήσεις δεικτών',en:'Index reviews'},'/index-reviews/'],
+     [{el:'Γεγονότα αγοράς',en:'Market events'},'/market-events/']]},
    {g:{el:'Σχετικά',en:'About'},items:[
-     [{el:'Μεθοδολογία & δείκτες',en:'Methodology & ratios'},'../methodology/'],
-     [{el:'Περί',en:'About'},'../about/'],
-     [{el:'Όροι χρήσης',en:'Terms of use'},'../terms/']]}
+     [{el:'Μεθοδολογία & δείκτες',en:'Methodology & ratios'},'/methodology/'],
+     [{el:'Περί',en:'About'},'/about/'],
+     [{el:'Όροι χρήσης',en:'Terms of use'},'/terms/']]}
  ];
  var NAV_ACTIVE=(typeof window.NAV_ACTIVE==='number')?window.NAV_ACTIVE:0;
  var NAV_CUR=window.NAV_CUR||(NAV[NAV_ACTIVE]&&NAV[NAV_ACTIVE].items[0][0].el);
@@ -34,7 +34,7 @@
    aria:{el:'Βάση δεδομένων',en:'Data basis'},
    annualOnly:{el:'Ετήσια στοιχεία',en:'Annual figures'} };
 
- var NAVHTML="<nav class=\"site-nav\">\n <div class=\"bar1\"><a class=\"lock\" href=\"../\"><span class=\"am\">A<i>M</i></span><span class=\"lrule\"></span><span class=\"lname\">AXION<br>METRICS</span></a><ul class=\"tabs\" id=\"navtabs\"></ul><div class=\"am-right\"><div class=\"am-basis\" id=\"ambasis\"></div><button class=\"langtog\" data-langtog aria-label=\"Language\">EN</button></div></div>\n <div class=\"bar2\" id=\"navbar2\"></div>\n</nav>\n<div class=\"am-upd\" id=\"amupd\" hidden></div>";
+ var NAVHTML="<nav class=\"site-nav\">\n <div class=\"bar1\"><a class=\"lock\" href=\"/\"><span class=\"am\">A<i>M</i></span><span class=\"lrule\"></span><span class=\"lname\">AXION<br>METRICS</span></a><ul class=\"tabs\" id=\"navtabs\"></ul><div class=\"am-right\"><div class=\"am-basis\" id=\"ambasis\"></div><button class=\"langtog\" data-langtog aria-label=\"Language\">EN</button></div></div>\n <div class=\"bar2\" id=\"navbar2\"></div>\n</nav>\n<div class=\"am-upd\" id=\"amupd\" hidden></div>";
 
  function footerHTML(){
    /* Οι στήλες παράγονται ΑΠΟ ΤΟΝ ΙΔΙΟ πίνακα NAV με το header — καμία χειροκίνητη λίστα,
@@ -148,7 +148,7 @@
    if(!U.length){ el.hidden=true; el.innerHTML=''; return; }
    var chips=U.map(function(u){
      var pr=updPeriod(u), nm=u.name||u.tk;
-     return '<a class="chip" href="../company/?tk='+encodeURIComponent(u.tk)+'&basis='+u.basis+'">'
+     return '<a class="chip" href="'+AX_CO(u.tk,u.basis)+'">'
           + '<span class="co">'+esc(nm)+'</span>'
           + '<span class="per '+pr.cls+'">'+esc(pr.txt)+'</span>'
           + '<span class="dt">'+updDate(u.date)+'</span></a>';

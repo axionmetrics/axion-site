@@ -183,7 +183,7 @@ function card(sec){
    .map(r=>{
      const dead=r.trading===false?' co-dead':'';
      const dot=(r.trading===false&&r.tstatus)?`<span class="tdot ${r.tstatus.type==='delisted'?'t-del':'t-sus'}" title="${r.tstatus.label}"></span>`:((AXBASIS==='interim'&&r.interimPartial)?`<span class="tdot t-prov" title="${(r.h1n||1)}/2 ${L('word.semesters')}"></span>`:'');
-     return `<a class="co${dead}" href="${COMPANY_PAGE}?tk=${encodeURIComponent(r.tk)}" target="_blank"><span class="cn">${dot}${r.t}</span><span class="cm">${eur(r.mcap)}</span></a>`;
+     return `<a class="co${dead}" href="${AX_CO(r.tk)}" target="_blank"><span class="cn">${dot}${r.t}</span><span class="cm">${eur(r.mcap)}</span></a>`;
    }).join('');
  return `<div class="card">
   <div class="chdr">

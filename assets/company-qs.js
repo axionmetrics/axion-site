@@ -1,6 +1,8 @@
 /* ---------- Γρήγορη εύρεση εταιρείας ---------- */
 const QS_CURRENT=(AX?AX.name:'');
-const QS_PAGE='';   // προσωρινά: όλες δείχνουν στην ίδια σελίδα
+// §75.3 — οι σύνδεσμοι φτιάχνονται από το AX_CO (chrome.js): /etaireia/<slug>/ όπου υπάρχει.
+// ΠΡΟΣΟΧΗ: σκέτο «?tk=» από σελίδα /etaireia/<slug>/ θα κρατούσε το ψημένο κέλυφος ΑΛΛΗΣ
+// εταιρείας και θα έδειχνε λάθος τίτλο/canonical.
 const qsNorm=s=>(s||'').toUpperCase()
  .replace(/[ΆΑ]/g,'Α').replace(/[ΈΕ]/g,'Ε').replace(/[ΉΗ]/g,'Η').replace(/[ΊΪΐΙ]/g,'Ι')
  .replace(/[ΌΟ]/g,'Ο').replace(/[ΎΫΰΥ]/g,'Υ').replace(/[ΏΩ]/g,'Ω');
@@ -63,7 +65,7 @@ function qsRender(){
     let right='';
     if(r[2]===false) right=`<span class="tbadge sm t-frozen">${L('co.entity.badge')}</span>`;
     else if(_p && _p.label!=='—') right=`<span class="qs-per ${_p.tier}">${_p.label}</span>`;
-    html+=`<a class="qs-item${here}${sel}${dead}" data-i="${i}" href="${encodeURI(QS_PAGE)}?tk=${encodeURIComponent(r[1])}">
+    html+=`<a class="qs-item${here}${sel}${dead}" data-i="${i}" href="${AX_CO(r[1])}">
       <span class="qs-nm">${r[0]}</span><span class="qs-tk">${r[1]}</span><span class="qs-right">${right}</span></a>`;
   });
   body.innerHTML=html;
