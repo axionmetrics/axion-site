@@ -242,8 +242,13 @@ document.getElementById('co-sector').textContent=company.sector;
   var C=company;
   // §75 — κανονική διεύθυνση = η στατική σελίδα. Το `?tk=` μένει ζωντανό αλλά δηλώνει
   // ότι η κανονική του έκδοση είναι η /etaireia/<slug>/, ώστε να μη μετρηθούν δύο φορές.
-  var url='https://www.axionmetrics.gr/'+(C.slug?('etaireia/'+C.slug+'/')
-                                                :('company/?tk='+encodeURIComponent(C.ticker)));
+  // §77 — ΤΟ `company` ΔΕΝ ΕΧΕΙ `slug`. Το slug ζει στο AXION.companies (ανά ticker), όχι στο
+  // αντικείμενο της τρέχουσας εταιρείας· το `C.slug` ήταν πάντα undefined, άρα ΟΛΕΣ οι σελίδες
+  // —μαζί και οι 133 στατικές— έγραφαν στο canonical το `/company/?tk=…`, δηλαδή ακριβώς τις
+  // διευθύνσεις που το Search Console αρνείται να δει. Μοναδική πηγή: η AX_CO του i18n.js.
+  var _path=(typeof AX_CO==='function') ? AX_CO(C.ticker)
+          : ('/company/?tk='+encodeURIComponent(C.ticker));
+  var url='https://www.axionmetrics.gr'+_path;
   var li=(C.latest&&C.latest.idx!=null)?C.latest.idx:((C.years&&C.years.length-1)||0);
   var M=C.metrics||{};
   var num=function(v){return (typeof v==='number'&&!isNaN(v))?v:null;};
