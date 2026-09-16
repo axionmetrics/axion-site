@@ -328,7 +328,7 @@
   .hero{background:#fff;border:1px solid #eef1f6;border-radius:14px;box-shadow:0 4px 16px rgba(27,39,64,.06);overflow:hidden;margin-top:22px;margin-bottom:18px}
 .hero .stripe{height:5px;background:#c6a24e}
 .hero .hero-in{padding:24px 34px 22px}
-.hero h1{font-family:Inter,sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.02em;color:#1b2740;font-size:30px;line-height:1.05;margin:0}
+.hero h1,.hero .hero-h1{font-family:Inter,sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.02em;color:#1b2740;font-size:30px;line-height:1.05;margin:0}
 .hero-stats{display:flex;flex-wrap:wrap;margin-top:16px}
 .hero .hs{display:flex;flex-direction:column;gap:3px;padding:2px 20px}
 .hero .hs:first-child{padding-left:0}
@@ -411,3 +411,6 @@
  .cband .clab .t{font-size:11px;line-height:1.3}
  .cband .clab .s{font-size:9.5px}
 }
+/* §79 — ο κλάδος στο mast είναι πλέον σύνδεσμος προς /klados/<slug>/ */
+.sctag a{color:inherit;text-decoration:none}
+.sctag a:hover{text-decoration:underline}

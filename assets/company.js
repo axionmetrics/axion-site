@@ -230,7 +230,14 @@ window.AX_LOGO={"ALWN":1,"ΑΣΤΑΚ":2,"ΑΝΔΡΟ":3,"ΑΤΡΑΣΤ":4,"ΑΛΦ�
 if(!(company&&company.name&&company.name!=='—')) document.title='Axion Metrics';
 document.getElementById('co-ticker').textContent=company.ticker;
 document.getElementById('co-eur').textContent=company.euronext_name+' · Euronext Athens';
-document.getElementById('co-sector').textContent=company.sector;
+// §79 — ΕΣΩΤΕΡΙΚΗ ΣΥΝΔΕΣΗ. Ο κλάδος ήταν σκέτο κείμενο· τώρα κάθε μία από τις 133
+// σελίδες δίνει έναν σύνδεσμο στη σελίδα του κλάδου της, χτίζοντας ιεραρχία θέματος
+// (εταιρεία → κλάδος) αντί για 133 σελίδες που δείχνουν μόνο η μία στην άλλη.
+(function(){var _e=document.getElementById('co-sector'), _s=company.sector;
+ var _u=null; try{ _u=(typeof AX_KLADOS==='function')?AX_KLADOS(_s):null; }catch(x){}
+ if(_u) _e.innerHTML='<a href="'+_u.replace('https://www.axionmetrics.gr','')+'">'+
+        _s.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</a>';
+ else _e.textContent=_s;})();
 // §73 — SEO ΑΝΑ ΕΤΑΙΡΕΙΑ. Τρία πράγματα: canonical/og, ο ΤΙΤΛΟΣ, και η ΠΕΡΙΛΗΨΗ σε ορατό
 // κείμενο. Τεκμήριο από το Search Console (16/09/2026): κάθε ερώτημα που μας φέρνει είναι
 // «όνομα εταιρείας + μετοχή/μέρισμα» (πρδ μετοχη · ευαθ μετοχη · αραιγ μετοχη · ιντκα

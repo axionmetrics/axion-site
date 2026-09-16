@@ -143,9 +143,9 @@
  @media(max-width:900px){.cards{grid-template-columns:1fr 1fr}}
  @media(max-width:640px){.hero{padding:14px 16px}.secbox .hero-in{padding:20px 20px}.secbox .hs{padding:2px 14px}.cards{grid-template-columns:1fr}.wrap{padding-left:14px;padding-right:14px}}
 </style>
-<link rel="stylesheet" href="../assets/chrome.css">
-<script src="../assets/data.js"></script>
-<script src="../assets/i18n.js"></script>
+<link rel="stylesheet" href="/assets/chrome.css">
+<script src="/assets/data.js"></script>
+<script src="/assets/i18n.js"></script>
 </head>
 <body>
 <div id="am-nav"></div>
@@ -153,7 +153,7 @@
  <div class="secbox">
     <div class="stripe"></div>
     <div class="hero-in">
-      <h1 data-i18n="rk.h1">Κατατάξεις</h1>
+      <h1 id="rk-h1" data-i18n="rk.h1">Κατατάξεις</h1>
       <div class="hero-stats">
         <div class="hs"><span class="v" data-i18n="rk.hs1v">Κατάταξη</span><span class="l" data-i18n="rk.hs1l">ανά δείκτη</span></div>
         <div class="hs"><span class="v" data-i18n="rk.hs2v">Εμβέλεια</span><span class="l" data-i18n="rk.hs2l">αγορά ή κλάδος</span></div>
@@ -300,7 +300,9 @@ const MET=[
 ];
 const SECTORS=[...new Set(DATA.map(r=>r.s))].filter(s=>s&&s!=='—');
 
-let metric='pe', scope=null, dir='top', topN=10;
+// §79 — στατική σελίδα /katataxeis/<δείκτης>/: ο δείκτης ψήνεται στο κέλυφος.
+let metric=(window.AX_METRIC && MET.some(m=>m.k===window.AX_METRIC)) ? window.AX_METRIC : 'pe',
+    scope=null, dir='top', topN=10;
 
 const fmt=(v,d)=>(v==null||isNaN(v))?'—':v.toLocaleString(LOC(),{minimumFractionDigits:d,maximumFractionDigits:d});
 const fv=(m,v)=>fmt(v,m.d)+(m.pct?' %':'');
@@ -464,12 +466,20 @@ function fillPeriods(){
  const rc=repCount(PERIOD), tot=periodRows(PERIOD).filter(r=>r.calculated!==false).length;
  const pi=document.getElementById('perinfo'); if(pi) pi.textContent=L('rk.reportedn').replace('{a}',rc).replace('{b}',tot);
 }
-function render(){fillPeriods();renderBasisBlock();chips();table();cards();}
+function render(){fillPeriods();renderBasisBlock();chips();table();cards();
+ // §79 — στη στατική σελίδα ο τίτλος και το canonical ακολουθούν τον ψημένο δείκτη
+ if(window.AX_METRIC){
+   var _h=document.getElementById('rk-h1'); if(_h)_h.textContent=L('rk.h1')+' · '+metLabel(metric);
+ }
+ try{ var _u=(typeof AX_KATATAXI==='function')?AX_KATATAXI(metric):null;
+      if(_u){ var _c=document.querySelector('link[rel="canonical"]'); if(_c)_c.setAttribute('href',_u);
+              var _o=document.querySelector('meta[property="og:url"]'); if(_o)_o.setAttribute('content',_u); } }catch(e){}
+}
 render();
 document.addEventListener('axion:langchange',render);
 </script>
 <div id="am-foot"></div>
 <script>window.NAV_ACTIVE=0;window.NAV_CUR="Κατατάξεις / League tables";window.AX_NO_BASIS=true;</script>
-<script src="../assets/chrome.js"></script>
+<script src="/assets/chrome.js"></script>
 </body>
 </html>

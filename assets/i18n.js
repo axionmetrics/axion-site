@@ -10,6 +10,25 @@ window.AX_CO=function(tk,basis){
   return '/company/?tk='+encodeURIComponent(tk)+(basis?('&basis='+basis):'');
 };
 
+/* §79 — Διευθύνσεις στατικών σελίδων κλάδου και κατάταξης. Ζουν ΕΔΩ, μαζί με την AX_CO,
+   γιατί το i18n.js φορτώνει στο <head> κάθε σελίδας· το chrome.js φορτώνει τελευταίο και
+   όποιος το χρησιμοποίησε ως σπίτι κοινών βοηθημάτων έφαγε ReferenceError (§74).
+   Ο κατάλογος slug ψήνεται από τη γέφυρα στο data.js (AXION.meta.slugs) — μία πηγή. */
+window.AX_KLADOS=function(sectorName){
+  try{
+    var M=(window.AXION&&window.AXION.meta&&window.AXION.meta.slugs&&window.AXION.meta.slugs.sectors)||null;
+    if(M&&M[sectorName]) return 'https://www.axionmetrics.gr/klados/'+M[sectorName]+'/';
+  }catch(e){}
+  return null;
+};
+window.AX_KATATAXI=function(metricKey){
+  try{
+    var M=(window.AXION&&window.AXION.meta&&window.AXION.meta.slugs&&window.AXION.meta.slugs.metrics)||null;
+    if(M&&M[metricKey]) return 'https://www.axionmetrics.gr/katataxeis/'+M[metricKey]+'/';
+  }catch(e){}
+  return null;
+};
+
 /* Axion Metrics — i18n engine (GR/EN). Κοινό για όλες τις σελίδες.
    Χρήση: data-i18n="key" (textContent), data-i18n-html, data-i18n-ph (placeholder),
    data-i18n-title. Κάθε σελίδα δηλώνει το λεξικό της με AX_I18N.add({...}).
