@@ -41,15 +41,18 @@ def main():
     # ποιο branch; ρώτα το git (default: αυτό που δείχνει το origin/HEAD, αλλιώς main)
     branch='main'
     try:
-        r=subprocess.run(['git','rev-parse','--abbrev-ref','HEAD'],capture_output=True,text=True)
+        r=subprocess.run(['git','rev-parse','--abbrev-ref','HEAD'],capture_output=True,text=True,encoding='utf-8',errors='replace')
         if r.returncode==0 and r.stdout.strip() and r.stdout.strip()!='HEAD':
             branch=r.stdout.strip()
     except Exception: pass
 
+    # ⚠ encoding='utf-8' ΥΠΟΧΡΕΩΤΙΚΟ: το data.js έχει ελληνικά· χωρίς αυτό το subprocess
+    # αποκωδικοποιεί με το locale των Windows (cp1252) και σκάει με UnicodeDecodeError
+    # μέσα στο _readerthread — το stdout γυρίζει None και η αποτυχία μοιάζει με «git μη διαθέσιμο».
     try:
         subprocess.run(['git','fetch',args.remote,'--quiet'],check=False)
         ref=f'{args.remote}/{branch}:assets/data.js'
-        r=subprocess.run(['git','show',ref],capture_output=True,text=True)
+        r=subprocess.run(['git','show',ref],capture_output=True,text=True,encoding='utf-8',errors='replace')
         if r.returncode!=0 or not r.stdout.strip():
             print(f"graft: δεν βρέθηκε {ref} — παράλειψη (θα το γράψει το daily action)."); return
         OLD,_=load(r.stdout)
