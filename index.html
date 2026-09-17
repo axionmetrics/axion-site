@@ -186,6 +186,11 @@
  <div class="fgrid"><a class="fcard" href="company/"><div class="ficon"><img src="assets/icons/company.png" alt="" loading="lazy"></div><h3 data-i18n="card.company.h">Θεμελιώδης ανάλυση εταιρείας</h3><p data-i18n="card.company.p">26 αριθμοδείκτες με κλαδική σύγκριση, ιστορικότητα μεγεθών, μέτοχοι, θυγατρικές, γεγονότα και ποιότητα κερδών (Piotroski).</p></a><a class="fcard" href="compare/"><div class="ficon"><img src="assets/icons/compare.png" alt="" loading="lazy"></div><h3 data-i18n="card.compare.h">Σύγκριση &amp; κατατάξεις</h3><p data-i18n="card.compare.p">Εταιρείες δίπλα-δίπλα σε κάθε δείκτη, και league tables για όλη την αγορά.</p></a><a class="fcard" href="sectors/"><div class="ficon"><img src="assets/icons/sector.png" alt="" loading="lazy"></div><h3 data-i18n="card.sector.h">Ανάλυση κλάδου</h3><p data-i18n="card.sector.p">Κλαδικές διάμεσοι, screener εντός κλάδου και τροχιά ποιότητας.</p></a><a class="fcard" href="index-reviews/"><div class="ficon"><img src="assets/icons/events.png" alt="" loading="lazy"></div><h3 data-i18n="card.events.h">Δείκτες &amp; γεγονότα αγοράς</h3><p data-i18n="card.events.p">Είσοδοι/έξοδοι στους δείκτες FTSE/Athex και ροή εταιρικών γεγονότων (μερίσματα, ΑΜΚ).</p></a></div>
 </div></div>
 
+<!-- §86 — ΣΤΑΤΙΣΤΙΚΑ ΣΤΗΝ ΑΡΧΙΚΗ. Η αρχική ΔΕΝ φορτώνει το chrome.js (έχει δική της
+     κεφαλίδα/υποσέλιδο), οπότε η injectAnalytics() δεν έτρεχε ποτέ εδώ: η σελίδα που
+     δέχεται τις περισσότερες ΠΡΩΤΕΣ επισκέψεις ήταν η μόνη που δεν μετριόταν. Ίδιο id
+     `cf-beacon` με το chrome.js, ώστε αν κάποτε φορτωθεί κι εκείνο να μη διπλομετρήσει. -->
+<script id="cf-beacon" defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "a9e573e27dd34f6784b7df2d706c1bee"}'></script>
 <script src="assets/i18n.js"></script>
 <script>
 AX_I18N.add({
