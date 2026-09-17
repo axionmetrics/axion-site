@@ -88,6 +88,7 @@
 </style>
 <link rel="stylesheet" href="/assets/chrome.css">
 <script src="/assets/data.js"></script>
+<script src="/assets/current.js"></script>
 <script src="/assets/i18n.js"></script>
 </head>
 <body>
@@ -113,7 +114,7 @@
 
  <div class="grid" id="grid"></div>
 
- <div class="foot" data-i18n="sectors.foot">Οι εταιρείες κάθε κλάδου εμφανίζονται κατά φθίνουσα κεφαλαιοποίηση. Κλικ στο όνομα του κλάδου ανοίγει τη σελίδα του· κλικ σε εταιρεία τη σελίδα της. Η «ανάπτυξη τζίρου» είναι ο μέσος ετήσιος ρυθμός αύξησης του κύκλου εργασιών (CAGR) 2020–2025, σταθμισμένος κατά μέγεθος.</div>
+ <div class="foot" data-i18n-html="sectors.foot">Οι εταιρείες κάθε κλάδου εμφανίζονται κατά φθίνουσα κεφαλαιοποίηση. Η <b>κεφαλαιοποίηση είναι η τρέχουσα</b>, με βάση την τελευταία τιμή κλεισίματος — η ίδια που δείχνει και η σελίδα κάθε εταιρείας. Κλικ στο όνομα του κλάδου ανοίγει τη σελίδα του· κλικ σε εταιρεία τη σελίδα της. Η «ανάπτυξη τζίρου» είναι ο μέσος ετήσιος ρυθμός αύξησης του κύκλου εργασιών (CAGR) 2020–2025, σταθμισμένος κατά μέγεθος.</div>
 </div>
 
 <script>
@@ -124,7 +125,7 @@ AX_I18N.add({
  'sectors.sort.name':{el:'Αλφαβητικά', en:'Alphabetical'},
  'sectors.sort.mcap':{el:'Κεφαλαιοποίηση', en:'Market cap'},
  'sectors.sort.cagr':{el:'Ανάπτυξη τζίρου', en:'Revenue growth'},
- 'sectors.foot':{el:'Οι εταιρείες κάθε κλάδου εμφανίζονται κατά φθίνουσα κεφαλαιοποίηση. Κλικ στο όνομα του κλάδου ανοίγει τη σελίδα του· κλικ σε εταιρεία τη σελίδα της. Η «ανάπτυξη τζίρου» είναι ο μέσος ετήσιος ρυθμός αύξησης του κύκλου εργασιών (CAGR) 2020–2025, σταθμισμένος κατά μέγεθος.', en:'Companies in each sector are shown by descending market cap. Clicking the sector name opens its page; clicking a company opens its page. “Revenue growth” is the size-weighted average annual growth rate of turnover (CAGR) 2020–2025.'},
+ 'sectors.foot':{el:'Οι εταιρείες κάθε κλάδου εμφανίζονται κατά φθίνουσα κεφαλαιοποίηση. Η <b>κεφαλαιοποίηση είναι η τρέχουσα</b>, με βάση την τελευταία τιμή κλεισίματος — η ίδια που δείχνει και η σελίδα κάθε εταιρείας. Κλικ στο όνομα του κλάδου ανοίγει τη σελίδα του· κλικ σε εταιρεία τη σελίδα της. Η «ανάπτυξη τζίρου» είναι ο μέσος ετήσιος ρυθμός αύξησης του κύκλου εργασιών (CAGR) 2020–2025, σταθμισμένος κατά μέγεθος.', en:'Companies in each sector are shown by descending market cap. <b>Market cap is current</b>, based on the latest closing price — the same figure each company page shows. Clicking the sector name opens its page; clicking a company opens its page. “Revenue growth” is the size-weighted average annual growth rate of turnover (CAGR) 2020–2025.'},
  'sectors.revgrowth':{el:'Ανάπτυξη τζίρου', en:'Revenue growth'},
  'sectors.mcaplbl':{el:'Κεφ/ποίηση', en:'Market cap'},
  'sum.sectors':{el:'Κλάδοι', en:'Sectors'},
@@ -150,7 +151,16 @@ const secHref=n=>{ try{ var u=(typeof AX_KLADOS==='function')?AX_KLADOS(n):null;
 const COMPANY_PAGE='../company/';
 
 const AXBASIS='annual'; /* Ευρετήριο κλάδων: μόνο ετήσια βάση (καμία εξαμηνιαία διάμεσος κλάδου) */
-const DATA=((window.AXION&&window.AXION.rows&&window.AXION.rows[AXBASIS])||[]).filter(function(r){return r.calculated!==false;});
+/* §87 — ΤΡΕΧΟΥΣΑ ΚΕΦΑΛΑΙΟΠΟΙΗΣΗ. Το `rows[].mcap` κρατά την κεφαλαιοποίηση ΤΟΥ MASTER,
+   ενώ η σελίδα εταιρείας δείχνει τη χθεσινή τιμή κλεισίματος από το current.js. Οι δύο
+   σελίδες διαφωνούσαν (106 MOTOR OIL: 3,48 δισ. εδώ, 7,63 δισ. εκεί). Εδώ πλέον ισχύει
+   η ΙΔΙΑ πηγή με τη σελίδα εταιρείας. Αντίγραφο, όχι μετάλλαξη του AXION.rows. */
+const CUR=(window.AXION_CURRENT||{});
+const DATA=((window.AXION&&window.AXION.rows&&window.AXION.rows[AXBASIS])||[])
+  .filter(function(r){return r.calculated!==false;})
+  .map(function(r){ var c=CUR[r.tk];
+    return (c && c.mcap!=null && !isNaN(c.mcap)) ? Object.assign({},r,{mcap:c.mcap}) : r; });
+const CUR_DATE=(function(){ for(var k in CUR){ if(CUR[k]&&CUR[k].date) return CUR[k].date; } return null; })();
 document.addEventListener('axion:basischange',function(){location.reload();});
 
 const fmt=(v,d)=>(v==null||isNaN(v))?'—':v.toLocaleString(LOC(),{minimumFractionDigits:d,maximumFractionDigits:d});
