@@ -65,7 +65,7 @@
   .glance-row{display:flex;gap:16px;align-items:stretch}
   .p-glance{flex:1 1 62%}.p-dist{flex:1 1 38%}
   .glance-row .panel .pbody{flex:1;display:flex;flex-direction:column}
-  .phead .hint{margin-left:auto;font-family:var(--sans);font-size:11px;font-weight:500;color:#cfe0f6;white-space:nowrap;text-transform:none;letter-spacing:0}
+  .phead .hint{margin-left:auto;font-family:var(--sans);font-size:12.5px;font-weight:500;color:#cfe0f6;white-space:nowrap;text-transform:none;letter-spacing:0}
   .scorecard-wrap{margin-top:16px;padding-top:18px;border-top:1px solid var(--line)}
   .mini-h{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:12px}
   .mini-h span{color:var(--faint);font-weight:400;letter-spacing:.02em;text-transform:none}
@@ -124,7 +124,7 @@
   .phead.teal{background:#223c66}.phead.green{background:#3f9e6a}
   .phead i{font-size:18px;opacity:.92}
   .phead h2{font-family:var(--disp);font-weight:700;font-size:14px;letter-spacing:.05em;text-transform:uppercase}
-  .phead .hint{margin-left:auto;font-family:var(--sans);font-size:11px;font-weight:500;color:#cfe0f6;text-transform:none;letter-spacing:0;text-align:right}
+  .phead .hint{margin-left:auto;font-family:var(--sans);font-size:12.5px;font-weight:500;color:#cfe0f6;text-transform:none;letter-spacing:0;text-align:right}
   .pbody{padding:18px 20px 20px;flex:1}
 
   .sector-line{display:flex;align-items:baseline;gap:10px;padding-bottom:14px;margin-bottom:15px;border-bottom:1px solid var(--line2)}
