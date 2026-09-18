@@ -1,4 +1,4 @@
-name: Euronext Monitor (εβδομαδιαίο)
+name: "Εταιρικά γεγονότα — Δευ/Τετ/Παρ πρωί"
 
 # Ανιχνεύει αλλαγές εταιρικών γεγονότων από το Euronext Athens και
 # ΑΝΑΦΕΡΕΙ (Issue + job summary). ΔΕΝ αλλάζει το data.js ούτε το master.

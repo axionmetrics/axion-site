@@ -9,7 +9,7 @@
 #   • has_new=true  -> ενημερώνει ΕΝΑ σταθερό open issue (label: reconciler),
 #                      ή το δημιουργεί αν δεν υπάρχει.
 #   • has_new=false -> κλείνει το open issue (όλα live).
-name: Results Reconciler (αποτελέσματα περιόδου)
+name: "Δημοσιεύσεις αποτελεσμάτων — Δευ/Τετ/Παρ πρωί"
 
 on:
   schedule:
