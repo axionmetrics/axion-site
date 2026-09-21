@@ -7,20 +7,32 @@ Axion Metrics — Results Reconciler  (AUTO layer)
 περιόδου) με τα δικά μας δεδομένα (data.js) → λίστα «δημοσίευσαν αλλά όχι live».
 ΔΕΝ αλλάζει master/data.js.
 
+ΔΥΟ ΠΗΓΕΣ (§96, 2026-09-21):
+  1. **Οικονομικές εκθέσεις** του εκδότη στο Euronext Athens
+     (/el/market-data/issuers/<cid>/financial-data). Δομημένος τίτλος
+     «Οικονομική έκθεση <ΟΝΟΜΑ> (ΕΤΟΣ,Εξαμηνιαία|Ετήσιος Ισολογισμός,…)» + ημ/νία + PDF.
+     Είναι ΤΟ ΙΔΙΟ το PDF που κατεβάζουμε → ΚΥΡΙΑ πηγή. Καλύπτει 136/137 (έλεγχος 21/09/2026).
+  2. **Οικονομικό ημερολόγιο** (fin-cal-api). Δευτερεύουσα: για ~1/7 των εταιρειών δεν
+     έχει ΚΑΜΙΑ εγγραφή (π.χ. 51 VIOHALCO), και κάποιες φορές κρατά ημερομηνίες που
+     μετατέθηκαν. Εταιρεία που φαίνεται ΜΟΝΟ στο ημερολόγιο (χωρίς έκθεση) μπαίνει σε
+     χωριστή ενότητα και ΔΕΝ μετράει ως εκκρεμότητα.
+
 ΦΙΛΤΡΑ: εξαιρεί (α) frozen εταιρείες (UPDATED/CALCULATED=NO → `calculated=false`
 στο data.js) και (β) μελλοντικές (προγραμματισμένες) ημ/νίες.
 Σε ΚΑΘΕ report δείχνει ρητά το «Εκτός κάλυψης (frozen)» roster — ποιες αφήνουμε εκτός.
 """
-import json, re, sys, os, argparse, datetime, urllib.request
+import json, re, sys, os, argparse, datetime, urllib.request, html, time
+from concurrent.futures import ThreadPoolExecutor
 
 BASE = "https://athens.euronext.com/en/fin-cal-api"
-ISSUER_URL = "https://athens.euronext.com/en/issuers/{cid}"
+ISSUER_URL = "https://athens.euronext.com/el/market-data/issuers/{cid}/financial-data"
 UA = {"User-Agent": "AxionMetrics-Reconciler/1.0 (+https://axionmetrics.gr)"}
 
 # Κλειδώνουμε στη ΔΗΜΟΣΙΕΥΣΗ ΤΗΣ ΕΚΘΕΣΗΣ (full report PDF) — αυτό κατεβάζουμε.
 # Πολλές εταιρείες ανακοινώνουν πρώτα (press release) και δημοσιεύουν την έκθεση αργότερα
 # (π.χ. ELVALHALCOR: ανακοίνωση 03.08 / δημοσίευση έκθεσης 04.09). Κρατάμε την πιο πρόσφατη.
 INTERIM_TITLES = ("six months results announcement", "six months financial report publication",
+                  "six months results publication", "six month results publication",
                   "half year financial report publication", "half-year financial report publication",
                   "interim financial report publication")
 ANNUAL_TITLES  = ("annual results announcement", "twelve months results announcement",
@@ -167,6 +179,71 @@ def pick_publication(evs, cut):
     if not past: return None
     return max(past, key=lambda e: date_key(e["date"]))
 
+# ---------------------------------------------------------------- πηγή 1: οικονομικές εκθέσεις
+FIN_URL = "https://athens.euronext.com/el/market-data/issuers/{cid}/financial-data"
+FIN_TIT = re.compile(r'\((\d{4})\s*,\s*([^,()]+?)\s*,\s*([^,()]+?)\)')
+FIN_KIND = {"interim": "εξαμην", "annual": "ετησ"}
+# Η σελίδα εκθέσεων είναι πλήρης ΜΟΝΟ για τις εξαμηνιαίες: 136/137 έχουν «(2025,Εξαμηνιαία,…)»,
+# ενώ «(2025,Ετήσιος Ισολογισμός,…)» έχουν μόνο 23 — οι ετήσιες από το 2022 και μετά
+# (ESEF) λείπουν για τις περισσότερες. Άρα: εξάμηνο → η έκθεση είναι κυρίαρχη·
+# έτος → κυρίαρχο μένει το ημερολόγιο και η έκθεση απλώς ΠΡΟΣΘΕΤΕΙ όσες λείπουν.
+REPORTS_AUTHORITATIVE = {"interim": True, "annual": False}
+
+def _get_text(url, tries=4):
+    for k in range(tries):
+        try:
+            req = urllib.request.Request(url, headers=UA)
+            with urllib.request.urlopen(req, timeout=60) as r:
+                return r.read().decode("utf-8", "replace")
+        except Exception:
+            if k == tries - 1: raise
+            time.sleep(2 + 3 * k)
+
+def fetch_fin_reports(cid):
+    """[{year, kind, scope, date(YYYYMMDD), title, pdf}] — πρώτη σελίδα (15 νεότερες εκθέσεις)."""
+    t = _get_text(FIN_URL.format(cid=cid)); out = []
+    for tr in re.findall(r'<tr[^>]*>([\s\S]*?)</tr>', t):
+        cells = [re.sub(r'\s+', ' ', html.unescape(re.sub(r'<[^>]+>', ' ', c))).strip()
+                 for c in re.findall(r'<td[^>]*>([\s\S]*?)</td>', tr)]
+        if len(cells) < 2: continue
+        m = FIN_TIT.search(cells[0]); d = re.search(r'(\d{2})-(\d{2})-(\d{4})', cells[1])
+        if not (m and d): continue
+        pdf = re.search(r'href="([^"]+\.pdf[^"]*)"', tr)
+        href = pdf.group(1) if pdf else None
+        if href and href.startswith("/"): href = "https://athens.euronext.com" + href
+        out.append({"year": int(m.group(1)), "kind": m.group(2), "scope": m.group(3),
+                    "date": d.group(3) + d.group(2) + d.group(1), "title": cells[0], "pdf": href})
+    return out
+
+def _fold(s):
+    import unicodedata
+    return "".join(c for c in unicodedata.normalize("NFD", s or "") if unicodedata.category(c) != "Mn").lower()
+
+def reports_published(cid2row, basis, period, excluded_tks, asof, workers=4):
+    """{code: row+date+pdf} από τις οικονομικές εκθέσεις. Κρατά έκθεση του σωστού ΕΙΔΟΥΣ και ΕΤΟΥΣ,
+    δημοσιευμένη μέσα στο παράθυρο της περιόδου (ίδιοι μήνες με το ημερολόγιο) και όχι μετά το asof.
+    Το παράθυρο κόβει τις μη ημερολογιακές χρήσεις (18 CPI, 131 NAKAS: «εξαμηνιαία 2026» τον Μάρτιο).
+    Επιστρέφει και τα cid που απέτυχαν — γι' αυτά ισχύει μόνο το ημερολόγιο."""
+    yr = int(period[:4]); want = FIN_KIND[basis]
+    months = {tuple(int(x) for x in ym.split("-")) for ym in period_window(basis, period)}
+    cut = asof.strftime("%Y%m%d") if asof else None
+    rows = [r for r in cid2row.values() if r["tk"] not in excluded_tks]
+    def one(r):
+        try: return r, fetch_fin_reports(r["cid"]), None
+        except Exception as e: return r, [], str(e)
+    pub, failed = {}, []
+    with ThreadPoolExecutor(workers) as ex:
+        for r, reps, err in ex.map(one, rows):
+            if err: failed.append(r["code"]); continue
+            hits = [x for x in reps if x["year"] == yr and _fold(x["kind"]).startswith(want)
+                    and (int(x["date"][:4]), int(x["date"][4:6])) in months
+                    and (not cut or x["date"] <= cut)]
+            if hits:
+                h = min(hits, key=lambda x: x["date"])          # η ΠΡΩΤΗ δημοσίευση της έκθεσης
+                pub[r["code"]] = {**r, "date": f'{h["date"][6:]}.{h["date"][4:6]}.{h["date"][:4]}',
+                                  "title": h["title"], "pdf": h["pdf"], "src": "έκθεση"}
+    return pub, failed
+
 def reconcile(events, cid2row, reported_tks, basis, period, excluded_tks=None, asof=None):
     excluded_tks = excluded_tks or set()
     cut = asof.strftime("%Y%m%d") if asof else None
@@ -195,15 +272,25 @@ def render_report(results, asof, roster):
         L.append("Καμία νέα δημοσίευση εκτός site. ✅")
     for basis, period, res in results:
         L += ["", f"## {label(basis, period)}",
-              f"δημοσίευσαν (Euronext, στις 133 μας): **{len(res['published'])}**  ·  "
+              f"δημοσίευσαν: **{len(res['published'])}** "
+              f"(εκθέσεις {res.get('n_rep', 0)} · ημερολόγιο {res.get('n_cal', 0)})  ·  "
               f"εκκρεμούν στο master: **{len(res['new'])}**", ""]
+        if res.get("failed"):
+            L += [f"⚠️ Δεν διαβάστηκαν οι εκθέσεις για κωδ. {', '.join(map(str, res['failed']))} — "
+                  f"για αυτές ισχύει μόνο το ημερολόγιο.", ""]
         if not res["new"]:
-            L.append("_Όλες live._"); continue
-        L += ["| Εταιρεία | Ticker | Δημοσίευση (Euronext) | Euronext |", "|---|---|---|---|"]
-        for r in res["new"]:
-            disp = r.get("disp") or _short(r["name"])  # database name (master), fallback cid_map
-            L.append(f"| **{r['code']} · {disp}** | {r['tk']} | {r['date']} | "
-                     f"[issuer ↗]({ISSUER_URL.format(cid=r['cid'])}) |")
+            L.append("_Όλες live._")
+        else:
+            L += ["| Εταιρεία | Ticker | Δημοσίευση | Πηγή | Έκθεση |", "|---|---|---|---|---|"]
+            for r in res["new"]:
+                disp = r.get("disp") or _short(r["name"])  # database name (master), fallback cid_map
+                link = f"[PDF ↗]({r['pdf']})" if r.get("pdf") else f"[issuer ↗]({ISSUER_URL.format(cid=r['cid'])})"
+                L.append(f"| **{r['code']} · {disp}** | {r['tk']} | {r['date']} | {r.get('src', '')} | {link} |")
+        if res.get("cal_only"):
+            L += ["", "**Μόνο στο ημερολόγιο — δεν έχει ανέβει έκθεση** (πιθανή μετάθεση· δεν μετράει):", ""]
+            for r in res["cal_only"]:
+                disp = r.get("disp") or _short(r["name"])
+                L.append(f"- {r['code']} · {disp} — ημερολόγιο {r['date']}")
     # frozen roster — ΠΑΝΤΑ, για να βλέπουμε ποιες αφήνουμε εκτός
     L += ["", f"## ⏸️ Εκτός κάλυψης (frozen) — δεν παρακολουθούνται · {len(roster)}", ""]
     if roster:
@@ -235,9 +322,26 @@ def run_basis(basis, period, cid2row, data_js, asof, events_json=None):
         events = []
         for ym in period_window(basis, period): events += fetch_month(ym)
     res = reconcile(events, cid2row, reported, basis, period, excluded_tks=excluded, asof=asof)
+    cal = {r["code"]: {**r, "src": "ημερολόγιο"} for r in res["published"]}
+    if os.environ.get("RECON_NO_REPORTS"):
+        rep_pub, failed = {}, []
+    else:
+        rep_pub, failed = reports_published(cid2row, basis, period, excluded, asof)
+    # Έκθεση = κυρίαρχη. Ημερολόγιο μόνο: (α) όπου απέτυχε η ανάγνωση εκθέσεων → μετράει κανονικά,
+    # (β) αλλιώς → «μόνο ημερολόγιο» (πιθανώς μετατεθειμένη ημερομηνία), ΔΕΝ μετράει ως εκκρεμότητα.
+    published = dict(rep_pub)
+    cal_only = []
+    for code, r in cal.items():
+        if code in published: continue
+        if code in failed or not REPORTS_AUTHORITATIVE[basis]: published[code] = r
+        else: cal_only.append(r)
+    pub = sorted(published.values(), key=lambda r: date_key(r["date"]))
+    res = {"published": pub, "new": [r for r in pub if r["tk"] not in reported],
+           "cal_only": sorted([r for r in cal_only if r["tk"] not in reported], key=lambda r: date_key(r["date"])),
+           "failed": failed, "n_cal": len(cal), "n_rep": len(rep_pub)}
     # Εμπλουτισμός ΜΟΝΟ εμφάνισης: database name από το master· fallback στο cid_map name.
     # (res["new"] μοιράζεται τα ίδια dict-objects με res["published"], άρα καλύπτεται κι αυτό.)
-    for r in res["published"]:
+    for r in res["published"] + res["cal_only"]:
         r["disp"] = names.get(r["tk"]) or _short(r["name"])
     return res
 
