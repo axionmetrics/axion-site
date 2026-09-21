@@ -60,6 +60,31 @@ def session_date(eu_raw):
         d-=datetime.timedelta(days=1)
     return d.strftime('%Y-%m-%d')
 
+def report_feed_time(eu_raw, sdate):
+    """Γράφει στο log και στο summary του Action το `lastUpdated` του feed (ώρα Αθήνας),
+    την ώρα εκτέλεσης και την ημερομηνία συνεδρίασης που προέκυψε — για να ελέγχεται
+    καθημερινά αν το όριο CLOSE_HOUR_ATH σφραγίζει σωστή ημερομηνία."""
+    try:
+        from zoneinfo import ZoneInfo
+        tz=ZoneInfo('Europe/Athens')
+        ts=eu_raw.get('lastUpdated') if isinstance(eu_raw,dict) else None
+        lu=datetime.datetime.fromtimestamp(int(ts),tz).strftime('%a %d/%m/%Y %H:%M:%S') if ts else '—'
+        now=datetime.datetime.now(tz).strftime('%a %d/%m/%Y %H:%M:%S')
+    except Exception as ex:
+        lu, now = 'σφάλμα (%s)' % ex, '—'
+    print(f"feed: lastUpdated={lu} (Αθήνα) · εκτέλεση={now} · συνεδρίαση={sdate}")
+    path=os.environ.get('GITHUB_STEP_SUMMARY')
+    if path:
+        try:
+            with open(path,'a',encoding='utf-8') as f:
+                f.write("\n| feed | |\n|---|---|\n")
+                f.write(f"| `lastUpdated` (Αθήνα) | {lu} |\n")
+                f.write(f"| ώρα εκτέλεσης (Αθήνα) | {now} |\n")
+                f.write(f"| ημερομηνία συνεδρίασης που γράφεται | **{sdate}** |\n")
+                f.write(f"| όριο `CLOSE_HOUR_ATH` | {CLOSE_HOUR_ATH}:00 |\n")
+        except Exception:
+            pass
+
 def to_num(v):
     """Ανθεκτικό parse αριθμού: δέχεται number ή string με ελληνικούς/αγγλικούς διαχωριστές."""
     if v is None: return None
@@ -219,6 +244,7 @@ def main():
     eu=build_eu_map(arr)
     ax=load_axion(DATA)          # ΜΟΝΟ ανάγνωση (οικονομικά για P/E, P/BV)
     today=session_date(eu_raw)   # ημερομηνία τελευταίας κλεισμένης συνεδρίασης (όχι ώρα εκτέλεσης)
+    report_feed_time(eu_raw, today)
     write_snapshots(eu, today)   # αρχείο στιγμιότυπων περιόδου (τέλος 6μήνου/έτους)
     curmap, ratios=build_current(ax, eu, today)
     # sanity: το euronext mcap πρέπει να είναι στην ίδια τάξη μεγέθους με το δικό μας
