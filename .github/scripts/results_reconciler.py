@@ -188,6 +188,11 @@ FIN_KIND = {"interim": "εξαμην", "annual": "ετησ"}
 # (ESEF) λείπουν για τις περισσότερες. Άρα: εξάμηνο → η έκθεση είναι κυρίαρχη·
 # έτος → κυρίαρχο μένει το ημερολόγιο και η έκθεση απλώς ΠΡΟΣΘΕΤΕΙ όσες λείπουν.
 REPORTS_AUTHORITATIVE = {"interim": True, "annual": False}
+# Η ίδια σελίδα φιλοξενεί και ΑΛΛΑ έγγραφα με τον ίδιο δομημένο τίτλο. Μετράει ΜΟΝΟ
+# «Οικονομική έκθεση» / «Οικονομική κατάσταση». Εκτός: «Κατάσταση επενδύσεων» — η τρισέλιδη
+# κατάσταση ακινήτων των ΑΕΕΑΠ στις 30/06, που ανεβαίνει ΠΡΙΝ από την έκθεση (48 TRASTOR:
+# κατάσταση επενδύσεων 27/07/2026, έκθεση 25/09/2026) — και «Στοιχεία και Πληροφορίες» (παλιό).
+FIN_DOC_OK = ("οικονομικη εκθεση", "οικονομικη κατασταση")
 
 def _get_text(url, tries=4):
     for k in range(tries):
@@ -236,6 +241,7 @@ def reports_published(cid2row, basis, period, excluded_tks, asof, workers=4):
         for r, reps, err in ex.map(one, rows):
             if err: failed.append(r["code"]); continue
             hits = [x for x in reps if x["year"] == yr and _fold(x["kind"]).startswith(want)
+                    and _fold(x["title"]).startswith(FIN_DOC_OK)
                     and (int(x["date"][:4]), int(x["date"][4:6])) in months
                     and (not cut or x["date"] <= cut)]
             if hits:
