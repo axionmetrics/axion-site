@@ -14,7 +14,7 @@
    {g:{el:'Κλάδοι',en:'Sectors'},items:[
      [{el:'Ευρετήριο κλάδων',en:'Sector index'},'/sectors/'],
      [{el:'Σελίδα κλάδου',en:'Sector page'},'/sector/']]},
-   {g:{el:'Εργαλεία',en:'Tools'},items:[
+   {g:{el:'Γεγονότα',en:'Events'},items:[
      [{el:'Αναθεωρήσεις δεικτών',en:'Index reviews'},'/index-reviews/'],
      [{el:'Γεγονότα αγοράς',en:'Market events'},'/market-events/']]},
    {g:{el:'Σχετικά',en:'About'},items:[
