@@ -293,12 +293,9 @@ const SECTORS=[...new Set(DATA.map(r=>r.s))];
 // διεύθυνση δεν θα όριζε τίποτα και και οι 10 σελίδες θα έδειχναν τον πρώτο κλάδο.
 let sector=(window.AX_SECTOR && SECTORS.indexOf(window.AX_SECTOR)>=0) ? window.AX_SECTOR : SECTORS[0];
 
-function clHash(s){let x=2166136261;for(let i=0;i<s.length;i++){x^=s.charCodeAt(i);x=Math.imul(x,16777619);}return (x>>>0)/4294967296;}
-DATA.forEach(r=>{ if(r.gm===undefined){ const u=k=>clHash(r.t+'|'+k);
- r.gm =Math.round((18+u('gm')*44)*10)/10;
- r.nm =Math.round((3 +u('nm')*24)*10)/10;
- r.cr =Math.round((0.8+u('cr')*2.2)*10)/10;
- r.roa=Math.round((2 +u('roa')*15)*10)/10; }});
+/* Τα gm/nm/cr/roa έρχονται από το master (RATIOS) μέσω της γέφυρας. Εδώ υπήρχε μπλοκ που,
+   αν έλειπε το πεδίο, ΚΑΤΑΣΚΕΥΑΖΕ τιμές από hash της επωνυμίας — καταργήθηκε: κενό πεδίο
+   πρέπει να δείχνει «—», ποτέ εφευρημένο νούμερο. */
 const CL_MET=[
  {k:'pe', dir:-1,d:1,negWorst:1},
  {k:'pbv',dir:-1,d:1,negWorst:1},
