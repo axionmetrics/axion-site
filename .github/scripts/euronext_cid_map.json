@@ -1,8 +1,8 @@
 {
  "_meta": {
   "source": "athens.euronext.com issuers_el.json (Code=cid)",
-  "built": "2026-09-17",
-  "n": 137
+  "built": "2026-09-23",
+  "n": 139
  },
  "by_code": {
   "1": 863,
@@ -141,7 +141,9 @@
   "134": 1526,
   "135": 1537,
   "136": 165,
-  "137": 564
+  "137": 564,
+  "138": 1536,
+  "139": 1539
  },
  "by_tk": {
   "ALWN": 863,
@@ -280,7 +282,9 @@
   "QLCO": 1526,
   "ADPS": 1537,
   "ΟΛΥΜΠ": 165,
-  "YKNOT": 564
+  "YKNOT": 564,
+  "SB": 1536,
+  "SBLK": 1539
  },
  "rows": [
   {
@@ -1378,6 +1382,22 @@
    "isin": "GRS295003008",
    "cid": 564,
    "euname": "Y/KNOT INVEST A.E."
+  },
+  {
+   "code": 138,
+   "name": "138 SAFE BULKERS",
+   "tk": "SB",
+   "isin": "MHY7388L1039",
+   "cid": 1536,
+   "euname": "Safe Bulkers, Inc."
+  },
+  {
+   "code": 139,
+   "name": "139 STAR BULK",
+   "tk": "SBLK",
+   "isin": "MHY8162K2046",
+   "cid": 1539,
+   "euname": "Star Bulk Carriers Corp."
   }
  ]
 }
