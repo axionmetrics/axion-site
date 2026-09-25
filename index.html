@@ -92,6 +92,18 @@
  .feath{text-align:center;margin-bottom:38px}
  .feath h2{font-family:Inter,sans-serif;font-size:29px;font-weight:800;color:#20344a;letter-spacing:-.01em}
  .feath p{font-size:15px;color:#6b8199;margin-top:9px}
+ /* §107 — κατάλογος εισηγμένων· πραγματικοί σύνδεσμοι προς κάθε σελίδα εταιρείας */
+ .ax-dir{padding:46px 0 58px;background:#f7fbff;border-top:1px solid #e6eef7}
+ .ax-dir h2{font-family:Inter,sans-serif;font-size:19px;font-weight:800;color:#20344a;letter-spacing:-.01em;margin:0 0 20px}
+ .ax-dir h3{font-family:Inter,sans-serif;font-size:13.5px;font-weight:700;color:#16243d;margin:22px 0 8px;display:flex;align-items:baseline;gap:9px}
+ .ax-dir h3 a{color:#16243d;text-decoration:none;border-bottom:1px solid #cddcec}
+ .ax-dir h3 a:hover{border-bottom-color:#16243d}
+ .ax-dir h3 span{font-size:11px;font-weight:500;color:#8199b3}
+ .ax-dir ul{list-style:none;margin:0;padding:0;display:grid;gap:3px 22px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+ .ax-dir li a{display:block;font-size:12.5px;color:#41628a;text-decoration:none;padding:3px 0;line-height:1.35}
+ .ax-dir li a:hover{color:#16243d;text-decoration:underline}
+ .ax-dir li i{font-style:normal;font-family:'Ubuntu Mono',monospace;font-size:11px;color:#8199b3}
+ .ax-dir-r{margin-top:4px}
  .fgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
  .fcard{background:#fff;border:1px solid #eaf2fa;border-radius:18px;padding:26px 22px;text-align:center;
    box-shadow:0 10px 26px rgba(47,128,194,.07);text-decoration:none;color:inherit;display:block;
@@ -185,6 +197,184 @@
  <div class="feath"><h2 data-i18n="feat.h2">Όλα όσα χρειάζεσαι για να αποφασίσεις</h2><p data-i18n="feat.p">Ό,τι χρειάζεσαι για κάθε εισηγμένη — από την εταιρεία μέχρι τον κλάδο και την αγορά.</p></div>
  <div class="fgrid"><a class="fcard" href="company/"><div class="ficon"><img src="assets/icons/company.png" alt="" loading="lazy"></div><h3 data-i18n="card.company.h">Θεμελιώδης ανάλυση εταιρείας</h3><p data-i18n="card.company.p">26 αριθμοδείκτες με κλαδική σύγκριση, ιστορικότητα μεγεθών, μέτοχοι, θυγατρικές, γεγονότα και ποιότητα κερδών (Piotroski).</p></a><a class="fcard" href="compare/"><div class="ficon"><img src="assets/icons/compare.png" alt="" loading="lazy"></div><h3 data-i18n="card.compare.h">Σύγκριση &amp; κατατάξεις</h3><p data-i18n="card.compare.p">Εταιρείες δίπλα-δίπλα σε κάθε δείκτη, και league tables για όλη την αγορά.</p></a><a class="fcard" href="sectors/"><div class="ficon"><img src="assets/icons/sector.png" alt="" loading="lazy"></div><h3 data-i18n="card.sector.h">Ανάλυση κλάδου</h3><p data-i18n="card.sector.p">Κλαδικές διάμεσοι, screener εντός κλάδου και τροχιά ποιότητας.</p></a><a class="fcard" href="index-reviews/"><div class="ficon"><img src="assets/icons/events.png" alt="" loading="lazy"></div><h3 data-i18n="card.events.h">Δείκτες &amp; γεγονότα αγοράς</h3><p data-i18n="card.events.p">Είσοδοι/έξοδοι στους δείκτες FTSE/Athex και ροή εταιρικών γεγονότων (μερίσματα, ΑΜΚ).</p></a></div>
 </div></div>
+
+<!-- §107 — Ο κατάλογος ΠΑΡΑΓΕΤΑΙ από τη γέφυρα (emit_home_directory). Ό,τι βρίσκεται
+     ανάμεσα στα δύο σημάδια ξαναγράφεται σε κάθε τρέξιμο — ΜΗΝ το επεξεργάζεσαι με το
+     χέρι. Αν σβήσουν τα σημάδια, η γέφυρα απλώς παραλείπει τον κατάλογο. -->
+<!-- AX-DIR:START -->
+<section class="ax-dir"><div class="wrap">
+<h2>Εισηγμένες του Χρηματιστηρίου Αθηνών ανά κλάδο</h2>
+<h3><a href="/klados/holding/">Holding</a> <span>8 εισηγμένες</span></h3><ul>
+<li><a href="/etaireia/centric/">CENTRIC <i>ΣΕΝΤΡ</i></a></li>
+<li><a href="/etaireia/fais-group/">FAIS GROUP <i>ΦΑΙΣ</i></a></li>
+<li><a href="/etaireia/fourlis-group/">FOURLIS GROUP <i>ΦΡΛΚ</i></a></li>
+<li><a href="/etaireia/ideal-holdings/">IDEAL HOLDINGS <i>ΙΝΤΕΚ</i></a></li>
+<li><a href="/etaireia/intracom-holdings/">INTRACOM HOLDINGS <i>ΙΝΤΚΑ</i></a></li>
+<li><a href="/etaireia/marfin-investment-group/">MARFIN INVESTMENT GROUP <i>ΜΙΓ</i></a></li>
+<li><a href="/etaireia/quest-holdings/">QUEST HOLDINGS <i>ΚΟΥΕΣ</i></a></li>
+<li><a href="/etaireia/evropi-holdings/">ΕΥΡΩΠΗ HOLDINGS <i>EVR</i></a></li>
+</ul>
+<h3><a href="/klados/akinita/">Ακίνητα</a> <span>12 εισηγμένες</span></h3><ul>
+<li><a href="/etaireia/alpha-real-estate-services/">ALPHA REAL ESTATE SERVICES <i>ΑΣΤΑΚ</i></a></li>
+<li><a href="/etaireia/briq-properties/">BRIQ PROPERTIES <i>ΜΠΡΙΚ</i></a></li>
+<li><a href="/etaireia/dimand/">DIMAND <i>DIMAND</i></a></li>
+<li><a href="/etaireia/lamda-development/">LAMDA DEVELOPMENT <i>ΛΑΜΔΑ</i></a></li>
+<li><a href="/etaireia/noval-property/">NOVAL PROPERTY <i>NOVAL</i></a></li>
+<li><a href="/etaireia/orilina-properties/">ORILINA PROPERTIES <i>ΟΡΙΛΙΝΑ</i></a></li>
+<li><a href="/etaireia/premia-properties/">PREMIA PROPERTIES <i>ΠΡΕΜΙΑ</i></a></li>
+<li><a href="/etaireia/prodea-investments/">PRODEA INVESTMENTS <i>ΠΡΟΝΤΕΑ</i></a></li>
+<li><a href="/etaireia/trade-estates/">TRADE ESTATES <i>ΤΡΕΣΤΑΤΕΣ</i></a></li>
+<li><a href="/etaireia/trastor/">TRASTOR <i>ΤΡΑΣΤΟΡ</i></a></li>
+<li><a href="/etaireia/kekrops/">ΚΕΚΡΟΨ <i>ΚΕΚΡ</i></a></li>
+<li><a href="/etaireia/mple-kedros/">ΜΠΛΕ ΚΕΔΡΟΣ <i>ΜΠΛΕΚΕΔΡΟΣ</i></a></li>
+</ul>
+<h3><a href="/klados/viomichania-vasika-ylika/">Βιομηχανία &amp; Βασικά Υλικά</a> <span>26 εισηγμένες</span></h3><ul>
+<li><a href="/etaireia/alumil/">ALUMIL <i>ΑΛΜΥ</i></a></li>
+<li><a href="/etaireia/cenergy-holdings/">CENERGY HOLDINGS <i>CENER</i></a></li>
+<li><a href="/etaireia/daios-plastics/">DAIOS PLASTICS <i>ΔΑΙΟΣ</i></a></li>
+<li><a href="/etaireia/doppler/">DOPPLER <i>ΝΤΟΠΛΕΡ</i></a></li>
+<li><a href="/etaireia/elvalhalcor/">ELVALHALCOR <i>ΕΛΧΑ</i></a></li>
+<li><a href="/etaireia/flexopack/">FLEXOPACK <i>ΦΛΕΞΟ</i></a></li>
+<li><a href="/etaireia/frigoglass-saic/">FRIGOGLASS SAIC <i>ΦΡΙΓΟ</i></a></li>
+<li><a href="/etaireia/lavipharm/">LAVIPHARM <i>ΛΑΒΙ</i></a></li>
+<li><a href="/etaireia/leventeris/">LEVENTERIS <i>ΛΕΒΚ</i></a></li>
+<li><a href="/etaireia/mathios-refractories/">MATHIOS REFRACTORIES <i>ΜΑΘΙΟ</i></a></li>
+<li><a href="/etaireia/medicon-hellas/">MEDICON HELLAS <i>ΜΕΝΤΙ</i></a></li>
+<li><a href="/etaireia/metlen-energy-metals/">METLEN ENERGY &amp; METALS <i>MTLN</i></a></li>
+<li><a href="/etaireia/mevaco/">MEVACO <i>ΜΕΒΑ</i></a></li>
+<li><a href="/etaireia/pairis/">PAIRIS <i>ΠΑΙΡΗ</i></a></li>
+<li><a href="/etaireia/profil-tzirakian/">PROFIL ΤΖΙΡΑΚΙΑΝ <i>ΤΖΚΑ</i></a></li>
+<li><a href="/etaireia/titan/">TITAN <i>TITC</i></a></li>
+<li><a href="/etaireia/unibios/">UNIBIOS <i>ΒΙΟΣΚ</i></a></li>
+<li><a href="/etaireia/viohalco/">VIOHALCO <i>ΒΙΟ</i></a></li>
+<li><a href="/etaireia/omilos-plastika-thrakis/">ΌΜΙΛΟΣ ΠΛΑΣΤΙΚΑ ΘΡΑΚΗΣ <i>ΠΛΑΘ</i></a></li>
+<li><a href="/etaireia/afoi-kordellou/">ΑΦΟΙ ΚΟΡΔΕΛΛΟΥ <i>ΚΟΡΔΕ</i></a></li>
+<li><a href="/etaireia/el-d-mouzakis/">ΕΛ.Δ.ΜΟΥΖΑΚΗΣ <i>ΜΟΥΖΚ</i></a></li>
+<li><a href="/etaireia/elastron/">ΕΛΑΣΤΡΟΝ <i>ΕΛΣΤΡ</i></a></li>
+<li><a href="/etaireia/iktinos-ellas/">ΙΚΤΙΝΟΣ ΕΛΛΑΣ <i>ΙΚΤΙΝ</i></a></li>
+<li><a href="/etaireia/plastika-kritis/">ΠΛΑΣΤΙΚΑ ΚΡΗΤΗΣ <i>ΠΛΑΚΡ</i></a></li>
+<li><a href="/etaireia/sidma/">ΣΙΔΜΑ <i>ΣΙΔΜΑ</i></a></li>
+<li><a href="/etaireia/chaidemenos/">ΧΑΪΔΕΜΕΝΟΣ <i>ΧΑΙΔΕ</i></a></li>
+</ul>
+<h3><a href="/klados/emporio-dianomi/">Εμπόριο &amp; Διανομή</a> <span>15 εισηγμένες</span></h3><ul>
+<li><a href="/etaireia/as-company/">AS COMPANY <i>ΑΣΚΟ</i></a></li>
+<li><a href="/etaireia/attica-polykatastimata/">ATTICA ΠΟΛΥΚΑΤΑΣΤΗΜΑΤΑ <i>ADPS</i></a></li>
+<li><a href="/etaireia/autohellas/">AUTOHELLAS <i>ΟΤΟΕΛ</i></a></li>
+<li><a href="/etaireia/ave/">AVE <i>ΑΒΕ</i></a></li>
+<li><a href="/etaireia/cpi/">CPI <i>ΣΠΙ</i></a></li>
+<li><a href="/etaireia/elton-group/">ELTON GROUP <i>ΕΛΤΟΝ</i></a></li>
+<li><a href="/etaireia/intertech/">INTERTECH <i>ΙΝΤΕΤ</i></a></li>
+<li><a href="/etaireia/interwood-xylemporia/">INTERWOOD ΞΥΛΕΜΠΟΡΙΑ <i>ΞΥΛΚ</i></a></li>
+<li><a href="/etaireia/jumbo/">JUMBO <i>ΜΠΕΛΑ</i></a></li>
+<li><a href="/etaireia/vogyatzoglou-systems/">VOGYATZOGLOU SYSTEMS <i>ΒΟΣΥΣ</i></a></li>
+<li><a href="/etaireia/agrotikos-oikos-spyrou/">ΑΓΡΟΤΙΚΟΣ ΟΙΚΟΣ ΣΠΥΡΟΥ <i>ΣΠΥΡ</i></a></li>
+<li><a href="/etaireia/geniki-emporiou-viomichanias/">ΓΕΝΙΚΗ ΕΜΠΟΡΙΟΥ &amp; ΒΙΟΜΗΧΑΝΙΑΣ <i>ΓΕΒΚΑ</i></a></li>
+<li><a href="/etaireia/motodynamiki/">ΜΟΤΟΔΥΝΑΜΙΚΗ <i>ΜΟΤΟ</i></a></li>
+<li><a href="/etaireia/petros-petropoulos/">ΠΕΤΡΟΣ ΠΕΤΡΟΠΟΥΛΟΣ <i>ΠΕΤΡΟ</i></a></li>
+<li><a href="/etaireia/filippos-nakas/">ΦΙΛΙΠΠΟΣ ΝΑΚΑΣ <i>ΝΑΚΑΣ</i></a></li>
+</ul>
+<h3><a href="/klados/energeia-koinis-ofeleias/">Ενέργεια &amp; Κοινής Ωφέλειας</a> <span>9 εισηγμένες</span></h3><ul>
+<li><a href="/etaireia/heleniq-energy/">HELENIQ ENERGY <i>ΕΛΠΕ</i></a></li>
+<li><a href="/etaireia/motor-oil/">MOTOR OIL <i>ΜΟΗ</i></a></li>
+<li><a href="/etaireia/revoil/">REVOIL <i>ΡΕΒ</i></a></li>
+<li><a href="/etaireia/admie-symmetochon/">ΑΔΜΗΕ ΣΥΜΜΕΤΟΧΩΝ <i>ΑΔΜΗΕ</i></a></li>
+<li><a href="/etaireia/dei/">ΔΕΗ <i>ΔΕΗ</i></a></li>
+<li><a href="/etaireia/elin/">ΕΛΙΝ <i>ΕΛΙΝ</i></a></li>
+<li><a href="/etaireia/evath/">ΕΥΑΘ <i>ΕΥΑΠΣ</i></a></li>
+<li><a href="/etaireia/evdap/">ΕΥΔΑΠ <i>ΕΥΔΑΠ</i></a></li>
+<li><a href="/etaireia/terna-energeiaki/">ΤΕΡΝΑ ΕΝΕΡΓΕΙΑΚΗ <i>ΤΕΝΕΡΓΑ</i></a></li>
+</ul>
+<h3><a href="/klados/katanalotika-agatha/">Καταναλωτικά Αγαθά</a> <span>22 εισηγμένες</span></h3><ul>
+<li><a href="/etaireia/allwyn/">ALLWYN <i>ALWN</i></a></li>
+<li><a href="/etaireia/ballys-intralot/">BALLY'S INTRALOT <i>BYLOT</i></a></li>
+<li><a href="/etaireia/biokarpet/">BIOKARPET <i>ΒΙΟΚΑ</i></a></li>
+<li><a href="/etaireia/coca-cola/">COCA COLA <i>ΕΕΕ</i></a></li>
+<li><a href="/etaireia/evrofarma/">EVROFARMA <i>ΕΒΡΟΦ</i></a></li>
+<li><a href="/etaireia/lanakam/">LANAKAM <i>ΛΑΝΑΚ</i></a></li>
+<li><a href="/etaireia/loulis-food-ingredients/">LOULIS FOOD INGREDIENTS <i>ΛΟΥΛΗ</i></a></li>
+<li><a href="/etaireia/mediterra/">MEDITERRA <i>ΜΑΣΤΙΧΑ</i></a></li>
+<li><a href="/etaireia/minerva/">MINERVA <i>ΜΙΝ</i></a></li>
+<li><a href="/etaireia/onyx-touristiki/">ONYX TOURISTIKI <i>ONYX</i></a></li>
+<li><a href="/etaireia/sarantis/">SARANTIS <i>ΣΑΡ</i></a></li>
+<li><a href="/etaireia/sarantopoulos/">SARANTOPOULOS <i>ΣΑΡΑΝ</i></a></li>
+<li><a href="/etaireia/y-knot-invest/">Y/KNOT INVEST <i>YKNOT</i></a></li>
+<li><a href="/etaireia/omilos-iatrikou-athinon/">ΌΜΙΛΟΣ ΙΑΤΡΙΚΟΥ ΑΘΗΝΩΝ <i>ΙΑΤΡ</i></a></li>
+<li><a href="/etaireia/dromeas/">ΔΡΟΜΕΑΣ <i>ΔΡΟΜΕ</i></a></li>
+<li><a href="/etaireia/elve/">ΕΛΒΕ <i>ΕΛΒΕ</i></a></li>
+<li><a href="/etaireia/kapnoviomichania-karelia/">ΚΑΠΝΟΒΙΟΜΗΧΑΝΙΑ ΚΑΡΕΛΙΑ <i>ΚΑΡΕΛ</i></a></li>
+<li><a href="/etaireia/klostoufantourgia-navpaktou/">ΚΛΩΣΤΟΥΦΑΝΤΟΥΡΓΙΑ ΝΑΥΠΑΚΤΟΥ <i>ΝΑΥΠ</i></a></li>
+<li><a href="/etaireia/kri-kri/">ΚΡΙ ΚΡΙ <i>ΚΡΙ</i></a></li>
+<li><a href="/etaireia/lampsa/">ΛΑΜΨΑ <i>ΛΑΜΨΑ</i></a></li>
+<li><a href="/etaireia/papoutsanis/">ΠΑΠΟΥΤΣΑΝΗΣ <i>ΠΑΠ</i></a></li>
+<li><a href="/etaireia/tria-alfa/">ΤΡΙΑ ΑΛΦΑ <i>ΑΑΑΚ</i></a></li>
+</ul>
+<h3><a href="/klados/kataskeves-ypodomes-metafores/">Κατασκευές, Υποδομές &amp; Μεταφορές</a> <span>16 εισηγμένες</span></h3><ul>
+<li><a href="/etaireia/aegean-airlines/">AEGEAN AIRLINES <i>ΑΡΑΙΓ</i></a></li>
+<li><a href="/etaireia/attica-group/">ATTICA GROUP <i>ΑΤΤΙΚΑ</i></a></li>
+<li><a href="/etaireia/avax-group/">AVAX GROUP <i>ΑΒΑΞ</i></a></li>
+<li><a href="/etaireia/eins/">EINS <i>ΕΥΡΩΣ</i></a></li>
+<li><a href="/etaireia/ekter/">EKTER <i>ΕΚΤΕΡ</i></a></li>
+<li><a href="/etaireia/ellaktor/">ELLAKTOR <i>ΕΛΛΑΚΤΩΡ</i></a></li>
+<li><a href="/etaireia/fdl-group/">FDL GROUP <i>ΦΟΥΝΤΛ</i></a></li>
+<li><a href="/etaireia/gek-terna/">GEK TERNA <i>ΓΕΚΤΕΡΝΑ</i></a></li>
+<li><a href="/etaireia/proodeftiki/">PROODEFTIKI <i>ΠΡΔ</i></a></li>
+<li><a href="/etaireia/omilos-aktor/">ΌΜΙΛΟΣ AKTOR <i>AKTR</i></a></li>
+<li><a href="/etaireia/vioter/">ΒΙΟΤΕΡ <i>ΒΙΟΤ</i></a></li>
+<li><a href="/etaireia/diethnis-aerolimenas-athinon/">ΔΙΕΘΝΗΣ ΑΕΡΟΛΙΜΕΝΑΣ ΑΘΗΝΩΝ <i>ΔΑΑ</i></a></li>
+<li><a href="/etaireia/domiki-kritis/">ΔΟΜΙΚΗ ΚΡΗΤΗΣ <i>ΔΟΜΙΚ</i></a></li>
+<li><a href="/etaireia/organismos-limenos-thessalonikis/">ΟΡΓΑΝΙΣΜΟΣ ΛΙΜΕΝΟΣ ΘΕΣΣΑΛΟΝΙΚΗΣ <i>ΟΛΘ</i></a></li>
+<li><a href="/etaireia/organismos-limenos-peiraios/">ΟΡΓΑΝΙΣΜΟΣ ΛΙΜΕΝΟΣ ΠΕΙΡΑΙΩΣ <i>ΟΛΠ</i></a></li>
+<li><a href="/etaireia/techniki-olympiaki/">ΤΕΧΝΙΚΗ ΟΛΥΜΠΙΑΚΗ <i>ΟΛΥΜΠ</i></a></li>
+</ul>
+<h3><a href="/klados/navtilia/">Ναυτιλία</a> <span>2 εισηγμένες</span></h3><ul>
+<li><a href="/etaireia/safe-bulkers/">SAFE BULKERS <i>SB</i></a></li>
+<li><a href="/etaireia/star-bulk-carriers/">STAR BULK CARRIERS <i>SBLK</i></a></li>
+</ul>
+<h3><a href="/klados/technologia-mme-tilepikoinonies/">Τεχνολογία, ΜΜΕ &amp; Τηλεπικοινωνίες</a> <span>16 εισηγμένες</span></h3><ul>
+<li><a href="/etaireia/alter-ego-media/">ALTER EGO MEDIA <i>AEM</i></a></li>
+<li><a href="/etaireia/attica-media-group/">ATTICA MEDIA GROUP <i>ΑΤΕΚ</i></a></li>
+<li><a href="/etaireia/austriacard/">AUSTRIACARD <i>ACAG</i></a></li>
+<li><a href="/etaireia/dotsoft/">DOTSOFT <i>ΝΤΟΤΣΟΦΤ</i></a></li>
+<li><a href="/etaireia/logismos/">LOGISMOS <i>ΛΟΓΟΣ</i></a></li>
+<li><a href="/etaireia/optronics-technologies/">OPTRONICS TECHNOLOGIES <i>ΟΠΤΡΟΝ</i></a></li>
+<li><a href="/etaireia/performance-technologies/">PERFORMANCE TECHNOLOGIES <i>ΠΕΡΦ</i></a></li>
+<li><a href="/etaireia/profile-software/">PROFILE SOFTWARE <i>ΠΡΟΦ</i></a></li>
+<li><a href="/etaireia/qnr/">QNR <i>ΚΟΥΑΛ</i></a></li>
+<li><a href="/etaireia/qualco-group/">QUALCO GROUP <i>QLCO</i></a></li>
+<li><a href="/etaireia/real-consulting/">REAL CONSULTING <i>REALCONS</i></a></li>
+<li><a href="/etaireia/softweb/">SOFTWEB <i>SOFTWEB</i></a></li>
+<li><a href="/etaireia/space-hellas/">SPACE HELLAS <i>ΣΠΕΙΣ</i></a></li>
+<li><a href="/etaireia/vidavo/">VIDAVO <i>ΒΙΝΤΑ</i></a></li>
+<li><a href="/etaireia/ilyda/">ΙΛΥΔΑ <i>ΙΛΥΔΑ</i></a></li>
+<li><a href="/etaireia/organismos-tilepikoinonion-ellados/">ΟΡΓΑΝΙΣΜΟΣ ΤΗΛΕΠΙΚΟΙΝΩΝΙΩΝ ΕΛΛΑΔΟΣ <i>ΟΤΕ</i></a></li>
+</ul>
+<h3><a href="/klados/trapezes/">Τράπεζες</a> <span>6 εισηγμένες</span></h3><ul>
+<li><a href="/etaireia/alpha-bank/">ALPHA BANK <i>ΑΛΦΑ</i></a></li>
+<li><a href="/etaireia/crediabank/">CREDIABANK <i>CREDIA</i></a></li>
+<li><a href="/etaireia/eurobank/">EUROBANK <i>ΕΥΡΩΒ</i></a></li>
+<li><a href="/etaireia/optima-bank/">OPTIMA BANK <i>OPTIMA</i></a></li>
+<li><a href="/etaireia/piraeus-bank/">PIRAEUS BANK <i>ΠΕΙΡ</i></a></li>
+<li><a href="/etaireia/ethniki-trapeza-tis-ellados/">ΕΘΝΙΚΗ ΤΡΑΠΕΖΑ ΤΗΣ ΕΛΛΑΔΟΣ <i>ΕΤΕ</i></a></li>
+</ul>
+<h3><a href="/klados/chrimatooikonomika/">Χρηματοοικονομικά</a> <span>7 εισηγμένες</span></h3><ul>
+<li><a href="/etaireia/alpha-asset-management/">ALPHA ASSET MANAGEMENT <i>ΑΔΑΚ</i></a></li>
+<li><a href="/etaireia/alpha-trust-holdings/">ALPHA TRUST HOLDINGS <i>ΑΤΡΑΣΤ</i></a></li>
+<li><a href="/etaireia/alphatrust-andromeda/">ALPHATRUST ΑΝΔΡΟΜΕΔΑ <i>ΑΝΔΡΟ</i></a></li>
+<li><a href="/etaireia/cnl-capital/">CNL CAPITAL <i>CNLCAP</i></a></li>
+<li><a href="/etaireia/euronext-athens/">EURONEXT ATHENS <i>ΕΧΑΕ</i></a></li>
+<li><a href="/etaireia/euroxx-securities/">EUROXX SECURITIES <i>EX</i></a></li>
+<li><a href="/etaireia/interlife-asfalistiki/">INTERLIFE ΑΣΦΑΛΙΣΤΙΚΗ <i>ΙΝΛΙΦ</i></a></li>
+</ul>
+<h3>Κατατάξεις</h3><ul class="ax-dir-r">
+<li><a href="/katataxeis/p-e/">Κατάταξη ανά P/E</a></li>
+<li><a href="/katataxeis/p-bv/">Κατάταξη ανά P/BV</a></li>
+<li><a href="/katataxeis/ev-ebitda/">Κατάταξη ανά EV/EBITDA</a></li>
+<li><a href="/katataxeis/roe/">Κατάταξη ανά ROE</a></li>
+<li><a href="/katataxeis/merismatiki-apodosi/">Κατάταξη ανά Μερισματική απόδοση</a></li>
+<li><a href="/katataxeis/katharos-daneismos-ebitda/">Κατάταξη ανά Καθαρός δανεισμός / EBITDA</a></li>
+<li><a href="/apotelesmata/">Τελευταία εταιρικά αποτελέσματα</a></li>
+</ul></div></section>
+<!-- AX-DIR:END -->
 
 <!-- §86 — ΣΤΑΤΙΣΤΙΚΑ ΣΤΗΝ ΑΡΧΙΚΗ. Η αρχική ΔΕΝ φορτώνει το chrome.js (έχει δική της
      κεφαλίδα/υποσέλιδο), οπότε η injectAnalytics() δεν έτρεχε ποτέ εδώ: η σελίδα που
