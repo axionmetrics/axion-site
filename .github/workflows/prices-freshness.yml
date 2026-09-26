@@ -1,0 +1,88 @@
+name: "Έλεγχος φρεσκάδας τιμών — καθημερινά πρωί"
+
+# §111 (26/09/2026) — Η αλυσίδα των ημερήσιων τιμών αποτυγχάνει ΣΙΩΠΗΛΑ: ο Cloudflare
+# Worker `axion-eod-trigger` γράφει τον κωδικό απόκρισης του GitHub σε console.log που δεν
+# τον βλέπει κανείς. Αν λήξει το `GH_TOKEN` (24/09/2027), σβήσει ο Worker, σταματήσουν τα
+# cron triggers του Cloudflare, αλλάξει το feed του Euronext ή σπάσει το daily_prices.py,
+# το μόνο σύμπτωμα είναι ότι το site δείχνει παλιές τιμές. Αυτή η ροή ΔΕΝ γράφει τίποτα —
+# συγκρίνει και ΑΝΑΦΕΡΕΙ (Issue + job summary), όπως ο euronext-monitor.
+#
+# ΚΑΘΗΜΕΡΙΝΑ, ΕΠΙΤΗΔΕΣ: ο έλεγχος ρωτά το ίδιο το feed ποια ήταν η τελευταία συνεδρίαση
+# (μέσω της session_date() του daily_prices.py), άρα Σαββατοκύριακα και αργίες του Χ.Α.
+# δίνουν υστέρηση 0 από μόνα τους. Δεν συντηρείται ημερολόγιο αργιών, και δεν εξαρτιόμαστε
+# από τη σημασιολογία του πεδίου ημέρας-εβδομάδας στο cron.
+
+on:
+  schedule:
+    - cron: '10 6 * * *'      # → 09:10 Αθήνας σε ΘΕΡΙΝΗ · 08:10 σε ΧΕΙΜΕΡΙΝΗ
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: prices-freshness
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0        # χρειάζεται για το `git log` του current.js παρακάτω
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Έλεγχος φρεσκάδας current.js
+        id: chk
+        run: python .github/scripts/prices_freshness.py
+
+      - name: Τελευταίο commit του current.js
+        id: last
+        if: always()
+        run: |
+          set -euo pipefail
+          INFO=$(git log -1 --date=iso-strict --format='%ad · %an · %s' -- assets/current.js || echo '—')
+          echo "info=$INFO" >> "$GITHUB_OUTPUT"
+          echo "τελευταίο commit current.js: $INFO"
+
+      # Ίδιο μοτίβο με τον euronext-monitor (§ διόρθωση 2026-09-05): το label δημιουργείται
+      # αν λείπει, το @mention μπαίνει ΜΕΣΑ στο σώμα (ειδοποιεί σίγουρα, δεν μπορεί να
+      # αποτύχει σαν κλήση API), `always()` ώστε να φεύγει η ειδοποίηση ό,τι κι αν γίνει,
+      # και ΚΑΜΙΑ απόκρυψη σφαλμάτων. ΕΠΙΠΛΕΟΝ εδώ: δεν ανοίγει νέο Issue κάθε μέρα όσο
+      # το πρόβλημα διαρκεί — σχολιάζει το ανοιχτό.
+      - name: Αναφορά (Issue ή σχόλιο στο ανοιχτό)
+        if: always() && steps.chk.outputs.stale == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OWNER: ${{ github.repository_owner }}
+          LASTCOMMIT: ${{ steps.last.outputs.info }}
+        run: |
+          set -euo pipefail
+          gh label create freshness --color B60205 \
+            --description "Οι τιμές του current.js έμειναν πίσω" || true
+
+          BODY="$RUNNER_TEMP/issue_body.md"
+          printf '@%s\n\n' "$OWNER" > "$BODY"
+          cat "$RUNNER_TEMP/freshness.md" >> "$BODY"
+          printf '\n| τελευταίο commit του `current.js` | %s |\n' "$LASTCOMMIT" >> "$BODY"
+
+          EXISTING=$(gh issue list --label freshness --state open \
+                       --json number --jq '.[0].number // empty')
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body-file "$BODY"
+            echo "Σχολίασα στο ανοιχτό Issue #$EXISTING" >> "$GITHUB_STEP_SUMMARY"
+          else
+            URL=$(gh issue create \
+              --title "⚠️ Παλιές τιμές — το current.js έμεινε πίσω ($(date -u +%Y-%m-%d))" \
+              --body-file "$BODY" --label freshness)
+            echo "Δημιουργήθηκε: $URL"
+            echo "Δημιουργήθηκε Issue: $URL" >> "$GITHUB_STEP_SUMMARY"
+            gh issue edit "$URL" --add-assignee "$OWNER" \
+              || echo "::warning::Απέτυχε η ανάθεση στον $OWNER (το @mention ισχύει)"
+          fi
