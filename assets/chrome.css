@@ -130,19 +130,29 @@
  .wrap>.secbox:first-child>.hero-in>h1,.wrap>.hero:first-child>.hero-in>h1,.wrap>.mast:first-child>.hero-in>h1{font-size:17px}}
 
 /* ===== §30 σήμα εκπομπής στην επικεφαλίδα της λωρίδας «Νέα αποτελέσματα» =====
-   Δύο τόξα προς κάθε πλευρά μιας κουκκίδας, που εξαπλώνονται και σβήνουν.
-   Καθαρά CSS, 30×14px, δεν επηρεάζει το ύψος του block. */
-.am-upd .uhd .sig{position:relative;display:inline-flex;align-items:center;flex:none;width:30px;height:12px}
-.am-upd .uhd .sig b{position:absolute;left:13px;top:50%;margin-top:-2.5px;width:5px;height:5px;
-  border-radius:50%;background:#0f6f6a}
-.am-upd .uhd .sig s{position:absolute;top:50%;width:16px;height:16px;margin-top:-8px;
-  border:1.5px solid #0f6f6a;border-radius:50%;opacity:0;animation:amSig 2.6s ease-out infinite}
-.am-upd .uhd .sig s.r{left:15px;transform-origin:left center;clip-path:polygon(50% 0,100% 0,100% 100%,50% 100%)}
-.am-upd .uhd .sig s.l{left:-1px;transform-origin:right center;clip-path:polygon(0 0,50% 0,50% 100%,0 100%)}
-.am-upd .uhd .sig s.l+s.l,.am-upd .uhd .sig s.r+s.r{animation-delay:.9s}
-@keyframes amSig{0%{transform:scale(.40);opacity:0}20%{opacity:.85}100%{transform:scale(1.15);opacity:0}}
+   Ραντάρ με σάρωση (§114, 27/09/2026): στενή δέσμη που περιστρέφεται μέσα σε δύο
+   δακτυλίους, με κουκκίδα και παλμό που φεύγει σε κάθε κύκλο. 22×22px — η σειρά
+   .uhd ψηλώνει κατά 9px σε σχέση με το παλιό 30×12 σήμα δύο τόξων.
+   ΔΙΠΛΟ ΧΡΩΜΑ, σκόπιμα: δέσμη και δακτύλιοι στο πετρόλ #0f6f6a των εξαμηνιαίων,
+   κουκκίδα και παλμός στο μπλε #2f80c2 της μάρκας — τα ΔΥΟ χρώματα που έχουν ήδη
+   τα chips της λωρίδας (.p-h1 πετρόλ, .p-yr μπλε). Καθαρά CSS, χωρίς εικόνες. */
+.am-upd .uhd .sig{position:relative;display:inline-block;flex:none;width:22px;height:22px}
+.am-upd .uhd .sig u{position:absolute;inset:0;border-radius:50%;
+  background:conic-gradient(from 0turn,rgba(15,111,106,.45),rgba(15,111,106,.07) 16%,rgba(15,111,106,0) 30%);
+  animation:amSweep 2.4s linear infinite}
+.am-upd .uhd .sig i{position:absolute;border-radius:50%}
+.am-upd .uhd .sig i:nth-of-type(1){inset:0;border:1.5px solid rgba(15,111,106,.32)}
+.am-upd .uhd .sig i:nth-of-type(2){inset:23%;border:1px solid rgba(15,111,106,.20)}
+.am-upd .uhd .sig s{position:absolute;inset:0;border-radius:50%;border:1.5px solid #2f80c2;opacity:0;
+  animation:amPing 2.4s ease-out infinite}
+.am-upd .uhd .sig b{position:absolute;left:50%;top:50%;width:21%;height:21%;transform:translate(-50%,-50%);
+  border-radius:50%;background:#2f80c2}
+@keyframes amSweep{to{transform:rotate(1turn)}}
+@keyframes amPing{0%{transform:scale(.22);opacity:0}15%{opacity:.75}100%{transform:scale(1);opacity:0}}
 @media(prefers-reduced-motion:reduce){
-  .am-upd .uhd .sig s{animation:none;opacity:.45;transform:scale(.85)}}
+  .am-upd .uhd .sig u,.am-upd .uhd .sig s{animation:none}
+  .am-upd .uhd .sig u{opacity:.5}
+  .am-upd .uhd .sig s{opacity:.35;transform:scale(.9)}}
 
 /* ── §34 Κοινά στοιχεία όψης 6μήνου (σελίδες 2–11) ───────────────────────────
    .h1c  = chip «6M» — παίρνει ΠΑΝΤΑ το font-size του κειμένου δίπλα του.

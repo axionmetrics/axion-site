@@ -154,9 +154,8 @@
           + '<span class="per '+pr.cls+'">'+esc(pr.txt)+'</span>'
           + '<span class="dt">'+updDate(u.date)+'</span></a>';
    }).join('');
-   // σήμα εκπομπής: τόξα εκατέρωθεν της κουκκίδας (§30) — καθαρά διακοσμητικό, aria-hidden
-   var sig='<span class="sig" aria-hidden="true"><b></b><s class="l"></s><s class="l"></s>'
-         + '<s class="r"></s><s class="r"></s></span>';
+   // σήμα εκπομπής: ραντάρ με σάρωση (§30/§114) — καθαρά διακοσμητικό, aria-hidden
+   var sig='<span class="sig" aria-hidden="true"><u></u><i></i><i></i><s></s><b></b></span>';
    el.innerHTML='<div class="uhd">'+sig+'<span class="t">'+esc(L(UPD_T))+'</span></div>'
               + '<div class="chips">'+chips+'</div>';
    el.hidden=false;
