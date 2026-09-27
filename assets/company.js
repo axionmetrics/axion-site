@@ -597,6 +597,21 @@ document.getElementById('latest').innerHTML=METRICS.map(m=>{
     note=`<div class="cnote">${parts.join(' · ')}</div>`;
   }
   cb.innerHTML=`<div class="latest">${clab}${item(L('co.m.mcap'),eur(cur.mcap))}${item('P/E',xx(peVal))}${item('P/BV',xx(pbvVal))}</div>${note}`;
+  // §115 — αρίθμηση προς τα πάνω ΜΟΝΟ στην κεφαλαιοποίηση. Τα P/E και P/BV έχουν πολύ μικρή
+  // διαδρομή (π.χ. 0 -> 1,25): σε 700ms δεν διαβάζεται ως κίνηση αλλά ως τρεμόπαιγμα δεκαδικών.
+  (function(){
+    try{ if(matchMedia('(prefers-reduced-motion:reduce)').matches) return; }catch(e){}
+    if(cur.mcap==null) return;
+    const el=cb.querySelector('.metric-item .v'); if(!el) return;
+    const suf=EURSUF(), target=cur.mcap, DUR=700, t0=performance.now();
+    (function step(now){
+      // clamp και στα δύο άκρα: το requestAnimationFrame δίνει τη σφραγίδα ΕΝΑΡΞΗΣ του καρέ,
+      // που μπορεί να προηγείται του t0 -> αρνητικό p -> αρνητικό ποσό στο πρώτο καρέ.
+      const p=Math.min(1,Math.max(0,(now-t0)/DUR)), e=1-Math.pow(1-p,3);
+      el.innerHTML=`${fMil(target*e)}<small>${suf}</small>`;
+      if(p<1) requestAnimationFrame(step);
+    })(t0);
+  })();
 })();
 // «Ζώνη ένωσης» — διακριτικό background πίσω από τα κοινά μεγέθη (Κεφαλαιοποίηση/P·E/P·BV) και στα δύο blocks
 (function(){
