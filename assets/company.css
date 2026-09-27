@@ -321,7 +321,8 @@
     .phead.yr .latest{display:flex;flex-wrap:wrap;gap:8px}
     .phead.yr .latest .metric-item{flex:1 1 90px}
     .phead.yr .cband>.latest{margin:0}
-    .phead.yr .cband .clab{flex:1 1 100%;margin-bottom:6px}
+    .phead.yr .cband .clab{flex:1 1 100%;margin-bottom:6px;align-items:center;text-align:center;padding-right:0}
+    .phead.yr .cband .clab .t{justify-content:center}
     .mast h1{font-size:34px}.topnav{display:none}
   }
   /* ---------- γρήγορη εύρεση εταιρείας ---------- */
@@ -395,8 +396,8 @@
 .cband{background:linear-gradient(180deg,rgba(47,128,194,.16),rgba(47,128,194,.05));border-radius:11px;padding:10px 9px 11px;margin-top:12px;border:1px solid rgba(255,255,255,.10)}
 /* το εσωτερικό grid «σπάει» έξω από το padding+border του cband (9+1=10px) ώστε οι στήλες να ευθυγραμμίζονται ΑΚΡΙΒΩΣ με το πάνω block */
 .cband>.latest{margin-left:-10px;margin-right:-10px}
-.cband .clab{grid-column:1 / 4;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
-.cband .clab .t{font-size:12.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#8fc4ee;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;line-height:1.2}
+.cband .clab{grid-column:1 / 4;min-width:0;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;text-align:right;padding-right:21px}
+.cband .clab .t{font-size:12.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#8fc4ee;display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;line-height:1.2}
 .cband .clab .s{font-size:10.5px;color:rgba(255,255,255,.62);margin-top:3px;font-weight:600}
 .cband .k{color:#bcd9f2}
 .cband .cell{background:#2f80c2;border:1px solid #3f92d6}
