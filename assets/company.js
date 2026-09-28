@@ -13,7 +13,7 @@ AX_I18N.add({
  'co.ph.dist':{el:'Χρηματικές διανομές', en:'Cash distributions'},
  'co.hint.3y':{el:'3ετία', en:'3-year'},
  'co.ph.ratios':{el:'Δείκτες', en:'Ratios'},
- 'co.ph.traj':{el:'Τροχιά μεγεθών', en:'Size trajectory'},
+ 'co.ph.traj':{el:'Τροχιά μεγεθών', en:'Key figures over time'},
  'co.leg.rev':{el:'Τζίρος', en:'Revenue'},
  'co.leg.ppi':{el:'PPI', en:'PPI'},
  'co.unit.meur2':{el:'(εκατ. €)', en:'(€M)'},
