@@ -37,7 +37,7 @@
 
  /* §118 — επιλογή γλώσσας με σημαίες: και οι δύο πάντα ορατές, η τρέχουσα ανενεργή */
  var LANGHTML="<div class=\"langflags\" role=\"group\" aria-label=\"Language\"><button type=\"button\" data-langset=\"el\" title=\"Ελληνικά\" aria-label=\"Ελληνικά\"><svg viewBox=\"0 0 27 18\" aria-hidden=\"true\"><rect width=\"27\" height=\"18\" fill=\"#fff\"/><g fill=\"#0D5EAF\"><rect width=\"27\" height=\"2\"/><rect width=\"27\" height=\"2\" y=\"4\"/><rect width=\"27\" height=\"2\" y=\"8\"/><rect width=\"27\" height=\"2\" y=\"12\"/><rect width=\"27\" height=\"2\" y=\"16\"/></g><rect width=\"10\" height=\"10\" fill=\"#0D5EAF\"/><path d=\"M0 4h10v2H0z M4 0h2v10H4z\" fill=\"#fff\"/><rect width=\"27\" height=\"18\" fill=\"none\" stroke=\"rgba(0,0,0,.18)\"/></svg></button><button type=\"button\" data-langset=\"en\" title=\"English\" aria-label=\"English\"><svg viewBox=\"0 0 60 30\" aria-hidden=\"true\"><clipPath id=\"axukj\"><path d=\"M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z\"/></clipPath><rect width=\"60\" height=\"30\" fill=\"#012169\"/><path d=\"M0,0 L60,30 M60,0 L0,30\" stroke=\"#fff\" stroke-width=\"6\"/><path d=\"M0,0 L60,30 M60,0 L0,30\" clip-path=\"url(#axukj)\" stroke=\"#C8102E\" stroke-width=\"4\"/><path d=\"M30,0 v30 M0,15 h60\" stroke=\"#fff\" stroke-width=\"10\"/><path d=\"M30,0 v30 M0,15 h60\" stroke=\"#C8102E\" stroke-width=\"6\"/><rect width=\"60\" height=\"30\" fill=\"none\" stroke=\"rgba(0,0,0,.18)\" stroke-width=\"2\"/></svg></button></div>";
- var NAVHTML="<nav class=\"site-nav\">\n <div class=\"bar1\"><a class=\"lock\" href=\"/\"><span class=\"am\">A<i>M</i></span><span class=\"lrule\"></span><span class=\"lname\">AXION<br>METRICS</span></a><ul class=\"tabs\" id=\"navtabs\"></ul><div class=\"am-right\"><div class=\"am-basis\" id=\"ambasis\"></div>"+LANGHTML+"</div></div>\n <div class=\"bar2\" id=\"navbar2\"></div>\n</nav>\n<div class=\"am-upd\" id=\"amupd\" hidden></div>";
+ var NAVHTML="<nav class=\"site-nav\">\n <div class=\"bar1\"><a class=\"lock\" href=\"/\"><span class=\"am\">A<i>M</i></span><span class=\"lrule\"></span><span class=\"lname\">AXION<br>METRICS</span></a><ul class=\"tabs\" id=\"navtabs\"></ul><div class=\"am-right\"><div class=\"am-basis\" id=\"ambasis\"></div>"+LANGHTML+"</div></div>\n <div class=\"bar2\" id=\"navbar2\"></div>\n <div class=\"am-upd\" id=\"amupd\" hidden></div>\n <div class=\"am-ev\" id=\"amev\" hidden></div>\n</nav>";
 
  function footerHTML(){
    /* Οι στήλες παράγονται ΑΠΟ ΤΟΝ ΙΔΙΟ πίνακα NAV με το header — καμία χειροκίνητη λίστα,
@@ -85,6 +85,7 @@
    if(!buildNav._wired){
      tabs.addEventListener('click',function(e){var li=e.target.closest('li');if(li){var g=NAV[+li.dataset.i];if(g&&g.items[0])location.href=g.items[0][1];}});
      addEventListener('resize',align); addEventListener('load',align);
+     addEventListener('resize',setScrollPad); addEventListener('load',setScrollPad);
      if(document.fonts&&document.fonts.ready)document.fonts.ready.then(align);
      buildNav._wired=true;
    }
@@ -163,6 +164,51 @@
               + '<div class="chips">'+chips+'</div>';
    el.hidden=false;
  }
+ /* §119 — η κολλητή κεφαλίδα ψήλωσε· τα in-page scroll (#anchors, scrollIntoView)
+    πρέπει να σταματούν ΚΑΤΩ από αυτήν, αλλιώς ο στόχος κρύβεται από πίσω της */
+ function setScrollPad(){
+   var n=document.querySelector('.site-nav'); if(!n) return;
+   document.documentElement.style.scrollPaddingTop=Math.round(n.getBoundingClientRect().height)+8+'px';
+ }
+ /* §119 — λωρίδα «Τελευταία γεγονότα»: τα 15 νεότερα εταιρικά γεγονότα, συνεχής κύλιση */
+ var EV_T={el:'Τελευταία γεγονότα',en:'Latest events'};
+ var EV_TYPE={amk:{el:'Μετ.Κεφαλαίου',en:'Capital'},
+              div:{el:'Χρημ.Διανομές',en:'Distributions'},
+              listing:{el:'Εισαγωγές/Διαγραφές',en:'Listings/Delistings'},
+              index:{el:'Δείκτες',en:'Index changes'}};
+ var EV_N=15, EV_PXS=75;   // πλήθος γεγονότων · ταχύτητα κύλισης σε px/δευτερόλεπτο
+ function evDate(iso){ var p=String(iso).split('-'); if(p.length!==3) return '';
+   return parseInt(p[2],10)+'/'+parseInt(p[1],10); }
+ /* Η ΔΙΑΡΚΕΙΑ υπολογίζεται από το ΠΡΑΓΜΑΤΙΚΟ πλάτος του περιεχομένου, όχι σταθερή:
+    αλλιώς μια μέρα με μακροσκελή κείμενα γεγονότων θα έτρεχε τη λωρίδα πιο γρήγορα
+    από μια μέρα με σύντομα. Έτσι τα px/s μένουν σταθερά. */
+ function evDur(el){
+   var tr=el.querySelector('.track'); if(!tr) return;
+   var d=(tr.scrollWidth/2)/EV_PXS;
+   if(d>0) el.style.setProperty('--amev-dur', d.toFixed(1)+'s');
+ }
+ function renderEvents(){
+   var el=document.getElementById('amev'); if(!el) return;
+   var src=(window.AXION&&window.AXION.marketEvents)||[];
+   var E=src.slice(0,EV_N);
+   if(!E.length){ el.hidden=true; el.innerHTML=''; return; }
+   var one=E.map(function(e){
+     var tag=EV_TYPE[e.t]?L(EV_TYPE[e.t]):String(e.t||'');
+     var inner='<span class="d">'+evDate(e.d)+'</span>'
+             + '<span class="co">'+esc(e.co||e.tk||'')+'</span>'
+             + '<span class="pill p-'+esc(e.t)+'">'+esc(tag)+'</span>'
+             + '<span class="x">'+esc(e.x||'')+'</span>';
+     var href=(typeof AX_CO==='function'&&e.tk)?AX_CO(e.tk):null;
+     return href ? '<a class="ev" href="'+href+'">'+inner+'</a>'
+                 : '<span class="ev">'+inner+'</span>';
+   }).join('');
+   el.innerHTML='<div class="elab"><span class="edot" aria-hidden="true"></span><span class="t">'+esc(L(EV_T))+'</span></div>'
+              + '<div class="eview"><div class="track">'+one+one+'</div></div>';
+   el.hidden=false;
+   evDur(el); setScrollPad();
+   // οι γραμματοσειρές φορτώνουν αργότερα και αλλάζουν το πλάτος -> ξαναμέτρηση
+   try{ if(document.fonts&&document.fonts.ready) document.fonts.ready.then(function(){ evDur(el); setScrollPad(); }); }catch(_){}
+ }
  function syncLangFlags(){
    var l=curLang(), bs=document.querySelectorAll('.langflags button[data-langset]');
    for(var i=0;i<bs.length;i++){
@@ -181,7 +227,7 @@
      document.dispatchEvent(new CustomEvent('axion:langchange',{detail:{lang:nl}}));
    }
  });
- function relocalize(){ buildNav(); renderBasis(); renderUpdates(); var f=document.querySelector('.site-ft'); if(f) f.outerHTML=footerHTML(); syncLangFlags(); }
+ function relocalize(){ buildNav(); renderBasis(); renderUpdates(); renderEvents(); var f=document.querySelector('.site-ft'); if(f) f.outerHTML=footerHTML(); syncLangFlags(); }
  document.addEventListener('axion:langchange', relocalize);
 
  function injectAnalytics(){
@@ -192,6 +238,6 @@
    s.setAttribute('data-cf-beacon','{"token": "a9e573e27dd34f6784b7df2d706c1bee"}');
    document.head.appendChild(s);
  }
- function init(){ injectStyle(); mount(); buildNav(); renderBasis(); renderUpdates(); syncLangFlags(); injectAnalytics(); }
+ function init(){ injectStyle(); mount(); buildNav(); renderBasis(); renderUpdates(); renderEvents(); syncLangFlags(); setScrollPad(); injectAnalytics(); }
  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);} else {init();}
 })();
