@@ -55,6 +55,12 @@ window.AX_KATATAXI=function(metricKey){
     document.documentElement.setAttribute('lang', LANG==='en'?'en':'el');
     var togs=root.querySelectorAll('[data-langtog]');
     for(i=0;i<togs.length;i++){ togs[i].textContent = (LANG==='en'?'ΕΛ':'EN'); }
+    /* §118 — ζεύγος σημαιών: η ΤΡΕΧΟΥΣΑ γλώσσα είναι ανενεργή (δεν είναι επιλογή) */
+    var lfs=root.querySelectorAll('[data-langset]');
+    for(i=0;i<lfs.length;i++){
+      if(lfs[i].getAttribute('data-langset')===LANG){ lfs[i].setAttribute('aria-current','true'); lfs[i].disabled=true; }
+      else { lfs[i].removeAttribute('aria-current'); lfs[i].disabled=false; }
+    }
   }
 
   function setLang(l){
@@ -92,6 +98,8 @@ window.AX_KATATAXI=function(metricKey){
 
   // global click handler for any [data-langtog]
   document.addEventListener('click',function(e){
+    var f=e.target.closest && e.target.closest('[data-langset]');
+    if(f){ e.preventDefault(); setLang(f.getAttribute('data-langset')); return; }
     var b=e.target.closest && e.target.closest('[data-langtog]');
     if(b){ e.preventDefault(); toggle(); }
   });

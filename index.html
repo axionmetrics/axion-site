@@ -41,8 +41,13 @@
  .lname{font-family:Inter,sans-serif;font-size:9.5px;font-weight:600;letter-spacing:.22em;color:#8199b3;line-height:1.75}
  .menu{display:flex;align-items:center;gap:34px;font-size:14.5px;font-weight:600;color:#6b8199}
  .menu a{cursor:pointer;color:inherit;text-decoration:none} .menu a:hover{color:#2f80c2}
- .langtog{border:1px solid #cfe0f0;background:#fff;color:#2f80c2;font:700 12px Inter,sans-serif;padding:5px 10px;border-radius:8px;cursor:pointer;letter-spacing:.05em}
- .langtog:hover{background:#eef7ff}
+ /* §118 — επιλογή γλώσσας με σημαίες (η τρέχουσα ανενεργή) */
+ .langflags{display:inline-flex;align-items:center;gap:6px}
+ .langflags button{all:unset;display:block;line-height:0;cursor:pointer;border-radius:3px;padding:2px;transition:opacity .15s,transform .15s}
+ .langflags svg{display:block;width:22px;height:15px;border-radius:2.5px}
+ .langflags button[aria-current]{opacity:.35;cursor:default}
+ .langflags button:not([aria-current]):hover{transform:translateY(-1px)}
+ .langflags button:focus-visible{outline:2px solid #2f80c2;outline-offset:2px}
  .navspace{width:60px}
 
  /* eyebrow */
@@ -164,7 +169,7 @@
      <div class="rule"></div>
      <div class="lname">AXION<br>METRICS</div>
    </div>
-   <div class="menu"><a href="company/" data-i18n="nav.companies">Εταιρείες</a><a href="sectors/" data-i18n="nav.sectors">Κλάδοι</a><a href="index-reviews/" data-i18n="nav.events">Γεγονότα</a><a href="methodology/" data-i18n="nav.about">Σχετικά</a><button class="langtog" data-langtog aria-label="Language">EN</button></div>
+   <div class="menu"><a href="company/" data-i18n="nav.companies">Εταιρείες</a><a href="sectors/" data-i18n="nav.sectors">Κλάδοι</a><a href="index-reviews/" data-i18n="nav.events">Γεγονότα</a><a href="methodology/" data-i18n="nav.about">Σχετικά</a><div class="langflags" role="group" aria-label="Language"><button type="button" data-langset="el" title="Ελληνικά" aria-label="Ελληνικά"><svg viewBox="0 0 27 18" aria-hidden="true"><rect width="27" height="18" fill="#fff"/><g fill="#0D5EAF"><rect width="27" height="2"/><rect width="27" height="2" y="4"/><rect width="27" height="2" y="8"/><rect width="27" height="2" y="12"/><rect width="27" height="2" y="16"/></g><rect width="10" height="10" fill="#0D5EAF"/><path d="M0 4h10v2H0z M4 0h2v10H4z" fill="#fff"/><rect width="27" height="18" fill="none" stroke="rgba(0,0,0,.18)"/></svg></button><button type="button" data-langset="en" title="English" aria-label="English"><svg viewBox="0 0 60 30" aria-hidden="true"><clipPath id="axukj"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath><rect width="60" height="30" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#axukj)" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/><rect width="60" height="30" fill="none" stroke="rgba(0,0,0,.18)" stroke-width="2"/></svg></button></div></div>
    <div class="navspace"></div>
  </div>
 
