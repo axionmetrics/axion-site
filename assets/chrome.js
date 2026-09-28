@@ -19,7 +19,7 @@
      [{el:'Γεγονότα αγοράς',en:'Market events'},'/market-events/']]},
    {g:{el:'Σχετικά',en:'About'},items:[
      [{el:'Μεθοδολογία & δείκτες',en:'Methodology & ratios'},'/methodology/'],
-     [{el:'Περί',en:'About'},'/about/'],
+     [{el:'Περί',en:'About the project'},'/about/'],
      [{el:'Όροι χρήσης',en:'Terms of use'},'/terms/']]}
  ];
  var NAV_ACTIVE=(typeof window.NAV_ACTIVE==='number')?window.NAV_ACTIVE:0;
