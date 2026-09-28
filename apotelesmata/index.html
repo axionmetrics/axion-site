@@ -88,6 +88,7 @@
  tbody td{padding:10px;border-bottom:1px solid var(--line);vertical-align:middle}
  tbody tr:hover{background:#f4f7fc}
  td.rk{font-family:'Ubuntu Mono';font-weight:700;color:#b9c3d0;width:38px;text-align:center;font-size:14px}
+ thead th.aa{width:38px;text-align:center;padding-left:6px;padding-right:6px}
  tbody tr.top3 td.rk{color:var(--accent)}
  td.nm{font-weight:700;font-size:14px}
  td.nm a{color:var(--text);text-decoration:none}
@@ -220,6 +221,7 @@ AX_I18N.add({
  'ap.hs3v':{el:'Δημοσίευση', en:'Publication'}, 'ap.hs3l':{el:'ημερομηνία έκθεσης', en:'report date'},
  'ap.sector':{el:'Κλάδος', en:'Sector'},
  'ap.all':{el:'Όλοι', en:'All'},
+ 'ap.h.aa':{el:'Α/Α', en:'#'},
  'ap.h.co':{el:'Εταιρεία', en:'Company'}, 'ap.h.kl':{el:'Κλάδος', en:'Sector'},
  'ap.h.dt':{el:'Δημοσίευση', en:'Published'}, 'ap.h.rev':{el:'Τζίρος', en:'Revenue'},
  'ap.h.eb':{el:'EBITDA', en:'EBITDA'}, 'ap.h.np':{el:'Καθαρά κέρδη', en:'Net profit'},
@@ -333,6 +335,7 @@ function thead(){
   const th=(k,lab,cls)=>'<th class="s '+(cls||'')+(sortK===k?' on':'')+'" onclick="setSort('+JSON.stringify(k)+')">'
     +lab+'<span class="ar">'+(sortK===k?(sortD>0?'▲':'▼'):'▾')+'</span></th>';
   document.getElementById('thead').innerHTML='<tr>'+
+    '<th class="aa">'+L('ap.h.aa')+'</th>'+
     th('name',L('ap.h.co'),'l')+'<th class="l">'+L('ap.h.kl')+'</th>'+th('date',L('ap.h.dt'))+
     th('rev',L('ap.h.rev'))+th('eb',CUR.basis&&ROWS.some(r=>r.bank)?L('ap.h.eb')+'*':L('ap.h.eb'))+
     th('np',L('ap.h.np'))+'</tr>';
@@ -340,12 +343,13 @@ function thead(){
 function table(){
   const a=sorted(shown());
   const tb=document.getElementById('tbody');
-  if(!a.length){ tb.innerHTML='<tr><td colspan="6" class="empty">'+L('ap.none')+'</td></tr>'; return; }
+  if(!a.length){ tb.innerHTML='<tr><td colspan="7" class="empty">'+L('ap.none')+'</td></tr>'; return; }
   const num=(v,d)=>'<td class="num">'+eur(v)+(d==null?'':'<span class="dd '+dCls(d)+'">'+dStr(d)+'</span>')+'</td>';
-  tb.innerHTML=a.map(r=>{
+  tb.innerHTML=a.map((r,i)=>{
     const href=(typeof AX_CO==='function')?AX_CO(r.tk):('/company/?tk='+encodeURIComponent(r.tk));
     const kl=(typeof AX_KLADOS==='function')?AX_KLADOS(r.s):null;
-    return '<tr><td class="co"><a href="'+href+(CUR.basis==='interim'?'?basis=interim':'')+'">'+r.name+'</a></td>'
+    return '<tr><td class="rk">'+(i+1)+'</td>'
+      +'<td class="co"><a href="'+href+(CUR.basis==='interim'?'?basis=interim':'')+'">'+r.name+'</a></td>'
       +'<td class="kl">'+(kl?'<a href="'+kl.replace('https://www.axionmetrics.gr','')+'">'+SEC(r.s)+'</a>':SEC(r.s))+'</td>'
       +'<td class="dt">'+dateStr(r.date)+'</td>'
       +num(r.rev,yoy(r.rev,r.revP))+num(r.eb,yoy(r.eb,r.ebP))+num(r.np,yoy(r.np,r.npP))+'</tr>';
