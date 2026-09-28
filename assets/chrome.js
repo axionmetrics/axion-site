@@ -202,7 +202,7 @@
      return href ? '<a class="ev" href="'+href+'">'+inner+'</a>'
                  : '<span class="ev">'+inner+'</span>';
    }).join('');
-   el.innerHTML='<div class="elab"><span class="edot" aria-hidden="true"></span><span class="t">'+esc(L(EV_T))+'</span></div>'
+   el.innerHTML='<div class="elab"><span class="t">'+esc(L(EV_T))+'</span></div>'
               + '<div class="eview"><div class="track">'+one+one+'</div></div>';
    el.hidden=false;
    evDur(el); setScrollPad();

@@ -109,8 +109,6 @@
 .am-ev[hidden]{display:none}
 .am-ev .elab{display:flex;align-items:center;gap:7px;flex:none;padding-right:14px;margin-right:14px;border-right:1px solid #cfdcec}
 .am-ev .elab .t{font-family:Inter,sans-serif;font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#5a6577;white-space:nowrap}
-.am-ev .edot{width:7px;height:7px;border-radius:50%;background:#2f80c2;flex:none;animation:amEvDot 2s ease-in-out infinite}
-@keyframes amEvDot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.78)}}
 /* το δεξί άκρο σβήνει αντί να κόβεται απότομα· το αριστερό επίσης, γιατί εκεί μπαίνουν τα στοιχεία */
 .am-ev .eview{position:relative;flex:1;min-width:0;height:40px;overflow:hidden;
   -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 16px,#000 calc(100% - 30px),transparent 100%);
@@ -134,9 +132,9 @@
 .am-ev .p-listing{background:#e6f4ea;color:#1f7a3e}
 .am-ev .p-index{background:#e8edf6;color:#2b4c85}
 @media(max-width:820px){.am-ev{padding:0 16px}
- .am-ev .elab .t{display:none}
- .am-ev .elab{padding-right:10px;margin-right:10px}}
-@media(prefers-reduced-motion:reduce){.am-ev .track{animation:none}.am-ev .edot{animation:none}}
+ /* χωρίς την κουκκίδα, ένα .elab με κρυμμένο τίτλο θα άφηνε ορφανή κάθετη γραμμή */
+ .am-ev .elab{display:none}}
+@media(prefers-reduced-motion:reduce){.am-ev .track{animation:none}}
 
 /* ===== ΤΙΤΛΟΣ ΣΕΛΙΔΑΣ — λιτή γραμμή (B1). Αντικαθιστά την παλιά κάρτα με stripe.
    Στόχος ΜΟΝΟ το πρώτο παιδί του .wrap (.secbox/.hero/.mast) — είναι πάντα το
