@@ -30,6 +30,17 @@
         en:'Fundamental analysis for companies listed on the Athens Stock Exchange — ratios, sector comparison, quality & momentum.'},
    bot:{el:'Δεν αποτελεί επενδυτική συμβουλή',en:'Not investment advice'}
  };
+
+ /* §125 — στοιχεία επικοινωνίας: εικονίδιο στο header, στήλη στο footer.
+    ΜΙΑ πηγή για τη διεύθυνση — header, footer και μελλοντικές χρήσεις διαβάζουν από εδώ. */
+ var MAIL='info@axionmetrics.gr';
+ var MAILSVG='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M3 7l9 6 9-6"/></svg>';
+ var CT={
+   h:{el:'Επικοινωνία',en:'Contact'},
+   sub:{el:'Για διορθώσεις στοιχείων, ερωτήσεις μεθοδολογίας ή συνεργασία.',
+        en:'For data corrections, methodology questions or collaboration.'},
+   aria:{el:'Επικοινωνία με email',en:'Contact by email'}
+ };
  var BASIS={ annual:{el:'Ετήσια',en:'Annual'}, interim:{el:'Εξάμηνο',en:'Interim'},
    soon:{el:'σύντομα',en:'soon'}, soonT:{el:'Σύντομα διαθέσιμο',en:'Coming soon'},
    aria:{el:'Βάση δεδομένων',en:'Data basis'},
@@ -37,7 +48,7 @@
 
  /* §118 — επιλογή γλώσσας με σημαίες: και οι δύο πάντα ορατές, η τρέχουσα ανενεργή */
  var LANGHTML="<div class=\"langflags\" role=\"group\" aria-label=\"Language\"><button type=\"button\" data-langset=\"el\" title=\"Ελληνικά\" aria-label=\"Ελληνικά\"><svg viewBox=\"0 0 27 18\" aria-hidden=\"true\"><rect width=\"27\" height=\"18\" fill=\"#fff\"/><g fill=\"#0D5EAF\"><rect width=\"27\" height=\"2\"/><rect width=\"27\" height=\"2\" y=\"4\"/><rect width=\"27\" height=\"2\" y=\"8\"/><rect width=\"27\" height=\"2\" y=\"12\"/><rect width=\"27\" height=\"2\" y=\"16\"/></g><rect width=\"10\" height=\"10\" fill=\"#0D5EAF\"/><path d=\"M0 4h10v2H0z M4 0h2v10H4z\" fill=\"#fff\"/><rect width=\"27\" height=\"18\" fill=\"none\" stroke=\"rgba(0,0,0,.18)\"/></svg></button><button type=\"button\" data-langset=\"en\" title=\"English\" aria-label=\"English\"><svg viewBox=\"0 0 60 30\" aria-hidden=\"true\"><clipPath id=\"axukj\"><path d=\"M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z\"/></clipPath><rect width=\"60\" height=\"30\" fill=\"#012169\"/><path d=\"M0,0 L60,30 M60,0 L0,30\" stroke=\"#fff\" stroke-width=\"6\"/><path d=\"M0,0 L60,30 M60,0 L0,30\" clip-path=\"url(#axukj)\" stroke=\"#C8102E\" stroke-width=\"4\"/><path d=\"M30,0 v30 M0,15 h60\" stroke=\"#fff\" stroke-width=\"10\"/><path d=\"M30,0 v30 M0,15 h60\" stroke=\"#C8102E\" stroke-width=\"6\"/><rect width=\"60\" height=\"30\" fill=\"none\" stroke=\"rgba(0,0,0,.18)\" stroke-width=\"2\"/></svg></button></div>";
- var NAVHTML="<nav class=\"site-nav\">\n <div class=\"bar1\"><a class=\"lock\" href=\"/\"><span class=\"am\">A<i>M</i></span><span class=\"lrule\"></span><span class=\"lname\">AXION<br>METRICS</span></a><ul class=\"tabs\" id=\"navtabs\"></ul><div class=\"am-right\"><div class=\"am-basis\" id=\"ambasis\"></div>"+LANGHTML+"</div></div>\n <div class=\"bar2\" id=\"navbar2\"></div>\n <div class=\"am-upd\" id=\"amupd\" hidden></div>\n <div class=\"am-ev\" id=\"amev\" hidden></div>\n</nav>";
+ var NAVHTML="<nav class=\"site-nav\">\n <div class=\"bar1\"><a class=\"lock\" href=\"/\"><span class=\"am\">A<i>M</i></span><span class=\"lrule\"></span><span class=\"lname\">AXION<br>METRICS</span></a><ul class=\"tabs\" id=\"navtabs\"></ul><div class=\"am-right\"><div class=\"am-basis\" id=\"ambasis\"></div>"+LANGHTML+"<span class=\"mrule\"></span><a class=\"am-mail\" id=\"ammail\" href=\"mailto:"+MAIL+"\">"+MAILSVG+"</a></div></div>\n <div class=\"bar2\" id=\"navbar2\"></div>\n <div class=\"am-upd\" id=\"amupd\" hidden></div>\n <div class=\"am-ev\" id=\"amev\" hidden></div>\n</nav>";
 
  function footerHTML(){
    /* Οι στήλες παράγονται ΑΠΟ ΤΟΝ ΙΔΙΟ πίνακα NAV με το header — καμία χειροκίνητη λίστα,
@@ -48,10 +59,15 @@
      for(var j=0;j<g.items.length;j++){ links+='<a href="'+g.items[j][1]+'">'+esc(L(g.items[j][0]))+'</a>'; }
      cols+='<div class="fcol"><h4>'+esc(L(g.g))+'</h4>'+links+'</div>';
    }
+   /* §125 — η στήλη «Επικοινωνία» μπαίνει ΤΕΛΕΥΤΑΙΑ, μετά τις ομάδες του NAV.
+      Το email ΦΕΥΓΕΙ από την κάτω γραμμή ώστε να μην εμφανίζεται δύο φορές. */
+   cols+='<div class="fcol fcontact"><h4>'+esc(L(CT.h))+'</h4>'
+        +'<a href="mailto:'+MAIL+'">'+MAILSVG+esc(MAIL)+'</a>'
+        +'<div class="sub">'+esc(L(CT.sub))+'</div></div>';
    return "<footer class=\"site-ft\"><div class=\"in\">"
      +"<div class=\"fbrand\"><div class=\"flogo\">AXION<i>METRICS</i></div><div class=\"ftag\">"+esc(L(FT.tag))+"</div></div>"
      +cols
-     +"</div><div class=\"fbot\">© 2026 Axion Metrics · "+esc(L(FT.bot))+" · <a href=\"mailto:info@axionmetrics.gr\" style=\"color:inherit\">info@axionmetrics.gr</a></div></footer>";
+     +"</div><div class=\"fbot\">© 2026 Axion Metrics · "+esc(L(FT.bot))+"</div></footer>";
  }
 
  function injectStyle(){
@@ -210,6 +226,8 @@
    try{ if(document.fonts&&document.fonts.ready) document.fonts.ready.then(function(){ evDur(el); setScrollPad(); }); }catch(_){}
  }
  function syncLangFlags(){
+   var mm=document.getElementById('ammail');
+   if(mm){ mm.title=MAIL; mm.setAttribute('aria-label', L(CT.aria)+': '+MAIL); }
    var l=curLang(), bs=document.querySelectorAll('.langflags button[data-langset]');
    for(var i=0;i<bs.length;i++){
      if(bs[i].getAttribute('data-langset')===l){ bs[i].setAttribute('aria-current','true'); bs[i].disabled=true; }
