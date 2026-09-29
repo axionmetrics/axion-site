@@ -27,6 +27,7 @@ Euronext Monitor — Axion Metrics
  
 import json
 import os
+import re
 import sys
 import datetime
 import urllib.request
@@ -159,9 +160,25 @@ def load_distributions():
  
  
 # ----------------------------------------------------------------------------
-def build_snapshot(stocks, dists):
+DIST_MEMORY = 600   # πόσα κλειδιά διανομών κρατά η μνήμη του snapshot
+
+
+def build_snapshot(stocks, dists, prev=None):
     """Μόνο το ουσιώδες state — χωρίς volatile timestamps ώστε το git diff
-    να δείχνει αλλαγή ΜΟΝΟ όταν αλλάζει πραγματικά κάτι."""
+    να δείχνει αλλαγή ΜΟΝΟ όταν αλλάζει πραγματικά κάτι.
+
+    §123 — ΟΙ ΔΙΑΝΟΜΕΣ ΕΙΝΑΙ ΕΝΩΣΗ, ΟΧΙ ΣΤΙΓΜΙΟΤΥΠΟ.
+    Η σελίδα διανομών δίνει σταθερά CASH_PAGES*10 = 20 γραμμές, ταξινομημένες
+    φθίνουσα κατά αποκοπή. Όταν πολλές εταιρείες έχουν ΤΗΝ ΙΔΙΑ ημερομηνία
+    αποκοπής στο κάτω όριο του παραθύρου (π.χ. έξι στις 20/07/2026), το ποιες
+    δύο από αυτές χωράνε στις τελευταίες θέσεις ΔΕΝ είναι σταθερό — δεν υπάρχει
+    δευτερεύον κριτήριο ταξινόμησης. Έτσι σε κάθε τρέξιμο έμπαινε στο παράθυρο
+    άλλο υποσύνολο, και το προηγούμενο snapshot (που κρατούσε ΜΟΝΟ τις 20 της
+    στιγμής) το έβλεπε ως «νέα διανομή» — δίμηνα παλιά γεγονότα εμφανίζονταν
+    στάγδην ως νέα. Κρατώντας ένωση, ό,τι έχει ξαναδεί ο monitor μένει «γνωστό».
+    """
+    keep = sorted(set(r["key"] for r in dists) |
+                  set((prev or {}).get("distributions", [])))[-DIST_MEMORY:]
     return {
         "stocks": {
             s: {
@@ -172,7 +189,7 @@ def build_snapshot(stocks, dists):
                 "ca_date": v["ca_date"],
             } for s, v in stocks.items()
         },
-        "distributions": sorted(r["key"] for r in dists),
+        "distributions": keep,
     }
  
  
@@ -345,6 +362,96 @@ def build_events(ch, stocks, detected_on):
     return ev
  
  
+# ----------------------------------------------------------------------------
+# §123 — ΔΙΧΤΥ ΑΣΦΑΛΕΙΑΣ: ήδη καταχωρημένα & πολύ παλιά
+# ----------------------------------------------------------------------------
+DATA_JS   = os.path.normpath(os.path.join(HERE, "..", "..", "assets", "data.js"))
+STALE_DAYS = 30   # πέρα από τόσες ημέρες, το γεγονός θεωρείται «παλιό»
+
+
+def _known_from_data_js():
+    """Κλειδιά «ημερομηνία|ποσό» των ΗΔΗ καταχωρημένων χρηματικών διανομών.
+
+    Το data.js είναι το παραγόμενο του master — ό,τι υπάρχει εκεί έχει ήδη
+    περάσει στα ΕΤΑΙΡΙΚΑ ΓΕΓΟΝΟΤΑ. Δεν αντιστοιχίζουμε με σύμβολο Euronext
+    (τα σύμβολα διαφέρουν από τα ονόματα του master· η αντιστοίχιση γίνεται
+    στο apply_events.py από το INDEX), αλλά με ΗΜΕΡΟΜΗΝΙΑ + ΠΟΣΟ, που είναι
+    αρκετά διακριτικό ζεύγος για διανομή.
+    """
+    if not os.path.exists(DATA_JS):
+        return set()
+    try:
+        with open(DATA_JS, encoding="utf-8") as f:
+            txt = f.read()
+        i = txt.index('"marketEvents"')
+        j = txt.index("[", i)
+        depth = 0
+        for k in range(j, len(txt)):
+            if txt[k] == "[":
+                depth += 1
+            elif txt[k] == "]":
+                depth -= 1
+                if depth == 0:
+                    break
+        out = set()
+        for e in json.loads(txt[j:k + 1]):
+            if e.get("t") not in ("div", "capital"):
+                continue
+            m = re.search(r"€\s*([0-9][0-9.,]*)", e.get("x", "") or "")
+            if m:
+                a = _amt(m.group(1))
+                if a:
+                    out.add("%s|%s" % (e.get("d", ""), a))
+        return out
+    except Exception as exc:                      # ποτέ δεν ρίχνει το job
+        print("[monitor] ΠΡΟΣΟΧΗ: αδύνατη η ανάγνωση data.js (%s)" % exc,
+              file=sys.stderr)
+        return set()
+
+
+def _amt(v):
+    """Κανονικοποίηση ποσού σε «0.6000».
+
+    ΠΡΟΣΟΧΗ στις δύο μορφές: η ουρά γράφει «0.6000» (τελεία = δεκαδικό, μορφή
+    CSV), το data.js «0,6000» (κόμμα = δεκαδικό, ελληνική μορφή). Τυφλή αφαίρεση
+    των τελειών μετατρέπει το «0.0606» σε 606 — γι' αυτό η μορφή κρίνεται από
+    το αν υπάρχει κόμμα.
+    """
+    t = str(v or "").strip()
+    if not t:
+        return ""
+    if "," in t:
+        t = t.replace(".", "").replace(",", ".")   # ελληνική: τελεία = χιλιάδες
+    try:
+        return "%.4f" % float(t)
+    except Exception:
+        return ""
+
+
+def _age_days(date_iso, detected_on):
+    try:
+        a = datetime.date.fromisoformat(date_iso)
+        b = datetime.date.fromisoformat(detected_on)
+        return (b - a).days
+    except Exception:
+        return 0
+
+
+def annotate(events, detected_on):
+    """Χωρίζει σε (νέα, ήδη γνωστά, παλιά). ΤΙΠΟΤΑ δεν πετιέται σιωπηλά."""
+    known = _known_from_data_js()
+    fresh, dup, stale = [], [], []
+    for e in events:
+        amt = _amt(e.get("amount_eur"))
+        if amt and ("%s|%s" % (e["date"], amt)) in known:
+            dup.append(e)
+        elif _age_days(e["date"], detected_on) > STALE_DAYS:
+            stale.append(e)
+        else:
+            fresh.append(e)
+    return fresh, dup, stale
+
+
 def _read_queue_keys():
     keys = set()
     if os.path.exists(QUEUE_PATH):
@@ -488,17 +595,33 @@ def main():
     queued = 0
     if changed:
         events = build_events(ch, stocks, gen_dt[:10])
-        queued = write_queue(events)
+        # §123 — τριχοτόμηση πριν την ουρά: νέα / ήδη στο data.js / παλιά.
+        # Στην ουρά μπαίνουν ΜΟΝΟ τα νέα· τα άλλα δύο αναφέρονται ώστε να
+        # φαίνονται, αλλά δεν λερώνουν το apply.
+        fresh, dup, stale = annotate(events, gen_dt[:10])
+        queued = write_queue(fresh)
         if queued:
             report += ("\n\n> 📥 %d νέα γεγονότα προστέθηκαν στην ουρά "
                        "`events_queue.csv` — θα περάσουν στο master με το "
                        "επόμενο apply." % queued)
+        if dup:
+            report += ("\n\n> ♻️ %d γεγονότα **παραλείφθηκαν** — υπάρχουν ήδη "
+                       "στο `assets/data.js` (ίδια ημερομηνία & ποσό): %s"
+                       % (len(dup), ", ".join("%s %s" % (e["euronext_symbol"],
+                                                         e["date"]) for e in dup)))
+        if stale:
+            report += ("\n\n> 🕰️ %d γεγονότα **παλαιότερα των %d ημερών** — δεν "
+                       "μπήκαν στην ουρά, έλεγξέ τα χειροκίνητα: %s"
+                       % (len(stale), STALE_DAYS,
+                          ", ".join("%s %s (%d ημ.)" % (e["euronext_symbol"], e["date"],
+                                                        _age_days(e["date"], gen_dt[:10]))
+                                    for e in stale)))
  
     with open(REPORT_MD, "w", encoding="utf-8") as f:
         f.write(report + "\n")
  
     # Γράφουμε το snapshot ΠΑΝΤΑ (η επιτροπή γίνεται μόνο αν άλλαξε ουσιαστικά).
-    snap = build_snapshot(stocks, dists)
+    snap = build_snapshot(stocks, dists, prev)
     with open(SNAP_PATH, "w", encoding="utf-8") as f:
         json.dump(snap, f, ensure_ascii=False, indent=1, sort_keys=True)
  
