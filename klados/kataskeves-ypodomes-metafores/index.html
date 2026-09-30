@@ -375,7 +375,11 @@ function tiles(){
 
 function render(){
  document.getElementById('title').textContent=SEC(sector);
- try{ var _u=(typeof AX_KLADOS==='function')?AX_KLADOS(sector):null;
+ // §127 — ΜΟΝΟ στις ψημένες σελίδες /klados/<slug>/. Στο σκέτο `/sector/` ο κλάδος
+ // πέφτει στον πρώτο του καταλόγου και η σελίδα δήλωνε canonical το
+ // `/klados/katanalotika-agatha/`. Αν ο χρήστης αλλάξει κλάδο από τον επιλογέα, το
+ // canonical μένει `/sector/` — σωστό: η διεύθυνση δεν άλλαξε.
+ try{ var _u=(window.AX_SECTOR&&typeof AX_KLADOS==='function')?AX_KLADOS(sector):null;
       if(_u){ var _c=document.querySelector('link[rel="canonical"]'); if(_c)_c.setAttribute('href',_u);
               var _o=document.querySelector('meta[property="og:url"]'); if(_o)_o.setAttribute('content',_u); } }catch(e){}
  picker(); tiles(); clRender();

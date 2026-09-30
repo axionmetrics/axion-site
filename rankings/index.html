@@ -471,7 +471,10 @@ function render(){fillPeriods();renderBasisBlock();chips();table();cards();
  if(window.AX_METRIC){
    var _h=document.getElementById('rk-h1'); if(_h)_h.textContent=L('rk.h1')+' · '+metLabel(metric);
  }
- try{ var _u=(typeof AX_KATATAXI==='function')?AX_KATATAXI(metric):null;
+ // §127 — ΜΟΝΟ στις ψημένες σελίδες /katataxeis/<slug>/. Στο σκέτο `/rankings/` ο
+ // δείκτης πέφτει στο προεπιλεγμένο 'pe', και η επανεγγραφή έκανε τη σελίδα να
+ // δηλώνει canonical το `/katataxeis/p-e/` — αποκήρυξη του εαυτού της.
+ try{ var _u=(window.AX_METRIC&&typeof AX_KATATAXI==='function')?AX_KATATAXI(metric):null;
       if(_u){ var _c=document.querySelector('link[rel="canonical"]'); if(_c)_c.setAttribute('href',_u);
               var _o=document.querySelector('meta[property="og:url"]'); if(_o)_o.setAttribute('content',_u); } }catch(e){}
 }

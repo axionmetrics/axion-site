@@ -362,13 +362,22 @@ document.getElementById('co-eur').textContent=company.euronext_name+' · Euronex
   }
   function S(sel,a,val){var e=document.querySelector(sel); if(e) e.setAttribute(a,val);}
   document.title=ttl;
-  var cn=document.querySelector('link[rel="canonical"]'); if(cn) cn.setAttribute('href',url);
+  // §127 — ΤΟ ΚΕΝΟ `/company/` ΔΕΝ ΑΠΟΚΗΡΥΣΣΕΙ ΤΟΝ ΕΑΥΤΟ ΤΟΥ.
+  // Τεκμήριο (30/09/2026): φορτώνοντας το σκέτο `/company/` το JS έγραφε canonical
+  // `/etaireia/allwyn/` — δηλαδή η σελίδα, που ΕΙΝΑΙ μέσα στο sitemap, δήλωνε στη
+  // Google «είμαι αντίγραφο της πρώτης εταιρείας του καταλόγου». Η επανεγγραφή είναι
+  // σωστή μόνο όταν η οντότητα έχει δηλωθεί ρητά: ψημένο AX_TK (σελίδες /etaireia/)
+  // ή ?tk= στη διεύθυνση (εκεί η συγχώνευση στην καθαρή διεύθυνση είναι το ζητούμενο).
+  var _explicit = !!window.AX_TK || !!new URLSearchParams(location.search).get('tk');
+  if(_explicit){
+    var cn=document.querySelector('link[rel="canonical"]'); if(cn) cn.setAttribute('href',url);
+  }
   S('meta[name="description"]','content',desc);
   S('meta[property="og:description"]','content',desc);
   S('meta[name="twitter:description"]','content',desc);
   S('meta[property="og:title"]','content',ttl);
   S('meta[name="twitter:title"]','content',ttl);
-  S('meta[property="og:url"]','content',url);
+  if(_explicit) S('meta[property="og:url"]','content',url);
   function fill(){var e=document.getElementById('co-summary'); if(e) e.textContent=summary;}
   if(document.getElementById('co-summary')) fill(); else document.addEventListener('DOMContentLoaded',fill);
 }catch(e){}})();
