@@ -29,6 +29,16 @@
  .site-nav .am-mail:focus-visible{outline:2px solid #57a5df;outline-offset:2px}
  @media(prefers-reduced-motion:reduce){ .site-nav .am-mail:hover{transform:none} }
 
+ /* §126 — ΣΤΑΤΙΚΟΣ ΧΑΡΤΗΣ. Ζει μέσα στο #am-foot και το chrome.js τον αντικαθιστά
+    ολόκληρο με το κανονικό footer στο DOMContentLoaded. Υπάρχει για τον crawler, που
+    διαβάζει το HTML πριν τρέξει JS — ΟΧΙ κρυμμένος (κρυφοί σύνδεσμοι = ποινή), απλώς
+    στυλιζαρισμένος σαν λιτό footer ώστε ένα τυχόν φευγαλέο φανέρωμα να μη ξενίζει. */
+ .am-sfoot{background:#0f1f38;color:#6f86ac;margin-top:64px;padding:26px 22px;
+   display:flex;flex-wrap:wrap;gap:8px 22px;justify-content:center;
+   font-family:Inter,sans-serif;font-size:12.5px}
+ .am-sfoot a{color:#aebfd8;text-decoration:none}
+ .am-sfoot a:hover{color:#fff}
+
  .site-ft{background:#0f1f38;color:#aebfd8;margin-top:64px}
  .site-ft .in{max-width:1180px;margin:0 auto;padding:36px 22px 24px;display:grid;grid-template-columns:minmax(170px,250px) repeat(5,auto);gap:30px 26px;justify-content:space-between;align-items:start}
  .site-ft .fbrand{max-width:290px}
