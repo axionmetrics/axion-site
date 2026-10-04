@@ -429,3 +429,23 @@
 /* §79 — ο κλάδος στο mast είναι πλέον σύνδεσμος προς /klados/<slug>/ */
 .sctag a{color:inherit;text-decoration:none}
 .sctag a:hover{text-decoration:underline}
+
+  /* §125 — block «Πορεία της εταιρείας» (πάνω από τον διακόπτη Ετήσια/Εξάμηνο) */
+  .a-story{margin:30px 0 0}
+  .a-story[hidden]{display:none!important}
+  .p-story .pbody{padding:18px 20px 20px}
+  .story-tag{display:inline-flex;align-items:center;gap:7px;font-family:var(--disp);font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#1f5f97;background:var(--bl);border:1px solid #b7dbf5;padding:4px 11px;border-radius:20px;margin-bottom:12px}
+  .story-tag[hidden]{display:none!important}
+  .story-p{font-size:14.5px;line-height:1.74;color:var(--text)}
+  .story-p strong{color:var(--ink);font-weight:700}
+  .story-warn{margin-top:15px;background:#fdf7ee;border:1px solid #f0ddc2;border-left:3px solid var(--gold);border-radius:9px;padding:11px 14px}
+  .story-warn[hidden]{display:none!important}
+  .story-warn .wh{font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:#a56400;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+  .story-warn .wh i{font-size:13px}
+  .story-warn .wt{font-size:12.5px;line-height:1.58;color:#6a5533}
+  .story-src{margin-top:12px;font-size:11px;color:var(--faint)}
+  .story-src[hidden]{display:none!important}
+  @media(max-width:760px){
+    .p-story .phead .hint{display:none}
+    .story-p{font-size:14px;line-height:1.7}
+  }

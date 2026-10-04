@@ -1163,3 +1163,34 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
     dvEl.innerHTML=`<div class="dv-empty"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/></svg></div><div class="t">${L('co.dist.none')}</div><div class="s">${L('co.dist.none.s')}</div></div>`;
   }
 })();
+
+/* ── §125 «Πορεία της εταιρείας» ─────────────────────────────────────────────
+   Πηγή: window.AXION.stories[ticker] (φύλλο «ΠΟΡΕΙΑ ΕΤΑΙΡΕΙΩΝ» του master).
+   Το κείμενο ΔΕΝ αλλάζει με την όψη Ετήσια/Εξάμηνο — γι' αυτό το block στέκεται
+   πάνω από τον διακόπτη. Αν λείπει κείμενο, το block μένει κρυφό. */
+(function(){
+  var box=document.getElementById('co-story'); if(!box) return;
+  var S=(window.AXION&&window.AXION.stories&&AX&&window.AXION.stories[AX.tk])||null;
+  if(!S||!S.par) return;
+  var lg=curLang(), en=EN();
+  var esc2=function(t){return String(t==null?'':t).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');};
+  var md=function(t){return esc2(t).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');};
+  var pick=function(o){return o?(o[lg]||o.el||''):'';};
+  if(en){
+    var h2=box.querySelector('.phead h2'); if(h2) h2.textContent='Company trajectory';
+    var hn=box.querySelector('.phead .hint'); if(hn) hn.textContent='what management chose and how it shows in the figures';
+  }
+  var tg=pick(S.tag), te=document.getElementById('story-tag');
+  if(te&&tg){ te.textContent=tg; te.hidden=false; }
+  var pe=document.getElementById('story-par'); if(pe) pe.innerHTML=md(pick(S.par));
+  var w=S.warn?pick(S.warn):'';
+  if(w){
+    var wb=document.getElementById('story-warn'), wl=wb&&wb.querySelector('.wl'), wt=document.getElementById('story-warn-t');
+    if(wl&&en) wl.textContent='Mind the comparison';
+    if(wt) wt.innerHTML=md(w);
+    if(wb) wb.hidden=false;
+  }
+  var sv=pick(S.src), sb=document.getElementById('story-src');
+  if(sb&&sv){ sb.textContent=(en?'Source: ':'Πηγή: ')+sv; sb.hidden=false; }
+  box.hidden=false;
+})();
