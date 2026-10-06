@@ -18,6 +18,7 @@ AX_I18N.add({
  'co.leg.ppi':{el:'PPI', en:'PPI'},
  'co.unit.meur2':{el:'(εκατ. €)', en:'(€M)'},
  'co.subs.ph':{el:'Αναζήτηση θυγατρικής ή χώρας…', en:'Search subsidiary or country…'},
+ 'co.subs.none':{el:'Δεν εντοπίστηκαν θυγατρικές ή συμμετοχές στις δημοσιευμένες οικονομικές καταστάσεις.', en:'No subsidiaries or holdings identified in the published financial statements.'},
  'co.ratios.note':{el:'<strong>Διάμεσος κλάδου:</strong> η σύγκριση γίνεται με τη διάμεση («τυπική») τιμή των εταιρειών του κλάδου, όχι με μέσο όρο — έτσι ακραίες τιμές λίγων εταιρειών δεν αλλοιώνουν τη σύγκριση. Οι τράπεζες εξετάζονται χωριστά.', en:'<strong>Sector median:</strong> the comparison uses the median (“typical”) value of the sector’s companies, not the average — so extreme values from a few companies do not distort the comparison. Banks are examined separately.'},
  'co.qs.title':{el:'Εύρεση εταιρείας', en:'Find company'},
  'co.qs.ph':{el:'Όνομα ή σύμβολο…', en:'Name or symbol…'},
@@ -882,6 +883,27 @@ const SIZE_RAMP=['#c2410c','#e2590e','#f0791f','#f5a04c','#f0c07e','#5ea9b4','#8
 })();
 
 const subs=(AX&&AX.subs)||{total:0,countries:0,full:0,equity:0,listed:[],byCountry:[]};;
+/* §126 — ΚΕΝΗ ΚΑΤΑΣΤΑΣΗ «Θυγατρικές & συμμετοχές»: όταν δεν υπάρχει καμία οντότητα, το ντόνατ
+   έδειχνε «0 οντότητες» με άδειο υπόμνημα και άδεια λίστα. Κρύβουμε γράφημα/κουμπί/φίλτρο και
+   βάζουμε μία γραμμή κειμένου. Η γραμμή φτιάχνεται ΕΔΩ (όχι στο κέλυφος) ώστε η αλλαγή να μην
+   απαιτεί ξαναψήσιμο και των 139 στατικών σελίδων. Η διατύπωση λέει ΤΙ βρέθηκε στις καταστάσεις,
+   δεν βεβαιώνει ότι η εταιρεία δεν έχει θυγατρικές. */
+if(!subs.total){
+  var _lw=document.getElementById('listed-wrap'), _pb=_lw&&_lw.parentElement;
+  if(_pb){
+    var _p=document.createElement('p');
+    _p.className='subs-none'; _p.id='subs-none';
+    _p.setAttribute('data-i18n','co.subs.none');
+    _p.textContent=L('co.subs.none');
+    _lw.insertAdjacentElement('afterend',_p);
+    _pb.classList.add('subs-empty');
+  }
+  // display:none ΡΗΤΑ: το .geo-wrap έχει display:flex στο CSS, που νικάει το [hidden].
+  var _gw=document.querySelector('.geo-wrap'); if(_gw) _gw.style.display='none';
+  var _sa=document.getElementById('show-all'); if(_sa) _sa.style.display='none';
+  var _sf=document.getElementById('subs-full'); if(_sf) _sf.style.display='none';
+}
+
 const geoShort={'Ηνωμένο Βασίλειο':'Ην. Βασίλειο'};
 // Εμφανίζουμε τις 5 χώρες με τις περισσότερες οντότητες (byCountry είναι ήδη ταξινομημένο φθίνουσα)·
 // οι υπόλοιπες συγκεντρώνονται σε ένα «Λοιπές (Ν χώρες)» — και στο legend και στο pie. Η πλήρης λίστα μένει στο dropdown.

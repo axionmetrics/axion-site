@@ -449,3 +449,9 @@
     .p-story .phead .hint{display:none}
     .story-p{font-size:14px;line-height:1.7}
   }
+
+/* §126 — κενή κατάσταση «Θυγατρικές & συμμετοχές» */
+.subs-none{margin:14px 2px 6px;padding:12px 14px;border:1px dashed #cfdce9;border-radius:10px;
+  background:#f7fafc;color:#5b6b7e;font-size:12.5px;line-height:1.5;text-align:center}
+.pbody.subs-empty{display:flex;align-items:center;justify-content:center;min-height:180px}
+.pbody.subs-empty .subs-none{margin:0;max-width:420px}
