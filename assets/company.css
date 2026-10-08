@@ -457,57 +457,69 @@
 .pbody.subs-empty .subs-none{margin:0;max-width:420px}
 
 /* §128 — «Short θέσεις»: λωρίδα μέσα στη σκούρα κεφαλίδα, κάτω από τα «Τρέχοντα Μεγέθη».
-   Δικό της κεραμιδί, ώστε να μη συγχέεται ούτε με το μπλε της αποτίμησης ούτε με το
-   πράσινο των θυγατρικών. Dropdown ανά fund, όλα κλειστά εξ ορισμού. */
-.sh{position:relative;z-index:1;margin-top:10px;border-radius:11px;padding:12px 14px;
-  background:linear-gradient(180deg,rgba(224,122,106,.17),rgba(224,122,106,.06));
-  border:1px solid rgba(224,122,106,.34);color:#fff}
-.sh .hd{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:9px}
-.sh .hd .t{font-size:14px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#f0b3a8;display:flex;align-items:center;gap:7px}
-.sh .hd .s{font-size:11.5px;color:rgba(255,255,255,.55);font-weight:600}
-.sh .hd .n{margin-left:auto;font-size:11px;font-weight:800;letter-spacing:.045em;text-transform:uppercase;color:rgba(255,255,255,.5)}
-.sh .dot{width:8px;height:8px;border-radius:50%;background:#e07a6a;display:inline-block}
-.sh .scwrap{position:relative}
-.sh .scwrap:after{content:'';position:absolute;left:0;right:7px;bottom:0;height:22px;pointer-events:none;
-  background:linear-gradient(180deg,rgba(43,62,95,0),rgba(43,62,95,.9))}
-.sh .sc{max-height:330px;overflow-y:auto;padding-right:6px;scrollbar-width:thin;scrollbar-color:rgba(224,122,106,.6) rgba(255,255,255,.08)}
-.sh .sc::-webkit-scrollbar{width:7px}
-.sh .sc::-webkit-scrollbar-track{background:rgba(255,255,255,.08);border-radius:4px}
-.sh .sc::-webkit-scrollbar-thumb{background:rgba(224,122,106,.6);border-radius:4px}
-.sh details{border:1px solid rgba(255,255,255,.10);border-radius:8px;background:rgba(255,255,255,.04);overflow:hidden}
-.sh details+details{margin-top:6px}
-.sh details[open]{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.16)}
-.sh details.op{border-color:rgba(224,122,106,.45);background:rgba(224,122,106,.13)}
-.sh summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:14px 1fr auto;gap:9px;align-items:center;padding:8px 11px}
+   ΣΥΜΠΑΓΗ ΧΡΩΜΑΤΑ, ΟΧΙ ΔΙΑΦΑΝΕΙΕΣ: κάθε rgba() πάνω στο #223c66 της κεφαλίδας περνούσε το
+   κείμενο μέσα από ένα ακόμη στρώμα σύνθεσης και το έκανε να φαίνεται θολό. Οι τιμές εδώ
+   είναι οι ΙΔΙΕΣ αποχρώσεις υπολογισμένες «πατημένες» πάνω στο φόντο, άρα η εικόνα δεν
+   αλλάζει — αλλάζει μόνο η ευκρίνεια. Το ίδιο και στα κείμενα: συμπαγή γκρίζα αντί για
+   λευκό με opacity. */
+.sh{
+  --bg:#3a4066;      /* η λωρίδα */
+  --card:#434a70;    /* fund με κλειστή θέση */
+  --cardh:#4b5280;   /* hover */
+  --open:#5e4664;    /* fund με ανοιχτή θέση */
+  --row:#3f4669;     /* ζυγή γραμμή λίστας */
+  --line:#565e85;    /* περιγράμματα */
+  --acc:#e8846f;     /* κεραμιδί τονισμού */
+  --ink:#ffffff; --ink2:#ccd3e6; --ink3:#9ba5c4;
+  position:relative;z-index:1;margin-top:10px;border-radius:11px;padding:13px 15px;
+  background:var(--bg);border:1px solid #6e5a74;color:var(--ink)}
+.sh .hd{display:flex;align-items:baseline;gap:11px;flex-wrap:wrap;margin-bottom:10px}
+.sh .hd .t{font-size:15px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#f3b3a4;display:flex;align-items:center;gap:7px}
+.sh .hd .s{font-size:13px;color:var(--ink2);font-weight:600}
+.sh .hd .n{margin-left:auto;font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--ink3)}
+.sh .dot{width:9px;height:9px;border-radius:50%;background:var(--acc);display:inline-block}
+.sh .sc{max-height:360px;overflow-y:auto;padding-right:6px;scrollbar-width:thin;scrollbar-color:var(--acc) #2f3557}
+.sh .sc::-webkit-scrollbar{width:8px}
+.sh .sc::-webkit-scrollbar-track{background:#2f3557;border-radius:4px}
+.sh .sc::-webkit-scrollbar-thumb{background:var(--acc);border-radius:4px}
+.sh details{border:1px solid var(--line);border-radius:8px;background:var(--card);overflow:hidden}
+.sh details+details{margin-top:7px}
+.sh details[open]{background:var(--cardh)}
+.sh details.op{border-color:#a05c57;background:var(--open)}
+.sh summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:14px 1fr auto;gap:10px;align-items:center;padding:9px 12px}
 .sh summary::-webkit-details-marker{display:none}
-.sh summary:focus-visible{outline:2px solid #f0b3a8;outline-offset:-2px}
-.sh .arw{font-size:9px;color:rgba(255,255,255,.5);transition:transform .15s}
+.sh summary:hover{background:var(--cardh)}
+.sh details.op summary:hover{background:#6a4e70}
+.sh summary:focus-visible{outline:2px solid #f3b3a4;outline-offset:-2px}
+.sh .arw{font-size:10px;color:var(--ink3);transition:transform .15s}
 .sh details[open] .arw{transform:rotate(90deg)}
 @media (prefers-reduced-motion:reduce){.sh .arw{transition:none}}
-.sh .nm{display:flex;align-items:center;gap:8px;min-width:0}
-.sh .nm b{font-size:14.5px;font-weight:700;color:rgba(255,255,255,.93);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.sh .meta{display:flex;align-items:center;gap:9px;white-space:nowrap}
-.sh .meta .lp{font-family:var(--disp);font-size:18px;font-weight:800;color:#fff}
-.sh .meta .ld{font-family:var(--mono);font-size:11.5px;color:rgba(255,255,255,.52)}
-.sh .chip{font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:5px;white-space:nowrap}
-.sh .chip.op{background:rgba(224,122,106,.36);color:#ffe2db;border:1px solid rgba(224,122,106,.6)}
-.sh .chip.cl{background:rgba(255,255,255,.10);color:rgba(255,255,255,.66);border:1px solid rgba(255,255,255,.16)}
-.sh .rows{padding:2px 11px 9px}
-.sh .rh{display:grid;grid-template-columns:104px 1fr 78px;gap:9px;padding:3px 6px 5px;
-  font-size:10px;font-weight:800;letter-spacing:.045em;text-transform:uppercase;color:rgba(255,255,255,.38)}
+.sh .nm{display:flex;align-items:center;gap:9px;min-width:0}
+.sh .nm b{font-size:16px;font-weight:700;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sh .meta{display:flex;align-items:center;gap:10px;white-space:nowrap}
+.sh .meta .lp{font-family:var(--disp);font-size:19px;font-weight:800;color:var(--ink)}
+.sh .meta .ld{font-family:var(--mono);font-size:13px;color:var(--ink2)}
+.sh .chip{font-size:11px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;padding:3px 8px;border-radius:5px;white-space:nowrap}
+.sh .chip.op{background:#b2644f;color:#fff3ef;border:1px solid #d08167}
+.sh .chip.cl{background:#5a6188;color:#e4e9f7;border:1px solid #717aaa}
+.sh .rows{padding:3px 12px 10px}
+.sh .rh{display:grid;grid-template-columns:118px 1fr 86px;gap:10px;padding:4px 7px 6px;
+  font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--ink3)}
 .sh .rh .ra{text-align:right}
-.sh .r{display:grid;grid-template-columns:104px 1fr 78px;gap:9px;align-items:center;font-size:12.5px;padding:4px 6px;border-radius:5px}
-.sh .r:nth-child(even){background:rgba(255,255,255,.04)}
-.sh .r .d{font-family:var(--mono);font-size:11.5px;color:rgba(255,255,255,.62)}
-.sh .r .p{font-family:var(--disp);font-size:16px;font-weight:800;color:#fff;display:flex;align-items:center;gap:7px}
-.sh .r .c{font-family:var(--mono);font-size:11.5px;font-weight:700;text-align:right}
-.sh .up{color:#f3a593}.sh .dn{color:#a8cfae}.sh .nw{color:rgba(255,255,255,.40)}
-.sh .foot{font-size:11px;color:rgba(255,255,255,.45);font-weight:600;margin-top:8px;line-height:1.5}
+.sh .r{display:grid;grid-template-columns:118px 1fr 86px;gap:10px;align-items:center;font-size:13px;padding:5px 7px;border-radius:5px}
+.sh .r:nth-child(even){background:var(--row)}
+.sh .r .d{font-family:var(--mono);font-size:13px;color:var(--ink2)}
+.sh .r .p{font-family:var(--disp);font-size:17px;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:8px}
+.sh .r .c{font-family:var(--mono);font-size:13px;font-weight:700;text-align:right}
+.sh .up{color:#ffa78f}.sh .dn{color:#a9dcb4}.sh .nw{color:var(--ink3)}
+.sh .foot{font-size:12px;color:var(--ink2);font-weight:600;margin-top:10px;line-height:1.55}
 @media (max-width:760px){
   .sh .hd .n{margin-left:0;flex:1 1 100%}
-  .sh summary{grid-template-columns:14px 1fr;row-gap:4px}
+  .sh summary{grid-template-columns:14px 1fr;row-gap:5px}
   .sh .meta{grid-column:2;justify-content:flex-start}
-  .sh .rh,.sh .r{grid-template-columns:88px 1fr 66px;gap:6px}
-  .sh .meta .lp{font-size:16px}
-  .sh .r .p{font-size:14.5px}
+  .sh .meta .lp{font-size:17px}
+  .sh .nm b{font-size:14.5px}
+  .sh .rh,.sh .r{grid-template-columns:100px 1fr 72px;gap:7px}
+  .sh .r .p{font-size:15px}
+  .sh .r .d,.sh .r .c{font-size:12px}
 }
