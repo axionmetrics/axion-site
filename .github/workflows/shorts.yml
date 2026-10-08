@@ -1,0 +1,66 @@
+name: "Short θέσεις — Δευ–Παρ 19:30 & 22:30 Αθήνας"
+
+# Ενημερώνει το assets/shorts.js από το αρχείο ανοιχτών πωλήσεων της Επιτροπής
+# Κεφαλαιαγοράς (playbook §128).
+#
+# ⚠ Γράφει ΜΟΝΟ το shorts.js (+ .github/shorts/) — ΠΟΤΕ το data.js ή το current.js.
+#   Το master δεν εμπλέκεται· η μόνη εξάρτηση από αυτό είναι ο χάρτης `meta.isin`
+#   που ψήνει η γέφυρα μέσα στο data.js.
+#
+# ΓΙΑΤΙ ΔΥΟ CRON ΧΩΡΙΣ ΦΙΛΤΡΟ ΕΠΟΧΗΣ (σε αντίθεση με το daily-prices):
+#   το script κάνει ΠΡΩΤΑ έλεγχο έκδοσης — διαβάζει την ημερομηνία μέσα στο όνομα του
+#   αρχείου («2026_10_05 HCMC_disclosed_short_positions_gr.xls») και αν είναι η ίδια με
+#   την αποθηκευμένη τερματίζει ΧΩΡΙΣ να κατεβάσει τίποτα και χωρίς commit. Άρα μια
+#   περιττή εκτέλεση κοστίζει δευτερόλεπτα και δεν παράγει θόρυβο· δεν χρειάζεται
+#   ακρίβεια ώρας. Οι γνωστοποιήσεις οφείλονται ως τις 15:30 της επόμενης εργάσιμης,
+#   οπότε και οι δύο ώρες τις προλαβαίνουν.
+#
+#   cron (UTC)    θερινή (+3)   χειμερινή (+2)
+#   30 16         19:30         18:30
+#   30 19         22:30         21:30
+on:
+  schedule:
+    - cron: '30 16 * * 1-5'
+    - cron: '30 19 * * 1-5'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  issues: write          # για ειδοποίηση σε αταίριαστο ISIN ή αλλαγή δομής της πηγής
+
+concurrency:
+  group: shorts
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # Το αρχείο της Επιτροπής είναι legacy .xls (BIFF) — το xlrd 2.x το διαβάζει.
+      - name: Εγκατάσταση xlrd
+        run: pip install --quiet 'xlrd>=2.0,<3'
+
+      - name: Ενημέρωση short θέσεων
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python .github/scripts/shorts.py | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - name: Commit & push (shorts.js + αρχείο εκδόσεων)
+        run: |
+          git add assets/shorts.js .github/shorts/ 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "Καμία αλλαγή — δεν έγινε commit."
+          else
+            git config user.name  "axion-bot"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "shorts: ενημέρωση από Επιτροπή Κεφαλαιαγοράς $(date -u +%Y-%m-%d)"
+            git push
+          fi

@@ -1216,3 +1216,75 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
   if(sb&&sv){ sb.textContent=(en?'Source: ':'Πηγή: ')+sv; sb.hidden=false; }
   box.hidden=false;
 })();
+
+/* ── §128 «Short θέσεις» ─────────────────────────────────────────────────────
+   Πηγή: window.AXION_SHORTS (assets/shorts.js), που το παράγει το GitHub Action
+   .github/scripts/shorts.py από το αρχείο ανοιχτών πωλήσεων της Επιτροπής
+   Κεφαλαιαγοράς. ΑΝΕΞΑΡΤΗΤΟ από το data.js και από το master — γι' αυτό φορτώνεται
+   ΕΔΩ δυναμικά και όχι από το κέλυφος: έτσι μια ενημέρωση short ΔΕΝ απαιτεί
+   ξαναψήσιμο των 139 στατικών σελίδων.
+   Θέση: μέσα στη σκούρα κεφαλίδα, ΑΜΕΣΩΣ ΚΑΤΩ από τη ζώνη «Τρέχοντα Μεγέθη» — το μόνο
+   άλλο «τρέχον» δεδομένο της σελίδας. Χωρίς γνωστοποιήσεις → δεν εμφανίζεται τίποτα. */
+(function(){
+  if(typeof AX==='undefined' || !AX || !AX.tk) return;
+  var ph=document.querySelector('.phead.yr'); if(!ph) return;
+
+  function esc(t){return String(t==null?'':t).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  /* δεκαδικό χωριστικό κατά γλώσσα: κόμμα στα ελληνικά, τελεία στα αγγλικά */
+  function dec(x){ return EN()?String(x):String(x).replace('.',','); }
+  function pc(v){return (v==null?'—':dec(Number(v).toFixed(2)));}
+  function dl(v){ if(v==null) return '—'; if(Math.abs(v)<0.005) return dec('0.00');
+    return (v>0?'+':'−')+dec(Math.abs(v).toFixed(2)); }
+  function gd(iso){ var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(iso||''); return m?(m[3]+'/'+m[2]+'/'+m[1]):(iso||''); }
+
+  function render(){
+    var D=window.AXION_SHORTS; if(!D||!D.by) return;
+    var rec=D.by[AX.tk]; if(!rec||!rec.funds||!rec.funds.length) return;
+    var en=EN();
+    var T=en?{t:'Short positions',s:'Hellenic Capital Market Commission · disclosures ≥0.5% of share capital',
+              open:'open',closed:'closed',date:'Date',pos:'Position',chg:'Change',dis:'disclosures',
+              n:function(f,o,g){return f+' fund'+(f===1?'':'s')+' · '+o+' with an open position · '+g+' disclosures';},
+              foot:'Change is against the same fund’s previous disclosure. “Closed” next to the name means the fund has no currently disclosed position; if it reopens, the label becomes “open”. Inside the list, “closed” on a row marks a disclosure that fell below the 0.5% threshold — in several cases the record simply stops without such a disclosure.'}
+             :{t:'Short θέσεις',s:'Επιτροπή Κεφαλαιαγοράς · δημοσιοποιήσεις ≥0,5% του μετοχικού κεφαλαίου',
+              open:'ανοιχτή',closed:'κλειστή',date:'Ημερομηνία',pos:'Θέση',chg:'Μεταβολή',dis:'γνωστοπ.',
+              n:function(f,o,g){return f+' fund'+(f===1?'':'s')+' · '+o+' με ανοιχτή θέση · '+g+' γνωστοποιήσεις';},
+              foot:'Η μεταβολή είναι έναντι της προηγούμενης γνωστοποίησης του ίδιου fund. «Κλειστή» δίπλα στο όνομα = το fund δεν έχει σήμερα δημοσιοποιημένη θέση· αν ξανανοίξει, η ένδειξη γίνεται «ανοιχτή». Μέσα στη λίστα, «κλειστή» σε μια γραμμή σημαίνει ότι η συγκεκριμένη γνωστοποίηση έπεσε κάτω από το όριο του 0,5% — σε αρκετές περιπτώσεις η καταγραφή απλώς σταματά χωρίς τέτοια γνωστοποίηση.'};
+
+    var gs=rec.funds.map(function(g){
+      var rows=g.rows.map(function(r){
+        var k=(r.c==null||Math.abs(r.c)<0.005)?'nw':(r.c>0?'up':'dn');
+        return '<div class="r"><span class="d">'+gd(r.d)+'</span>'
+          +'<span class="p">'+pc(r.p)+'%'+(r.x?' <span class="chip cl">'+T.closed+'</span>':'')+'</span>'
+          +'<span class="c '+k+'">'+dl(r.c)+'</span></div>';
+      }).join('');
+      return '<details class="'+(g.open?'op':'')+'">'
+        +'<summary><span class="arw">▶</span>'
+        +'<span class="nm"><b title="'+esc(g.f)+'">'+esc(g.f)+'</b>'
+        +(g.open?'':'<span class="chip cl">'+T.closed+'</span>')+'</span>'
+        +'<span class="meta"><span class="lp">'+pc(g.lp)+'%</span>'
+        +(g.open?'<span class="chip op">'+T.open+'</span>':'')
+        +'<span class="ld">'+gd(g.ld)+' · '+g.n+' '+T.dis+'</span></span></summary>'
+        +'<div class="rows"><div class="rh"><span>'+T.date+'</span><span>'+T.pos+'</span><span class="ra">'+T.chg+'</span></div>'
+        +rows+'</div></details>';
+    }).join('');
+
+    var box=document.getElementById('co-shorts');
+    if(!box){ box=document.createElement('div'); box.className='sh'; box.id='co-shorts'; ph.appendChild(box); }
+    box.innerHTML='<div class="hd"><div class="t"><span class="dot"></span>'+T.t+'</div>'
+      +'<div class="s">'+T.s+'</div>'
+      +'<div class="n">'+T.n(rec.funds.length, rec.nopen, rec.n)+'</div></div>'
+      +'<div class="scwrap"><div class="sc">'+gs+'</div></div>'
+      +'<div class="foot">'+T.foot+'</div>';
+  }
+
+  function boot(){ render(); try{ document.addEventListener('axion:langchange', render); }catch(e){} }
+
+  if(window.AXION_SHORTS) boot();
+  else{
+    var sc=document.createElement('script');
+    sc.src='/assets/shorts.js'; sc.async=true;
+    sc.onload=boot; sc.onerror=function(){};   /* δεν υπάρχει ακόμη → το block απλώς λείπει */
+    document.head.appendChild(sc);
+  }
+})();
+

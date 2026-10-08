@@ -455,3 +455,57 @@
   background:#f7fafc;color:#5b6b7e;font-size:12.5px;line-height:1.5;text-align:center}
 .pbody.subs-empty{display:flex;align-items:center;justify-content:center;min-height:180px}
 .pbody.subs-empty .subs-none{margin:0;max-width:420px}
+
+/* §128 — «Short θέσεις»: λωρίδα μέσα στη σκούρα κεφαλίδα, κάτω από τα «Τρέχοντα Μεγέθη».
+   Δικό της κεραμιδί, ώστε να μη συγχέεται ούτε με το μπλε της αποτίμησης ούτε με το
+   πράσινο των θυγατρικών. Dropdown ανά fund, όλα κλειστά εξ ορισμού. */
+.sh{position:relative;z-index:1;margin-top:10px;border-radius:11px;padding:12px 14px;
+  background:linear-gradient(180deg,rgba(224,122,106,.17),rgba(224,122,106,.06));
+  border:1px solid rgba(224,122,106,.34);color:#fff}
+.sh .hd{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:9px}
+.sh .hd .t{font-size:12.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#f0b3a8;display:flex;align-items:center;gap:7px}
+.sh .hd .s{font-size:10.5px;color:rgba(255,255,255,.55);font-weight:600}
+.sh .hd .n{margin-left:auto;font-size:10px;font-weight:800;letter-spacing:.045em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.sh .dot{width:8px;height:8px;border-radius:50%;background:#e07a6a;display:inline-block}
+.sh .scwrap{position:relative}
+.sh .scwrap:after{content:'';position:absolute;left:0;right:7px;bottom:0;height:22px;pointer-events:none;
+  background:linear-gradient(180deg,rgba(43,62,95,0),rgba(43,62,95,.9))}
+.sh .sc{max-height:300px;overflow-y:auto;padding-right:6px;scrollbar-width:thin;scrollbar-color:rgba(224,122,106,.6) rgba(255,255,255,.08)}
+.sh .sc::-webkit-scrollbar{width:7px}
+.sh .sc::-webkit-scrollbar-track{background:rgba(255,255,255,.08);border-radius:4px}
+.sh .sc::-webkit-scrollbar-thumb{background:rgba(224,122,106,.6);border-radius:4px}
+.sh details{border:1px solid rgba(255,255,255,.10);border-radius:8px;background:rgba(255,255,255,.04);overflow:hidden}
+.sh details+details{margin-top:6px}
+.sh details[open]{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.16)}
+.sh details.op{border-color:rgba(224,122,106,.45);background:rgba(224,122,106,.13)}
+.sh summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:14px 1fr auto;gap:9px;align-items:center;padding:8px 11px}
+.sh summary::-webkit-details-marker{display:none}
+.sh summary:focus-visible{outline:2px solid #f0b3a8;outline-offset:-2px}
+.sh .arw{font-size:9px;color:rgba(255,255,255,.5);transition:transform .15s}
+.sh details[open] .arw{transform:rotate(90deg)}
+@media (prefers-reduced-motion:reduce){.sh .arw{transition:none}}
+.sh .nm{display:flex;align-items:center;gap:8px;min-width:0}
+.sh .nm b{font-size:12.5px;font-weight:700;color:rgba(255,255,255,.93);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sh .meta{display:flex;align-items:center;gap:9px;white-space:nowrap}
+.sh .meta .lp{font-family:var(--disp);font-size:14px;font-weight:800;color:#fff}
+.sh .meta .ld{font-family:var(--mono);font-size:10.5px;color:rgba(255,255,255,.52)}
+.sh .chip{font-size:9px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:5px;white-space:nowrap}
+.sh .chip.op{background:rgba(224,122,106,.36);color:#ffe2db;border:1px solid rgba(224,122,106,.6)}
+.sh .chip.cl{background:rgba(255,255,255,.10);color:rgba(255,255,255,.66);border:1px solid rgba(255,255,255,.16)}
+.sh .rows{padding:2px 11px 9px}
+.sh .rh{display:grid;grid-template-columns:92px 1fr 70px;gap:9px;padding:3px 6px 5px;
+  font-size:9px;font-weight:800;letter-spacing:.045em;text-transform:uppercase;color:rgba(255,255,255,.38)}
+.sh .rh .ra{text-align:right}
+.sh .r{display:grid;grid-template-columns:92px 1fr 70px;gap:9px;align-items:center;font-size:11.5px;padding:3px 6px;border-radius:5px}
+.sh .r:nth-child(even){background:rgba(255,255,255,.04)}
+.sh .r .d{font-family:var(--mono);font-size:10.5px;color:rgba(255,255,255,.62)}
+.sh .r .p{font-family:var(--disp);font-size:12.5px;font-weight:800;color:#fff;display:flex;align-items:center;gap:7px}
+.sh .r .c{font-family:var(--mono);font-size:10.5px;font-weight:700;text-align:right}
+.sh .up{color:#f3a593}.sh .dn{color:#a8cfae}.sh .nw{color:rgba(255,255,255,.40)}
+.sh .foot{font-size:10px;color:rgba(255,255,255,.45);font-weight:600;margin-top:8px;line-height:1.5}
+@media (max-width:760px){
+  .sh .hd .n{margin-left:0;flex:1 1 100%}
+  .sh summary{grid-template-columns:14px 1fr;row-gap:4px}
+  .sh .meta{grid-column:2;justify-content:flex-start}
+  .sh .rh,.sh .r{grid-template-columns:78px 1fr 58px;gap:6px}
+}

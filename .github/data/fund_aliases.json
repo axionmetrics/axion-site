@@ -1,0 +1,5 @@
+{
+  "_README": "Κανονικοποίηση ονομάτων funds για τις ανοιχτές πωλήσεις (playbook §128). Κλειδί = το όνομα ΑΚΡΙΒΩΣ όπως το γράφει η Επιτροπή Κεφαλαιαγοράς. Τιμή = το κανονικό όνομα που εμφανίζεται στο site. Βάζουμε εδώ ΜΟΝΟ περιπτώσεις που είναι βέβαιο ότι πρόκειται για την ΙΔΙΑ νομική οντότητα με διαφορετική γραφή — ΟΧΙ συγγενείς εταιρείες του ίδιου ομίλου (π.χ. Oceanwood LLP vs LTD, Millennium DIFC vs International) που είναι ξεχωριστοί υπόχρεοι. Το shorts.py ανοίγει GitHub Issue όταν δει δύο ονόματα που διαφέρουν μόνο σε πεζά/κεφαλαία ή σε Ltd/Limited.",
+  "JPMORGAN ASSET MANAGEMENT (UK) LIMITED": "JPMorgan Asset Management (UK) Ltd",
+  "QUBE RESEARCH & TECHNOLOGIES LIMITED": "Qube Research & Technologies Limited"
+}
