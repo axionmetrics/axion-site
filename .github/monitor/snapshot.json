@@ -193,6 +193,13 @@
    "segment": "EN.A. Growth",
    "status": "1"
   },
+  "VRLS": {
+   "ca_date": "2026-10-09",
+   "ca_type": "ΜΕΤΑΒΟΛΗ ΜΕΤΟΧΙΚΟΥ ΚΕΦΑΛΑΙΟΥ",
+   "isin": "GRS575003009",
+   "segment": "EN.A. Growth",
+   "status": "1"
+  },
   "YKNOT": {
    "ca_date": "2026-04-01",
    "ca_type": "ΜΕΤΑΒΟΛΗ ΜΕΤΟΧΙΚΟΥ ΚΕΦΑΛΑΙΟΥ",
@@ -674,7 +681,7 @@
    "ca_type": "ΜΕΡΙΣΜΑ",
    "isin": "GRS500003009",
    "segment": "EN.A. Growth",
-   "status": "1"
+   "status": "0"
   },
   "ΜΕΒΑ": {
    "ca_date": "2026-07-03",
