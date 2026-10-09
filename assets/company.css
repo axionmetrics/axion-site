@@ -513,13 +513,43 @@
 .sh .r .c{font-family:var(--mono);font-size:13px;font-weight:700;text-align:right}
 .sh .up{color:#ffa78f}.sh .dn{color:#a9dcb4}.sh .nw{color:var(--ink3)}
 .sh .foot{font-size:12px;color:var(--ink2);font-weight:600;margin-top:10px;line-height:1.55}
+/* Κινητό: το block έσπαγε σε 4 σημεία — (α) η «.ld» (ημερομηνία · πλήθος) ήταν nowrap
+   δίπλα στο ποσοστό και έβγαινε έξω από την κάρτα, (β) τα ονόματα των funds κόβονταν με
+   «…», (γ) η γραμμή με in-row chip «κλειστή» έσπρωχνε τη στήλη μεταβολής εκτός πλάτους,
+   (δ) το σταθερό max-height:360px έκοβε τη λίστα στη μέση μιας κάρτας. */
 @media (max-width:760px){
-  .sh .hd .n{margin-left:0;flex:1 1 100%}
-  .sh summary{grid-template-columns:14px 1fr;row-gap:5px}
-  .sh .meta{grid-column:2;justify-content:flex-start}
+  .sh{padding:11px 12px}
+  .sh .hd{gap:8px;margin-bottom:9px}
+  .sh .hd .n{margin-left:0;flex:1 1 100%;font-size:11.5px;letter-spacing:.02em}
+  .sh .sc{max-height:min(66vh,520px);padding-right:4px}
+  .sh summary{grid-template-columns:14px minmax(0,1fr);row-gap:6px;column-gap:9px;padding:9px 10px;align-items:start}
+  .sh .arw{margin-top:4px}
+  /* ΟΝΟΜΑ: αναδίπλωση αντί για αποκοπή — το πλήρες όνομα του fund είναι η πληροφορία */
+  .sh .nm{display:block}
+  .sh .nm b{font-size:14.5px;white-space:normal;overflow:visible;text-overflow:clip;
+    line-height:1.3;overflow-wrap:anywhere}
+  /* το chip ακολουθεί inline την τελευταία λέξη του ονόματος, δεν πάει σε δική του σειρά */
+  .sh .nm .chip{display:inline-block;margin-left:7px;vertical-align:1px}
+  /* ΜΕΤΑ-ΓΡΑΜΜΗ: ποσοστό + chip στην 1η σειρά, ημερομηνία/πλήθος σε δική της */
+  .sh .meta{grid-column:2;justify-content:flex-start;flex-wrap:wrap;white-space:normal;
+    row-gap:5px;column-gap:9px;min-width:0}
   .sh .meta .lp{font-size:17px}
-  .sh .nm b{font-size:14.5px}
-  .sh .rh,.sh .r{grid-template-columns:100px 1fr 72px;gap:7px}
-  .sh .r .p{font-size:15px}
+  .sh .meta .ld{font-size:12px;white-space:nowrap}
+  .sh .rows{padding:3px 8px 9px}
+  .sh .rh,.sh .r{grid-template-columns:84px minmax(0,1fr) 58px;gap:6px;padding:5px 5px}
+  /* πεζά-κεφαλαία αντί για ΚΕΦΑΛΑΙΑ: το «ΜΕΤΑΒΟΛΗ» δεν χωρούσε στη στήλη του */
+  .sh .rh{font-size:10.5px;letter-spacing:0;text-transform:none;font-weight:700}
+  .sh .rh>span,.sh .r>span{min-width:0}
+  .sh .r .p{font-size:15px;flex-wrap:wrap;gap:5px}
+  .sh .r .p .chip{font-size:9.5px;padding:2px 5px}
   .sh .r .d,.sh .r .c{font-size:12px}
+  .sh .foot{font-size:11.5px;line-height:1.5}
+}
+@media (max-width:400px){
+  .sh{padding:10px}
+  .sh .rows{padding:3px 6px 8px}
+  .sh .rh,.sh .r{grid-template-columns:74px minmax(0,1fr) 56px;gap:5px;padding:5px 4px}
+  .sh .rh{font-size:9.5px}
+  .sh .r .d,.sh .r .c{font-size:11px}
+  .sh .r .p{font-size:14px}
 }
