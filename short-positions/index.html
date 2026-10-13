@@ -191,7 +191,69 @@
    .sp tbody td.lst{text-align:right}
    .sp tbody td.p,.sp tbody td.eu{font-size:15px}
  }
-</style>
+ /* ── ανάπτυξη γραμμής ανοιχτής θέσης: ιστορικό (§129.2) ──────────────────────── */
+ .sp tbody tr.hd{cursor:pointer}
+ .sp tbody tr.hd:hover{background:#f4f7fb}
+ .sp tbody tr.hd.on{background:#fbf4f1}
+ .sp td.nm .arw{display:inline-block;width:12px;margin-right:2px;color:#9aa7b8;font-size:9px;
+   transition:transform .12s;vertical-align:1px}
+ .sp tbody tr.hd.on .arw{transform:rotate(90deg);color:#9e3c1e}
+ .sp tr.ex{display:none}
+ .sp tr.ex.on{display:table-row}
+ .sp tr.ex>td{background:#f4f7fb;border-top:0;padding:0 10px 13px}
+ .hx{background:#fff;border:1px solid var(--line);border-left:3px solid #c2694f;border-radius:10px;padding:12px 14px}
+ .hx .hxh{font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:9px}
+ .hx .g{margin-bottom:12px}.hx .g:last-child{margin-bottom:0}
+ .hx .gh{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+ .hx .gh b{font-size:13.5px;color:#223c66;font-weight:800}
+ .hx .gm{font-size:11.5px;color:var(--muted);font-family:'Ubuntu Mono'}
+ .hx .chip{font-size:9.5px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;padding:2px 6px;border-radius:999px}
+ .hx .chip.op{background:#fdece5;color:#9e3c1e;border:1px solid #f0c3b2}
+ .hx .chip.cl{background:#eef1f6;color:#7b8798;border:1px solid #dde3ec}
+ .hx .rl{border:1px solid var(--line);border-radius:8px;overflow:hidden;max-width:580px}
+ .hx .rh,.hx .r{display:grid;grid-template-columns:124px minmax(0,1fr) 96px;gap:8px;padding:5px 11px;align-items:baseline}
+ .hx .rh{background:#f4f7fb;font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+ .hx .r{border-top:1px solid #eef1f6;font-size:13px}
+ .hx .r .d{font-family:'Ubuntu Mono';color:#4b5a70}
+ .hx .r .p{font-family:'Inter';font-weight:700;color:#223c66}
+ .hx .r .c{font-family:'Ubuntu Mono';text-align:right}
+ .hx .r.nw0 .p{color:#9e3c1e}
+ .hx .up{color:#c23b22;font-weight:700}.hx .dn{color:#1d8a46;font-weight:700}.hx .nw{color:#9aa7b8}
+ .hx .cls{margin-top:13px;border-top:1px dashed #d8e0ec;padding-top:10px}
+ .hx .cls>.t{font-size:10.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+ .hx details.cf{border:1px solid var(--line);border-radius:8px;margin-bottom:5px;background:#fcfdfe}
+ .hx details.cf>summary{list-style:none;cursor:pointer;display:grid;
+   grid-template-columns:12px minmax(0,1fr) 62px 104px;gap:9px;padding:6px 11px;align-items:baseline;font-size:12.5px}
+ .hx details.cf>summary::-webkit-details-marker{display:none}
+ .hx details.cf>summary .a{color:#9aa7b8;font-size:8px}
+ .hx details.cf[open]>summary .a{display:inline-block;transform:rotate(90deg)}
+ .hx details.cf>summary .fn{color:#2d3f5e;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ .hx details.cf>summary .mx{font-family:'Inter';font-weight:700;color:#223c66;text-align:right}
+ .hx details.cf>summary .pe{font-family:'Ubuntu Mono';font-size:11.5px;color:var(--muted);text-align:right}
+ .hx details.cf .rl{border:0;border-top:1px solid var(--line);border-radius:0}
+ .hx .foot{font-size:11.5px;color:var(--muted);line-height:1.6;margin-top:11px;border-top:1px solid #eef1f6;padding-top:9px}
+ /* γράφημα */
+ .hx .spk{margin:2px 0 7px}
+ .hx .spk svg{display:block;width:100%;height:auto}
+ .hx .spk.one svg{max-width:660px}
+ .hx .gb{display:block}
+ @media (min-width:1060px){
+   .hx .gb.two{display:grid;grid-template-columns:minmax(0,560px) minmax(0,1fr);gap:20px;align-items:start}
+   .hx .gb.two .spk{order:2;margin-top:0}
+   .hx .gb.two .spk.one svg{max-width:none}
+ }
+ @media (max-width:760px){
+   .sp tr.ex.on{display:block}
+   .sp tbody tr.ex{border:0;background:transparent;padding:0;margin:-7px 0 9px;border-radius:0}
+   .sp tbody tr.ex>td{display:block;padding:0;text-align:left}
+   .sp tbody tr.ex>td:before{content:none}
+   .hx{padding:11px 12px}
+   .hx .rh,.hx .r{grid-template-columns:88px minmax(0,1fr) 68px;gap:6px;padding:5px 9px;font-size:12.5px}
+   .hx .rh{font-size:9.5px}
+   .hx details.cf>summary{grid-template-columns:12px minmax(0,1fr) 56px;row-gap:3px;font-size:12px}
+   .hx details.cf>summary .pe{grid-column:2/4;text-align:left}
+ }
+ </style>
 </head>
 <body>
 <div id="am-nav"></div>
@@ -280,6 +342,12 @@ AX_I18N.add({
  /* υποσημείωση + κενή κατάσταση */
  'sp.note':{el:'Δημοσιοποίηση υποχρεωτική στο 0,5% του μετοχικού κεφαλαίου και σε κάθε βήμα 0,1% πάνω από αυτό. «Χωρίς τρέχουσα θέση» σημαίνει ότι δεν υπάρχει σήμερα δημοσιοποιημένη θέση — όχι απαραίτητα ότι το fund αποχώρησε, αφού κάτω από το όριο η θέση παύει να δημοσιοποιείται. Το ίδιο fund εμφανίζεται ενίοτε με δύο νομικές μορφές (π.χ. LLP και LTD)· τα κρατάμε χωριστά όπως τα δημοσιεύει η Επιτροπή.',
            en:'Disclosure is mandatory at 0.5% of share capital and at every 0.1% step above it. “No current position” means no position is disclosed today — not necessarily that the fund has exited, since below the threshold a position stops being disclosed. The same fund sometimes appears under two legal forms (e.g. LLP and LTD); we keep them separate, as the Commission publishes them.'},
+ 'sp.open':{el:'ανοιχτή', en:'open'},
+ 'sp.cl':{el:'κλειστή', en:'closed'},
+ 'sp.hx.h':{el:'Ιστορικό θέσης — {n}', en:'Position history — {n}'},
+ 'sp.hx.cl':{el:'Παλαιότερα funds χωρίς τρέχουσα θέση ({n})', en:'Earlier funds with no current position ({n})'},
+ 'sp.hx.foot':{el:'Η μεταβολή είναι η διαφορά από την προηγούμενη γνωστοποίηση του ίδιου fund, υπολογισμένη στα ποσοστά όπως εμφανίζονται. «Κλειστή» σε γραμμή σημαίνει ότι η γνωστοποίηση έπεσε κάτω από το 0,5%. Το ιστορικό δίνεται μόνο σε ποσοστό: η κεφαλαιοποίηση κάθε παλιάς ημερομηνίας δεν είναι γνωστή, άρα έκθεση σε ευρώ για το παρελθόν δεν υπολογίζεται.',
+             en:'Change is the difference from the same fund’s previous disclosure, computed on the percentages as displayed. “Closed” on a row means the disclosure fell below 0.5%. History is given in percentage only: the market capitalisation at each past date is not known, so no euro exposure is computed for the past.'},
  'sp.empty':{el:'Δεν υπάρχουν διαθέσιμα στοιχεία short θέσεων αυτή τη στιγμή.', en:'No short-position data is available at the moment.'}
 });
 
@@ -291,7 +359,9 @@ AX_I18N.add({
  function f(k,o){var s=L(k);for(var p in o)s=s.split('{'+p+'}').join(o[p]);return s;}
  /* δεκαδικό χωριστικό κατά γλώσσα — ίδια σύμβαση με το block της σελίδας εταιρείας (§128) */
  function dec(x){return EN()?String(x):String(x).replace('.',',');}
- function pct(v){return (v==null||isNaN(v))?'—':dec(Number(v).toFixed(2))+'%';}
+ /* 3 δεκαδικά: η πηγή (Επιτροπή Κεφαλαιαγοράς) δημοσιεύει έως 5 — με 2 δεκαδικά
+    ισοπεδώνονταν διαφορετικές θέσεις στην ίδια τιμή. §129.3 */
+ function pct(v){return (v==null||isNaN(v))?'—':dec(Number(v).toFixed(3))+'%';}
  function gd(iso){var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(iso||'');return m?(m[3]+'/'+m[2]+'/'+m[1]):(iso||'');}
  function my(iso){var m=/^(\d{4})-(\d{2})/.exec(iso||'');return m?(m[2]+'/'+m[1]):(iso||'');}
  function eur(x){
@@ -307,10 +377,21 @@ AX_I18N.add({
    var v=(x/1e6).toFixed(0), g=String(v).replace(/\B(?=(\d{3})+(?!\d))/g, EN()?',':'.');
    return EN()?('€'+g+'m'):(g+' εκ. €');
  }
+ /* Η μεταβολή ΔΕΝ διαβάζεται από το αποθηκευμένο `c` του shorts.js. Το `c` είναι η αληθινή
+    διαφορά στην πηγαία ακρίβεια (5 δεκαδικά)· στρογγυλεμένο στα 3 δεν βγαίνει πάντα από την
+    αφαίρεση των δύο ποσοστών που βλέπει ο αναγνώστης (1,134 − 1,054 = 0,080, αλλά η αληθινή
+    διαφορά είναι −0,08056 → −0,081· συνέβαινε σε 30 από τις 357 γραμμές). Επιλογή: η πράξη
+    πρέπει να επαληθεύεται με το μάτι, άρα η μεταβολή υπολογίζεται ΕΔΩ από τα εμφανιζόμενα
+    νούμερα. Απόκλιση από την αληθινή τιμή: έως 0,001. §129.3 */
+ function rD(v){return v==null?null:Math.round(v*1000)/1000;}
+ function chg(rows,i){
+   if(!rows||i+1>=rows.length) return null;      /* η παλαιότερη γνωστοποίηση δεν έχει προηγούμενη */
+   return Math.round((rD(rows[i].p)-rD(rows[i+1].p))*1000)/1000;
+ }
  function dlt(v){
    if(v==null) return '<span class="nw">—</span>';
-   if(Math.abs(v)<0.005) return '<span class="nw">'+dec('0.00')+'</span>';
-   return '<span class="'+(v>0?'up':'dn')+'">'+(v>0?'+':'−')+dec(Math.abs(v).toFixed(2))+'</span>';
+   if(Math.abs(v)<0.0005) return '<span class="nw">'+dec('0.000')+'</span>';
+   return '<span class="'+(v>0?'up':'dn')+'">'+(v>0?'+':'−')+dec(Math.abs(v).toFixed(3))+'</span>';
  }
 
  var SH=window.AXION_SHORTS, CUR=window.AXION_CURRENT||{}, AX=window.AXION||{};
@@ -334,7 +415,7 @@ AX_I18N.add({
        var F=FU[fd.f]||(FU[fd.f]={f:fd.f,rows:0,cos:{},open:{},last:'',max:0});
        F.rows+=fd.rows.length; F.cos[nm]=1;
        if(fd.ld>F.last) F.last=fd.ld;
-       if(fd.open){F.open[nm]={tk:tk,p:fd.lp,d:fd.ld};opens.push({f:fd.f,p:fd.lp,d:fd.ld,c:fd.rows[0]&&fd.rows[0].c});}
+       if(fd.open){F.open[nm]={tk:tk,p:fd.lp,d:fd.ld};opens.push({f:fd.f,p:fd.lp,d:fd.ld,c:chg(fd.rows,0)});}
        fd.rows.forEach(function(r){
          dates++; if(r.p>mx)mx=r.p; if(r.p>F.max)F.max=r.p;
          if(first===null||r.d<first)first=r.d;
@@ -345,7 +426,7 @@ AX_I18N.add({
      if(allFirst===null||first<allFirst) allFirst=first;
      var mc=mcap(tk), row={tk:tk,nm:nm,slug:I.slug,sec:I.s||'',nf:rec.funds.length,n:rec.n,
        mx:mx,first:first,last:last,lastp:lastp,tot:rec.tot||0,opens:opens,
-       exp:(mc!=null&&rec.tot)?mc*rec.tot/100:null,mcap:mc};
+       exp:(mc!=null&&rec.tot)?mc*rec.tot/100:null,mcap:mc,funds:rec.funds};
      if(opens.length){openC.push(row); if(CUR[tk]&&CUR[tk].date) priceDates.push(CUR[tk].date);} else closedC.push(row);
    });
    var openF=[],closedF=[];
@@ -383,17 +464,92 @@ AX_I18N.add({
      +L('sp.x.why')+' <em>'+L('sp.x.not')+'</em>'+L('sp.x.not2')+'</div>';
  }
 
+
+ /* ── §129.2 ανάπτυξη γραμμής: ιστορικό θέσης ────────────────────────────────── */
+ var OPEN={};
+ function ts(iso){var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(iso||'');return m?Date.UTC(+m[1],+m[2]-1,+m[3]):0;}
+ function pts(fd){return fd.rows.slice().reverse().map(function(r){return {t:ts(r.d),p:r.p};});}
+ function fsort(a,b){return ((a.open?0:1)-(b.open?0:1))||(ts(b.ld)-ts(a.ld));}
+ function fmax(fd){return Math.max.apply(null,fd.rows.map(function(r){return r.p;}));}
+ function rowsHtml(rows){
+   var h='<div class="rl"><div class="rh"><span>'+L('sp.c.date')+'</span><span>'+L('sp.c.pos')
+     +'</span><span style="text-align:right">'+L('sp.c.chg')+'</span></div>';
+   h+=rows.map(function(r,i){
+     return '<div class="r'+(i===0?' nw0':'')+'"><span class="d">'+gd(r.d)+'</span>'
+       +'<span class="p">'+pct(r.p)+(r.x?' <span class="chip cl">'+L('sp.cl')+'</span>':'')+'</span>'
+       +'<span class="c">'+dlt(chg(rows,i))+'</span></div>';
+   }).join('');
+   return h+'</div>';
+ }
+ /* μικρο-γράφημα βήματος: η θέση κρατά την τιμή της μέχρι την επόμενη γνωστοποίηση,
+    άρα η γραμμή είναι κλιμακωτή — όχι ευθεία παρεμβολή που θα υπονοούσε συνεχή κίνηση. */
+ function spark(ss,w,h){
+   var all=[]; ss.forEach(function(s){s.pts.forEach(function(p){all.push(p);});});
+   if(all.length<2) return '';
+   var xs=all.map(function(p){return p.t;}), ys=all.map(function(p){return p.p;});
+   var x0=Math.min.apply(null,xs), x1=Math.max.apply(null,xs);
+   var hi=Math.max.apply(null,ys), lo=Math.min.apply(null,ys);
+   hi=Math.max(hi,0.5); lo=Math.min(lo,0.5);
+   var pad=(hi-lo)*0.2||0.08; hi+=pad; lo=Math.max(0,lo-pad);
+   var LX=36,RX=8,TY=8,BY=17;
+   function X(t){return x1===x0?(LX+(w-LX-RX)/2):LX+((t-x0)/(x1-x0))*(w-LX-RX);}
+   function Y(v){return TY+(1-(v-lo)/(hi-lo))*(h-TY-BY);}
+   var g='',yt=Y(0.5).toFixed(1);
+   g+='<line x1="'+LX+'" y1="'+yt+'" x2="'+(w-RX)+'" y2="'+yt+'" stroke="#c9d4e4" stroke-dasharray="3 3"/>'
+     +'<text x="'+(LX-5)+'" y="'+(Y(0.5)+3.4).toFixed(1)+'" text-anchor="end" font-size="9.5" fill="#9aa7b8">'+dec('0.50')+'%</text>';
+   var top=Math.max.apply(null,ys);
+   g+='<text x="'+(LX-5)+'" y="'+(Y(top)+3.4).toFixed(1)+'" text-anchor="end" font-size="9.5" fill="#8c9ab0">'+dec(top.toFixed(2))+'%</text>';
+   ss.forEach(function(s){
+     var p=s.pts,d='',k;
+     for(k=0;k<p.length;k++){
+       var x=X(p[k].t),y=Y(p[k].p);
+       if(!k) d='M'+x.toFixed(1)+' '+y.toFixed(1);
+       else d+=' L'+x.toFixed(1)+' '+Y(p[k-1].p).toFixed(1)+' L'+x.toFixed(1)+' '+y.toFixed(1);
+     }
+     g+='<path d="'+d+'" fill="none" stroke="'+s.c+'" stroke-width="'+(s.open?2.1:1.4)+'" stroke-linejoin="round"'
+       +(s.open?'':' stroke-opacity=".6" stroke-dasharray="4 3"')+'/>';
+     if(s.open) g+='<circle cx="'+X(p[p.length-1].t).toFixed(1)+'" cy="'+Y(p[p.length-1].p).toFixed(1)+'" r="3.2" fill="'+s.c+'"/>';
+   });
+   g+='<text x="'+LX+'" y="'+(h-4)+'" font-size="9.5" fill="#9aa7b8">'+my(all[0]&&new Date(x0).toISOString().slice(0,7))+'</text>'
+    +'<text x="'+(w-RX)+'" y="'+(h-4)+'" text-anchor="end" font-size="9.5" fill="#9aa7b8">'+my(new Date(x1).toISOString().slice(0,7))+'</text>';
+   return '<svg viewBox="0 0 '+w+' '+h+'" '
+     +'font-family="Ubuntu Mono, monospace" role="img">'+g+'</svg>';
+ }
+ function panel(c){
+   var fs=(c.funds||[]).slice().sort(fsort),
+       op=fs.filter(function(x){return x.open;}), cl=fs.filter(function(x){return !x.open;});
+   var h='<div class="hx"><div class="hxh">'+f('sp.hx.h',{n:esc(c.nm)})+'</div>';
+   h+=op.map(function(fd){
+     return '<div class="g"><div class="gh"><b>'+esc(fd.f)+'</b><span class="chip op">'+L('sp.open')+'</span>'
+       +'<span class="gm">'+pct(fd.lp)+' · '+gd(fd.ld)+' · '+fd.n+' '+L('sp.u.rows')+'</span></div>'
+       +'<div class="gb two">'
+       +'<div class="spk one">'+spark([{pts:pts(fd),open:true,c:'#9e3c1e'}],620,150)+'</div>'
+       +rowsHtml(fd.rows)+'</div></div>';
+   }).join('');
+   if(cl.length){
+     h+='<div class="cls"><div class="t">'+f('sp.hx.cl',{n:cl.length})+'</div>'
+       +cl.map(function(fd){
+         return '<details class="cf"><summary><span class="a">▶</span><span class="fn">'+esc(fd.f)+'</span>'
+           +'<span class="mx">'+pct(fmax(fd))+'</span>'
+           +'<span class="pe">'+my(fd.rows[fd.rows.length-1].d)+' – '+my(fd.rows[0].d)+'</span></summary>'
+           +rowsHtml(fd.rows)+'</details>';
+       }).join('')+'</div>';
+   }
+   return h+'<div class="foot">'+L('sp.hx.foot')+'</div></div>';
+ }
  /* ── όψη: ανά εταιρεία ──────────────────────────────────────────────────────── */
  function viewCo(){
    var t1=M.openC.map(function(c,i){
-     return '<tr><td class="rk">'+(i+1)+'</td><td class="nm">'+coLink(c.tk,c.nm)+'</td>'
+     return '<tr class="hd" data-tk="'+c.tk+'" tabindex="0" role="button" aria-expanded="false"><td class="rk">'+(i+1)+'</td>'
+       +'<td class="nm"><span class="arw">▶</span>'+coLink(c.tk,c.nm)+'</td>'
        +'<td class="sc" data-l="'+L('sp.c.sec')+'">'+esc(SEC(c.sec))+'</td>'
        +'<td class="fd" data-l="'+L('sp.c.fund')+'">'+esc(c.opens.map(function(o){return o.f;}).join(' · '))+'</td>'
        +'<td class="p op" data-l="'+L('sp.c.pos')+'">'+pct(c.tot)+'</td>'
        +'<td class="eu" data-l="'+L('sp.c.exp')+'">'+eur(c.exp)+'</td>'
        +'<td class="mono" data-l="'+L('sp.c.date')+'">'+gd(c.opens.map(function(o){return o.d;}).sort().pop())+'</td>'
        +'<td class="mono" style="text-align:right" data-l="'+L('sp.c.chg')+'">'+dlt(c.opens[0].c)+'</td>'
-       +'<td class="lst hide-s" style="text-align:right">'+c.n+' '+L('sp.u.rows')+' · max '+pct(c.mx)+'</td></tr>';
+       +'<td class="lst hide-s" style="text-align:right">'+c.n+' '+L('sp.u.rows')+' · max '+pct(c.mx)+'</td></tr>'
+       +'<tr class="ex"><td colspan="9">'+panel(c)+'</td></tr>';
    }).join('');
    var t2=M.closedC.map(function(c){
      return '<tr><td class="nm">'+coLink(c.tk,c.nm)+'</td><td class="sc" data-l="'+L('sp.c.sec')+'">'+esc(SEC(c.sec))+'</td>'
@@ -481,12 +637,32 @@ AX_I18N.add({
    elCo.innerHTML=viewCo();
    elFu.innerHTML=viewFu();
    elN.textContent=L('sp.note');
+   Array.prototype.forEach.call(elCo.querySelectorAll('tr.hd'),function(tr){
+     if(OPEN[tr.getAttribute('data-tk')]) toggle(tr,true);
+   });
  }
  function sel(co){
    bCo.classList.toggle('on',co); bFu.classList.toggle('on',!co);
    elCo.classList.toggle('on',co); elFu.classList.toggle('on',!co);
    try{history.replaceState(null,'',co?location.pathname:(location.pathname+'#fund'));}catch(e){}
  }
+ /* ανάπτυξη/σύμπτυξη γραμμής ανοιχτής θέσης */
+ function toggle(tr,on){
+   var ex=tr.nextElementSibling; if(!ex||ex.className.indexOf('ex')<0) return;
+   ex.classList.toggle('on',on); tr.classList.toggle('on',on);
+   tr.setAttribute('aria-expanded',on?'true':'false');
+   OPEN[tr.getAttribute('data-tk')]=on?1:0;
+ }
+ elCo.addEventListener('click',function(e){
+   if(e.target.closest('a')) return;
+   var tr=e.target.closest('tr.hd'); if(!tr) return;
+   toggle(tr,!tr.classList.contains('on'));
+ });
+ elCo.addEventListener('keydown',function(e){
+   if(e.key!=='Enter'&&e.key!==' ') return;
+   var tr=e.target.closest&&e.target.closest('tr.hd'); if(!tr) return;
+   e.preventDefault(); toggle(tr,!tr.classList.contains('on'));
+ });
  bCo.addEventListener('click',function(){sel(true);});
  bFu.addEventListener('click',function(){sel(false);});
  render();

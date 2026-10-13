@@ -1232,9 +1232,20 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
   function esc(t){return String(t==null?'':t).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
   /* δεκαδικό χωριστικό κατά γλώσσα: κόμμα στα ελληνικά, τελεία στα αγγλικά */
   function dec(x){ return EN()?String(x):String(x).replace('.',','); }
-  function pc(v){return (v==null?'—':dec(Number(v).toFixed(2)));}
-  function dl(v){ if(v==null) return '—'; if(Math.abs(v)<0.005) return dec('0.00');
-    return (v>0?'+':'−')+dec(Math.abs(v).toFixed(2)); }
+  /* 3 δεκαδικά: το αρχείο της Επιτροπής δημοσιεύει έως 5 (π.χ. 1,05351) — με 2 δεκαδικά
+     διαφορετικές γνωστοποιήσεις έδειχναν την ίδια τιμή. Ίδια σύμβαση με το /short-positions/. */
+  function pc(v){return (v==null?'—':dec(Number(v).toFixed(3)));}
+  function dl(v){ if(v==null) return '—'; if(Math.abs(v)<0.0005) return dec('0.000');
+    return (v>0?'+':'−')+dec(Math.abs(v).toFixed(3)); }
+  /* Η μεταβολή ΔΕΝ διαβάζεται από το αποθηκευμένο `c`: εκείνο είναι η αληθινή διαφορά στα 5
+     δεκαδικά της πηγής και, στρογγυλεμένο στα 3, δεν βγαίνει πάντα από την αφαίρεση των δύο
+     ποσοστών που βλέπει ο αναγνώστης. Υπολογίζεται εδώ από τα εμφανιζόμενα νούμερα (απόκλιση
+     έως 0,001). Ίδια σύμβαση με το /short-positions/. */
+  function rD(v){return v==null?null:Math.round(v*1000)/1000;}
+  function chg(rows,i){
+    if(!rows||i+1>=rows.length) return null;
+    return Math.round((rD(rows[i].p)-rD(rows[i+1].p))*1000)/1000;
+  }
   function gd(iso){ var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(iso||''); return m?(m[3]+'/'+m[2]+'/'+m[1]):(iso||''); }
 
   function render(){
@@ -1244,18 +1255,19 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
     var T=en?{t:'Short positions',s:'Hellenic Capital Market Commission · disclosures ≥0.5% of share capital',
               open:'open',closed:'closed',date:'Date',pos:'Position',chg:'Change',dis:'disclosures',
               n:function(f,o,g){return f+' fund'+(f===1?'':'s')+' · '+o+' with an open position · '+g+' disclosures';},
-              foot:'Change is against the same fund’s previous disclosure. “Closed” next to the name means the fund has no currently disclosed position; if it reopens, the label becomes “open”. Inside the list, “closed” on a row marks a disclosure that fell below the 0.5% threshold — in several cases the record simply stops without such a disclosure.'}
+              foot:'Change is the difference from the same fund’s previous disclosure, computed on the percentages as displayed. “Closed” next to the name means the fund has no currently disclosed position; if it reopens, the label becomes “open”. Inside the list, “closed” on a row marks a disclosure that fell below the 0.5% threshold — in several cases the record simply stops without such a disclosure.'}
              :{t:'Short θέσεις',s:'Επιτροπή Κεφαλαιαγοράς · δημοσιοποιήσεις ≥0,5% του μετοχικού κεφαλαίου',
               open:'ανοιχτή',closed:'κλειστή',date:'Ημερομηνία',pos:'Θέση',chg:'Μεταβολή',dis:'γνωστοπ.',
               n:function(f,o,g){return f+' fund'+(f===1?'':'s')+' · '+o+' με ανοιχτή θέση · '+g+' γνωστοποιήσεις';},
-              foot:'Η μεταβολή είναι έναντι της προηγούμενης γνωστοποίησης του ίδιου fund. «Κλειστή» δίπλα στο όνομα = το fund δεν έχει σήμερα δημοσιοποιημένη θέση· αν ξανανοίξει, η ένδειξη γίνεται «ανοιχτή». Μέσα στη λίστα, «κλειστή» σε μια γραμμή σημαίνει ότι η συγκεκριμένη γνωστοποίηση έπεσε κάτω από το όριο του 0,5% — σε αρκετές περιπτώσεις η καταγραφή απλώς σταματά χωρίς τέτοια γνωστοποίηση.'};
+              foot:'Η μεταβολή είναι η διαφορά από την προηγούμενη γνωστοποίηση του ίδιου fund, υπολογισμένη στα ποσοστά όπως εμφανίζονται. «Κλειστή» δίπλα στο όνομα = το fund δεν έχει σήμερα δημοσιοποιημένη θέση· αν ξανανοίξει, η ένδειξη γίνεται «ανοιχτή». Μέσα στη λίστα, «κλειστή» σε μια γραμμή σημαίνει ότι η συγκεκριμένη γνωστοποίηση έπεσε κάτω από το όριο του 0,5% — σε αρκετές περιπτώσεις η καταγραφή απλώς σταματά χωρίς τέτοια γνωστοποίηση.'};
 
     var gs=rec.funds.map(function(g){
-      var rows=g.rows.map(function(r){
-        var k=(r.c==null||Math.abs(r.c)<0.005)?'nw':(r.c>0?'up':'dn');
+      var rows=g.rows.map(function(r,i){
+        var cv=chg(g.rows,i);
+        var k=(cv==null||Math.abs(cv)<0.0005)?'nw':(cv>0?'up':'dn');
         return '<div class="r"><span class="d">'+gd(r.d)+'</span>'
           +'<span class="p">'+pc(r.p)+'%'+(r.x?' <span class="chip cl">'+T.closed+'</span>':'')+'</span>'
-          +'<span class="c '+k+'">'+dl(r.c)+'</span></div>';
+          +'<span class="c '+k+'">'+dl(cv)+'</span></div>';
       }).join('');
       return '<details class="'+(g.open?'op':'')+'">'
         +'<summary><span class="arw">▶</span>'
