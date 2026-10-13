@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="sp.title">Short θέσεις — Axion Metrics</title>
+<meta name="description" content="Δημοσιοποιημένες short θέσεις στις εισηγμένες του Χρηματιστηρίου Αθηνών: ποια funds κρατούν θέσεις σήμερα, σε ποιες εταιρείες και με τι έκθεση σε ευρώ.">
+<link rel="canonical" href="https://www.axionmetrics.gr/short-positions/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Axion Metrics">
+<meta name="theme-color" content="#16243d">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Axion Metrics">
+<meta property="og:title" content="Short θέσεις — Axion Metrics">
+<meta property="og:description" content="Δημοσιοποιημένες short θέσεις στις εισηγμένες του Χρηματιστηρίου Αθηνών: ποια funds κρατούν θέσεις σήμερα, σε ποιες εταιρείες και με τι έκθεση σε ευρώ.">
+<meta property="og:url" content="https://www.axionmetrics.gr/short-positions/">
+<meta property="og:image" content="https://www.axionmetrics.gr/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Short θέσεις — Axion Metrics">
+<meta name="twitter:description" content="Δημοσιοποιημένες short θέσεις στις εισηγμένες του Χρηματιστηρίου Αθηνών: ποια funds κρατούν θέσεις σήμερα, σε ποιες εταιρείες και με τι έκθεση σε ευρώ.">
+<meta name="twitter:image" content="https://www.axionmetrics.gr/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&family=Open+Sans:wght@400;600;700;800&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/chrome.css">
+<style>
+ :root{--bg:#fff;--phead:#223c66;--text:#1b2740;--muted:#6b7890;--line:#e4e8f0;
+  --good:#00922f;--mid:#e08600;--bad:#f01c00;--accent:#1E4FA0;--soft:#f7f9fc;
+  --zg:#37a05e;--zm:#e0a53a;--zb:#db5247}
+ *{box-sizing:border-box;margin:0;padding:0}
+ body{background:var(--bg);color:var(--text);font-family:'Open Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+ .wrap{max-width:1180px;margin:0 auto;padding:0 22px 60px}
+ .mast{padding:26px 0 12px}
+ .mast h1{font-size:28px;font-weight:800}
+ .mast .sub{font-size:12.5px;color:var(--muted);margin-top:5px}
+
+ .controls{background:#f4f6f9;border:1px solid #e4e8f0;border-left:3px solid #5a6b85;border-radius:12px;padding:14px 16px;margin-top:14px}
+ .crow{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+ .crow + .crow{margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+ .lbl{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9aa7b8;width:78px;flex:none}
+ .chip{font-size:12.5px;font-weight:600;padding:6px 13px;border-radius:20px;border:1px solid var(--line);
+   background:#fff;color:var(--muted);cursor:pointer;transition:.12s}
+ .chip:hover{border-color:#c3d3e8;color:var(--text)}
+ .chip.on{background:#33425c;border-color:#33425c;color:#fff}
+ .chip.acc.on{background:#33425c;border-color:#33425c}
+ .seg{display:flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;background:#fff}
+ .seg button{font-family:inherit;font-size:12.5px;font-weight:600;padding:7px 14px;border:none;background:#fff;color:var(--muted);cursor:pointer}
+ .seg button.on{background:#33425c;color:#fff}
+
+ .resbar{display:flex;align-items:baseline;justify-content:space-between;margin:22px 2px 10px}
+ .resbar h2{font-size:17px;font-weight:800}
+ .resbar .meta{font-size:12px;color:var(--muted)}
+
+ table{width:100%;border-collapse:collapse;font-size:13px}
+ thead th{background:var(--phead);color:#fff;font-weight:700;padding:9px 10px;font-size:11.5px;letter-spacing:.02em}
+ thead th.l{text-align:left}
+ tbody td{padding:10px;border-bottom:1px solid var(--line);vertical-align:middle}
+ tbody tr:hover{background:#f4f7fc}
+ td.rk{font-family:'Ubuntu Mono';font-weight:700;color:#b9c3d0;width:38px;text-align:center;font-size:14px}
+ tbody tr.top3 td.rk{color:var(--accent)}
+ td.nm{font-weight:700;font-size:14px}
+ td.nm a{color:var(--text);text-decoration:none}
+ td.nm a:hover{color:var(--accent)}
+ td.sc{font-size:12px;color:var(--muted);width:130px}
+ td.val{font-family:'Ubuntu Mono';font-weight:700;font-size:17px;text-align:right;width:96px}
+ td.pct{width:280px;padding-right:16px}
+ td.sec2{font-family:'Ubuntu Mono';font-size:13px;color:var(--muted);text-align:center;width:78px}
+ .g{color:var(--good)}.m{color:var(--mid)}.b{color:var(--bad)}
+ .pbar{position:relative;height:9px;border-radius:5px;background:#eef1f6;overflow:hidden}
+ .pfill{position:absolute;left:0;top:0;bottom:0;border-radius:5px}
+ .pnum{font-family:'Ubuntu Mono';font-size:10px;color:#9aa7b8;margin-top:3px;display:block}
+
+ .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
+ .card{border:1px solid var(--line);border-radius:12px;padding:14px 16px;cursor:pointer;transition:.12s}
+ .card:hover{border-color:#c3d3e8;box-shadow:0 6px 18px rgba(30,79,160,.07)}
+ .card.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+ .card .bh{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9aa7b8;margin-bottom:8px}
+ .brow{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #eef1f6;font-size:12.5px}
+ .brow:last-child{border-bottom:none}
+ .brow .n{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ .brow .v{font-family:'Ubuntu Mono';font-weight:700;font-size:13.5px;flex:none;margin-left:10px}
+
+ h2.sec{font-size:16px;font-weight:800;margin:34px 0 4px}
+ .sech{font-size:11.5px;color:var(--muted);margin-bottom:6px}
+ .foot{font-size:11.5px;color:var(--muted);margin-top:20px;line-height:1.6}
+
+ /* == ομογενοποίηση: κοινή τυπογραφία επικεφαλίδων == */
+ .mast h1,h2,h2.sec{font-family:'Inter',sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.02em}
+
+
+ /* navy hero + secbox + picker (όπως στη σελίδα κλάδου) */
+ .crumb{font-size:11.5px;color:#9aa7b8;padding:20px 0 0}
+ .crumb a{color:var(--accent);text-decoration:none}
+ .hero{background:var(--text);border-radius:14px;padding:16px 24px;margin-top:14px}
+ .secbox{background:#fff;border:1px solid #eef1f6;border-radius:14px;box-shadow:0 4px 16px rgba(27,39,64,.06);overflow:hidden;margin-top:22px}
+ .secbox .stripe{height:5px;background:#c6a24e}
+ .secbox .hero-in{padding:24px 34px 22px}
+ .secbox .hero-stats{display:flex;flex-wrap:wrap;margin-top:15px}
+ .secbox .hs{display:flex;flex-direction:column;gap:3px;padding:2px 18px;max-width:210px}
+ .secbox .hs:first-child{padding-left:0}
+ .secbox .hs+.hs{border-left:1px solid #edf0f5}
+ .secbox .hs .v{font-size:14px;font-weight:800;color:#1b2740;line-height:1.15}
+ .secbox .hs .l{font-size:10.5px;color:#8a95a6;letter-spacing:.01em;line-height:1.3}
+ .secbox h1{font-family:Inter,sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.02em;color:#1b2740;font-size:30px;line-height:1.05;margin:0}
+ .secbox .sub{font-size:13.5px;line-height:1.55;color:#aebfd8;margin-top:10px;max-width:640px}
+ .secbox .hero-desc{font-size:13.5px;line-height:1.6;color:#55617a;margin-top:12px;max-width:680px}
+ .hero .picker .chip{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.20);color:#cdd7e6}
+ .hero .picker .chip:hover{border-color:rgba(255,255,255,.42);color:#fff}
+ .hero .picker .chip.on{background:#fff;border-color:#fff;color:var(--phead)}
+ @media(max-width:640px){.hero{padding:14px 16px}.secbox .hero-in{padding:20px 20px}.secbox .hs{padding:2px 14px}}
+
+ /* ── §129 «Short θέσεις»: συγκεντρωτική σελίδα αγοράς ───────────────────────────
+    Πηγές: window.AXION_SHORTS (shorts.js, Επιτροπή Κεφαλαιαγοράς) για τις θέσεις,
+    window.AXION (data.js) για ονόματα/slug/κλάδο, window.AXION_CURRENT (current.js)
+    για την κεφαλαιοποίηση → έκθεση σε ευρώ. Αν λείπει το shorts.js η σελίδα δείχνει
+    κενή κατάσταση αντί να σπάει. */
+ .sp-tiles{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 4px}
+ .sp-tiles .t{flex:1 1 130px;background:#f7f9fc;border:1px solid var(--line);
+   border-left:3px solid #c2694f;border-radius:11px;padding:11px 14px}
+ .sp-tiles .t b{display:block;font-family:'Inter';font-size:24px;font-weight:800;color:#223c66;line-height:1.1}
+ .sp-tiles .t span{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+ .sp-tiles .t.hi{background:#fdf3ef;border-color:#f0c3b2;border-left-color:#9e3c1e;flex:1 1 185px}
+ .sp-tiles .t.hi b{color:#9e3c1e;font-size:22px;white-space:nowrap}
+ .sp h2{font-size:17px;font-weight:800;margin:24px 2px 9px;color:#223c66;display:flex;align-items:baseline;gap:9px}
+ .sp h2 small{font-weight:600;font-size:12px;color:var(--muted)}
+ .sp h2 .dot{width:8px;height:8px;border-radius:50%;background:#c2694f;flex:none}
+ .sp h2.q .dot{background:#9aa7b8}
+ .sp .view{display:none}.sp .view.on{display:block}
+ .sp td.mono{font-family:'Ubuntu Mono';font-size:13px;color:var(--muted);white-space:nowrap}
+ .sp td.p{font-family:'Inter';font-weight:800;font-size:15px;color:#223c66;text-align:right;white-space:nowrap}
+ .sp td.p.op{color:#9e3c1e}
+ .sp td.eu{font-family:'Inter';font-weight:700;font-size:14px;color:#2d3f5e;text-align:right;white-space:nowrap}
+ .sp td.fd{font-size:12.5px}
+ .sp td.lst{font-size:12px;color:var(--muted)}
+ .sp .up{color:#c23b22;font-weight:700}.sp .dn{color:#1d8a46;font-weight:700}.sp .nw{color:#9aa7b8}
+ .sp th .i{display:inline-block;width:13px;height:13px;line-height:13px;border-radius:50%;border:1px solid #93a6c4;
+   color:#cdd9ea;font-size:9px;text-align:center;font-weight:700;margin-left:4px;vertical-align:1px;font-style:normal}
+ /* λωρίδα εξήγησης — τρεις γραμμές, πάντα ορατή (η προειδοποίηση δεν κρύβεται σε tooltip:
+    σε κινητό δεν υπάρχει hover και το νούμερο σε ευρώ είναι ακριβώς αυτό που παρεξηγείται) */
+ .sp .xs{margin-top:11px;background:#f7f9fc;border:1px solid var(--line);border-left:3px solid #2d5fa8;
+   border-radius:10px;padding:10px 14px;font-size:12.5px;color:#4b5a70;line-height:1.7}
+ .sp .xs b.h{color:#223c66;font-weight:800}
+ .sp .xs .ic{display:inline-block;width:15px;height:15px;line-height:15px;border-radius:50%;background:#2d5fa8;
+   color:#fff;font-size:10px;text-align:center;font-style:normal;font-weight:700;margin-right:5px;vertical-align:1px}
+ .sp .xs code{font-family:'Ubuntu Mono';font-size:12.5px;background:#fff;border:1px solid var(--line);
+   border-radius:5px;padding:1px 6px;color:#2d3f5e;white-space:nowrap}
+ .sp .xs em{font-style:normal;color:#8a6410;font-weight:700}
+ .sp .note{font-size:12px;color:var(--muted);margin-top:14px;line-height:1.6}
+ .sp .empty{margin-top:22px;padding:26px;text-align:center;color:var(--muted);font-size:13.5px;
+   background:var(--soft);border:1px dashed #cfd8e6;border-radius:12px}
+ /* ΚΙΝΗΤΟ: οι πίνακες γίνονται κάρτες. Επτά στήλες σε 390px βγάζουν οριζόντια κύλιση
+    ~690px — ο αναγνώστης χάνει τη μισή γραμμή. Κάθε <td> κουβαλά data-l με το όνομα της
+    στήλης και γίνεται «ετικέτα → τιμή»· η επικεφαλίδα του πίνακα κρύβεται. */
+ @media (max-width:760px){
+   /* ο τίτλος της σελίδας είναι μακρύς· το chrome.css βάζει flex:none στο h1 του hero,
+      οπότε σε 390px δεν αναδιπλωνόταν και έσπρωχνε τη σελίδα στα 450px (οριζόντια κύλιση). */
+   .wrap.sp>.secbox:first-child>.hero-in>h1{flex:1 1 100%;min-width:0}
+   .sp-tiles{gap:8px}
+   .sp-tiles .t,.sp-tiles .t.hi{flex:1 1 calc(50% - 4px);padding:9px 12px}
+   .sp-tiles .t b,.sp-tiles .t.hi b{font-size:20px}
+   .sp-tiles .t span{font-size:10px}
+   .sp h2{display:block;margin:20px 2px 8px}
+   .sp h2 .dot{display:inline-block;margin-right:7px;vertical-align:1px}
+   .sp h2 small{display:block;margin-top:3px}
+   .sp .hide-s{display:none}
+   .sp .xs code{white-space:normal;display:inline-block;margin:2px 0}
+
+   .sp table,.sp tbody,.sp tr,.sp td{display:block;width:auto}
+   .sp thead{display:none}
+   .sp tbody tr{border:1px solid var(--line);border-radius:11px;padding:10px 13px;margin-bottom:9px;background:#fff}
+   .sp tbody tr:hover{background:#fff}
+   .sp tbody td{border:0;padding:4px 0;display:flex;justify-content:space-between;align-items:baseline;gap:12px;text-align:right}
+   .sp tbody td:before{content:attr(data-l);flex:none;font-size:10.5px;font-weight:700;letter-spacing:.04em;
+     text-transform:uppercase;color:var(--muted);text-align:left}
+   .sp tbody td.rk{display:none}
+   .sp tbody td.nm{display:block;text-align:left;font-size:15px;padding:0 0 7px;margin-bottom:5px;
+     border-bottom:1px solid var(--line)}
+   .sp tbody td.nm:before{content:none}
+   /* κελιά με μακρύ κείμενο (λίστα funds / «σε ποιες»): ετικέτα από πάνω, περιεχόμενο από
+      κάτω. Σε flex κελί το κείμενο είναι ανώνυμο flex item με min-width:auto και δεν
+      αναδιπλώνεται — έβγαζε τη σελίδα στα 759px. */
+   .sp tbody td.fd{display:block;text-align:left}
+   .sp tbody td.fd:before{display:block;margin-bottom:3px}
+   .sp tbody td.lst{text-align:right}
+   .sp tbody td.p,.sp tbody td.eu{font-size:15px}
+ }
+</style>
+</head>
+<body>
+<div id="am-nav"></div>
+<div class="wrap sp">
+  <div class="secbox">
+    <div class="stripe"></div>
+    <div class="hero-in">
+      <h1 data-i18n="sp.h1">Short θέσεις στο Χρηματιστήριο Αθηνών</h1>
+      <p class="hero-desc" id="spDesc"></p>
+    </div>
+  </div>
+  <div class="sp-tiles" id="spTiles"></div>
+  <div class="controls" style="margin-top:14px">
+    <div class="crow">
+      <span class="lbl" data-i18n="sp.view">Όψη</span>
+      <div class="seg">
+        <button class="on" id="spBco" data-i18n="sp.byco">Ανά εταιρεία</button>
+        <button id="spBfu" data-i18n="sp.byfu">Ανά fund</button>
+      </div>
+      <span style="font-size:12px;color:var(--muted);margin-left:6px" class="hide-s" data-i18n="sp.hint">Οι ανοιχτές θέσεις πάντα πρώτες· το ιστορικό από κάτω.</span>
+    </div>
+  </div>
+  <div class="view on" id="spVco"></div>
+  <div class="view" id="spVfu"></div>
+  <p class="note" id="spNote"></p>
+</div>
+<script src="../assets/data.js"></script>
+<script src="../assets/current.js"></script>
+<script src="../assets/shorts.js"></script>
+<script src="../assets/i18n.js"></script>
+<script>
+AX_I18N.add({
+ 'sp.title':{el:'Short θέσεις — Axion Metrics', en:'Short positions — Axion Metrics'},
+ 'sp.h1':{el:'Short θέσεις στο Χρηματιστήριο Αθηνών', en:'Short positions on the Athens Stock Exchange'},
+ 'sp.desc':{el:'Δημοσιοποιημένες καθαρές αρνητικές θέσεις ≥0,5% του μετοχικού κεφαλαίου — πηγή: Επιτροπή Κεφαλαιαγοράς. Τελευταία ενημέρωση {d}.',
+            en:'Disclosed net short positions of ≥0.5% of share capital — source: Hellenic Capital Market Commission. Last update {d}.'},
+ 'sp.view':{el:'Όψη', en:'View'},
+ 'sp.byco':{el:'Ανά εταιρεία', en:'By company'},
+ 'sp.byfu':{el:'Ανά fund', en:'By fund'},
+ 'sp.hint':{el:'Οι ανοιχτές θέσεις πάντα πρώτες· το ιστορικό από κάτω.', en:'Open positions always first; history below.'},
+ /* πλακίδια */
+ 'sp.k.pos':{el:'ανοιχτές θέσεις', en:'open positions'},
+ 'sp.k.coNow':{el:'εταιρείες σήμερα', en:'companies today'},
+ 'sp.k.fuNow':{el:'funds σήμερα', en:'funds today'},
+ 'sp.k.exp':{el:'συνολική έκθεση', en:'total exposure'},
+ 'sp.k.coAll':{el:'εταιρείες ιστορικά', en:'companies ever'},
+ 'sp.k.fuAll':{el:'funds ιστορικά', en:'funds ever'},
+ 'sp.k.rows':{el:'γνωστοποιήσεις', en:'disclosures'},
+ /* επικεφαλίδες ενοτήτων */
+ 'sp.h.open':{el:'Τρέχουσες ανοιχτές θέσεις', en:'Current open positions'},
+ 'sp.h.openS':{el:'{n} θέσεις σε {c} εταιρείες · {e} συνολικά', en:'{n} positions in {c} companies · {e} in total'},
+ 'sp.h.closed':{el:'Εταιρείες χωρίς τρέχουσα θέση', en:'Companies with no current position'},
+ 'sp.h.closedS':{el:'{n} εταιρείες με ιστορικό short από {d}', en:'{n} companies with short history since {d}'},
+ 'sp.h.fopen':{el:'Funds με ανοιχτή θέση', en:'Funds with an open position'},
+ 'sp.h.fopenS':{el:'{n} funds · {e} συνολικά', en:'{n} funds · {e} in total'},
+ 'sp.h.fclosed':{el:'Funds χωρίς τρέχουσα θέση', en:'Funds with no current position'},
+ 'sp.h.fclosedS':{el:'{n} funds', en:'{n} funds'},
+ /* στήλες */
+ 'sp.c.co':{el:'Εταιρεία', en:'Company'},
+ 'sp.c.sec':{el:'Κλάδος', en:'Sector'},
+ 'sp.c.fund':{el:'Fund', en:'Fund'},
+ 'sp.c.pos':{el:'Θέση', en:'Position'},
+ 'sp.c.exp':{el:'Έκθεση', en:'Exposure'},
+ 'sp.c.date':{el:'Ημερομηνία', en:'Date'},
+ 'sp.c.chg':{el:'Μεταβολή', en:'Change'},
+ 'sp.c.hist':{el:'Ιστορικό', en:'History'},
+ 'sp.c.funds':{el:'Funds', en:'Funds'},
+ 'sp.c.rows':{el:'Γνωστ.', en:'Discl.'},
+ 'sp.c.max':{el:'Μέγιστη', en:'Peak'},
+ 'sp.c.lastrec':{el:'Τελευταία καταγραφή', en:'Last recorded'},
+ 'sp.c.period':{el:'Περίοδος', en:'Period'},
+ 'sp.c.npos':{el:'Θέσεις', en:'Positions'},
+ 'sp.c.inwhich':{el:'Σε ποιες', en:'In which'},
+ 'sp.c.last':{el:'Τελευταία', en:'Latest'},
+ 'sp.c.cos':{el:'Εταιρείες', en:'Companies'},
+ 'sp.u.rows':{el:'γνωστ.', en:'discl.'},
+ 'sp.u.cos':{el:'εταιρ.', en:'cos.'},
+ /* λωρίδα εξήγησης */
+ 'sp.x.h':{el:'Έκθεση σε ευρώ', en:'Exposure in euros'},
+ 'sp.x.def':{el:' = θέση % × κεφαλαιοποίηση στο κλείσιμο {d} — π.χ. ', en:' = position % × market capitalisation at the {d} close — e.g. '},
+ 'sp.x.defNoDate':{el:' = θέση % × κεφαλαιοποίηση στο τελευταίο κλείσιμο — π.χ. ', en:' = position % × market capitalisation at the latest close — e.g. '},
+ 'sp.x.why':{el:'Υπάρχει για να συγκρίνονται θέσεις σε εταιρείες διαφορετικού μεγέθους.',
+             en:'It exists so that positions in companies of different size can be compared.'},
+ 'sp.x.not':{el:'Δεν είναι κέρδος, ζημία ή επένδυση του fund', en:'It is not a profit, loss or investment of the fund'},
+ 'sp.x.not2':{el:' — η θέση μπορεί να χτίστηκε σε άλλες τιμές.', en:' — the position may have been built at quite different prices.'},
+ /* υποσημείωση + κενή κατάσταση */
+ 'sp.note':{el:'Δημοσιοποίηση υποχρεωτική στο 0,5% του μετοχικού κεφαλαίου και σε κάθε βήμα 0,1% πάνω από αυτό. «Χωρίς τρέχουσα θέση» σημαίνει ότι δεν υπάρχει σήμερα δημοσιοποιημένη θέση — όχι απαραίτητα ότι το fund αποχώρησε, αφού κάτω από το όριο η θέση παύει να δημοσιοποιείται. Το ίδιο fund εμφανίζεται ενίοτε με δύο νομικές μορφές (π.χ. LLP και LTD)· τα κρατάμε χωριστά όπως τα δημοσιεύει η Επιτροπή.',
+           en:'Disclosure is mandatory at 0.5% of share capital and at every 0.1% step above it. “No current position” means no position is disclosed today — not necessarily that the fund has exited, since below the threshold a position stops being disclosed. The same fund sometimes appears under two legal forms (e.g. LLP and LTD); we keep them separate, as the Commission publishes them.'},
+ 'sp.empty':{el:'Δεν υπάρχουν διαθέσιμα στοιχεία short θέσεων αυτή τη στιγμή.', en:'No short-position data is available at the moment.'}
+});
+
+(function(){
+ function L(k){return AX_I18N.t(k);}
+ function SEC(n){return AX_I18N.sector(n);}
+ function EN(){return (window.AX_I18N?AX_I18N.lang:'el')==='en';}
+ function esc(t){return String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+ function f(k,o){var s=L(k);for(var p in o)s=s.split('{'+p+'}').join(o[p]);return s;}
+ /* δεκαδικό χωριστικό κατά γλώσσα — ίδια σύμβαση με το block της σελίδας εταιρείας (§128) */
+ function dec(x){return EN()?String(x):String(x).replace('.',',');}
+ function pct(v){return (v==null||isNaN(v))?'—':dec(Number(v).toFixed(2))+'%';}
+ function gd(iso){var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(iso||'');return m?(m[3]+'/'+m[2]+'/'+m[1]):(iso||'');}
+ function my(iso){var m=/^(\d{4})-(\d{2})/.exec(iso||'');return m?(m[2]+'/'+m[1]):(iso||'');}
+ function eur(x){
+   if(x==null||isNaN(x)) return '<span class="nw">—</span>';
+   if(EN()) return x>=1e9?('€'+(x/1e9).toFixed(2)+'bn'):('€'+(x/1e6).toFixed(1)+'m');
+   return x>=1e9?(dec((x/1e9).toFixed(2))+' δισ. €'):(dec((x/1e6).toFixed(1))+' εκ. €');
+ }
+ /* Το παράδειγμα της εξήγησης γράφει ΠΑΝΤΑ την κεφαλαιοποίηση σε εκατομμύρια (όχι δισ.):
+    «1,05% × 7,06 δισ. € = 74,2 εκ. €» δεν βγαίνει αν κάνει κανείς την πράξη (74,1)· με
+    «7.062 εκ. €» βγαίνει. Η πράξη πρέπει να επαληθεύεται με το μάτι. */
+ function eurEx(x){
+   if(x==null||isNaN(x)) return '—';
+   var v=(x/1e6).toFixed(0), g=String(v).replace(/\B(?=(\d{3})+(?!\d))/g, EN()?',':'.');
+   return EN()?('€'+g+'m'):(g+' εκ. €');
+ }
+ function dlt(v){
+   if(v==null) return '<span class="nw">—</span>';
+   if(Math.abs(v)<0.005) return '<span class="nw">'+dec('0.00')+'</span>';
+   return '<span class="'+(v>0?'up':'dn')+'">'+(v>0?'+':'−')+dec(Math.abs(v).toFixed(2))+'</span>';
+ }
+
+ var SH=window.AXION_SHORTS, CUR=window.AXION_CURRENT||{}, AX=window.AXION||{};
+ var INFO={}; ((AX.companies&&AX.companies.annual)||[]).forEach(function(c){
+   INFO[c.tk]={name:c.name,slug:c.slug,s:c.s};});
+ function coLink(tk,nm){
+   var u=(window.AX_CO?AX_CO(tk):null);
+   return u?('<a href="'+u+'">'+esc(nm)+'</a>'):esc(nm);
+ }
+ function mcap(tk){var c=CUR[tk];return (c&&typeof c.mcap==='number'&&c.mcap>0)?c.mcap:null;}
+
+ /* ── μοντέλο ────────────────────────────────────────────────────────────────── */
+ var M=null;
+ function build(){
+   if(!SH||!SH.by) return null;
+   var openC=[],closedC=[],FU={},priceDates=[],allFirst=null,nrows=0;
+   Object.keys(SH.by).forEach(function(tk){
+     var rec=SH.by[tk], I=INFO[tk]||{}, nm=I.name||tk;
+     var mx=0,first=null,last=null,lastp=null,opens=[],dates=0;
+     rec.funds.forEach(function(fd){
+       var F=FU[fd.f]||(FU[fd.f]={f:fd.f,rows:0,cos:{},open:{},last:'',max:0});
+       F.rows+=fd.rows.length; F.cos[nm]=1;
+       if(fd.ld>F.last) F.last=fd.ld;
+       if(fd.open){F.open[nm]={tk:tk,p:fd.lp,d:fd.ld};opens.push({f:fd.f,p:fd.lp,d:fd.ld,c:fd.rows[0]&&fd.rows[0].c});}
+       fd.rows.forEach(function(r){
+         dates++; if(r.p>mx)mx=r.p; if(r.p>F.max)F.max=r.p;
+         if(first===null||r.d<first)first=r.d;
+         if(last===null||r.d>last){last=r.d;lastp=r.p;}
+       });
+     });
+     nrows+=dates;
+     if(allFirst===null||first<allFirst) allFirst=first;
+     var mc=mcap(tk), row={tk:tk,nm:nm,slug:I.slug,sec:I.s||'',nf:rec.funds.length,n:rec.n,
+       mx:mx,first:first,last:last,lastp:lastp,tot:rec.tot||0,opens:opens,
+       exp:(mc!=null&&rec.tot)?mc*rec.tot/100:null,mcap:mc};
+     if(opens.length){openC.push(row); if(CUR[tk]&&CUR[tk].date) priceDates.push(CUR[tk].date);} else closedC.push(row);
+   });
+   var openF=[],closedF=[];
+   Object.keys(FU).forEach(function(k){
+     var F=FU[k]; F.cosList=Object.keys(F.cos).sort(); F.nco=F.cosList.length;
+     F.openList=Object.keys(F.open).map(function(n){
+       var o=F.open[n], mc=mcap(o.tk);
+       return {nm:n,tk:o.tk,p:o.p,d:o.d,exp:(mc!=null)?mc*o.p/100:null};
+     }).sort(function(a,b){return b.p-a.p;});
+     F.exp=F.openList.reduce(function(s,o){return s+(o.exp||0);},0);
+     if(!F.openList.length) F.exp=null;
+     (F.openList.length?openF:closedF).push(F);
+   });
+   function byExp(a,b){return (b.exp||0)-(a.exp||0) || (b.tot||0)-(a.tot||0);}
+   openC.sort(byExp); closedC.sort(function(a,b){return b.n-a.n;});
+   openF.sort(byExp); closedF.sort(function(a,b){return b.rows-a.rows;});
+   priceDates.sort();
+   return {openC:openC,closedC:closedC,openF:openF,closedF:closedF,nrows:nrows,
+     nco:openC.length+closedC.length,nfu:openF.length+closedF.length,
+     npos:openC.reduce(function(s,c){return s+c.opens.length;},0),
+     totExp:openC.reduce(function(s,c){return s+(c.exp||0);},0),
+     anyExp:openC.some(function(c){return c.exp!=null;}),
+     priceDate:priceDates.length?priceDates[priceDates.length-1]:null,
+     first:allFirst};
+ }
+
+ /* ── λωρίδα εξήγησης (ΣΤ) ───────────────────────────────────────────────────── */
+ function explain(){
+   if(!M.anyExp) return '';
+   var ex=null;
+   for(var i=0;i<M.openC.length;i++) if(M.openC[i].exp!=null){ex=M.openC[i];break;}
+   var calc=ex?('<code>'+pct(ex.tot)+' × '+eurEx(ex.mcap)+' = '+eur(ex.exp)+'</code>'):'';
+   var def=M.priceDate?f('sp.x.def',{d:gd(M.priceDate)}):L('sp.x.defNoDate');
+   return '<div class="xs"><b class="h"><i class="ic">i</i>'+L('sp.x.h')+'</b>'+def+calc+'. '
+     +L('sp.x.why')+' <em>'+L('sp.x.not')+'</em>'+L('sp.x.not2')+'</div>';
+ }
+
+ /* ── όψη: ανά εταιρεία ──────────────────────────────────────────────────────── */
+ function viewCo(){
+   var t1=M.openC.map(function(c,i){
+     return '<tr><td class="rk">'+(i+1)+'</td><td class="nm">'+coLink(c.tk,c.nm)+'</td>'
+       +'<td class="sc" data-l="'+L('sp.c.sec')+'">'+esc(SEC(c.sec))+'</td>'
+       +'<td class="fd" data-l="'+L('sp.c.fund')+'">'+esc(c.opens.map(function(o){return o.f;}).join(' · '))+'</td>'
+       +'<td class="p op" data-l="'+L('sp.c.pos')+'">'+pct(c.tot)+'</td>'
+       +'<td class="eu" data-l="'+L('sp.c.exp')+'">'+eur(c.exp)+'</td>'
+       +'<td class="mono" data-l="'+L('sp.c.date')+'">'+gd(c.opens.map(function(o){return o.d;}).sort().pop())+'</td>'
+       +'<td class="mono" style="text-align:right" data-l="'+L('sp.c.chg')+'">'+dlt(c.opens[0].c)+'</td>'
+       +'<td class="lst hide-s" style="text-align:right">'+c.n+' '+L('sp.u.rows')+' · max '+pct(c.mx)+'</td></tr>';
+   }).join('');
+   var t2=M.closedC.map(function(c){
+     return '<tr><td class="nm">'+coLink(c.tk,c.nm)+'</td><td class="sc" data-l="'+L('sp.c.sec')+'">'+esc(SEC(c.sec))+'</td>'
+       +'<td class="mono" style="text-align:center" data-l="'+L('sp.c.funds')+'">'+c.nf+'</td>'
+       +'<td class="mono" style="text-align:center" data-l="'+L('sp.c.rows')+'">'+c.n+'</td>'
+       +'<td class="p" data-l="'+L('sp.c.max')+'">'+pct(c.mx)+'</td>'
+       +'<td class="lst" data-l="'+L('sp.c.lastrec')+'">'+pct(c.lastp)+' · '+gd(c.last)+'</td>'
+       +'<td class="mono hide-s" style="text-align:right">'+my(c.first)+' – '+my(c.last)+'</td></tr>';
+   }).join('');
+   return '<h2><span class="dot"></span>'+L('sp.h.open')+' <small>'
+     +f('sp.h.openS',{n:M.npos,c:M.openC.length,e:M.anyExp?eur(M.totExp):'—'})+'</small></h2>'
+     +'<table><thead><tr><th></th><th class="l">'+L('sp.c.co')+'</th><th class="l">'+L('sp.c.sec')+'</th>'
+     +'<th class="l">'+L('sp.c.fund')+'</th><th style="text-align:right">'+L('sp.c.pos')+'</th>'
+     +'<th style="text-align:right">'+L('sp.c.exp')+'<i class="i">i</i></th><th class="l">'+L('sp.c.date')+'</th>'
+     +'<th style="text-align:right">'+L('sp.c.chg')+'</th>'
+     +'<th class="hide-s" style="text-align:right">'+L('sp.c.hist')+'</th></tr></thead><tbody>'+t1+'</tbody></table>'
+     +explain()
+     +'<h2 class="q"><span class="dot"></span>'+L('sp.h.closed')+' <small>'
+     +f('sp.h.closedS',{n:M.closedC.length,d:gd(M.first)})+'</small></h2>'
+     +'<table><thead><tr><th class="l">'+L('sp.c.co')+'</th><th class="l">'+L('sp.c.sec')+'</th>'
+     +'<th>'+L('sp.c.funds')+'</th><th>'+L('sp.c.rows')+'</th>'
+     +'<th style="text-align:right">'+L('sp.c.max')+'</th><th class="l">'+L('sp.c.lastrec')+'</th>'
+     +'<th class="hide-s" style="text-align:right">'+L('sp.c.period')+'</th></tr></thead><tbody>'+t2+'</tbody></table>';
+ }
+
+ /* ── όψη: ανά fund ──────────────────────────────────────────────────────────── */
+ function viewFu(){
+   var t1=M.openF.map(function(F,i){
+     var inw=F.openList.map(function(o){
+       return esc(o.nm)+' <b style="color:#9e3c1e">'+pct(o.p)+'</b>'
+         +(o.exp!=null?(' <span style="color:#8c9ab0">('+eur(o.exp)+')</span>'):'');
+     }).join(' · ');
+     return '<tr><td class="rk">'+(i+1)+'</td><td class="nm">'+esc(F.f)+'</td>'
+       +'<td class="mono" style="text-align:center" data-l="'+L('sp.c.npos')+'">'+F.openList.length+'</td>'
+       +'<td class="eu" style="font-size:15px;color:#9e3c1e" data-l="'+L('sp.c.exp')+'">'+eur(F.exp)+'</td>'
+       +'<td class="fd" data-l="'+L('sp.c.inwhich')+'">'+inw+'</td>'
+       +'<td class="mono" data-l="'+L('sp.c.last')+'">'+gd(F.last)+'</td>'
+       +'<td class="lst hide-s" style="text-align:right">'+F.rows+' '+L('sp.u.rows')+' · '+F.nco+' '+L('sp.u.cos')+'</td></tr>';
+   }).join('');
+   var t2=M.closedF.map(function(F){
+     var l=F.cosList.slice(0,4).map(esc).join(' · ')+(F.nco>4?' …':'');
+     return '<tr><td class="nm">'+esc(F.f)+'</td>'
+       +'<td class="mono" style="text-align:center" data-l="'+L('sp.c.cos')+'">'+F.nco+'</td>'
+       +'<td class="mono" style="text-align:center" data-l="'+L('sp.c.rows')+'">'+F.rows+'</td>'
+       +'<td class="p" data-l="'+L('sp.c.max')+'">'+pct(F.max)+'</td>'
+       +'<td class="mono" data-l="'+L('sp.c.last')+'">'+gd(F.last)+'</td>'
+       +'<td class="fd" data-l="'+L('sp.c.inwhich')+'">'+l+'</td></tr>';
+   }).join('');
+   return '<h2><span class="dot"></span>'+L('sp.h.fopen')+' <small>'
+     +f('sp.h.fopenS',{n:M.openF.length,e:M.anyExp?eur(M.totExp):'—'})+'</small></h2>'
+     +'<table><thead><tr><th></th><th class="l">'+L('sp.c.fund')+'</th><th>'+L('sp.c.npos')+'</th>'
+     +'<th style="text-align:right">'+L('sp.c.exp')+'<i class="i">i</i></th><th class="l">'+L('sp.c.inwhich')+'</th>'
+     +'<th class="l">'+L('sp.c.last')+'</th>'
+     +'<th class="hide-s" style="text-align:right">'+L('sp.c.hist')+'</th></tr></thead><tbody>'+t1+'</tbody></table>'
+     +explain()
+     +'<h2 class="q"><span class="dot"></span>'+L('sp.h.fclosed')+' <small>'
+     +f('sp.h.fclosedS',{n:M.closedF.length})+'</small></h2>'
+     +'<table><thead><tr><th class="l">'+L('sp.c.fund')+'</th><th>'+L('sp.c.cos')+'</th>'
+     +'<th>'+L('sp.c.rows')+'</th><th style="text-align:right">'+L('sp.c.max')+'</th>'
+     +'<th class="l">'+L('sp.c.last')+'</th>'
+     +'<th class="l hide-s">'+L('sp.c.inwhich')+'</th></tr></thead><tbody>'+t2+'</tbody></table>';
+ }
+
+ function tiles(){
+   var T=[[M.npos,'sp.k.pos',''],[M.openC.length,'sp.k.coNow',''],[M.openF.length,'sp.k.fuNow','']];
+   if(M.anyExp) T.push([eur(M.totExp),'sp.k.exp',' hi']);
+   T.push([M.nco,'sp.k.coAll',''],[M.nfu,'sp.k.fuAll',''],[M.nrows,'sp.k.rows','']);
+   return T.map(function(t){return '<div class="t'+t[2]+'"><b>'+t[0]+'</b><span>'+L(t[1])+'</span></div>';}).join('');
+ }
+
+ var elT=document.getElementById('spTiles'), elCo=document.getElementById('spVco'),
+     elFu=document.getElementById('spVfu'), elD=document.getElementById('spDesc'),
+     elN=document.getElementById('spNote'),
+     bCo=document.getElementById('spBco'), bFu=document.getElementById('spBfu');
+
+ function render(){
+   M=build();
+   if(!M||!M.nco){
+     elT.innerHTML=''; elN.textContent='';
+     elCo.innerHTML='<div class="empty">'+L('sp.empty')+'</div>'; elFu.innerHTML='';
+     elD.textContent=''; return;
+   }
+   elD.textContent=f('sp.desc',{d:gd((window.AXION_SHORTS&&AXION_SHORTS.pub)||'')});
+   elT.innerHTML=tiles();
+   elCo.innerHTML=viewCo();
+   elFu.innerHTML=viewFu();
+   elN.textContent=L('sp.note');
+ }
+ function sel(co){
+   bCo.classList.toggle('on',co); bFu.classList.toggle('on',!co);
+   elCo.classList.toggle('on',co); elFu.classList.toggle('on',!co);
+   try{history.replaceState(null,'',co?location.pathname:(location.pathname+'#fund'));}catch(e){}
+ }
+ bCo.addEventListener('click',function(){sel(true);});
+ bFu.addEventListener('click',function(){sel(false);});
+ render();
+ if(location.hash==='#fund') sel(false);
+ document.addEventListener('axion:langchange',render);
+})();
+</script>
+<div id="am-foot"><nav class="am-sfoot" aria-label="Χάρτης ιστότοπου"><span class="am-sfoot-x"></span><a href="/">Αρχική</a><a href="/company/">Σελίδα εταιρείας</a><a href="/compare/">Σύγκριση εταιρειών</a><a href="/rankings/">Κατατάξεις</a><a href="/apotelesmata/">Τελευταία αποτελέσματα</a><a href="/sectors/">Ευρετήριο κλάδων</a><a href="/sector/">Σελίδα κλάδου</a><a href="/index-reviews/">Αναθεωρήσεις δεικτών</a><a href="/market-events/">Γεγονότα αγοράς</a><a href="/short-positions/">Short θέσεις</a><a href="/methodology/">Μεθοδολογία &amp; δείκτες</a><a href="/about/">Περί</a><a href="/terms/">Όροι χρήσης</a><a href="/katataxeis/p-e/">Κατάταξη ανά P/E</a><a href="/katataxeis/p-bv/">Κατάταξη ανά P/BV</a><a href="/katataxeis/ev-ebitda/">Κατάταξη ανά EV/EBITDA</a><a href="/katataxeis/roe/">Κατάταξη ανά ROE</a><a href="/katataxeis/merismatiki-apodosi/">Κατάταξη ανά Μερισματική απόδοση</a><a href="/katataxeis/katharos-daneismos-ebitda/">Κατάταξη ανά Καθαρός δανεισμός / EBITDA</a><a href="/klados/akinita/">Ακίνητα</a><a href="/klados/chrimatooikonomika/">Χρηματοοικονομικά</a><a href="/klados/emporio-dianomi/">Εμπόριο &amp; Διανομή</a><a href="/klados/energeia-koinis-ofeleias/">Ενέργεια &amp; Κοινής Ωφέλειας</a><a href="/klados/holding/">Holding</a><a href="/klados/katanalotika-agatha/">Καταναλωτικά Αγαθά</a><a href="/klados/kataskeves-ypodomes-metafores/">Κατασκευές, Υποδομές &amp; Μεταφορές</a><a href="/klados/navtilia/">Ναυτιλία</a><a href="/klados/technologia-mme-tilepikoinonies/">Τεχνολογία, ΜΜΕ &amp; Τηλεπικοινωνίες</a><a href="/klados/trapezes/">Τράπεζες</a><a href="/klados/viomichania-vasika-ylika/">Βιομηχανία &amp; Βασικά Υλικά</a></nav></div>
+<script>window.NAV_ACTIVE=2;window.NAV_CUR="Short θέσεις";window.AX_NO_BASIS=true;</script>
+<script src="../assets/chrome.js"></script>
+</body>
+</html>

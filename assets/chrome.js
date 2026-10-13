@@ -14,9 +14,10 @@
    {g:{el:'Κλάδοι',en:'Sectors'},items:[
      [{el:'Ευρετήριο κλάδων',en:'Sector index'},'/sectors/'],
      [{el:'Σελίδα κλάδου',en:'Sector page'},'/sector/']]},
-   {g:{el:'Γεγονότα',en:'Events'},items:[
+   {g:{el:'Αγορά',en:'Market'},items:[
      [{el:'Αναθεωρήσεις δεικτών',en:'Index reviews'},'/index-reviews/'],
-     [{el:'Γεγονότα αγοράς',en:'Market events'},'/market-events/']]},
+     [{el:'Γεγονότα αγοράς',en:'Market events'},'/market-events/'],
+     [{el:'Short θέσεις',en:'Short positions'},'/short-positions/']]},
    {g:{el:'Σχετικά',en:'About'},items:[
      [{el:'Μεθοδολογία & δείκτες',en:'Methodology & ratios'},'/methodology/'],
      [{el:'Περί',en:'About the project'},'/about/'],
