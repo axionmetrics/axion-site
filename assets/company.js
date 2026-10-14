@@ -36,6 +36,12 @@ AX_I18N.add({
  'co.eb.plain':{el:'(κανονικό)', en:'(standard)'},
  'co.eb.s.reponly':{el:'Ο αριθμός είναι το <b>δημοσιευμένο</b> EBITDA της εταιρείας. Για αυτή την εταιρεία δεν υπολογίζουμε δικό μας EBITDA — ο ενιαίος τύπος δεν έχει νόημα στη δομή της.', en:'This figure is the company\u2019s <b>reported</b> EBITDA. We do not compute our own EBITDA for this company \u2014 the standard formula is not meaningful for its structure.'},
  'co.eb.s.own':{el:'<b>Η εταιρεία δεν δημοσιεύει EBITDA.</b> Ο αριθμός είναι <b>υπολογισμός Axion</b> με τον ίδιο τύπο που εφαρμόζεται σε όλες τις εισηγμένες: κέρδη προ φόρων + τόκοι − χρηματοοικονομικά έσοδα + αποσβέσεις.', en:'<b>The company does not report EBITDA.</b> This figure is an <b>Axion calculation</b> using the same formula applied to every listed company: pre-tax profit + interest − financial income + depreciation.'},
+ /* §45.8 — ΣΥΓΚΡΙΣΙΜΟ (ADJUSTED) EBITDA: το δημοσιεύει η ΙΔΙΑ η εταιρεία δίπλα στο
+    κανονικό, με δικό της ορισμό (έκτακτα, επιδράσεις αποτίμησης, φάσεις κόστους). Δεν
+    συγκρίνεται μεταξύ εισηγμένων, άρα ΔΕΝ τροφοδοτεί δείκτη ή κατάταξη — μπαίνει μόνο
+    στη λωρίδα, ώστε να μη λείπει από τη σελίδα μέγεθος που ανακοίνωσε η εταιρεία. */
+ 'co.eb.s.adj':{el:'Η εταιρεία δημοσιεύει και <b>συγκρίσιμο (adjusted) EBITDA {v}</b> για την ίδια περίοδο — μέγεθος με δικό της ορισμό, που αφαιρεί έκτακτα και επιδράσεις αποτίμησης. Δεν είναι συγκρίσιμο μεταξύ εισηγμένων, γι\u2019 αυτό οι δείκτες και οι κατατάξεις χρησιμοποιούν πάντα το <b>υπολογισμένο Axion</b>.',
+                en:'The company also reports an <b>adjusted EBITDA of {v}</b> for the same period — a measure it defines itself, stripping out one-off items and valuation effects. It is not comparable across listed companies, so ratios and rankings always use the <b>Axion calculation</b>.'},
  'co.eb.s.plain':{el:'Και τα δύο είναι <b>κανονικό EBITDA</b>. Η διαφορά προκύπτει από τον τρόπο δόμησης: η εταιρεία ξεκινά συνήθως από το λειτουργικό αποτέλεσμα, ο <b>υπολογισμός Axion</b> από τα κέρδη προ φόρων — άρα διαφέρουν κατά στοιχεία όπως τα αποτελέσματα συγγενών και οι αποσβέσεις επιχορηγήσεων.', en:'Both are <b>standard EBITDA</b>. The difference comes from how each is built: the company typically starts from operating profit, the <b>Axion calculation</b> from pre-tax profit — so they differ by items such as results of associates and amortisation of grants.'},
  'co.eb.s.kind':{el:'Η εταιρεία δημοσιεύει EBITDA {k} — {w}. Το <b>υπολογισμένο Axion</b> εφαρμόζει τον ίδιο τύπο σε όλες τις εισηγμένες και είναι αυτό που χρησιμοποιείται στις κατατάξεις και στις διαμέσους κλάδου.', en:'The company reports EBITDA {k} — {w}. The <b>Axion calculation</b> applies the same formula to every listed company and is what feeds the rankings and sector medians.'},
  'co.eb.w.val':{el:'<b>εξαιρεί κέρδη ή ζημιές από αναπροσαρμογή σε εύλογη αξία</b>', en:'<b>it excludes fair-value revaluation gains and losses</b>'},
@@ -458,13 +464,14 @@ const EB_STATE=(function(){
   if(!EB_SCHEMA_OK) return has(own) ? {s:'legacy',own:own} : {s:'na'};
   const rep=(company.metrics.ebitda_rep||[])[li];
   const kind=(company.metrics.ebitda_kind||[])[li]||null;
-  if(!has(own)&&!has(rep)) return {s:'na'};
-  if(!has(rep)) return {s:'own',own:own};
+  const _a=(company.metrics.ebitda_adj||[])[li]; const adj=has(_a)?_a:null;
+  if(!has(own)&&!has(rep)) return {s:'na',adj:adj};
+  if(!has(rep)) return {s:'own',own:own,adj:adj};
   // ΜΟΝΟ δημοσιευμένο: για holdings/ΑΕΕΧ δεν ορίζεται δικός μας EBITDA (κενός τύπος off27).
   // ΔΕΝ είναι 'same' — δεν υπάρχει τίποτα να «συμφωνήσει».
-  if(!has(own)) return {s:'reponly',rep:rep,kind:kind};
+  if(!has(own)) return {s:'reponly',rep:rep,kind:kind,adj:adj};
   const d=Math.abs(own-rep)/Math.max(Math.abs(rep),1);
-  return d<=EB_TOL ? {s:'same',rep:rep,own:own,kind:kind,d:d} : {s:'diff',rep:rep,own:own,kind:kind,d:d};
+  return d<=EB_TOL ? {s:'same',rep:rep,own:own,kind:kind,d:d,adj:adj} : {s:'diff',rep:rep,own:own,kind:kind,d:d,adj:adj};
 })();
 function EB_WHY(k){
   const t=String(k||'').toLowerCase();
@@ -487,13 +494,24 @@ const FN=(function(){
   // (α) EBITDA — σιωπή σε 'na' / 'legacy' / 'same' (§45): όταν η σελίδα δείχνει ΕΝΑ νούμερο
   //     δεν υπάρχει διαφορά να εξηγηθεί.
   const eb=EB_STATE;
-  if(!(eb.s==='na'||eb.s==='legacy'||eb.s==='same')){
-    let html;
-    if(eb.s==='reponly'){ html=L('co.eb.s.reponly'); }
-    else if(eb.s==='own'){ html=L('co.eb.s.own'); }
-    else if(eb.kind){ html=L('co.eb.s.kind').replace('{k}',`<span class="kt">${eb.kind}</span>`).replace('{w}',L(EB_WHY(eb.kind))); }
-    else { html=L('co.eb.s.plain'); }
-    out.push({key:'ebitda',html:html});
+  // §45.8 — ΔΥΟ ΑΝΕΞΑΡΤΗΤΟΙ λόγοι για υποσημείωση EBITDA: (α) η σχέση δικού μας και
+  // δημοσιευμένου, (β) η ύπαρξη συγκρίσιμου (adjusted). Το (β) ΔΕΝ υπακούει στην ανοχή
+  // του 5%: όταν τα δύο πρώτα συμφωνούν ('same') η ζώνη δείχνει έναν αριθμό και η λωρίδα
+  // θα σιωπούσε — οπότε μέγεθος που ΑΝΑΚΟΙΝΩΣΕ η εταιρεία δεν θα φαινόταν πουθενά.
+  // 27 HELENIQ ENERGY 6μηνο 2026: 1.325,2 έναντι 1.317,9 (0,55% → 'same'), adjusted 734.
+  {
+    const parts=[];
+    if(!(eb.s==='na'||eb.s==='legacy'||eb.s==='same')){
+      if(eb.s==='reponly'){ parts.push(L('co.eb.s.reponly')); }
+      else if(eb.s==='own'){ parts.push(L('co.eb.s.own')); }
+      else if(eb.kind){ parts.push(L('co.eb.s.kind').replace('{k}',`<span class="kt">${eb.kind}</span>`).replace('{w}',L(EB_WHY(eb.kind)))); }
+      else { parts.push(L('co.eb.s.plain')); }
+    }
+    // ΦΡΟΥΡΟΣ: σε 'na' το πλακίδιο δείχνει «—», οπότε μια υποσημείωση «δημοσιεύει ΚΑΙ…»
+    // θα κρεμόταν από το τίποτα. Αν μια εταιρεία δημοσιεύει ΜΟΝΟ προσαρμοσμένο, αυτό
+    // ανήκει στη γραμμή «EBITDA ΔΗΜΟΣΙΕΥΜΕΝΟ» με ΕΙΔΟΣ «προσαρμοσμένο» (→ 'reponly').
+    if(eb.adj!=null && eb.s!=='na') parts.push(L('co.eb.s.adj').replace('{v}',`${fMil(eb.adj)}${EURSUF()}`));
+    if(parts.length) out.push({key:'ebitda',html:parts.join(' ')});
   }
   // (β) ΚΑΘΑΡΑ ΚΕΡΔΗ — ΜΟΝΟ όταν διαφέρουν από τα «κέρδη μετά φόρων» του ομίλου, δηλαδή
   //     όταν υπάρχουν μη ελέγχουσες συμμετοχές. Χωρίς αυτόν τον έλεγχο η υποσημείωση θα
