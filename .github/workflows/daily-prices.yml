@@ -108,5 +108,19 @@ jobs:
             git config user.name  "axion-bot"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git commit -m "daily: EOD τιμές + snapshot $(date -u +%Y-%m-%d)"
-            git push
+            # ΞΑΝΑΔΟΚΙΜΑΣΕ ΑΝ ΓΡΑΦΕΙ ΚΑΠΟΙΟΣ ΑΛΛΟΣ (12/10/2026): τρία bot και ο χρήστης
+            # σπρώχνουν στο ίδιο branch. Σκέτο `git push` σε ταυτόχρονη εγγραφή τρώει
+            # non-fast-forward και η δουλειά χάνεται ΑΘΟΡΥΒΑ. Ίδιο μοτίβο με το
+            # euronext-monitor.yml: fetch → rebase → push, 5 προσπάθειες ανά 5".
+            # Τα αρχεία των τριών ροών είναι ξένα μεταξύ τους (current.js+snapshots /
+            # shorts.js+.github/shorts / .github/monitor), άρα το rebase δεν συγκρούεται.
+            for i in 1 2 3 4 5; do
+              git fetch origin ${{ github.ref_name }}
+              if git rebase origin/${{ github.ref_name }} && git push; then
+                echo "OK pushed"; exit 0
+              fi
+              git rebase --abort 2>/dev/null || true
+              echo "retry $i ..."; sleep 5
+            done
+            echo "push failed after retries"; exit 1
           fi

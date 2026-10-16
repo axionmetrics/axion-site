@@ -20,6 +20,11 @@ name: "Short θέσεις — Δευ–Παρ 19:30 & 22:30 Αθήνας"
 #   30 19         22:30         21:30
 on:
   schedule:
+    # ⚠ ΔΙΚΤΥΩΤΟ ΑΣΦΑΛΕΙΑΣ (12/10/2026). Η ΚΥΡΙΑ διαδρομή είναι πλέον ο ίδιος εξωτερικός
+    # scheduler `axion-eod-trigger` του Cloudflare που τρέχει και τις τιμές: κάνει ΔΥΟ
+    # workflow_dispatch στις 18:05 Αθήνας — ένα εδώ κι ένα στο daily-prices.yml. Τα δύο
+    # cron μένουν γιατί το `GH_TOKEN` του Worker ΛΗΓΕΙ 24/09/2027 (ίδιος λόγος με το
+    # daily-prices.yml) και γιατί καλύπτουν σβησμένο/χαλασμένο Worker.
     - cron: '30 16 * * 1-5'
     - cron: '30 19 * * 1-5'
   workflow_dispatch: {}
@@ -62,5 +67,16 @@ jobs:
             git config user.name  "axion-bot"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git commit -m "shorts: ενημέρωση από Επιτροπή Κεφαλαιαγοράς $(date -u +%Y-%m-%d)"
-            git push
+            # ΞΑΝΑΔΟΚΙΜΑΣΕ ΑΝ ΓΡΑΦΕΙ ΚΑΠΟΙΟΣ ΑΛΛΟΣ (12/10/2026) — βλ. σχόλιο στο
+            # daily-prices.yml. Εδώ ο κίνδυνος είναι μεγαλύτερος: με τον Worker να
+            # χτυπά ΚΑΙ ΤΙΣ ΔΥΟ ροές στις 18:05, οι δύο εκτελέσεις ξεκινούν μαζί.
+            for i in 1 2 3 4 5; do
+              git fetch origin ${{ github.ref_name }}
+              if git rebase origin/${{ github.ref_name }} && git push; then
+                echo "OK pushed"; exit 0
+              fi
+              git rebase --abort 2>/dev/null || true
+              echo "retry $i ..."; sleep 5
+            done
+            echo "push failed after retries"; exit 1
           fi

@@ -10,6 +10,13 @@ master. Τρέχει σε GitHub Action. ΚΑΜΙΑ χειροκίνητη εν�
          το ΟΝΟΜΑ φέρει την ημερομηνία ενημέρωσης: «<YYYY_MM_DD> HCMC_disclosed_short_positions_gr.xls».
          Τρία φύλλα: «Τρέχουσες», «Ιστορικό», «Ημερομηνία Δημοσίευσης».
          Στήλες (κεφαλίδα γρ.7): POSITION HOLDER · NAME OF THE ISSUER · ISIN · NET SHORT POSITION % · POSITION DATE
+         ΑΚΡΙΒΕΙΑ: η στήλη του ποσοστού ΔΕΝ είναι 2 δεκαδικών. Ο Καν. (ΕΕ) 826/2012 (Παράρτ. Ι,
+         πίν. 1, πεδίο 13) απαιτεί «rounded to 2 decimal places» ως ΕΛΑΧΙΣΤΟ, αλλά η Επιτροπή
+         δημοσιεύει ό,τι της δηλώνεται: στην έκδοση 09/10/2026, 101 από τις 415 γραμμές έχουν
+         4–5 δεκαδικά (π.χ. 1.05351, 0.79475). Κρατάμε την ΠΗΓΑΙΑ ακρίβεια (5 δεκαδικά· η
+         στρογγυλοποίηση υπάρχει μόνο για να μη μπαίνει θόρυβος float) και αφήνουμε την
+         εμφάνιση να αποφασίσει πόσα δεκαδικά δείχνει. Με 2 δεκαδικά χάνονταν 101 τιμές και
+         94 διακριτές θέσεις ισοπεδώνονταν σε κοινές.
 robots : hcmc.gr → «User-Agent: * / Disallow:» (επιτρέπει τα πάντα, ελεγμένο 08/10/2026).
 
 Αντιστοίχιση: ΜΕ ISIN, από τον χάρτη `meta.isin` του data.js (τρέχοντα + ΠΑΛΙΑ ISIN από το INDEX
@@ -32,6 +39,9 @@ DATAJS = os.path.join(ROOT, 'assets', 'data.js')
 ARCH   = os.path.join(ROOT, '.github', 'shorts')
 ALIAS  = os.path.join(ROOT, '.github', 'data', 'fund_aliases.json')
 THRESHOLD = 0.5          # όριο δημοσιοποίησης (Καν. ΕΕ 236/2012, άρ. 6)
+DEC       = 5            # δεκαδικά που κρατάμε από την πηγή (βλ. ΑΚΡΙΒΕΙΑ στο docstring)
+FMT       = 2            # έκδοση μορφής εξόδου. ΑΥΞΗΣΕ ΤΟ όταν αλλάζει ο τρόπος που γράφονται
+                         # τα δεδομένα: αναγκάζει πλήρη ανακατασκευή ακόμη κι αν η πηγή είναι ίδια.
 
 def log(*a): print(*a, flush=True)
 
@@ -154,20 +164,20 @@ def build(cur_rows, hist_rows, pub, isin, aliases):
             rs.sort(key=lambda x: x['date'])
             prev=None; rows=[]
             for r in rs:
-                p=round(r['pct'], 2)
-                chg=None if prev is None else round(p-prev, 2)
+                p=round(r['pct'], DEC)
+                chg=None if prev is None else round(p-prev, DEC)
                 prev=p
                 rows.append({'d':r['date'],'p':p,'c':chg,'x':(p < THRESHOLD)})
             last=rs[-1]
             fl.append({'f':fund,'open':bool(last.get('cur')),'n':len(rows),
-                       'lp':round(last['pct'],2),'ld':last['date'],
+                       'lp':round(last['pct'],DEC),'ld':last['date'],
                        'rows':list(reversed(rows))})
         fl.sort(key=lambda g:(0 if g['open'] else 1, -g['lp'] if g['open'] else 0,
                               '' if g['open'] else g['ld']), reverse=False)
         op=[g for g in fl if g['open']];  op.sort(key=lambda g:-g['lp'])
         cl=[g for g in fl if not g['open']]; cl.sort(key=lambda g:g['ld'], reverse=True)
         out[tk]={'funds':op+cl,
-                 'nopen':len(op), 'tot':round(sum(g['lp'] for g in op), 2),
+                 'nopen':len(op), 'tot':round(sum(g['lp'] for g in op), DEC),
                  'n':sum(g['n'] for g in fl)}
     # ονόματα που διαφέρουν μόνο σε πεζά/κεφαλαία ή Ltd/Limited → πιθανό διπλό
     dups={k:sorted(v) for k,v in seen_names.items() if len(v) > 1}
@@ -191,8 +201,8 @@ def main():
             die('δεν βρέθηκε ο σύνδεσμος του αρχείου στη σελίδα',
                 'Η σελίδα %s δεν περιέχει πια href προς «…HCMC_disclosed_short_positions_gr.xls». '
                 'Πιθανή αλλαγή δομής — χρειάζεται έλεγχος.'%PAGE)
-        if src_date and state.get('src')==src_date:
-            log('καμία αλλαγή (έκδοση %s) — τέλος.'%src_date); return 0
+        if src_date and state.get('src')==src_date and state.get('fmt')==FMT:
+            log('καμία αλλαγή (έκδοση %s, μορφή %d) — τέλος.'%(src_date, FMT)); return 0
         log('νέα έκδοση:', src_date, url)
         try: raw=get(url, binary=True)
         except Exception as e: die('δεν κατεβαίνει το αρχείο', '%s\n%s'%(url, e))
@@ -253,7 +263,7 @@ def main():
               + '\n'.join('- %s'%(' · '.join('`%s`'%x for x in v)) for v in dups.values())
               + '\n\nΑν πρόκειται για την ΙΔΙΑ νομική οντότητα, πρόσθεσέ τα στο '
                 '`.github/data/fund_aliases.json`. Αν είναι διαφορετικοί υπόχρεοι, άφησέ τα ως έχουν.')
-    json.dump({'src':src_date,'sha':sha,'pub':pub,
+    json.dump({'src':src_date,'sha':sha,'pub':pub,'fmt':FMT,
                'unmatched':sorted(set(list(known_un)+list(unmatched))),
                'dups':sorted(set(list(known_dp)+list(dups)))},
               io.open(state_p,'w',encoding='utf-8'), ensure_ascii=False)
