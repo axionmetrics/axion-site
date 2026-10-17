@@ -31,11 +31,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&family=Open+Sans:wght@400;600;700;800&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.47.0/iconfont/tabler-icons.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <link rel="stylesheet" href="/assets/company.css">
 <link rel="stylesheet" href="/assets/chrome.css">
-<script src="/assets/i18n.js"></script>
-<script src="/assets/data.js"></script>
+<script src="/assets/i18n.js"></script><!-- ΧΩΡΙΣ defer: ορίζει AX_CO/AX_KLADOS/AX_KATATAXI και AX_I18N που τα inline μπλοκ των κελυφών καλούν κατά το parsing -->
+<script defer src="/assets/data.js"></script>
 <script src="/assets/current.js"></script><!-- τρέχουσες τιμές (μπάρα «Τρέχον») — ανεξάρτητο από το data.js· αν λείπει, η μπάρα απλώς κρύβεται -->
 <script>window.AXION_CURRENT=window.AXION_CURRENT||{};</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Corporation", "@id": "https://www.axionmetrics.gr/etaireia/ideal-holdings/#org", "name": "IDEAL HOLDINGS", "url": "https://www.axionmetrics.gr/etaireia/ideal-holdings/", "tickerSymbol": "ΙΝΤΕΚ", "description": "IDEAL λειτουργεί ως εταιρεία συμμετοχών με τρεις πυλώνες: εξειδικευμένο λιανεμπόριο (attica Πολυκαταστήματα), πληροφορική (όμιλος BYTE με Adacom και Bluestream) και, από το 2025, τρόφιμα· προστίθεται και η διανομή λογισμικού και εξοπλισμού μέσω της Metrosoft. Η καθοριστική κίνηση ήταν η εξαγορά του 100% της ΜΠΑΡΜΠΑ ΣΤΑΘΗΣ, μαζί με τη ΧΑΛΒΑΤΖΗΣ ΜΑΚΕΔΟΝΙΚΗ, έναντι 130 εκ. €: ολοκληρώθηκε στις 31.03.2025 και απορρόφησε τα κεφάλαια του ομολογιακού των 100 εκ. € του 2023. Ακολούθησαν νέο ομολογιακό 45 εκ. € (28.03.2025), η είσοδος της Oak Hill Advisors με 61,5 εκ. € για 15% της θυγατρικής που κρατά τις επενδύσεις (14.04.2025, με δικαίωμα για επιπλέον 10% έως 41 εκ. €) και ΑΜΚ 48,0 εκ. € με δημόσια προσφορά 8.000.000 μετοχών στα 6,00 €, καθαρά 44,5 εκ. €. Το 2026 η διοίκηση εισήγαγε την attica στην Euronext Athens στις 26.06.2026 στα 3,20 € ανά μετοχή και επέστρεψε κεφάλαιο 0,15 € ανά μετοχή, ήτοι 8.400.588,15 €, στις 04.02.2026. Τα μεγέθη ανεβαίνουν: κύκλος εργασιών 481,3 εκ. € το 2025 και 274,6 εκ. € στο εξάμηνο 2026 (+27%), EBITDA 35,1 εκ. € (+28%) και λειτουργικές ροές από −348.000 € σε 24,6 εκ. €.", "industry": "Holding"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Αρχική", "item": "https://www.axionmetrics.gr/"}, {"@type": "ListItem", "position": 2, "name": "Εταιρείες", "item": "https://www.axionmetrics.gr/company/"}, {"@type": "ListItem", "position": 3, "name": "IDEAL HOLDINGS", "item": "https://www.axionmetrics.gr/etaireia/ideal-holdings/"}]}, {"@type": "WebPage", "@id": "https://www.axionmetrics.gr/etaireia/ideal-holdings/", "url": "https://www.axionmetrics.gr/etaireia/ideal-holdings/", "name": "IDEAL HOLDINGS (ΙΝΤΕΚ) — μετοχή & αριθμοδείκτες", "description": "IDEAL HOLDINGS (ΙΝΤΕΚ): αποτελέσματα 2025 — κύκλος εργασιών 481,3 εκατ. €, καθαρά κέρδη 7,24 εκατ. €. Αριθμοδείκτες, μερίσματα και σύγκριση με τον κλάδο.", "inLanguage": "el", "about": {"@id": "https://www.axionmetrics.gr/etaireia/ideal-holdings/#org"}, "isPartOf": {"@type": "WebSite", "name": "Axion Metrics", "url": "https://www.axionmetrics.gr/"}}]}</script>
@@ -167,7 +167,7 @@
 </main>
 
 <script>window.AX_TK="ΙΝΤΕΚ";</script>
-<script src="/assets/company.js"></script>
+<script defer src="/assets/company.js"></script>
 <div class="qs-ov" id="qsOv" onclick="qsClose()"></div>
 <aside class="qs" id="qs" role="dialog" aria-label="Γρήγορη εύρεση εταιρείας">
   <div class="qs-head">
@@ -181,11 +181,11 @@
   <div class="qs-foot"><span><kbd>↑</kbd><kbd>↓</kbd> <span data-i18n="co.qs.nav">πλοήγηση</span></span><span><kbd>Enter</kbd> <span data-i18n="co.qs.open">άνοιγμα</span></span><span><kbd>Esc</kbd> <span data-i18n="co.qs.close">κλείσιμο</span></span></div>
 </aside>
 
-<script src="/assets/company-qs.js"></script>
+<script defer src="/assets/company-qs.js"></script>
 
 <p class="co-summary" id="co-summary">Η IDEAL HOLDINGS (ΙΝΤΕΚ) είναι εισηγμένη στο Χρηματιστήριο Αθηνών, στον κλάδο Holding. Τη χρήση 2025 ο κύκλος εργασιών ήταν 481,3 εκατ. €, το EBITDA 61,91 εκατ. € και τα καθαρά κέρδη 7,24 εκατ. €. Ο καθαρός δανεισμός διαμορφώθηκε σε 3,99 εκατ. €. Στη σελίδα θα βρείτε τα οικονομικά αποτελέσματα και τις οικονομικές καταστάσεις της εταιρείας, 26 αριθμοδείκτες με σύγκριση έναντι του κλάδου, την τροχιά των μεγεθών από το 2020, τους βασικούς μετόχους, τις θυγατρικές, τα μερίσματα και τα εταιρικά γεγονότα.</p>
 <div id="am-foot"><nav class="am-sfoot" aria-label="Χάρτης ιστότοπου"><span class="am-sfoot-x"></span><a href="/etaireia/centric/">CENTRIC</a><a href="/etaireia/fourlis-group/">FOURLIS GROUP</a><a href="/etaireia/marfin-investment-group/">MARFIN INVESTMENT GROUP</a><a href="/etaireia/quest-holdings/">QUEST HOLDINGS</a><a href="/etaireia/evropi-holdings/">ΕΥΡΩΠΗ HOLDINGS</a><a href="/etaireia/intracom-holdings/">INTRACOM HOLDINGS</a><a href="/etaireia/fais-group/">FAIS GROUP</a><a href="/">Αρχική</a><a href="/company/">Σελίδα εταιρείας</a><a href="/compare/">Σύγκριση εταιρειών</a><a href="/rankings/">Κατατάξεις</a><a href="/apotelesmata/">Τελευταία αποτελέσματα</a><a href="/sectors/">Ευρετήριο κλάδων</a><a href="/sector/">Σελίδα κλάδου</a><a href="/index-reviews/">Αναθεωρήσεις δεικτών</a><a href="/market-events/">Γεγονότα αγοράς</a><a href="/short-positions/">Short θέσεις</a><a href="/methodology/">Μεθοδολογία &amp; δείκτες</a><a href="/about/">Περί</a><a href="/terms/">Όροι χρήσης</a><a href="/katataxeis/p-e/">Κατάταξη ανά P/E</a><a href="/katataxeis/p-bv/">Κατάταξη ανά P/BV</a><a href="/katataxeis/ev-ebitda/">Κατάταξη ανά EV/EBITDA</a><a href="/katataxeis/roe/">Κατάταξη ανά ROE</a><a href="/katataxeis/merismatiki-apodosi/">Κατάταξη ανά Μερισματική απόδοση</a><a href="/katataxeis/katharos-daneismos-ebitda/">Κατάταξη ανά Καθαρός δανεισμός / EBITDA</a><a href="/klados/akinita/">Ακίνητα</a><a href="/klados/chrimatooikonomika/">Χρηματοοικονομικά</a><a href="/klados/emporio-dianomi/">Εμπόριο &amp; Διανομή</a><a href="/klados/energeia-koinis-ofeleias/">Ενέργεια &amp; Κοινής Ωφέλειας</a><a href="/klados/holding/">Holding</a><a href="/klados/katanalotika-agatha/">Καταναλωτικά Αγαθά</a><a href="/klados/kataskeves-ypodomes-metafores/">Κατασκευές, Υποδομές &amp; Μεταφορές</a><a href="/klados/navtilia/">Ναυτιλία</a><a href="/klados/technologia-mme-tilepikoinonies/">Τεχνολογία, ΜΜΕ &amp; Τηλεπικοινωνίες</a><a href="/klados/trapezes/">Τράπεζες</a><a href="/klados/viomichania-vasika-ylika/">Βιομηχανία &amp; Βασικά Υλικά</a></nav></div>
 <script>window.NAV_ACTIVE=0;window.NAV_CUR="Σελίδα εταιρείας";window.AX_NO_BASIS=true;</script>
-<script src="/assets/chrome.js"></script>
+<script defer src="/assets/chrome.js"></script>
 </body>
 </html>

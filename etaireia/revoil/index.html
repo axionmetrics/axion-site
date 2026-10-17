@@ -31,11 +31,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&family=Open+Sans:wght@400;600;700;800&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.47.0/iconfont/tabler-icons.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <link rel="stylesheet" href="/assets/company.css">
 <link rel="stylesheet" href="/assets/chrome.css">
-<script src="/assets/i18n.js"></script>
-<script src="/assets/data.js"></script>
+<script src="/assets/i18n.js"></script><!-- ΧΩΡΙΣ defer: ορίζει AX_CO/AX_KLADOS/AX_KATATAXI και AX_I18N που τα inline μπλοκ των κελυφών καλούν κατά το parsing -->
+<script defer src="/assets/data.js"></script>
 <script src="/assets/current.js"></script><!-- τρέχουσες τιμές (μπάρα «Τρέχον») — ανεξάρτητο από το data.js· αν λείπει, η μπάρα απλώς κρύβεται -->
 <script>window.AXION_CURRENT=window.AXION_CURRENT||{};</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Corporation", "@id": "https://www.axionmetrics.gr/etaireia/revoil/#org", "name": "REVOIL", "url": "https://www.axionmetrics.gr/etaireia/revoil/", "tickerSymbol": "ΡΕΒ", "description": "REVOIL εμπορεύεται υγρά καύσιμα και λιπαντικά «REVOLUTION» μέσω δικτύου 505 πρατηρίων (30.6.2026, από 507 στα τέλη του 2025) και 125 ανεξάρτητων πρατηρίων. Η διοίκηση επεκτείνει τον όμιλο εκτός καυσίμων: Ιούλιος 2025 εξαγορά της ENERGY STORAGE VENTURES (20 χιλ. €, άδειες για τρία έργα αποθήκευσης 150 MW), Νοέμβριος 2025 το 96,88% της ΜΑΛΤΕΖΟΣ ΑΒΕΕ (ηλιακοί θερμοσίφωνες) για 2,86 εκ. €, Δεκέμβριος 2025 η SURVEY ENERGY 1 (1,016 εκ. €, φωτοβολταϊκό 6 MW στη Θήβα) και στις 24/3/2026 η ENERGY VENTURES 6 (10 χιλ. €, άδειες για φωτοβολταϊκό 80,19 MW στην Κοζάνη). Παράλληλα αναδιάρθρωσε τον δανεισμό με τέσσερα νέα ομολογιακά (Πειραιώς 5, Alpha 5,5, Aegean Baltic 5 και Credia 5,9 εκ. €), αποπληρώνοντας δόσεις balloon 7,6 εκ. €, διένειμε μέρισμα 1.057.915 € (0,049 € ανά μετοχή) τον Ιούνιο 2026 και αγοράζει ίδιες μετοχές (322.500, 1,47%). Στο εξάμηνο 2026 οι πωλήσεις ανέβηκαν στα 500,39 εκ. € από 411,94 εκ. €, το EBITDA στα 8,90 εκ. €, τα καθαρά κέρδη στα 1,94 εκ. € και οι λειτουργικές ροές στα 13,43 εκ. €.", "alternateName": "ΡΕΒΟΪΛ Α.Ε.Ε.Π", "industry": "Ενέργεια & Κοινής Ωφέλειας"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Αρχική", "item": "https://www.axionmetrics.gr/"}, {"@type": "ListItem", "position": 2, "name": "Εταιρείες", "item": "https://www.axionmetrics.gr/company/"}, {"@type": "ListItem", "position": 3, "name": "REVOIL", "item": "https://www.axionmetrics.gr/etaireia/revoil/"}]}, {"@type": "WebPage", "@id": "https://www.axionmetrics.gr/etaireia/revoil/", "url": "https://www.axionmetrics.gr/etaireia/revoil/", "name": "REVOIL / ΡΕΒΟΪΛ Α.Ε.Ε.Π (ΡΕΒ) — μετοχή & αριθμοδείκτες", "description": "REVOIL / ΡΕΒΟΪΛ Α.Ε.Ε.Π (ΡΕΒ): αποτελέσματα 2025 — κύκλος εργασιών 837,1 εκατ. €, καθαρά κέρδη 2,46 εκατ. €. Αριθμοδείκτες και σύγκριση με τον κλάδο.", "inLanguage": "el", "about": {"@id": "https://www.axionmetrics.gr/etaireia/revoil/#org"}, "isPartOf": {"@type": "WebSite", "name": "Axion Metrics", "url": "https://www.axionmetrics.gr/"}}]}</script>
@@ -167,7 +167,7 @@
 </main>
 
 <script>window.AX_TK="ΡΕΒ";</script>
-<script src="/assets/company.js"></script>
+<script defer src="/assets/company.js"></script>
 <div class="qs-ov" id="qsOv" onclick="qsClose()"></div>
 <aside class="qs" id="qs" role="dialog" aria-label="Γρήγορη εύρεση εταιρείας">
   <div class="qs-head">
@@ -181,11 +181,11 @@
   <div class="qs-foot"><span><kbd>↑</kbd><kbd>↓</kbd> <span data-i18n="co.qs.nav">πλοήγηση</span></span><span><kbd>Enter</kbd> <span data-i18n="co.qs.open">άνοιγμα</span></span><span><kbd>Esc</kbd> <span data-i18n="co.qs.close">κλείσιμο</span></span></div>
 </aside>
 
-<script src="/assets/company-qs.js"></script>
+<script defer src="/assets/company-qs.js"></script>
 
 <p class="co-summary" id="co-summary">Η REVOIL (ΡΕΒ) είναι εισηγμένη στο Χρηματιστήριο Αθηνών, στον κλάδο Ενέργεια &amp; Κοινής Ωφέλειας. Τη χρήση 2025 ο κύκλος εργασιών ήταν 837,1 εκατ. €, το EBITDA 14,85 εκατ. € και τα καθαρά κέρδη 2,46 εκατ. €. Ο καθαρός δανεισμός διαμορφώθηκε σε 48,49 εκατ. €. Στη σελίδα θα βρείτε τα οικονομικά αποτελέσματα και τις οικονομικές καταστάσεις της εταιρείας, 26 αριθμοδείκτες με σύγκριση έναντι του κλάδου, την τροχιά των μεγεθών από το 2020, τους βασικούς μετόχους, τις θυγατρικές, τα μερίσματα και τα εταιρικά γεγονότα.</p>
 <div id="am-foot"><nav class="am-sfoot" aria-label="Χάρτης ιστότοπου"><span class="am-sfoot-x"></span><a href="/etaireia/heleniq-energy/">HELENIQ ENERGY</a><a href="/etaireia/admie-symmetochon/">ΑΔΜΗΕ ΣΥΜΜΕΤΟΧΩΝ</a><a href="/etaireia/dei/">ΔΕΗ</a><a href="/etaireia/elin/">ΕΛΙΝ</a><a href="/etaireia/evath/">ΕΥΑΘ</a><a href="/etaireia/evdap/">ΕΥΔΑΠ</a><a href="/etaireia/motor-oil/">MOTOR OIL</a><a href="/etaireia/terna-energeiaki/">ΤΕΡΝΑ ΕΝΕΡΓΕΙΑΚΗ</a><a href="/">Αρχική</a><a href="/company/">Σελίδα εταιρείας</a><a href="/compare/">Σύγκριση εταιρειών</a><a href="/rankings/">Κατατάξεις</a><a href="/apotelesmata/">Τελευταία αποτελέσματα</a><a href="/sectors/">Ευρετήριο κλάδων</a><a href="/sector/">Σελίδα κλάδου</a><a href="/index-reviews/">Αναθεωρήσεις δεικτών</a><a href="/market-events/">Γεγονότα αγοράς</a><a href="/short-positions/">Short θέσεις</a><a href="/methodology/">Μεθοδολογία &amp; δείκτες</a><a href="/about/">Περί</a><a href="/terms/">Όροι χρήσης</a><a href="/katataxeis/p-e/">Κατάταξη ανά P/E</a><a href="/katataxeis/p-bv/">Κατάταξη ανά P/BV</a><a href="/katataxeis/ev-ebitda/">Κατάταξη ανά EV/EBITDA</a><a href="/katataxeis/roe/">Κατάταξη ανά ROE</a><a href="/katataxeis/merismatiki-apodosi/">Κατάταξη ανά Μερισματική απόδοση</a><a href="/katataxeis/katharos-daneismos-ebitda/">Κατάταξη ανά Καθαρός δανεισμός / EBITDA</a><a href="/klados/akinita/">Ακίνητα</a><a href="/klados/chrimatooikonomika/">Χρηματοοικονομικά</a><a href="/klados/emporio-dianomi/">Εμπόριο &amp; Διανομή</a><a href="/klados/energeia-koinis-ofeleias/">Ενέργεια &amp; Κοινής Ωφέλειας</a><a href="/klados/holding/">Holding</a><a href="/klados/katanalotika-agatha/">Καταναλωτικά Αγαθά</a><a href="/klados/kataskeves-ypodomes-metafores/">Κατασκευές, Υποδομές &amp; Μεταφορές</a><a href="/klados/navtilia/">Ναυτιλία</a><a href="/klados/technologia-mme-tilepikoinonies/">Τεχνολογία, ΜΜΕ &amp; Τηλεπικοινωνίες</a><a href="/klados/trapezes/">Τράπεζες</a><a href="/klados/viomichania-vasika-ylika/">Βιομηχανία &amp; Βασικά Υλικά</a></nav></div>
 <script>window.NAV_ACTIVE=0;window.NAV_CUR="Σελίδα εταιρείας";window.AX_NO_BASIS=true;</script>
-<script src="/assets/chrome.js"></script>
+<script defer src="/assets/chrome.js"></script>
 </body>
 </html>

@@ -31,11 +31,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&family=Open+Sans:wght@400;600;700;800&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.47.0/iconfont/tabler-icons.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <link rel="stylesheet" href="/assets/company.css">
 <link rel="stylesheet" href="/assets/chrome.css">
-<script src="/assets/i18n.js"></script>
-<script src="/assets/data.js"></script>
+<script src="/assets/i18n.js"></script><!-- ΧΩΡΙΣ defer: ορίζει AX_CO/AX_KLADOS/AX_KATATAXI και AX_I18N που τα inline μπλοκ των κελυφών καλούν κατά το parsing -->
+<script defer src="/assets/data.js"></script>
 <script src="/assets/current.js"></script><!-- τρέχουσες τιμές (μπάρα «Τρέχον») — ανεξάρτητο από το data.js· αν λείπει, η μπάρα απλώς κρύβεται -->
 <script>window.AXION_CURRENT=window.AXION_CURRENT||{};</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Corporation", "@id": "https://www.axionmetrics.gr/etaireia/intertech/#org", "name": "INTERTECH", "url": "https://www.axionmetrics.gr/etaireia/intertech/", "tickerSymbol": "ΙΝΤΕΤ", "description": "INTERTECH είναι από το 1990 αποκλειστικός διανομέας τεχνολογικών προϊόντων στην Ελλάδα, με την Panasonic ως βασική συνεργασία (οι συμβάσεις ανανεώθηκαν την 1.4.2026) και περίπου 60% του κύκλου εργασιών από καταναλωτικά προϊόντα. Ο κύκλος εργασιών υποχώρησε από 17,42 εκ. € (2024) σε 12,38 εκ. € (2025) με ζημίες 1,62 εκ. €, και στο εξάμηνο 2026 έπεσε 25% στα 4,68 εκ. €, καθώς η Panasonic πούλησε στη Skyworth τα δικαιώματα του brand τηλεοράσεων και χάθηκε η κατηγορία αλκαλικών μπαταριών μετά την πώληση της APS. Η διοίκηση απάντησε με δύο κινήσεις: πώληση του ακινήτου της παλιάς έδρας στο Ελληνικό (Μάιος 2026) για 5.950.000 €, με έσοδο 2,74 εκ. € και τα κεφάλαια σε προθεσμιακές καταθέσεις — διαθέσιμα 458.000 → 6.399.000 €, πάγια 4,07 → 1,54 εκ. € — και στρατηγική συνεργασία με τη Skyworth (6 Απριλίου 2026) για κλιματιστικά και λευκές συσκευές. Τα κέρδη εξαμήνου 1,63 εκ. € προέρχονται από το ακίνητο· η εταιρεία δηλώνει προσαρμοσμένο EBITDA ζημία 512.000 € και τριετές πλάνο ανάκαμψης 2026–2028.", "alternateName": "ΙΝΤΕΡΤΕΚ Α.Ε. ΔΙΕΘΝΕΙΣ", "industry": "Εμπόριο & Διανομή"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Αρχική", "item": "https://www.axionmetrics.gr/"}, {"@type": "ListItem", "position": 2, "name": "Εταιρείες", "item": "https://www.axionmetrics.gr/company/"}, {"@type": "ListItem", "position": 3, "name": "INTERTECH", "item": "https://www.axionmetrics.gr/etaireia/intertech/"}]}, {"@type": "WebPage", "@id": "https://www.axionmetrics.gr/etaireia/intertech/", "url": "https://www.axionmetrics.gr/etaireia/intertech/", "name": "INTERTECH / ΙΝΤΕΡΤΕΚ Α.Ε. ΔΙΕΘΝΕΙΣ (ΙΝΤΕΤ) — μετοχή", "description": "INTERTECH / ΙΝΤΕΡΤΕΚ Α.Ε. ΔΙΕΘΝΕΙΣ (ΙΝΤΕΤ): αποτελέσματα 2025 — κύκλος εργασιών 12,38 εκατ. €, ζημιές 1,62 εκατ. €. Αριθμοδείκτες και μερίσματα.", "inLanguage": "el", "about": {"@id": "https://www.axionmetrics.gr/etaireia/intertech/#org"}, "isPartOf": {"@type": "WebSite", "name": "Axion Metrics", "url": "https://www.axionmetrics.gr/"}}]}</script>
@@ -167,7 +167,7 @@
 </main>
 
 <script>window.AX_TK="ΙΝΤΕΤ";</script>
-<script src="/assets/company.js"></script>
+<script defer src="/assets/company.js"></script>
 <div class="qs-ov" id="qsOv" onclick="qsClose()"></div>
 <aside class="qs" id="qs" role="dialog" aria-label="Γρήγορη εύρεση εταιρείας">
   <div class="qs-head">
@@ -181,11 +181,11 @@
   <div class="qs-foot"><span><kbd>↑</kbd><kbd>↓</kbd> <span data-i18n="co.qs.nav">πλοήγηση</span></span><span><kbd>Enter</kbd> <span data-i18n="co.qs.open">άνοιγμα</span></span><span><kbd>Esc</kbd> <span data-i18n="co.qs.close">κλείσιμο</span></span></div>
 </aside>
 
-<script src="/assets/company-qs.js"></script>
+<script defer src="/assets/company-qs.js"></script>
 
 <p class="co-summary" id="co-summary">Η INTERTECH (ΙΝΤΕΤ) είναι εισηγμένη στο Χρηματιστήριο Αθηνών, στον κλάδο Εμπόριο &amp; Διανομή. Τη χρήση 2025 ο κύκλος εργασιών ήταν 12,38 εκατ. €, το EBITDA -1,08 εκατ. € και ζημιές 1,62 εκατ. €. Ο καθαρός δανεισμός διαμορφώθηκε σε 1,65 εκατ. €. Στη σελίδα θα βρείτε τα οικονομικά αποτελέσματα και τις οικονομικές καταστάσεις της εταιρείας, 26 αριθμοδείκτες με σύγκριση έναντι του κλάδου, την τροχιά των μεγεθών από το 2020, τους βασικούς μετόχους, τις θυγατρικές, τα μερίσματα και τα εταιρικά γεγονότα.</p>
 <div id="am-foot"><nav class="am-sfoot" aria-label="Χάρτης ιστότοπου"><span class="am-sfoot-x"></span><a href="/etaireia/as-company/">AS COMPANY</a><a href="/etaireia/autohellas/">AUTOHELLAS</a><a href="/etaireia/ave/">AVE</a><a href="/etaireia/cpi/">CPI</a><a href="/etaireia/jumbo/">JUMBO</a><a href="/etaireia/agrotikos-oikos-spyrou/">ΑΓΡΟΤΙΚΟΣ ΟΙΚΟΣ ΣΠΥΡΟΥ</a><a href="/etaireia/vogyatzoglou-systems/">VOGYATZOGLOU SYSTEMS</a><a href="/etaireia/geniki-emporiou-viomichanias/">ΓΕΝΙΚΗ ΕΜΠΟΡΙΟΥ &amp; ΒΙΟΜΗΧΑΝΙΑΣ</a><a href="/etaireia/elton-group/">ELTON GROUP</a><a href="/etaireia/motodynamiki/">ΜΟΤΟΔΥΝΑΜΙΚΗ</a><a href="/etaireia/interwood-xylemporia/">INTERWOOD ΞΥΛΕΜΠΟΡΙΑ</a><a href="/etaireia/petros-petropoulos/">ΠΕΤΡΟΣ ΠΕΤΡΟΠΟΥΛΟΣ</a><a href="/etaireia/filippos-nakas/">ΦΙΛΙΠΠΟΣ ΝΑΚΑΣ</a><a href="/etaireia/attica-polykatastimata/">ATTICA ΠΟΛΥΚΑΤΑΣΤΗΜΑΤΑ</a><a href="/">Αρχική</a><a href="/company/">Σελίδα εταιρείας</a><a href="/compare/">Σύγκριση εταιρειών</a><a href="/rankings/">Κατατάξεις</a><a href="/apotelesmata/">Τελευταία αποτελέσματα</a><a href="/sectors/">Ευρετήριο κλάδων</a><a href="/sector/">Σελίδα κλάδου</a><a href="/index-reviews/">Αναθεωρήσεις δεικτών</a><a href="/market-events/">Γεγονότα αγοράς</a><a href="/short-positions/">Short θέσεις</a><a href="/methodology/">Μεθοδολογία &amp; δείκτες</a><a href="/about/">Περί</a><a href="/terms/">Όροι χρήσης</a><a href="/katataxeis/p-e/">Κατάταξη ανά P/E</a><a href="/katataxeis/p-bv/">Κατάταξη ανά P/BV</a><a href="/katataxeis/ev-ebitda/">Κατάταξη ανά EV/EBITDA</a><a href="/katataxeis/roe/">Κατάταξη ανά ROE</a><a href="/katataxeis/merismatiki-apodosi/">Κατάταξη ανά Μερισματική απόδοση</a><a href="/katataxeis/katharos-daneismos-ebitda/">Κατάταξη ανά Καθαρός δανεισμός / EBITDA</a><a href="/klados/akinita/">Ακίνητα</a><a href="/klados/chrimatooikonomika/">Χρηματοοικονομικά</a><a href="/klados/emporio-dianomi/">Εμπόριο &amp; Διανομή</a><a href="/klados/energeia-koinis-ofeleias/">Ενέργεια &amp; Κοινής Ωφέλειας</a><a href="/klados/holding/">Holding</a><a href="/klados/katanalotika-agatha/">Καταναλωτικά Αγαθά</a><a href="/klados/kataskeves-ypodomes-metafores/">Κατασκευές, Υποδομές &amp; Μεταφορές</a><a href="/klados/navtilia/">Ναυτιλία</a><a href="/klados/technologia-mme-tilepikoinonies/">Τεχνολογία, ΜΜΕ &amp; Τηλεπικοινωνίες</a><a href="/klados/trapezes/">Τράπεζες</a><a href="/klados/viomichania-vasika-ylika/">Βιομηχανία &amp; Βασικά Υλικά</a></nav></div>
 <script>window.NAV_ACTIVE=0;window.NAV_CUR="Σελίδα εταιρείας";window.AX_NO_BASIS=true;</script>
-<script src="/assets/chrome.js"></script>
+<script defer src="/assets/chrome.js"></script>
 </body>
 </html>

@@ -31,11 +31,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&family=Open+Sans:wght@400;600;700;800&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.47.0/iconfont/tabler-icons.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <link rel="stylesheet" href="/assets/company.css">
 <link rel="stylesheet" href="/assets/chrome.css">
-<script src="/assets/i18n.js"></script>
-<script src="/assets/data.js"></script>
+<script src="/assets/i18n.js"></script><!-- ΧΩΡΙΣ defer: ορίζει AX_CO/AX_KLADOS/AX_KATATAXI και AX_I18N που τα inline μπλοκ των κελυφών καλούν κατά το parsing -->
+<script defer src="/assets/data.js"></script>
 <script src="/assets/current.js"></script><!-- τρέχουσες τιμές (μπάρα «Τρέχον») — ανεξάρτητο από το data.js· αν λείπει, η μπάρα απλώς κρύβεται -->
 <script>window.AXION_CURRENT=window.AXION_CURRENT||{};</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Corporation", "@id": "https://www.axionmetrics.gr/etaireia/elton-group/#org", "name": "ELTON GROUP", "url": "https://www.axionmetrics.gr/etaireia/elton-group/", "tickerSymbol": "ΕΛΤΟΝ", "description": "ELTON διανέμει χημικές πρώτες ύλες με φυσική παρουσία σε έξι χώρες (Ελλάδα, Ρουμανία, Βουλγαρία, Σερβία, Τουρκία, Ουκρανία) και προσωπικό ομίλου 273 στο τέλος του 2025 έναντι 269. Μετά την απόκτηση του 100% της Ν. ΛΕΚΟΣ Α.Ε. (υπεραξία 2.626.529 €) η διοίκηση επέλεξε την ενσωμάτωσή της: αποφάσισε συγχώνευση με απορρόφηση και υπέβαλε το σχέδιο στο ΓΕΜΗ την 1/7/2026, με ολοκλήρωση που αναμένει εντός του 2026. Παράλληλα ρευστοποίησε πάγια και απομόχλευσε: τον Δεκέμβριο 2025 η βουλγαρική θυγατρική πούλησε τις εγκαταστάσεις της στη Σόφια (14.180 τ.μ.) για 3.400.000 €, ενώ ο τραπεζικός δανεισμός υποχώρησε από 26.338.679 € το 2024 σε 24.048.854 € και 20.344.485 € στο εξάμηνο 2026. Ο κύκλος εργασιών 2025 ανέβηκε στα 175,09 εκ. € με EBITDA μειωμένο στα 7,37 εκ. €, όμως τα καθαρά κέρδη ενισχύθηκαν στα 3,40 εκ. €. Στο εξάμηνο 2026 οι πωλήσεις έφτασαν τα 94,92 εκ. €, το EBITDA τα 5,75 εκ. € και οι λειτουργικές ροές επέστρεψαν σε θετικό έδαφος (2,38 εκ. € από −1,39 εκ. €), με μέρισμα χρήσης 2025 0,06500 € ανά μετοχή.", "alternateName": "ΕΛΤΟΝ ΔΙΕΘΝΟΥΣ ΕΜΠΟΡΙΟΥ", "industry": "Εμπόριο & Διανομή"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Αρχική", "item": "https://www.axionmetrics.gr/"}, {"@type": "ListItem", "position": 2, "name": "Εταιρείες", "item": "https://www.axionmetrics.gr/company/"}, {"@type": "ListItem", "position": 3, "name": "ELTON GROUP", "item": "https://www.axionmetrics.gr/etaireia/elton-group/"}]}, {"@type": "WebPage", "@id": "https://www.axionmetrics.gr/etaireia/elton-group/", "url": "https://www.axionmetrics.gr/etaireia/elton-group/", "name": "ELTON GROUP / ΕΛΤΟΝ ΔΙΕΘΝΟΥΣ ΕΜΠΟΡΙΟΥ (ΕΛΤΟΝ) — μετοχή", "description": "ELTON GROUP / ΕΛΤΟΝ ΔΙΕΘΝΟΥΣ ΕΜΠΟΡΙΟΥ (ΕΛΤΟΝ): αποτελέσματα 2025 — κύκλος εργασιών 175,1 εκατ. €, καθαρά κέρδη 3,40 εκατ. €. Αριθμοδείκτες και μερίσματα.", "inLanguage": "el", "about": {"@id": "https://www.axionmetrics.gr/etaireia/elton-group/#org"}, "isPartOf": {"@type": "WebSite", "name": "Axion Metrics", "url": "https://www.axionmetrics.gr/"}}]}</script>
@@ -167,7 +167,7 @@
 </main>
 
 <script>window.AX_TK="ΕΛΤΟΝ";</script>
-<script src="/assets/company.js"></script>
+<script defer src="/assets/company.js"></script>
 <div class="qs-ov" id="qsOv" onclick="qsClose()"></div>
 <aside class="qs" id="qs" role="dialog" aria-label="Γρήγορη εύρεση εταιρείας">
   <div class="qs-head">
@@ -181,11 +181,11 @@
   <div class="qs-foot"><span><kbd>↑</kbd><kbd>↓</kbd> <span data-i18n="co.qs.nav">πλοήγηση</span></span><span><kbd>Enter</kbd> <span data-i18n="co.qs.open">άνοιγμα</span></span><span><kbd>Esc</kbd> <span data-i18n="co.qs.close">κλείσιμο</span></span></div>
 </aside>
 
-<script src="/assets/company-qs.js"></script>
+<script defer src="/assets/company-qs.js"></script>
 
 <p class="co-summary" id="co-summary">Η ELTON GROUP (ΕΛΤΟΝ) είναι εισηγμένη στο Χρηματιστήριο Αθηνών, στον κλάδο Εμπόριο &amp; Διανομή. Τη χρήση 2025 ο κύκλος εργασιών ήταν 175,1 εκατ. €, το EBITDA 7,40 εκατ. € και τα καθαρά κέρδη 3,40 εκατ. €. Ο καθαρός δανεισμός διαμορφώθηκε σε 16,66 εκατ. €. Στη σελίδα θα βρείτε τα οικονομικά αποτελέσματα και τις οικονομικές καταστάσεις της εταιρείας, 26 αριθμοδείκτες με σύγκριση έναντι του κλάδου, την τροχιά των μεγεθών από το 2020, τους βασικούς μετόχους, τις θυγατρικές, τα μερίσματα και τα εταιρικά γεγονότα.</p>
 <div id="am-foot"><nav class="am-sfoot" aria-label="Χάρτης ιστότοπου"><span class="am-sfoot-x"></span><a href="/etaireia/as-company/">AS COMPANY</a><a href="/etaireia/autohellas/">AUTOHELLAS</a><a href="/etaireia/ave/">AVE</a><a href="/etaireia/cpi/">CPI</a><a href="/etaireia/jumbo/">JUMBO</a><a href="/etaireia/agrotikos-oikos-spyrou/">ΑΓΡΟΤΙΚΟΣ ΟΙΚΟΣ ΣΠΥΡΟΥ</a><a href="/etaireia/vogyatzoglou-systems/">VOGYATZOGLOU SYSTEMS</a><a href="/etaireia/geniki-emporiou-viomichanias/">ΓΕΝΙΚΗ ΕΜΠΟΡΙΟΥ &amp; ΒΙΟΜΗΧΑΝΙΑΣ</a><a href="/etaireia/motodynamiki/">ΜΟΤΟΔΥΝΑΜΙΚΗ</a><a href="/etaireia/interwood-xylemporia/">INTERWOOD ΞΥΛΕΜΠΟΡΙΑ</a><a href="/etaireia/intertech/">INTERTECH</a><a href="/etaireia/petros-petropoulos/">ΠΕΤΡΟΣ ΠΕΤΡΟΠΟΥΛΟΣ</a><a href="/etaireia/filippos-nakas/">ΦΙΛΙΠΠΟΣ ΝΑΚΑΣ</a><a href="/etaireia/attica-polykatastimata/">ATTICA ΠΟΛΥΚΑΤΑΣΤΗΜΑΤΑ</a><a href="/">Αρχική</a><a href="/company/">Σελίδα εταιρείας</a><a href="/compare/">Σύγκριση εταιρειών</a><a href="/rankings/">Κατατάξεις</a><a href="/apotelesmata/">Τελευταία αποτελέσματα</a><a href="/sectors/">Ευρετήριο κλάδων</a><a href="/sector/">Σελίδα κλάδου</a><a href="/index-reviews/">Αναθεωρήσεις δεικτών</a><a href="/market-events/">Γεγονότα αγοράς</a><a href="/short-positions/">Short θέσεις</a><a href="/methodology/">Μεθοδολογία &amp; δείκτες</a><a href="/about/">Περί</a><a href="/terms/">Όροι χρήσης</a><a href="/katataxeis/p-e/">Κατάταξη ανά P/E</a><a href="/katataxeis/p-bv/">Κατάταξη ανά P/BV</a><a href="/katataxeis/ev-ebitda/">Κατάταξη ανά EV/EBITDA</a><a href="/katataxeis/roe/">Κατάταξη ανά ROE</a><a href="/katataxeis/merismatiki-apodosi/">Κατάταξη ανά Μερισματική απόδοση</a><a href="/katataxeis/katharos-daneismos-ebitda/">Κατάταξη ανά Καθαρός δανεισμός / EBITDA</a><a href="/klados/akinita/">Ακίνητα</a><a href="/klados/chrimatooikonomika/">Χρηματοοικονομικά</a><a href="/klados/emporio-dianomi/">Εμπόριο &amp; Διανομή</a><a href="/klados/energeia-koinis-ofeleias/">Ενέργεια &amp; Κοινής Ωφέλειας</a><a href="/klados/holding/">Holding</a><a href="/klados/katanalotika-agatha/">Καταναλωτικά Αγαθά</a><a href="/klados/kataskeves-ypodomes-metafores/">Κατασκευές, Υποδομές &amp; Μεταφορές</a><a href="/klados/navtilia/">Ναυτιλία</a><a href="/klados/technologia-mme-tilepikoinonies/">Τεχνολογία, ΜΜΕ &amp; Τηλεπικοινωνίες</a><a href="/klados/trapezes/">Τράπεζες</a><a href="/klados/viomichania-vasika-ylika/">Βιομηχανία &amp; Βασικά Υλικά</a></nav></div>
 <script>window.NAV_ACTIVE=0;window.NAV_CUR="Σελίδα εταιρείας";window.AX_NO_BASIS=true;</script>
-<script src="/assets/chrome.js"></script>
+<script defer src="/assets/chrome.js"></script>
 </body>
 </html>

@@ -31,11 +31,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&family=Open+Sans:wght@400;600;700;800&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.47.0/iconfont/tabler-icons.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <link rel="stylesheet" href="/assets/company.css">
 <link rel="stylesheet" href="/assets/chrome.css">
-<script src="/assets/i18n.js"></script>
-<script src="/assets/data.js"></script>
+<script src="/assets/i18n.js"></script><!-- ΧΩΡΙΣ defer: ορίζει AX_CO/AX_KLADOS/AX_KATATAXI και AX_I18N που τα inline μπλοκ των κελυφών καλούν κατά το parsing -->
+<script defer src="/assets/data.js"></script>
 <script src="/assets/current.js"></script><!-- τρέχουσες τιμές (μπάρα «Τρέχον») — ανεξάρτητο από το data.js· αν λείπει, η μπάρα απλώς κρύβεται -->
 <script>window.AXION_CURRENT=window.AXION_CURRENT||{};</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Corporation", "@id": "https://www.axionmetrics.gr/etaireia/organismos-limenos-peiraios/#org", "name": "ΟΡΓΑΝΙΣΜΟΣ ΛΙΜΕΝΟΣ ΠΕΙΡΑΙΩΣ", "url": "https://www.axionmetrics.gr/etaireia/organismos-limenos-peiraios/", "tickerSymbol": "ΟΛΠ", "description": "OLP εκμεταλλεύεται με παραχώρηση το λιμάνι του Πειραιά — εμπορευματοκιβώτια, αυτοκίνητα, κρουαζιέρα, ακτοπλοΐα, ναυπηγοεπισκευή — με αντάλλαγμα 74,2 εκ. € (2025) για την παραχώρηση των προβλητών ΙΙ και ΙΙΙ· η COSCO ελέγχει έμμεσα το 67% των ψήφων. Η διοίκηση κατεύθυνε τα κεφάλαια στις υποδομές: προσθήκες παγίων 110,9 εκ. € το 2025 από 60,4 εκ. €, πάγια 523,4 εκ. € και 622,3 εκ. € στις 30.6.2026, πρόωρη αποπληρωμή των δύο τραπεζικών δανείων, μερίσματα 48,0 εκ. € (1,920 €/μτχ) για το 2024 και 47,4 εκ. € (1,896 €/μτχ) για το 2025 — τα διαθέσιμα έπεσαν από 204,5 σε 149,8 και σε 83,1 εκ. €. Το 2025 τα έσοδα ανέβηκαν στα 250,8 εκ. € με 664.581 TEU, αλλά στο εξάμηνο 2026 η διακίνηση υποχώρησε 38,7% σε 241.290 TEU: έσοδα 111,9 εκ. €, EBITDA 56,1 από 69,3 εκ. €, κέρδη 35,4 εκ. €. Από 10 Αυγούστου 2026 τρέχει η Δεύτερη Επενδυτική Περίοδος των 56,0 εκ. €, ενώ στις 27 Αυγούστου το καταστατικό άνοιξε σε θυγατρικές και συμμετοχές, με κατεύθυνση λιμένες, logistics και υποδομές.", "industry": "Κατασκευές, Υποδομές & Μεταφορές"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Αρχική", "item": "https://www.axionmetrics.gr/"}, {"@type": "ListItem", "position": 2, "name": "Εταιρείες", "item": "https://www.axionmetrics.gr/company/"}, {"@type": "ListItem", "position": 3, "name": "ΟΡΓΑΝΙΣΜΟΣ ΛΙΜΕΝΟΣ ΠΕΙΡΑΙΩΣ", "item": "https://www.axionmetrics.gr/etaireia/organismos-limenos-peiraios/"}]}, {"@type": "WebPage", "@id": "https://www.axionmetrics.gr/etaireia/organismos-limenos-peiraios/", "url": "https://www.axionmetrics.gr/etaireia/organismos-limenos-peiraios/", "name": "ΟΡΓΑΝΙΣΜΟΣ ΛΙΜΕΝΟΣ ΠΕΙΡΑΙΩΣ (ΟΛΠ) — μετοχή & αριθμοδείκτες", "description": "ΟΡΓΑΝΙΣΜΟΣ ΛΙΜΕΝΟΣ ΠΕΙΡΑΙΩΣ (ΟΛΠ): αποτελέσματα 2025 — κύκλος εργασιών 250,8 εκατ. €, καθαρά κέρδη 86,15 εκατ. €. Αριθμοδείκτες και σύγκριση με τον κλάδο.", "inLanguage": "el", "about": {"@id": "https://www.axionmetrics.gr/etaireia/organismos-limenos-peiraios/#org"}, "isPartOf": {"@type": "WebSite", "name": "Axion Metrics", "url": "https://www.axionmetrics.gr/"}}]}</script>
@@ -167,7 +167,7 @@
 </main>
 
 <script>window.AX_TK="ΟΛΠ";</script>
-<script src="/assets/company.js"></script>
+<script defer src="/assets/company.js"></script>
 <div class="qs-ov" id="qsOv" onclick="qsClose()"></div>
 <aside class="qs" id="qs" role="dialog" aria-label="Γρήγορη εύρεση εταιρείας">
   <div class="qs-head">
@@ -181,11 +181,11 @@
   <div class="qs-foot"><span><kbd>↑</kbd><kbd>↓</kbd> <span data-i18n="co.qs.nav">πλοήγηση</span></span><span><kbd>Enter</kbd> <span data-i18n="co.qs.open">άνοιγμα</span></span><span><kbd>Esc</kbd> <span data-i18n="co.qs.close">κλείσιμο</span></span></div>
 </aside>
 
-<script src="/assets/company-qs.js"></script>
+<script defer src="/assets/company-qs.js"></script>
 
 <p class="co-summary" id="co-summary">Η ΟΡΓΑΝΙΣΜΟΣ ΛΙΜΕΝΟΣ ΠΕΙΡΑΙΩΣ (ΟΛΠ) είναι εισηγμένη στο Χρηματιστήριο Αθηνών, στον κλάδο Κατασκευές, Υποδομές &amp; Μεταφορές. Τη χρήση 2025 ο κύκλος εργασιών ήταν 250,8 εκατ. €, το EBITDA 131,0 εκατ. € και τα καθαρά κέρδη 86,15 εκατ. €. Διαθέτει καθαρό ταμείο 149,8 εκατ. €. Στη σελίδα θα βρείτε τα οικονομικά αποτελέσματα και τις οικονομικές καταστάσεις της εταιρείας, 26 αριθμοδείκτες με σύγκριση έναντι του κλάδου, την τροχιά των μεγεθών από το 2020, τους βασικούς μετόχους, τις θυγατρικές, τα μερίσματα και τα εταιρικά γεγονότα.</p>
 <div id="am-foot"><nav class="am-sfoot" aria-label="Χάρτης ιστότοπου"><span class="am-sfoot-x"></span><a href="/etaireia/attica-group/">ATTICA GROUP</a><a href="/etaireia/avax-group/">AVAX GROUP</a><a href="/etaireia/aegean-airlines/">AEGEAN AIRLINES</a><a href="/etaireia/omilos-aktor/">ΌΜΙΛΟΣ AKTOR</a><a href="/etaireia/vioter/">ΒΙΟΤΕΡ</a><a href="/etaireia/gek-terna/">GEK TERNA</a><a href="/etaireia/diethnis-aerolimenas-athinon/">ΔΙΕΘΝΗΣ ΑΕΡΟΛΙΜΕΝΑΣ ΑΘΗΝΩΝ</a><a href="/etaireia/domiki-kritis/">ΔΟΜΙΚΗ ΚΡΗΤΗΣ</a><a href="/etaireia/ekter/">EKTER</a><a href="/etaireia/ellaktor/">ELLAKTOR</a><a href="/etaireia/eins/">EINS</a><a href="/etaireia/organismos-limenos-thessalonikis/">ΟΡΓΑΝΙΣΜΟΣ ΛΙΜΕΝΟΣ ΘΕΣΣΑΛΟΝΙΚΗΣ</a><a href="/etaireia/proodeftiki/">PROODEFTIKI</a><a href="/etaireia/fdl-group/">FDL GROUP</a><a href="/etaireia/techniki-olympiaki/">ΤΕΧΝΙΚΗ ΟΛΥΜΠΙΑΚΗ</a><a href="/">Αρχική</a><a href="/company/">Σελίδα εταιρείας</a><a href="/compare/">Σύγκριση εταιρειών</a><a href="/rankings/">Κατατάξεις</a><a href="/apotelesmata/">Τελευταία αποτελέσματα</a><a href="/sectors/">Ευρετήριο κλάδων</a><a href="/sector/">Σελίδα κλάδου</a><a href="/index-reviews/">Αναθεωρήσεις δεικτών</a><a href="/market-events/">Γεγονότα αγοράς</a><a href="/short-positions/">Short θέσεις</a><a href="/methodology/">Μεθοδολογία &amp; δείκτες</a><a href="/about/">Περί</a><a href="/terms/">Όροι χρήσης</a><a href="/katataxeis/p-e/">Κατάταξη ανά P/E</a><a href="/katataxeis/p-bv/">Κατάταξη ανά P/BV</a><a href="/katataxeis/ev-ebitda/">Κατάταξη ανά EV/EBITDA</a><a href="/katataxeis/roe/">Κατάταξη ανά ROE</a><a href="/katataxeis/merismatiki-apodosi/">Κατάταξη ανά Μερισματική απόδοση</a><a href="/katataxeis/katharos-daneismos-ebitda/">Κατάταξη ανά Καθαρός δανεισμός / EBITDA</a><a href="/klados/akinita/">Ακίνητα</a><a href="/klados/chrimatooikonomika/">Χρηματοοικονομικά</a><a href="/klados/emporio-dianomi/">Εμπόριο &amp; Διανομή</a><a href="/klados/energeia-koinis-ofeleias/">Ενέργεια &amp; Κοινής Ωφέλειας</a><a href="/klados/holding/">Holding</a><a href="/klados/katanalotika-agatha/">Καταναλωτικά Αγαθά</a><a href="/klados/kataskeves-ypodomes-metafores/">Κατασκευές, Υποδομές &amp; Μεταφορές</a><a href="/klados/navtilia/">Ναυτιλία</a><a href="/klados/technologia-mme-tilepikoinonies/">Τεχνολογία, ΜΜΕ &amp; Τηλεπικοινωνίες</a><a href="/klados/trapezes/">Τράπεζες</a><a href="/klados/viomichania-vasika-ylika/">Βιομηχανία &amp; Βασικά Υλικά</a></nav></div>
 <script>window.NAV_ACTIVE=0;window.NAV_CUR="Σελίδα εταιρείας";window.AX_NO_BASIS=true;</script>
-<script src="/assets/chrome.js"></script>
+<script defer src="/assets/chrome.js"></script>
 </body>
 </html>

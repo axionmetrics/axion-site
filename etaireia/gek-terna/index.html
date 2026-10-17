@@ -31,11 +31,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&family=Open+Sans:wght@400;600;700;800&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.47.0/iconfont/tabler-icons.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <link rel="stylesheet" href="/assets/company.css">
 <link rel="stylesheet" href="/assets/chrome.css">
-<script src="/assets/i18n.js"></script>
-<script src="/assets/data.js"></script>
+<script src="/assets/i18n.js"></script><!-- ΧΩΡΙΣ defer: ορίζει AX_CO/AX_KLADOS/AX_KATATAXI και AX_I18N που τα inline μπλοκ των κελυφών καλούν κατά το parsing -->
+<script defer src="/assets/data.js"></script>
 <script src="/assets/current.js"></script><!-- τρέχουσες τιμές (μπάρα «Τρέχον») — ανεξάρτητο από το data.js· αν λείπει, η μπάρα απλώς κρύβεται -->
 <script>window.AXION_CURRENT=window.AXION_CURRENT||{};</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Corporation", "@id": "https://www.axionmetrics.gr/etaireia/gek-terna/#org", "name": "GEK TERNA", "url": "https://www.axionmetrics.gr/etaireia/gek-terna/", "tickerSymbol": "ΓΕΚΤΕΡΝΑ", "description": "GEKTERNA είναι όμιλος κατασκευών, παραχωρήσεων και ΣΔΙΤ, θερμικής ηλεκτροπαραγωγής και εμπορίας ρεύματος και φυσικού αερίου, ακινήτων και λατομείων, με κύκλο εργασιών 3.855,4 εκ. € το 2025 και πάνω από 6.149 εργαζόμενους. Μετά την πώληση του τομέα ΑΠΕ, η διοίκηση ανακατεύθυνε τα κεφάλαια σε υποδομές με μακροχρόνια έσοδα: την 30.12.2025 η ΝΕΑ ΕΓΝΑΤΙΑ ΟΔΟΣ (90%) κατέβαλε εφάπαξ τίμημα 1,275 δισ. € για 35ετή παραχώρηση, τον Ιούλιο 2025 συμφωνήθηκε με τη MOTOR OIL η συνένωση των ΗΡΩΝ και NRG σε κοινή εταιρεία 50/50 (έγκριση Κομισιόν 07.01.2026) και στο εξάμηνο 2026 αγοράστηκε το 12,76% της ΕΥΔΑΠ για 135 εκ. €. Ακολούθησαν η επενδυτική βαθμίδα «BBB-»/«Baa3» και ΑΜΚ 659,3 εκ. € στα 42,50 € ανά μετοχή (03.07.2026). Το αποτύπωμα: πάγια 5.030,1→6.375,3 εκ. €, ενεργητικό 9.930,1 εκ. €, τραπεζικός δανεισμός 4.807,7→6.018,9 εκ. €, έσοδα +18,6% και λειτουργικές ροές 556,6 εκ. €. Στο εξάμηνο 2026 ο κύκλος εργασιών ανέβηκε στα 2.101,6 εκ. € και τα καθαρά κέρδη στα 83,9 εκ. €, με ανεκτέλεστο 6,9 δισ. €.", "alternateName": "ΓΕΚ ΤΕΡΝΑ", "industry": "Κατασκευές, Υποδομές & Μεταφορές"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Αρχική", "item": "https://www.axionmetrics.gr/"}, {"@type": "ListItem", "position": 2, "name": "Εταιρείες", "item": "https://www.axionmetrics.gr/company/"}, {"@type": "ListItem", "position": 3, "name": "GEK TERNA", "item": "https://www.axionmetrics.gr/etaireia/gek-terna/"}]}, {"@type": "WebPage", "@id": "https://www.axionmetrics.gr/etaireia/gek-terna/", "url": "https://www.axionmetrics.gr/etaireia/gek-terna/", "name": "GEK TERNA / ΓΕΚ ΤΕΡΝΑ (ΓΕΚΤΕΡΝΑ) — μετοχή & αριθμοδείκτες", "description": "GEK TERNA / ΓΕΚ ΤΕΡΝΑ (ΓΕΚΤΕΡΝΑ): αποτελέσματα 2025 — κύκλος εργασιών 3.855 εκατ. €, καθαρά κέρδη 139,0 εκατ. €. Αριθμοδείκτες και σύγκριση με τον κλάδο.", "inLanguage": "el", "about": {"@id": "https://www.axionmetrics.gr/etaireia/gek-terna/#org"}, "isPartOf": {"@type": "WebSite", "name": "Axion Metrics", "url": "https://www.axionmetrics.gr/"}}]}</script>
@@ -167,7 +167,7 @@
 </main>
 
 <script>window.AX_TK="ΓΕΚΤΕΡΝΑ";</script>
-<script src="/assets/company.js"></script>
+<script defer src="/assets/company.js"></script>
 <div class="qs-ov" id="qsOv" onclick="qsClose()"></div>
 <aside class="qs" id="qs" role="dialog" aria-label="Γρήγορη εύρεση εταιρείας">
   <div class="qs-head">
@@ -181,11 +181,11 @@
   <div class="qs-foot"><span><kbd>↑</kbd><kbd>↓</kbd> <span data-i18n="co.qs.nav">πλοήγηση</span></span><span><kbd>Enter</kbd> <span data-i18n="co.qs.open">άνοιγμα</span></span><span><kbd>Esc</kbd> <span data-i18n="co.qs.close">κλείσιμο</span></span></div>
 </aside>
 
-<script src="/assets/company-qs.js"></script>
+<script defer src="/assets/company-qs.js"></script>
 
 <p class="co-summary" id="co-summary">Η GEK TERNA (ΓΕΚΤΕΡΝΑ) είναι εισηγμένη στο Χρηματιστήριο Αθηνών, στον κλάδο Κατασκευές, Υποδομές &amp; Μεταφορές. Τη χρήση 2025 ο κύκλος εργασιών ήταν 3.855 εκατ. €, το EBITDA 582,0 εκατ. € και τα καθαρά κέρδη 139,0 εκατ. €. Ο καθαρός δανεισμός διαμορφώθηκε σε 4.325 εκατ. €. Στη σελίδα θα βρείτε τα οικονομικά αποτελέσματα και τις οικονομικές καταστάσεις της εταιρείας, 26 αριθμοδείκτες με σύγκριση έναντι του κλάδου, την τροχιά των μεγεθών από το 2020, τους βασικούς μετόχους, τις θυγατρικές, τα μερίσματα και τα εταιρικά γεγονότα.</p>
 <div id="am-foot"><nav class="am-sfoot" aria-label="Χάρτης ιστότοπου"><span class="am-sfoot-x"></span><a href="/etaireia/attica-group/">ATTICA GROUP</a><a href="/etaireia/avax-group/">AVAX GROUP</a><a href="/etaireia/aegean-airlines/">AEGEAN AIRLINES</a><a href="/etaireia/omilos-aktor/">ΌΜΙΛΟΣ AKTOR</a><a href="/etaireia/vioter/">ΒΙΟΤΕΡ</a><a href="/etaireia/diethnis-aerolimenas-athinon/">ΔΙΕΘΝΗΣ ΑΕΡΟΛΙΜΕΝΑΣ ΑΘΗΝΩΝ</a><a href="/etaireia/domiki-kritis/">ΔΟΜΙΚΗ ΚΡΗΤΗΣ</a><a href="/etaireia/ekter/">EKTER</a><a href="/etaireia/ellaktor/">ELLAKTOR</a><a href="/etaireia/eins/">EINS</a><a href="/etaireia/organismos-limenos-thessalonikis/">ΟΡΓΑΝΙΣΜΟΣ ΛΙΜΕΝΟΣ ΘΕΣΣΑΛΟΝΙΚΗΣ</a><a href="/etaireia/organismos-limenos-peiraios/">ΟΡΓΑΝΙΣΜΟΣ ΛΙΜΕΝΟΣ ΠΕΙΡΑΙΩΣ</a><a href="/etaireia/proodeftiki/">PROODEFTIKI</a><a href="/etaireia/fdl-group/">FDL GROUP</a><a href="/etaireia/techniki-olympiaki/">ΤΕΧΝΙΚΗ ΟΛΥΜΠΙΑΚΗ</a><a href="/">Αρχική</a><a href="/company/">Σελίδα εταιρείας</a><a href="/compare/">Σύγκριση εταιρειών</a><a href="/rankings/">Κατατάξεις</a><a href="/apotelesmata/">Τελευταία αποτελέσματα</a><a href="/sectors/">Ευρετήριο κλάδων</a><a href="/sector/">Σελίδα κλάδου</a><a href="/index-reviews/">Αναθεωρήσεις δεικτών</a><a href="/market-events/">Γεγονότα αγοράς</a><a href="/short-positions/">Short θέσεις</a><a href="/methodology/">Μεθοδολογία &amp; δείκτες</a><a href="/about/">Περί</a><a href="/terms/">Όροι χρήσης</a><a href="/katataxeis/p-e/">Κατάταξη ανά P/E</a><a href="/katataxeis/p-bv/">Κατάταξη ανά P/BV</a><a href="/katataxeis/ev-ebitda/">Κατάταξη ανά EV/EBITDA</a><a href="/katataxeis/roe/">Κατάταξη ανά ROE</a><a href="/katataxeis/merismatiki-apodosi/">Κατάταξη ανά Μερισματική απόδοση</a><a href="/katataxeis/katharos-daneismos-ebitda/">Κατάταξη ανά Καθαρός δανεισμός / EBITDA</a><a href="/klados/akinita/">Ακίνητα</a><a href="/klados/chrimatooikonomika/">Χρηματοοικονομικά</a><a href="/klados/emporio-dianomi/">Εμπόριο &amp; Διανομή</a><a href="/klados/energeia-koinis-ofeleias/">Ενέργεια &amp; Κοινής Ωφέλειας</a><a href="/klados/holding/">Holding</a><a href="/klados/katanalotika-agatha/">Καταναλωτικά Αγαθά</a><a href="/klados/kataskeves-ypodomes-metafores/">Κατασκευές, Υποδομές &amp; Μεταφορές</a><a href="/klados/navtilia/">Ναυτιλία</a><a href="/klados/technologia-mme-tilepikoinonies/">Τεχνολογία, ΜΜΕ &amp; Τηλεπικοινωνίες</a><a href="/klados/trapezes/">Τράπεζες</a><a href="/klados/viomichania-vasika-ylika/">Βιομηχανία &amp; Βασικά Υλικά</a></nav></div>
 <script>window.NAV_ACTIVE=0;window.NAV_CUR="Σελίδα εταιρείας";window.AX_NO_BASIS=true;</script>
-<script src="/assets/chrome.js"></script>
+<script defer src="/assets/chrome.js"></script>
 </body>
 </html>

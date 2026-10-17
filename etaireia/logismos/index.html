@@ -31,11 +31,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&family=Open+Sans:wght@400;600;700;800&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.47.0/iconfont/tabler-icons.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <link rel="stylesheet" href="/assets/company.css">
 <link rel="stylesheet" href="/assets/chrome.css">
-<script src="/assets/i18n.js"></script>
-<script src="/assets/data.js"></script>
+<script src="/assets/i18n.js"></script><!-- ΧΩΡΙΣ defer: ορίζει AX_CO/AX_KLADOS/AX_KATATAXI και AX_I18N που τα inline μπλοκ των κελυφών καλούν κατά το parsing -->
+<script defer src="/assets/data.js"></script>
 <script src="/assets/current.js"></script><!-- τρέχουσες τιμές (μπάρα «Τρέχον») — ανεξάρτητο από το data.js· αν λείπει, η μπάρα απλώς κρύβεται -->
 <script>window.AXION_CURRENT=window.AXION_CURRENT||{};</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Corporation", "@id": "https://www.axionmetrics.gr/etaireia/logismos/#org", "name": "LOGISMOS", "url": "https://www.axionmetrics.gr/etaireia/logismos/", "tickerSymbol": "ΛΟΓΟΣ", "description": "LOGISMOS αναπτύσσει και υποστηρίζει επιχειρηματικό λογισμικό από την Τεχνόπολη Θεσσαλονίκης, με σουίτα ERP, συστήματα CMS για καζίνο και εφαρμογές ERM για ακαδημαϊκά ιδρύματα· στόχος της διοίκησης είναι η επέκταση των δύο τελευταίων σε αγορές εσωτερικού και εξωτερικού. Η διετία δεν περιλαμβάνει εξαγορές ή κεφαλαιακές πράξεις: οι αποφάσεις αφορούν την αναβάθμιση δύο από τα τρία προϊόντα, την αύξηση του προσωπικού σε 67 εργαζόμενους στο τέλος του 2025 από 56, και πρόγραμμα ιδίων μετοχών ως επιβράβευση στελεχών — 18.750 μετοχές αγορασμένες τον Μάρτιο 2025 για 30.000 € διατέθηκαν δωρεάν τον Αύγουστο, άλλες 9.300 τον Ιανουάριο 2026 αξίας 20.460 €, ενώ από 1 Ιουλίου έως 31 Αυγούστου 2026 αγοράστηκαν 7.405 μετοχές, φτάνοντας στο 0,19% του κεφαλαίου. Ο κύκλος εργασιών ανέβηκε σε 3.472.893 € το 2025 και 1.916.818 € στο εξάμηνο 2026, αλλά η άνοδος της μισθοδοσίας και των αποσβέσεων (754.892 € το 2025) περιόρισε τα καθαρά κέρδη εξαμήνου σε 146.605 € από 305.061 €. Η εταιρεία παραμένει σχεδόν αδάνειστη, με τραπεζικές υποχρεώσεις 106.737 € και λειτουργικές ροές εξαμήνου 521.282 €.", "industry": "Τεχνολογία, ΜΜΕ & Τηλεπικοινωνίες"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Αρχική", "item": "https://www.axionmetrics.gr/"}, {"@type": "ListItem", "position": 2, "name": "Εταιρείες", "item": "https://www.axionmetrics.gr/company/"}, {"@type": "ListItem", "position": 3, "name": "LOGISMOS", "item": "https://www.axionmetrics.gr/etaireia/logismos/"}]}, {"@type": "WebPage", "@id": "https://www.axionmetrics.gr/etaireia/logismos/", "url": "https://www.axionmetrics.gr/etaireia/logismos/", "name": "LOGISMOS (ΛΟΓΟΣ) — μετοχή & αριθμοδείκτες", "description": "LOGISMOS (ΛΟΓΟΣ): αποτελέσματα 2025 — κύκλος εργασιών 3,47 εκατ. €, καθαρά κέρδη 0,23 εκατ. €. Αριθμοδείκτες, μερίσματα και σύγκριση με τον κλάδο.", "inLanguage": "el", "about": {"@id": "https://www.axionmetrics.gr/etaireia/logismos/#org"}, "isPartOf": {"@type": "WebSite", "name": "Axion Metrics", "url": "https://www.axionmetrics.gr/"}}]}</script>
@@ -167,7 +167,7 @@
 </main>
 
 <script>window.AX_TK="ΛΟΓΟΣ";</script>
-<script src="/assets/company.js"></script>
+<script defer src="/assets/company.js"></script>
 <div class="qs-ov" id="qsOv" onclick="qsClose()"></div>
 <aside class="qs" id="qs" role="dialog" aria-label="Γρήγορη εύρεση εταιρείας">
   <div class="qs-head">
@@ -181,11 +181,11 @@
   <div class="qs-foot"><span><kbd>↑</kbd><kbd>↓</kbd> <span data-i18n="co.qs.nav">πλοήγηση</span></span><span><kbd>Enter</kbd> <span data-i18n="co.qs.open">άνοιγμα</span></span><span><kbd>Esc</kbd> <span data-i18n="co.qs.close">κλείσιμο</span></span></div>
 </aside>
 
-<script src="/assets/company-qs.js"></script>
+<script defer src="/assets/company-qs.js"></script>
 
 <p class="co-summary" id="co-summary">Η LOGISMOS (ΛΟΓΟΣ) είναι εισηγμένη στο Χρηματιστήριο Αθηνών, στον κλάδο Τεχνολογία, ΜΜΕ &amp; Τηλεπικοινωνίες. Τη χρήση 2025 ο κύκλος εργασιών ήταν 3,47 εκατ. €, το EBITDA 1,03 εκατ. € και τα καθαρά κέρδη 0,23 εκατ. €. Διαθέτει καθαρό ταμείο 0,05 εκατ. €. Στη σελίδα θα βρείτε τα οικονομικά αποτελέσματα και τις οικονομικές καταστάσεις της εταιρείας, 26 αριθμοδείκτες με σύγκριση έναντι του κλάδου, την τροχιά των μεγεθών από το 2020, τους βασικούς μετόχους, τις θυγατρικές, τα μερίσματα και τα εταιρικά γεγονότα.</p>
 <div id="am-foot"><nav class="am-sfoot" aria-label="Χάρτης ιστότοπου"><span class="am-sfoot-x"></span><a href="/etaireia/alter-ego-media/">ALTER EGO MEDIA</a><a href="/etaireia/austriacard/">AUSTRIACARD</a><a href="/etaireia/dotsoft/">DOTSOFT</a><a href="/etaireia/performance-technologies/">PERFORMANCE TECHNOLOGIES</a><a href="/etaireia/profile-software/">PROFILE SOFTWARE</a><a href="/etaireia/qnr/">QNR</a><a href="/etaireia/real-consulting/">REAL CONSULTING</a><a href="/etaireia/softweb/">SOFTWEB</a><a href="/etaireia/space-hellas/">SPACE HELLAS</a><a href="/etaireia/vidavo/">VIDAVO</a><a href="/etaireia/attica-media-group/">ATTICA MEDIA GROUP</a><a href="/etaireia/ilyda/">ΙΛΥΔΑ</a><a href="/etaireia/optronics-technologies/">OPTRONICS TECHNOLOGIES</a><a href="/etaireia/organismos-tilepikoinonion-ellados/">ΟΡΓΑΝΙΣΜΟΣ ΤΗΛΕΠΙΚΟΙΝΩΝΙΩΝ ΕΛΛΑΔΟΣ</a><a href="/etaireia/qualco-group/">QUALCO GROUP</a><a href="/">Αρχική</a><a href="/company/">Σελίδα εταιρείας</a><a href="/compare/">Σύγκριση εταιρειών</a><a href="/rankings/">Κατατάξεις</a><a href="/apotelesmata/">Τελευταία αποτελέσματα</a><a href="/sectors/">Ευρετήριο κλάδων</a><a href="/sector/">Σελίδα κλάδου</a><a href="/index-reviews/">Αναθεωρήσεις δεικτών</a><a href="/market-events/">Γεγονότα αγοράς</a><a href="/short-positions/">Short θέσεις</a><a href="/methodology/">Μεθοδολογία &amp; δείκτες</a><a href="/about/">Περί</a><a href="/terms/">Όροι χρήσης</a><a href="/katataxeis/p-e/">Κατάταξη ανά P/E</a><a href="/katataxeis/p-bv/">Κατάταξη ανά P/BV</a><a href="/katataxeis/ev-ebitda/">Κατάταξη ανά EV/EBITDA</a><a href="/katataxeis/roe/">Κατάταξη ανά ROE</a><a href="/katataxeis/merismatiki-apodosi/">Κατάταξη ανά Μερισματική απόδοση</a><a href="/katataxeis/katharos-daneismos-ebitda/">Κατάταξη ανά Καθαρός δανεισμός / EBITDA</a><a href="/klados/akinita/">Ακίνητα</a><a href="/klados/chrimatooikonomika/">Χρηματοοικονομικά</a><a href="/klados/emporio-dianomi/">Εμπόριο &amp; Διανομή</a><a href="/klados/energeia-koinis-ofeleias/">Ενέργεια &amp; Κοινής Ωφέλειας</a><a href="/klados/holding/">Holding</a><a href="/klados/katanalotika-agatha/">Καταναλωτικά Αγαθά</a><a href="/klados/kataskeves-ypodomes-metafores/">Κατασκευές, Υποδομές &amp; Μεταφορές</a><a href="/klados/navtilia/">Ναυτιλία</a><a href="/klados/technologia-mme-tilepikoinonies/">Τεχνολογία, ΜΜΕ &amp; Τηλεπικοινωνίες</a><a href="/klados/trapezes/">Τράπεζες</a><a href="/klados/viomichania-vasika-ylika/">Βιομηχανία &amp; Βασικά Υλικά</a></nav></div>
 <script>window.NAV_ACTIVE=0;window.NAV_CUR="Σελίδα εταιρείας";window.AX_NO_BASIS=true;</script>
-<script src="/assets/chrome.js"></script>
+<script defer src="/assets/chrome.js"></script>
 </body>
 </html>
