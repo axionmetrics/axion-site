@@ -19,9 +19,15 @@ const QS_DATA=((window.AXION&&window.AXION.companies&&window.AXION.companies[AXB
  });
 let qsSel=0, qsRows=[];
 
-// τελευταία ενημερωμένη περίοδος ανά ticker (από rowsByPeriod, ανεξάρτητα τρέχουσας βάσης)
+// τελευταία ενημερωμένη περίοδος ανά ticker, ανεξάρτητα τρέχουσας βάσης.
+// §131 — ΠΡΩΤΑ το προ-υπολογισμένο AXION.meta.lastPeriod (το ψήνει η γέφυρα). Ήταν η
+// μόνη εξάρτηση της σελίδας εταιρείας στο rowsByPeriod (250 KB) — με το core.js/co.js
+// σπάσιμο, το rowsByPeriod δεν φορτώνεται καθόλου εκεί. Το σκέλος από rowsByPeriod μένει
+// ως εφεδρεία για τις σελίδες που φορτώνουν ακέραιο data.js (/company/, /compare/ κ.λπ.).
 const QS_PERIOD=(function(){
   try{
+    const _pre=(window.AXION&&window.AXION.meta&&window.AXION.meta.lastPeriod)||null;
+    if(_pre) return _pre;
     const ax=window.AXION||{}, rbp=ax.rowsByPeriod||{}, ann=rbp.annual||{}, inter=rbp.interim||{};
     const rs=coll=>{const m={};for(const p in coll){m[p]=new Set((coll[p]||[]).filter(r=>r&&r.reported).map(r=>r.tk));}return m;};
     const A=rs(ann), I=rs(inter);
