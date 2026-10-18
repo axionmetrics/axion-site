@@ -25,10 +25,13 @@
   .mast-bar{display:flex;align-items:center;gap:24px}
   .mast-nameline{display:flex;align-items:baseline;flex-wrap:wrap;gap:12px}
   .co-logo-top{flex:none;display:flex;align-items:center;justify-content:flex-start;width:200px;padding-right:22px;border-right:1px solid var(--line)}
-  /* §132 — CLS 0,348: το <img id="co-logo"> παίρνει src από JS και δεν έχει διαστάσεις στο
-     HTML, άρα μέχρι να φτάσει δεν δέσμευε ΚΑΘΟΛΟΥ ύψος και όλη η κεφαλίδα τιναζόταν προς τα
-     κάτω. Τα λογότυπα έχουν διαφορετικές αναλογίες, άρα δεν μπαίνουν width/height στην
-     ετικέτα· δεσμεύεται το ύψος του δοχείου, όσο το max-height του λογοτύπου. */
+  /* §134 — CLS: το <img id="co-logo"> κατεβαίνει πλέον με έτοιμο src και πραγματικά
+     width/height από τη γέφυρα (βλ. §134 στο build_site_data.py), άρα ο φυλλομετρητής
+     κρατά τον χώρο από την πρώτη ζωγραφιά — πριν το δοχείο ήταν [hidden] μέχρι το onload,
+     δηλαδή display:none, και το min-height δεν είχε τι να κρατήσει. Το min-height ΜΕΝΕΙ:
+     δεν είναι πια για το CLS αλλά για τη ΣΤΑΘΕΡΗ ΣΤΟΙΧΙΣΗ της κεφαλίδας — λογότυπα με
+     χαμηλή αναλογία (π.χ. JUMBO: 150×40) αφήνουν το δοχείο 2 px κοντύτερο και μετακινούν
+     όλη τη σελίδα· ελεγμένο με σύγκριση στιγμιότυπων στις 18/10/2026. */
   .co-logo-top{min-height:56px}
   .co-logo{max-height:56px;max-width:176px;width:auto;height:auto;object-fit:contain;display:block}
   .mast-id{flex:1;min-width:0}
