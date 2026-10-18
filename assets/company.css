@@ -25,6 +25,11 @@
   .mast-bar{display:flex;align-items:center;gap:24px}
   .mast-nameline{display:flex;align-items:baseline;flex-wrap:wrap;gap:12px}
   .co-logo-top{flex:none;display:flex;align-items:center;justify-content:flex-start;width:200px;padding-right:22px;border-right:1px solid var(--line)}
+  /* §132 — CLS 0,348: το <img id="co-logo"> παίρνει src από JS και δεν έχει διαστάσεις στο
+     HTML, άρα μέχρι να φτάσει δεν δέσμευε ΚΑΘΟΛΟΥ ύψος και όλη η κεφαλίδα τιναζόταν προς τα
+     κάτω. Τα λογότυπα έχουν διαφορετικές αναλογίες, άρα δεν μπαίνουν width/height στην
+     ετικέτα· δεσμεύεται το ύψος του δοχείου, όσο το max-height του λογοτύπου. */
+  .co-logo-top{min-height:56px}
   .co-logo{max-height:56px;max-width:176px;width:auto;height:auto;object-fit:contain;display:block}
   .mast-id{flex:1;min-width:0}
   .co-namerow{display:flex;align-items:baseline;flex-wrap:wrap;gap:12px}
@@ -36,6 +41,7 @@
     .mast-bar{flex-wrap:wrap;gap:14px}
     .co-logo-top{border-right:none;padding-right:0;width:auto;max-width:58%}
     .co-logo{max-height:42px;max-width:150px}
+    .co-logo-top{min-height:42px}
     .qs-open{margin-left:auto}
     .mast-id{flex:1 1 100%;order:3}
   }
@@ -123,6 +129,12 @@
   .phead.emerald{background:#3f9e6a}
   .phead.teal{background:#223c66}.phead.green{background:#3f9e6a}
   .phead i{font-size:18px;opacity:.92}
+  /* §132 — εικονίδια ως inline SVG αντί του icon-font tabler (ήταν 900 ms render-blocking
+     από cdnjs για 9 γλυφές). Τα τρία δοχεία (.phead, .story-warn .wh, .listed-box .lx)
+     είναι flex/align-items:center, άρα η στοίχιση προκύπτει μόνη της· το μέγεθος κληρονομείται
+     από το font-size του <i>, όπως και πριν. */
+  .pico{display:flex;align-items:center;justify-content:center;flex:none}
+  .pico svg{width:1em;height:1em;display:block}
   .phead h2{font-family:var(--disp);font-weight:700;font-size:14px;letter-spacing:.05em;text-transform:uppercase}
   .phead .hint{margin-left:auto;font-family:var(--sans);font-size:12.5px;font-weight:500;color:#cfe0f6;text-transform:none;letter-spacing:0;text-align:right}
   .pbody{padding:18px 20px 20px;flex:1}

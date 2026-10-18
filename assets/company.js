@@ -939,12 +939,35 @@ const geoPct=n=>Math.round(n/subs.total*100);
 document.getElementById('geo-total').textContent=subs.total;
 document.getElementById('geo-sub').innerHTML=L('co.geo.entities')+'<br>'+subs.countries+' '+L('co.geo.countries');
 document.getElementById('geo-legend').innerHTML=geoData.map(g=>`<div class="lg${g.rest?' rest':''}"><span class="sw" style="background:${g.col}"></span><span class="c">${g.label}</span><span class="n">${g.n}</span><span class="p">${geoPct(g.n)}%</span></div>`).join('');
-try{ if(window.Chart) new Chart(document.getElementById('geo'),{type:'doughnut',
-  data:{labels:geoData.map(g=>g.c),datasets:[{data:geoData.map(g=>g.n),backgroundColor:geoData.map(g=>g.col),borderColor:'#ffffff',borderWidth:3,hoverOffset:5}]},
-  options:{cutout:'66%',responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{display:false},tooltip:{backgroundColor:'#16243d',borderColor:'#2b4a6b',borderWidth:1,padding:10,callbacks:{label:c=>` ${c.label}: ${c.parsed} (${geoPct(c.parsed)}%)`}}}}
-}); }catch(e){}
-document.getElementById('listed-wrap').innerHTML=subs.listed.map(l=>`<div class="listed-box"><span class="tag">${L('co.geo.listed')}</span><span class="ln">${l.name}</span><span class="lp">${(l.stake==null?0:l.stake).toLocaleString(LOC(),{minimumFractionDigits:1,maximumFractionDigits:1})}%</span>${l.exch?`<span class="lx"><i class="ti ti-building-bank"></i>${l.exch}</span>`:''}</div>`).join('');
+// §132 — ΤΟ Chart.js ΦΟΡΤΩΝΕΙ ΜΕ ΚΑΘΥΣΤΕΡΗΣΗ. Είναι 59 KB από cdnjs, το 65% του δεν
+// εκτελείται ποτέ (Lighthouse), και υπάρχει για ΕΝΑ ντόνατ που ζει μέσα στο πλαίσιο
+// «Θυγατρικές & συμμετοχές» — κάτω από το πρώτο κάδρο στο κινητό. Τώρα κατεβαίνει μόνο
+// όταν το ντόνατ πλησιάσει το κάδρο (300px πριν), ή αμέσως αν λείπει IntersectionObserver.
+(function(){
+  var cv=document.getElementById('geo'); if(!cv) return;
+  var done=false;
+  function draw(){
+    if(done||!window.Chart) return; done=true;
+    try{ new Chart(cv,{type:'doughnut',
+      data:{labels:geoData.map(g=>g.c),datasets:[{data:geoData.map(g=>g.n),backgroundColor:geoData.map(g=>g.col),borderColor:'#ffffff',borderWidth:3,hoverOffset:5}]},
+      options:{cutout:'66%',responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false},tooltip:{backgroundColor:'#16243d',borderColor:'#2b4a6b',borderWidth:1,padding:10,callbacks:{label:c=>` ${c.label}: ${c.parsed} (${geoPct(c.parsed)}%)`}}}}
+    }); }catch(e){}
+  }
+  function load(){
+    if(window.Chart) return draw();
+    var s=document.createElement('script');
+    s.src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js';
+    s.async=true; s.onload=draw; document.head.appendChild(s);
+  }
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      for(var i=0;i<es.length;i++) if(es[i].isIntersecting){ io.disconnect(); load(); return; }
+    },{rootMargin:'300px'});
+    io.observe(cv);
+  } else load();
+})();
+document.getElementById('listed-wrap').innerHTML=subs.listed.map(l=>`<div class="listed-box"><span class="tag">${L('co.geo.listed')}</span><span class="ln">${l.name}</span><span class="lp">${(l.stake==null?0:l.stake).toLocaleString(LOC(),{minimumFractionDigits:1,maximumFractionDigits:1})}%</span>${l.exch?`<span class="lx"><i class="pico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l18 0"/><path d="M3 10l18 0"/><path d="M5 6l7 -3l7 3"/><path d="M4 10l0 11"/><path d="M20 10l0 11"/><path d="M8 14l0 3"/><path d="M12 14l0 3"/><path d="M16 14l0 3"/></svg></i>${l.exch}</span>`:''}</div>`).join('');
 
 const acc=document.getElementById('acc');
 acc.innerHTML=subs.byCountry.map(g=>{
