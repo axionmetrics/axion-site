@@ -167,6 +167,15 @@
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "CollectionPage", "@id": "https://www.axionmetrics.gr/katataxeis/katharos-daneismos-ebitda/", "url": "https://www.axionmetrics.gr/katataxeis/katharos-daneismos-ebitda/", "name": "Κατάταξη εισηγμένων ανά Καθαρός δανεισμός / EBITDA — Χρηματιστήριο Αθηνών | Axion Metrics", "description": "Κατάταξη των εισηγμένων του Χρηματιστηρίου Αθηνών με βάση τον δείκτη Καθαρός δανεισμός / EBITDA. Πόσες φορές το ετήσιο EBITDA είναι ο καθαρός δανεισμός — μέτρο δανειακής επιβάρυνσης. Κορυφαίες και χειρότερες εταιρείες, ανά σύνολο αγοράς ή ανά κλάδο.", "inLanguage": "el", "isPartOf": {"@type": "WebSite", "name": "Axion Metrics", "url": "https://www.axionmetrics.gr/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Αρχική", "item": "https://www.axionmetrics.gr/"}, {"@type": "ListItem", "position": 2, "name": "Κατατάξεις", "item": "https://www.axionmetrics.gr/rankings/"}, {"@type": "ListItem", "position": 3, "name": "Κατάταξη ανά Καθαρός δανεισμός / EBITDA", "item": "https://www.axionmetrics.gr/katataxeis/katharos-daneismos-ebitda/"}]}]}</script>
 </head>
 <body>
+<!-- §137 — ΤΑ ΔΟΧΕΙΑ ΑΥΤΗΣ ΤΗΣ ΣΕΛΙΔΑΣ ΕΙΝΑΙ ΨΗΜΕΝΑ ΣΤΟ HTML.
+     Δεν γράφτηκαν με το χέρι ούτε αντιγράφηκε λογική σε Python: τρέχει το ΙΔΙΟ
+     JavaScript της σελίδας σε headless Chromium (ASSETS/prerender.py) και το
+     αποτέλεσμα γράφεται μέσα στα άδεια <div>/<tbody> που θα γέμιζε έτσι κι αλλιώς.
+     Το JavaScript συνεχίζει να τα ξαναγράφει στο runtime με ΤΙΣ ΙΔΙΕΣ τιμές —
+     ελεγμένο: ίδιο DOM, ίδιο πλήθος κόμβων και γραμμών, μηδέν σφάλματα.
+     ΠΡΟΣΟΧΗ: η γέφυρα ξαναφτιάχνει αυτές τις σελίδες από τα κελύφη, άρα το
+     prerender.py πρέπει να τρέχει ΜΕΤΑ από κάθε build_site_data.py. Αν δεν τρέξει,
+     η σελίδα απλώς επιστρέφει στη συμπεριφορά πριν το §137 — τίποτα δεν σπάει. -->
 <div id="am-nav"></div>
 <div class="wrap">
  <div class="secbox">
@@ -180,17 +189,17 @@
       </div>
     </div>
   </div>
- <div id="basisblock" class="basis-block" hidden></div>
+ <div id="basisblock" class="basis-block" hidden><div class="bt">ΕΤΗΣΙΑ ΚΑΤΑΤΑΞΗ</div><div class="bd">Κατάταξη σε επιλεγμένη περίοδο <span class="per">2025</span></div></div>
 
- <div class="basisrow"><div class="page-basis" id="ambasis-page"></div><div class="sep"></div><div class="crow"><span class="lbl" data-i18n="rk.period">Περίοδος</span><select id="periodSel" class="periodSel" onchange="setPeriod(this.value)"></select><span class="meta" id="perinfo" style="font-size:12px;color:var(--muted)"></span></div></div>
+ <div class="basisrow"><div class="page-basis" id="ambasis-page"><div class="seg" role="group" aria-label="Βάση δεδομένων"><button type="button" data-b="annual" class="on">Ετήσια</button><button type="button" data-b="interim" class="">Εξάμηνο</button></div></div><div class="sep"></div><div class="crow"><span class="lbl" data-i18n="rk.period">Περίοδος</span><select id="periodSel" class="periodSel" onchange="setPeriod(this.value)"><option value="2026">2026</option><option value="2025" selected="">2025</option><option value="2024">2024</option><option value="2023">2023</option><option value="2022">2022</option><option value="2021">2021</option><option value="2020">2020</option></select><span class="meta" id="perinfo" style="font-size:12px;color:var(--muted)">132 από 132 έχουν ενημερωθεί</span></div></div>
  <div class="controls">
-  <div class="picker" id="schips" style="display:flex;flex-wrap:wrap;gap:7px"></div>
+  <div class="picker" id="schips" style="display:flex;flex-wrap:wrap;gap:7px"><span class="chip on" onclick="setScope(null)">Όλη η αγορά</span><span class="chip " onclick="setScope('Καταναλωτικά Αγαθά')">Καταναλωτικά Αγαθά</span><span class="chip " onclick="setScope('Ακίνητα')">Ακίνητα</span><span class="chip " onclick="setScope('Χρηματοοικονομικά')">Χρηματοοικονομικά</span><span class="chip " onclick="setScope('Τράπεζες')">Τράπεζες</span><span class="chip " onclick="setScope('Τεχνολογία, ΜΜΕ &amp; Τηλεπικοινωνίες')">Τεχνολογία, ΜΜΕ &amp; Τηλεπικοινωνίες</span><span class="chip " onclick="setScope('Εμπόριο &amp; Διανομή')">Εμπόριο &amp; Διανομή</span><span class="chip " onclick="setScope('Κατασκευές, Υποδομές &amp; Μεταφορές')">Κατασκευές, Υποδομές &amp; Μεταφορές</span><span class="chip " onclick="setScope('Βιομηχανία &amp; Βασικά Υλικά')">Βιομηχανία &amp; Βασικά Υλικά</span><span class="chip " onclick="setScope('Holding')">Holding</span><span class="chip " onclick="setScope('Ενέργεια &amp; Κοινής Ωφέλειας')">Ενέργεια &amp; Κοινής Ωφέλειας</span><span class="chip " onclick="setScope('Ναυτιλία')">Ναυτιλία</span></div>
  </div>
 
  <div class="controls">
   <div class="crow">
    <span class="lbl" data-i18n="rk.metric">Δείκτης</span>
-   <div id="mchips" style="display:flex;flex-wrap:wrap;gap:7px"></div>
+   <div id="mchips" style="display:flex;flex-wrap:wrap;gap:7px"><span class="chip acc " onclick="setMetric('pe')">P/E</span><span class="chip acc " onclick="setMetric('pbv')">P/BV</span><span class="chip acc " onclick="setMetric('ev')">EV/EBITDA</span><span class="chip acc " onclick="setMetric('roe')">ROE</span><span class="chip acc " onclick="setMetric('dy')">Μέρισμα</span><span class="chip acc on" onclick="setMetric('nde')">Καθ.δαν/EBITDA</span></div>
   </div>
   <div class="crow">
    <span class="lbl" data-i18n="rk.show">Εμφάνιση</span>
@@ -206,12 +215,109 @@
   </div>
  </div>
 
- <div class="resbar"><h2 id="rtitle"></h2><span class="meta" id="rmeta"></span></div>
- <div class="tblwrap"><table><thead id="thead"></thead><tbody id="tbody"></tbody></table></div>
+ <div class="resbar"><h2 id="rtitle">Κορυφαίες · Καθαρός δανεισμός / EBITDA</h2><span class="meta" id="rmeta">10 από 123 εταιρείες · Όλη η αγορά · διάμεσος 1,1</span></div>
+ <div class="tblwrap"><table><thead id="thead"><tr><th>#</th><th class="l">ΕΤΑΙΡΕΙΑ</th><th class="l">ΚΛΑΔΟΣ</th>
+   <th class="l">ΘΕΣΗ ΣΤΗΝ ΚΑΤΑΝΟΜΗ</th><th style="text-align:right">ΚΑΘ.ΔΑΝ/EBITDA</th></tr></thead><tbody id="tbody"><tr class="top3">
+   <td class="rk">1</td>
+   <td class="nm"><a href="/etaireia/tria-alfa/" target="_blank">ΤΡΙΑ ΑΛΦΑ</a></td>
+   <td class="sc">Καταναλωτικά Αγαθά</td>
+   <td class="pct"><div class="pbar"><div class="pfill" style="width:100%;background:var(--zg)"></div></div>
+     <span class="pnum">100%</span></td>
+   <td class="val g">-352,2</td></tr><tr class="top3">
+   <td class="rk">2</td>
+   <td class="nm"><a href="/etaireia/klostoufantourgia-navpaktou/" target="_blank">ΚΛΩΣΤΟΥΦΑΝΤΟΥΡΓΙΑ ΝΑΥΠΑΚΤΟΥ</a></td>
+   <td class="sc">Καταναλωτικά Αγαθά</td>
+   <td class="pct"><div class="pbar"><div class="pfill" style="width:15%;background:var(--zg)"></div></div>
+     <span class="pnum">15%</span></td>
+   <td class="val g">-21,0</td></tr><tr class="top3">
+   <td class="rk">3</td>
+   <td class="nm"><a href="/etaireia/evdap/" target="_blank">ΕΥΔΑΠ</a></td>
+   <td class="sc">Ενέργεια &amp; Κοινής Ωφέλειας</td>
+   <td class="pct"><div class="pbar"><div class="pfill" style="width:12%;background:var(--zg)"></div></div>
+     <span class="pnum">12%</span></td>
+   <td class="val g">-7,5</td></tr><tr class="">
+   <td class="rk">4</td>
+   <td class="nm"><a href="/etaireia/y-knot-invest/" target="_blank">Y/KNOT INVEST</a></td>
+   <td class="sc">Καταναλωτικά Αγαθά</td>
+   <td class="pct"><div class="pbar"><div class="pfill" style="width:12%;background:var(--zg)"></div></div>
+     <span class="pnum">12%</span></td>
+   <td class="val g">-7,4</td></tr><tr class="">
+   <td class="rk">5</td>
+   <td class="nm"><a href="/etaireia/alpha-real-estate-services/" target="_blank">ALPHA REAL ESTATE SERVICES</a></td>
+   <td class="sc">Ακίνητα</td>
+   <td class="pct"><div class="pbar"><div class="pfill" style="width:11%;background:var(--zg)"></div></div>
+     <span class="pnum">11%</span></td>
+   <td class="val g">-6,5</td></tr><tr class="">
+   <td class="rk">6</td>
+   <td class="nm"><a href="/etaireia/techniki-olympiaki/" target="_blank">ΤΕΧΝΙΚΗ ΟΛΥΜΠΙΑΚΗ</a></td>
+   <td class="sc">Κατασκευές, Υποδομές &amp; Μεταφορές</td>
+   <td class="pct"><div class="pbar"><div class="pfill" style="width:11%;background:var(--zg)"></div></div>
+     <span class="pnum">11%</span></td>
+   <td class="val g">-5,3</td></tr><tr class="">
+   <td class="rk">7</td>
+   <td class="nm"><a href="/etaireia/ave/" target="_blank">AVE</a></td>
+   <td class="sc">Εμπόριο &amp; Διανομή</td>
+   <td class="pct"><div class="pbar"><div class="pfill" style="width:11%;background:var(--zg)"></div></div>
+     <span class="pnum">11%</span></td>
+   <td class="val g">-4,2</td></tr><tr class="">
+   <td class="rk">8</td>
+   <td class="nm"><a href="/etaireia/optronics-technologies/" target="_blank">OPTRONICS TECHNOLOGIES</a></td>
+   <td class="sc">Τεχνολογία, ΜΜΕ &amp; Τηλεπικοινωνίες</td>
+   <td class="pct"><div class="pbar"><div class="pfill" style="width:11%;background:var(--zg)"></div></div>
+     <span class="pnum">11%</span></td>
+   <td class="val g">-3,5</td></tr><tr class="">
+   <td class="rk">9</td>
+   <td class="nm"><a href="/etaireia/intracom-holdings/" target="_blank">INTRACOM HOLDINGS</a></td>
+   <td class="sc">Holding</td>
+   <td class="pct"><div class="pbar"><div class="pfill" style="width:10%;background:var(--zg)"></div></div>
+     <span class="pnum">10%</span></td>
+   <td class="val g">-3,1</td></tr><tr class="">
+   <td class="rk">10</td>
+   <td class="nm"><a href="/etaireia/evath/" target="_blank">ΕΥΑΘ</a></td>
+   <td class="sc">Ενέργεια &amp; Κοινής Ωφέλειας</td>
+   <td class="pct"><div class="pbar"><div class="pfill" style="width:10%;background:var(--zg)"></div></div>
+     <span class="pnum">10%</span></td>
+   <td class="val g">-3,1</td></tr></tbody></table></div>
 
  <h2 class="sec" data-i18n="rk.glance">Όλες οι κατατάξεις με μια ματιά</h2>
  <div class="sech" data-i18n="rk.glancesub">Top-5 ανά δείκτη στην τρέχουσα εμβέλεια · κλικ σε κάρτα για πλήρη κατάταξη.</div>
- <div class="cards" id="cards"></div>
+ <div class="cards" id="cards"><div class="card " onclick="setMetric('pe')">
+    <div class="bh">P/E</div><div class="brow"><span class="n">1. ΑΓΡΟΤΙΚΟΣ ΟΙΚΟΣ ΣΠΥΡΟΥ</span>
+    <span class="v g">1,4</span></div><div class="brow"><span class="n">2. ELLAKTOR</span>
+    <span class="v g">3,1</span></div><div class="brow"><span class="n">3. ALPHATRUST ΑΝΔΡΟΜΕΔΑ</span>
+    <span class="v g">3,6</span></div><div class="brow"><span class="n">4. PREMIA PROPERTIES</span>
+    <span class="v g">4,1</span></div><div class="brow"><span class="n">5. INTERLIFE ΑΣΦΑΛΙΣΤΙΚΗ</span>
+    <span class="v g">4,2</span></div></div><div class="card " onclick="setMetric('pbv')">
+    <div class="bh">P/BV</div><div class="brow"><span class="n">1. ΔΡΟΜΕΑΣ</span>
+    <span class="v g">0,5</span></div><div class="brow"><span class="n">2. ΧΑΪΔΕΜΕΝΟΣ</span>
+    <span class="v g">0,5</span></div><div class="brow"><span class="n">3. ΤΕΧΝΙΚΗ ΟΛΥΜΠΙΑΚΗ</span>
+    <span class="v g">0,5</span></div><div class="brow"><span class="n">4. ΕΛΑΣΤΡΟΝ</span>
+    <span class="v g">0,5</span></div><div class="brow"><span class="n">5. ΑΦΟΙ ΚΟΡΔΕΛΛΟΥ</span>
+    <span class="v g">0,5</span></div></div><div class="card " onclick="setMetric('ev')">
+    <div class="bh">EV/EBITDA</div><div class="brow"><span class="n">1. ΑΓΡΟΤΙΚΟΣ ΟΙΚΟΣ ΣΠΥΡΟΥ</span>
+    <span class="v g">2,5</span></div><div class="brow"><span class="n">2. ΕΛΒΕ</span>
+    <span class="v g">2,9</span></div><div class="brow"><span class="n">3. FOURLIS GROUP</span>
+    <span class="v g">3,1</span></div><div class="brow"><span class="n">4. AEGEAN AIRLINES</span>
+    <span class="v g">3,1</span></div><div class="brow"><span class="n">5. AUTOHELLAS</span>
+    <span class="v g">3,4</span></div></div><div class="card " onclick="setMetric('roe')">
+    <div class="bh">ROE</div><div class="brow"><span class="n">1. ALLWYN</span>
+    <span class="v g">113 %</span></div><div class="brow"><span class="n">2. ΑΓΡΟΤΙΚΟΣ ΟΙΚΟΣ ΣΠΥΡΟΥ</span>
+    <span class="v g">96 %</span></div><div class="brow"><span class="n">3. FDL GROUP</span>
+    <span class="v g">55 %</span></div><div class="brow"><span class="n">4. EUROXX SECURITIES</span>
+    <span class="v g">47 %</span></div><div class="brow"><span class="n">5. DOTSOFT</span>
+    <span class="v g">44 %</span></div></div><div class="card " onclick="setMetric('dy')">
+    <div class="bh">Μερισματική απόδοση</div><div class="brow"><span class="n">1. ELLAKTOR</span>
+    <span class="v g">41,0 %</span></div><div class="brow"><span class="n">2. PRODEA INVESTMENTS</span>
+    <span class="v g">29,2 %</span></div><div class="brow"><span class="n">3. ΜΠΛΕ ΚΕΔΡΟΣ</span>
+    <span class="v g">8,7 %</span></div><div class="brow"><span class="n">4. ALPHATRUST ΑΝΔΡΟΜΕΔΑ</span>
+    <span class="v g">8,6 %</span></div><div class="brow"><span class="n">5. LOULIS FOOD INGREDIENTS</span>
+    <span class="v g">8,0 %</span></div></div><div class="card on" onclick="setMetric('nde')">
+    <div class="bh">Καθαρός δανεισμός / EBITDA</div><div class="brow"><span class="n">1. ΤΡΙΑ ΑΛΦΑ</span>
+    <span class="v g">-352,2</span></div><div class="brow"><span class="n">2. ΚΛΩΣΤΟΥΦΑΝΤΟΥΡΓΙΑ ΝΑΥΠΑΚΤΟΥ</span>
+    <span class="v g">-21,0</span></div><div class="brow"><span class="n">3. ΕΥΔΑΠ</span>
+    <span class="v g">-7,5</span></div><div class="brow"><span class="n">4. Y/KNOT INVEST</span>
+    <span class="v g">-7,4</span></div><div class="brow"><span class="n">5. ALPHA REAL ESTATE SERVICES</span>
+    <span class="v g">-6,5</span></div></div></div>
 
   <div class="foot"><div data-i18n-html="rk.ebfoot"><span style="color:var(--mid)">ⓘ</span> Οι δείκτες που βασίζονται στο EBITDA (<b>EV/EBITDA</b>, <b>καθαρός δανεισμός/EBITDA</b>) χρησιμοποιούν πάντα τον <b>υπολογισμό Axion</b> — τον ίδιο τύπο για όλες τις εισηγμένες — ώστε η σύγκριση να είναι ομοιογενής. Το EBITDA όπως το <b>δημοσιεύει η ίδια η εταιρεία</b> εμφανίζεται στη <b>σελίδα της εταιρείας</b>.</div></div>
 

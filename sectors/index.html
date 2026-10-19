@@ -107,18 +107,27 @@
 <script src="/assets/i18n.js"></script>
 </head>
 <body>
+<!-- §137 — ΤΑ ΔΟΧΕΙΑ ΑΥΤΗΣ ΤΗΣ ΣΕΛΙΔΑΣ ΕΙΝΑΙ ΨΗΜΕΝΑ ΣΤΟ HTML.
+     Δεν γράφτηκαν με το χέρι ούτε αντιγράφηκε λογική σε Python: τρέχει το ΙΔΙΟ
+     JavaScript της σελίδας σε headless Chromium (ASSETS/prerender.py) και το
+     αποτέλεσμα γράφεται μέσα στα άδεια <div>/<tbody> που θα γέμιζε έτσι κι αλλιώς.
+     Το JavaScript συνεχίζει να τα ξαναγράφει στο runtime με ΤΙΣ ΙΔΙΕΣ τιμές —
+     ελεγμένο: ίδιο DOM, ίδιο πλήθος κόμβων και γραμμών, μηδέν σφάλματα.
+     ΠΡΟΣΟΧΗ: η γέφυρα ξαναφτιάχνει αυτές τις σελίδες από τα κελύφη, άρα το
+     prerender.py πρέπει να τρέχει ΜΕΤΑ από κάθε build_site_data.py. Αν δεν τρέξει,
+     η σελίδα απλώς επιστρέφει στη συμπεριφορά πριν το §137 — τίποτα δεν σπάει. -->
 <div id="am-nav"></div>
 <div class="wrap">
  <section class="hero">
     <div class="stripe"></div>
     <div class="hero-in">
       <h1 data-i18n="sectors.h1">Ευρετήριο κλάδων</h1>
-      <div class="statrow" id="summary"></div>
+      <div class="statrow" id="summary"><div class="s"><span class="n">11</span><span class="l">Κλάδοι</span></div><div class="s"><span class="n">132</span><span class="l">Εταιρείες</span></div><div class="s"><span class="n">186.818 εκ. €</span><span class="l">Συν. κεφαλαιοποίηση</span></div><div class="s"><span class="n">12,9</span><span class="l">Διάμεση P/E</span></div><div class="s"><span class="n up">+11,0%</span><span class="l">Διάμεση ανάπτυξη τζίρου</span></div></div>
     </div>
   </section>
 
  <div class="resbar">
-  <span class="cnt" id="cnt"></span>
+  <span class="cnt" id="cnt">11 κλάδοι · 132 εταιρείες</span>
   <select class="sortsel" id="sort" onchange="render()">
    <option value="n" data-i18n="sectors.sort.n">Πλήθος εταιρειών</option>
    <option value="name" data-i18n="sectors.sort.name">Αλφαβητικά</option>
@@ -127,7 +136,139 @@
    </select>
  </div>
 
- <div class="grid" id="grid"></div>
+ <div class="grid" id="grid"><div class="card">
+  <div class="chdr">
+   <div class="chead">
+     <a class="cname" href="/klados/viomichania-vasika-ylika/" target="_blank">Βιομηχανία &amp; Βασικά Υλικά</a>
+     <span class="ccount">25</span>
+   </div>
+   <div class="cmeta">
+     <span>Ανάπτυξη τζίρου <b class="up">+6,4 %</b></span>
+     <span>Κεφ/ποίηση <b>22.609 εκ. €</b></span>
+   </div>
+  </div>
+  <div class="colist"><a class="co" href="/etaireia/metlen-energy-metals/" target="_blank"><span class="cn">METLEN ENERGY &amp; METALS</span><span class="cm">7.011 εκ. €</span></a><a class="co" href="/etaireia/cenergy-holdings/" target="_blank"><span class="cn">CENERGY HOLDINGS</span><span class="cm">4.732 εκ. €</span></a><a class="co" href="/etaireia/viohalco/" target="_blank"><span class="cn">VIOHALCO</span><span class="cm">4.023 εκ. €</span></a><a class="co" href="/etaireia/titan/" target="_blank"><span class="cn">TITAN</span><span class="cm">3.775 εκ. €</span></a><a class="co" href="/etaireia/elvalhalcor/" target="_blank"><span class="cn">ELVALHALCOR</span><span class="cm">1.515 εκ. €</span></a><a class="co" href="/etaireia/plastika-kritis/" target="_blank"><span class="cn">ΠΛΑΣΤΙΚΑ ΚΡΗΤΗΣ</span><span class="cm">416,2 εκ. €</span></a><a class="co" href="/etaireia/lavipharm/" target="_blank"><span class="cn">LAVIPHARM</span><span class="cm">257,5 εκ. €</span></a><a class="co" href="/etaireia/omilos-plastika-thrakis/" target="_blank"><span class="cn">ΌΜΙΛΟΣ ΠΛΑΣΤΙΚΑ ΘΡΑΚΗΣ</span><span class="cm">213,0 εκ. €</span></a><a class="co" href="/etaireia/alumil/" target="_blank"><span class="cn">ALUMIL</span><span class="cm">175,0 εκ. €</span></a><a class="co" href="/etaireia/daios-plastics/" target="_blank"><span class="cn">DAIOS PLASTICS</span><span class="cm">111,0 εκ. €</span></a><a class="co" href="/etaireia/flexopack/" target="_blank"><span class="cn">FLEXOPACK</span><span class="cm">95,61 εκ. €</span></a><a class="co" href="/etaireia/mevaco/" target="_blank"><span class="cn">MEVACO</span><span class="cm">60,27 εκ. €</span></a><a class="co" href="/etaireia/elastron/" target="_blank"><span class="cn">ΕΛΑΣΤΡΟΝ</span><span class="cm">46,09 εκ. €</span></a><a class="co" href="/etaireia/unibios/" target="_blank"><span class="cn">UNIBIOS</span><span class="cm">36,52 εκ. €</span></a><a class="co" href="/etaireia/sidma/" target="_blank"><span class="cn">ΣΙΔΜΑ</span><span class="cm">31,51 εκ. €</span></a><a class="co" href="/etaireia/iktinos-ellas/" target="_blank"><span class="cn">ΙΚΤΙΝΟΣ ΕΛΛΑΣ</span><span class="cm">31,44 εκ. €</span></a><a class="co" href="/etaireia/el-d-mouzakis/" target="_blank"><span class="cn">ΕΛ.Δ.ΜΟΥΖΑΚΗΣ</span><span class="cm">20,86 εκ. €</span></a><a class="co" href="/etaireia/medicon-hellas/" target="_blank"><span class="cn">MEDICON HELLAS</span><span class="cm">13,48 εκ. €</span></a><a class="co" href="/etaireia/afoi-kordellou/" target="_blank"><span class="cn">ΑΦΟΙ ΚΟΡΔΕΛΛΟΥ</span><span class="cm">8,89 εκ. €</span></a><a class="co" href="/etaireia/doppler/" target="_blank"><span class="cn">DOPPLER</span><span class="cm">8,09 εκ. €</span></a><a class="co" href="/etaireia/chaidemenos/" target="_blank"><span class="cn">ΧΑΪΔΕΜΕΝΟΣ</span><span class="cm">7,80 εκ. €</span></a><a class="co" href="/etaireia/profil-tzirakian/" target="_blank"><span class="cn">PROFIL ΤΖΙΡΑΚΙΑΝ</span><span class="cm">6,16 εκ. €</span></a><a class="co" href="/etaireia/mathios-refractories/" target="_blank"><span class="cn">MATHIOS REFRACTORIES</span><span class="cm">5,99 εκ. €</span></a><a class="co" href="/etaireia/pairis/" target="_blank"><span class="cn">PAIRIS</span><span class="cm">4,51 εκ. €</span></a><a class="co" href="/etaireia/leventeris/" target="_blank"><span class="cn">LEVENTERIS</span><span class="cm">2,98 εκ. €</span></a></div>
+ </div><div class="card">
+  <div class="chdr">
+   <div class="chead">
+     <a class="cname" href="/klados/katanalotika-agatha/" target="_blank">Καταναλωτικά Αγαθά</a>
+     <span class="ccount">21</span>
+   </div>
+   <div class="cmeta">
+     <span>Ανάπτυξη τζίρου <b class="up">+8,5 %</b></span>
+     <span>Κεφ/ποίηση <b>36.030 εκ. €</b></span>
+   </div>
+  </div>
+  <div class="colist"><a class="co" href="/etaireia/coca-cola/" target="_blank"><span class="cn">COCA COLA</span><span class="cm">19.446 εκ. €</span></a><a class="co" href="/etaireia/allwyn/" target="_blank"><span class="cn">ALLWYN</span><span class="cm">9.923 εκ. €</span></a><a class="co" href="/etaireia/ballys-intralot/" target="_blank"><span class="cn">BALLY'S INTRALOT</span><span class="cm">2.092 εκ. €</span></a><a class="co" href="/etaireia/kapnoviomichania-karelia/" target="_blank"><span class="cn">ΚΑΠΝΟΒΙΟΜΗΧΑΝΙΑ ΚΑΡΕΛΙΑ</span><span class="cm">1.154 εκ. €</span></a><a class="co" href="/etaireia/kri-kri/" target="_blank"><span class="cn">ΚΡΙ ΚΡΙ</span><span class="cm">1.101 εκ. €</span></a><a class="co" href="/etaireia/lampsa/" target="_blank"><span class="cn">ΛΑΜΨΑ</span><span class="cm">1.013 εκ. €</span></a><a class="co" href="/etaireia/sarantis/" target="_blank"><span class="cn">SARANTIS</span><span class="cm">717,3 εκ. €</span></a><a class="co" href="/etaireia/omilos-iatrikou-athinon/" target="_blank"><span class="cn">ΌΜΙΛΟΣ ΙΑΤΡΙΚΟΥ ΑΘΗΝΩΝ</span><span class="cm">124,9 εκ. €</span></a><a class="co" href="/etaireia/onyx-touristiki/" target="_blank"><span class="cn">ONYX TOURISTIKI</span><span class="cm">108,2 εκ. €</span></a><a class="co" href="/etaireia/papoutsanis/" target="_blank"><span class="cn">ΠΑΠΟΥΤΣΑΝΗΣ</span><span class="cm">91,59 εκ. €</span></a><a class="co" href="/etaireia/loulis-food-ingredients/" target="_blank"><span class="cn">LOULIS FOOD INGREDIENTS</span><span class="cm">57,18 εκ. €</span></a><a class="co" href="/etaireia/evrofarma/" target="_blank"><span class="cn">EVROFARMA</span><span class="cm">49,77 εκ. €</span></a><a class="co" href="/etaireia/y-knot-invest/" target="_blank"><span class="cn">Y/KNOT INVEST</span><span class="cm">48,23 εκ. €</span></a><a class="co" href="/etaireia/biokarpet/" target="_blank"><span class="cn">BIOKARPET</span><span class="cm">34,54 εκ. €</span></a><a class="co" href="/etaireia/elve/" target="_blank"><span class="cn">ΕΛΒΕ</span><span class="cm">24,97 εκ. €</span></a><a class="co" href="/etaireia/klostoufantourgia-navpaktou/" target="_blank"><span class="cn">ΚΛΩΣΤΟΥΦΑΝΤΟΥΡΓΙΑ ΝΑΥΠΑΚΤΟΥ</span><span class="cm">12,32 εκ. €</span></a><a class="co" href="/etaireia/dromeas/" target="_blank"><span class="cn">ΔΡΟΜΕΑΣ</span><span class="cm">11,18 εκ. €</span></a><a class="co" href="/etaireia/sarantopoulos/" target="_blank"><span class="cn">SARANTOPOULOS</span><span class="cm">6,52 εκ. €</span></a><a class="co" href="/etaireia/lanakam/" target="_blank"><span class="cn">LANAKAM</span><span class="cm">5,17 εκ. €</span></a><a class="co" href="/etaireia/tria-alfa/" target="_blank"><span class="cn">ΤΡΙΑ ΑΛΦΑ</span><span class="cm">4,83 εκ. €</span></a><a class="co" href="/etaireia/minerva/" target="_blank"><span class="cn">MINERVA</span><span class="cm">4,56 εκ. €</span></a></div>
+ </div><div class="card">
+  <div class="chdr">
+   <div class="chead">
+     <a class="cname" href="/klados/technologia-mme-tilepikoinonies/" target="_blank">Τεχνολογία, ΜΜΕ &amp; Τηλεπικοινωνίες</a>
+     <span class="ccount">16</span>
+   </div>
+   <div class="cmeta">
+     <span>Ανάπτυξη τζίρου <b class="up">+19,9 %</b></span>
+     <span>Κεφ/ποίηση <b>9.865 εκ. €</b></span>
+   </div>
+  </div>
+  <div class="colist"><a class="co" href="/etaireia/organismos-tilepikoinonion-ellados/" target="_blank"><span class="cn">ΟΡΓΑΝΙΣΜΟΣ ΤΗΛΕΠΙΚΟΙΝΩΝΙΩΝ ΕΛΛΑΔΟΣ</span><span class="cm">7.716 εκ. €</span></a><a class="co" href="/etaireia/qualco-group/" target="_blank"><span class="cn">QUALCO GROUP</span><span class="cm">424,4 εκ. €</span></a><a class="co" href="/etaireia/alter-ego-media/" target="_blank"><span class="cn">ALTER EGO MEDIA</span><span class="cm">372,9 εκ. €</span></a><a class="co" href="/etaireia/austriacard/" target="_blank"><span class="cn">AUSTRIACARD</span><span class="cm">356,6 εκ. €</span></a><a class="co" href="/etaireia/profile-software/" target="_blank"><span class="cn">PROFILE SOFTWARE</span><span class="cm">264,1 εκ. €</span></a><a class="co" href="/etaireia/real-consulting/" target="_blank"><span class="cn">REAL CONSULTING</span><span class="cm">262,2 εκ. €</span></a><a class="co" href="/etaireia/performance-technologies/" target="_blank"><span class="cn">PERFORMANCE TECHNOLOGIES</span><span class="cm">141,3 εκ. €</span></a><a class="co" href="/etaireia/dotsoft/" target="_blank"><span class="cn">DOTSOFT</span><span class="cm">112,3 εκ. €</span></a><a class="co" href="/etaireia/ilyda/" target="_blank"><span class="cn">ΙΛΥΔΑ</span><span class="cm">58,00 εκ. €</span></a><a class="co" href="/etaireia/space-hellas/" target="_blank"><span class="cn">SPACE HELLAS</span><span class="cm">51,78 εκ. €</span></a><a class="co" href="/etaireia/qnr/" target="_blank"><span class="cn">QNR</span><span class="cm">41,53 εκ. €</span></a><a class="co" href="/etaireia/softweb/" target="_blank"><span class="cn">SOFTWEB</span><span class="cm">17,50 εκ. €</span></a><a class="co" href="/etaireia/attica-media-group/" target="_blank"><span class="cn">ATTICA MEDIA GROUP</span><span class="cm">15,76 εκ. €</span></a><a class="co" href="/etaireia/logismos/" target="_blank"><span class="cn">LOGISMOS</span><span class="cm">12,80 εκ. €</span></a><a class="co" href="/etaireia/vidavo/" target="_blank"><span class="cn">VIDAVO</span><span class="cm">10,57 εκ. €</span></a><a class="co" href="/etaireia/optronics-technologies/" target="_blank"><span class="cn">OPTRONICS TECHNOLOGIES</span><span class="cm">7,33 εκ. €</span></a></div>
+ </div><div class="card">
+  <div class="chdr">
+   <div class="chead">
+     <a class="cname" href="/klados/emporio-dianomi/" target="_blank">Εμπόριο &amp; Διανομή</a>
+     <span class="ccount">15</span>
+   </div>
+   <div class="cmeta">
+     <span>Ανάπτυξη τζίρου <b class="up">+7,1 %</b></span>
+     <span>Κεφ/ποίηση <b>4.716 εκ. €</b></span>
+   </div>
+  </div>
+  <div class="colist"><a class="co" href="/etaireia/jumbo/" target="_blank"><span class="cn">JUMBO</span><span class="cm">3.604 εκ. €</span></a><a class="co" href="/etaireia/autohellas/" target="_blank"><span class="cn">AUTOHELLAS</span><span class="cm">514,5 εκ. €</span></a><a class="co" href="/etaireia/attica-polykatastimata/" target="_blank"><span class="cn">ATTICA ΠΟΛΥΚΑΤΑΣΤΗΜΑΤΑ</span><span class="cm">170,3 εκ. €</span></a><a class="co" href="/etaireia/ave/" target="_blank"><span class="cn">AVE</span><span class="cm">81,95 εκ. €</span></a><a class="co" href="/etaireia/motodynamiki/" target="_blank"><span class="cn">ΜΟΤΟΔΥΝΑΜΙΚΗ</span><span class="cm">70,55 εκ. €</span></a><a class="co" href="/etaireia/as-company/" target="_blank"><span class="cn">AS COMPANY</span><span class="cm">56,90 εκ. €</span></a><a class="co" href="/etaireia/petros-petropoulos/" target="_blank"><span class="cn">ΠΕΤΡΟΣ ΠΕΤΡΟΠΟΥΛΟΣ</span><span class="cm">48,79 εκ. €</span></a><a class="co" href="/etaireia/geniki-emporiou-viomichanias/" target="_blank"><span class="cn">ΓΕΝΙΚΗ ΕΜΠΟΡΙΟΥ &amp; ΒΙΟΜΗΧΑΝΙΑΣ</span><span class="cm">47,76 εκ. €</span></a><a class="co" href="/etaireia/elton-group/" target="_blank"><span class="cn">ELTON GROUP</span><span class="cm">47,05 εκ. €</span></a><a class="co" href="/etaireia/filippos-nakas/" target="_blank"><span class="cn">ΦΙΛΙΠΠΟΣ ΝΑΚΑΣ</span><span class="cm">21,56 εκ. €</span></a><a class="co" href="/etaireia/interwood-xylemporia/" target="_blank"><span class="cn">INTERWOOD ΞΥΛΕΜΠΟΡΙΑ</span><span class="cm">14,92 εκ. €</span></a><a class="co" href="/etaireia/vogyatzoglou-systems/" target="_blank"><span class="cn">VOGYATZOGLOU SYSTEMS</span><span class="cm">12,33 εκ. €</span></a><a class="co" href="/etaireia/intertech/" target="_blank"><span class="cn">INTERTECH</span><span class="cm">11,37 εκ. €</span></a><a class="co" href="/etaireia/agrotikos-oikos-spyrou/" target="_blank"><span class="cn">ΑΓΡΟΤΙΚΟΣ ΟΙΚΟΣ ΣΠΥΡΟΥ</span><span class="cm">9,33 εκ. €</span></a><a class="co" href="/etaireia/cpi/" target="_blank"><span class="cn">CPI</span><span class="cm">5,03 εκ. €</span></a></div>
+ </div><div class="card">
+  <div class="chdr">
+   <div class="chead">
+     <a class="cname" href="/klados/kataskeves-ypodomes-metafores/" target="_blank">Κατασκευές, Υποδομές &amp; Μεταφορές</a>
+     <span class="ccount">14</span>
+   </div>
+   <div class="cmeta">
+     <span>Ανάπτυξη τζίρου <b class="up">+18,4 %</b></span>
+     <span>Κεφ/ποίηση <b>15.336 εκ. €</b></span>
+   </div>
+  </div>
+  <div class="colist"><a class="co" href="/etaireia/gek-terna/" target="_blank"><span class="cn">GEK TERNA</span><span class="cm">4.772 εκ. €</span></a><a class="co" href="/etaireia/diethnis-aerolimenas-athinon/" target="_blank"><span class="cn">ΔΙΕΘΝΗΣ ΑΕΡΟΛΙΜΕΝΑΣ ΑΘΗΝΩΝ</span><span class="cm">3.981 εκ. €</span></a><a class="co" href="/etaireia/omilos-aktor/" target="_blank"><span class="cn">ΌΜΙΛΟΣ AKTOR</span><span class="cm">2.513 εκ. €</span></a><a class="co" href="/etaireia/organismos-limenos-peiraios/" target="_blank"><span class="cn">ΟΡΓΑΝΙΣΜΟΣ ΛΙΜΕΝΟΣ ΠΕΙΡΑΙΩΣ</span><span class="cm">1.083 εκ. €</span></a><a class="co" href="/etaireia/aegean-airlines/" target="_blank"><span class="cn">AEGEAN AIRLINES</span><span class="cm">1.005 εκ. €</span></a><a class="co" href="/etaireia/avax-group/" target="_blank"><span class="cn">AVAX GROUP</span><span class="cm">485,8 εκ. €</span></a><a class="co" href="/etaireia/ellaktor/" target="_blank"><span class="cn">ELLAKTOR</span><span class="cm">423,4 εκ. €</span></a><a class="co" href="/etaireia/organismos-limenos-thessalonikis/" target="_blank"><span class="cn">ΟΡΓΑΝΙΣΜΟΣ ΛΙΜΕΝΟΣ ΘΕΣΣΑΛΟΝΙΚΗΣ</span><span class="cm">408,2 εκ. €</span></a><a class="co" href="/etaireia/attica-group/" target="_blank"><span class="cn">ATTICA GROUP</span><span class="cm">340,4 εκ. €</span></a><a class="co" href="/etaireia/ekter/" target="_blank"><span class="cn">EKTER</span><span class="cm">127,1 εκ. €</span></a><a class="co" href="/etaireia/techniki-olympiaki/" target="_blank"><span class="cn">ΤΕΧΝΙΚΗ ΟΛΥΜΠΙΑΚΗ</span><span class="cm">93,59 εκ. €</span></a><a class="co" href="/etaireia/domiki-kritis/" target="_blank"><span class="cn">ΔΟΜΙΚΗ ΚΡΗΤΗΣ</span><span class="cm">37,47 εκ. €</span></a><a class="co" href="/etaireia/fdl-group/" target="_blank"><span class="cn">FDL GROUP</span><span class="cm">34,19 εκ. €</span></a><a class="co" href="/etaireia/eins/" target="_blank"><span class="cn">EINS</span><span class="cm">32,20 εκ. €</span></a></div>
+ </div><div class="card">
+  <div class="chdr">
+   <div class="chead">
+     <a class="cname" href="/klados/akinita/" target="_blank">Ακίνητα</a>
+     <span class="ccount">12</span>
+   </div>
+   <div class="cmeta">
+     <span>Ανάπτυξη τζίρου <b class="up">+34,1 %</b></span>
+     <span>Κεφ/ποίηση <b>3.738 εκ. €</b></span>
+   </div>
+  </div>
+  <div class="colist"><a class="co" href="/etaireia/lamda-development/" target="_blank"><span class="cn">LAMDA DEVELOPMENT</span><span class="cm">1.038 εκ. €</span></a><a class="co" href="/etaireia/prodea-investments/" target="_blank"><span class="cn">PRODEA INVESTMENTS</span><span class="cm">775,2 εκ. €</span></a><a class="co" href="/etaireia/trastor/" target="_blank"><span class="cn">TRASTOR</span><span class="cm">360,1 εκ. €</span></a><a class="co" href="/etaireia/noval-property/" target="_blank"><span class="cn">NOVAL PROPERTY</span><span class="cm">289,5 εκ. €</span></a><a class="co" href="/etaireia/dimand/" target="_blank"><span class="cn">DIMAND</span><span class="cm">261,5 εκ. €</span></a><a class="co" href="/etaireia/trade-estates/" target="_blank"><span class="cn">TRADE ESTATES</span><span class="cm">237,4 εκ. €</span></a><a class="co" href="/etaireia/mple-kedros/" target="_blank"><span class="cn">ΜΠΛΕ ΚΕΔΡΟΣ</span><span class="cm">198,5 εκ. €</span></a><a class="co" href="/etaireia/premia-properties/" target="_blank"><span class="cn">PREMIA PROPERTIES</span><span class="cm">163,4 εκ. €</span></a><a class="co" href="/etaireia/briq-properties/" target="_blank"><span class="cn">BRIQ PROPERTIES</span><span class="cm">159,9 εκ. €</span></a><a class="co" href="/etaireia/orilina-properties/" target="_blank"><span class="cn">ORILINA PROPERTIES</span><span class="cm">125,0 εκ. €</span></a><a class="co" href="/etaireia/alpha-real-estate-services/" target="_blank"><span class="cn">ALPHA REAL ESTATE SERVICES</span><span class="cm">98,00 εκ. €</span></a><a class="co" href="/etaireia/kekrops/" target="_blank"><span class="cn">ΚΕΚΡΟΨ</span><span class="cm">30,50 εκ. €</span></a></div>
+ </div><div class="card">
+  <div class="chdr">
+   <div class="chead">
+     <a class="cname" href="/klados/holding/" target="_blank">Holding</a>
+     <span class="ccount">8</span>
+   </div>
+   <div class="cmeta">
+     <span>Ανάπτυξη τζίρου <b class="up">+12,6 %</b></span>
+     <span>Κεφ/ποίηση <b>2.002 εκ. €</b></span>
+   </div>
+  </div>
+  <div class="colist"><a class="co" href="/etaireia/quest-holdings/" target="_blank"><span class="cn">QUEST HOLDINGS</span><span class="cm">793,4 εκ. €</span></a><a class="co" href="/etaireia/ideal-holdings/" target="_blank"><span class="cn">IDEAL HOLDINGS</span><span class="cm">304,7 εκ. €</span></a><a class="co" href="/etaireia/intracom-holdings/" target="_blank"><span class="cn">INTRACOM HOLDINGS</span><span class="cm">241,6 εκ. €</span></a><a class="co" href="/etaireia/fourlis-group/" target="_blank"><span class="cn">FOURLIS GROUP</span><span class="cm">205,7 εκ. €</span></a><a class="co" href="/etaireia/evropi-holdings/" target="_blank"><span class="cn">ΕΥΡΩΠΗ HOLDINGS</span><span class="cm">193,5 εκ. €</span></a><a class="co" href="/etaireia/fais-group/" target="_blank"><span class="cn">FAIS GROUP</span><span class="cm">144,8 εκ. €</span></a><a class="co" href="/etaireia/marfin-investment-group/" target="_blank"><span class="cn">MARFIN INVESTMENT GROUP</span><span class="cm">92,32 εκ. €</span></a><a class="co" href="/etaireia/centric/" target="_blank"><span class="cn">CENTRIC</span><span class="cm">26,19 εκ. €</span></a></div>
+ </div><div class="card">
+  <div class="chdr">
+   <div class="chead">
+     <a class="cname" href="/klados/energeia-koinis-ofeleias/" target="_blank">Ενέργεια &amp; Κοινής Ωφέλειας</a>
+     <span class="ccount">8</span>
+   </div>
+   <div class="cmeta">
+     <span>Ανάπτυξη τζίρου <b class="up">+8,6 %</b></span>
+     <span>Κεφ/ποίηση <b>30.462 εκ. €</b></span>
+   </div>
+  </div>
+  <div class="colist"><a class="co" href="/etaireia/dei/" target="_blank"><span class="cn">ΔΕΗ</span><span class="cm">13.501 εκ. €</span></a><a class="co" href="/etaireia/motor-oil/" target="_blank"><span class="cn">MOTOR OIL</span><span class="cm">7.638 εκ. €</span></a><a class="co" href="/etaireia/heleniq-energy/" target="_blank"><span class="cn">HELENIQ ENERGY</span><span class="cm">6.003 εκ. €</span></a><a class="co" href="/etaireia/admie-symmetochon/" target="_blank"><span class="cn">ΑΔΜΗΕ ΣΥΜΜΕΤΟΧΩΝ</span><span class="cm">1.640 εκ. €</span></a><a class="co" href="/etaireia/evdap/" target="_blank"><span class="cn">ΕΥΔΑΠ</span><span class="cm">1.436 εκ. €</span></a><a class="co" href="/etaireia/evath/" target="_blank"><span class="cn">ΕΥΑΘ</span><span class="cm">159,0 εκ. €</span></a><a class="co" href="/etaireia/elin/" target="_blank"><span class="cn">ΕΛΙΝ</span><span class="cm">44,80 εκ. €</span></a><a class="co" href="/etaireia/revoil/" target="_blank"><span class="cn">REVOIL</span><span class="cm">39,66 εκ. €</span></a></div>
+ </div><div class="card">
+  <div class="chdr">
+   <div class="chead">
+     <a class="cname" href="/klados/trapezes/" target="_blank">Τράπεζες</a>
+     <span class="ccount">6</span>
+   </div>
+   <div class="cmeta">
+     <span>Ανάπτυξη τζίρου <b class="up">+9,5 %</b></span>
+     <span>Κεφ/ποίηση <b>57.475 εκ. €</b></span>
+   </div>
+  </div>
+  <div class="colist"><a class="co" href="/etaireia/eurobank/" target="_blank"><span class="cn">EUROBANK</span><span class="cm">16.064 εκ. €</span></a><a class="co" href="/etaireia/ethniki-trapeza-tis-ellados/" target="_blank"><span class="cn">ΕΘΝΙΚΗ ΤΡΑΠΕΖΑ ΤΗΣ ΕΛΛΑΔΟΣ</span><span class="cm">14.811 εκ. €</span></a><a class="co" href="/etaireia/piraeus-bank/" target="_blank"><span class="cn">PIRAEUS BANK</span><span class="cm">12.088 εκ. €</span></a><a class="co" href="/etaireia/alpha-bank/" target="_blank"><span class="cn">ALPHA BANK</span><span class="cm">9.634 εκ. €</span></a><a class="co" href="/etaireia/optima-bank/" target="_blank"><span class="cn">OPTIMA BANK</span><span class="cm">3.021 εκ. €</span></a><a class="co" href="/etaireia/crediabank/" target="_blank"><span class="cn">CREDIABANK</span><span class="cm">1.856 εκ. €</span></a></div>
+ </div><div class="card">
+  <div class="chdr">
+   <div class="chead">
+     <a class="cname" href="/klados/chrimatooikonomika/" target="_blank">Χρηματοοικονομικά</a>
+     <span class="ccount">5</span>
+   </div>
+   <div class="cmeta">
+     <span>Ανάπτυξη τζίρου <b class="up">+25,4 %</b></span>
+     <span>Κεφ/ποίηση <b>863,9 εκ. €</b></span>
+   </div>
+  </div>
+  <div class="colist"><a class="co" href="/etaireia/euronext-athens/" target="_blank"><span class="cn">EURONEXT ATHENS</span><span class="cm">610,7 εκ. €</span></a><a class="co" href="/etaireia/interlife-asfalistiki/" target="_blank"><span class="cn">INTERLIFE ΑΣΦΑΛΙΣΤΙΚΗ</span><span class="cm">141,9 εκ. €</span></a><a class="co" href="/etaireia/euroxx-securities/" target="_blank"><span class="cn">EUROXX SECURITIES</span><span class="cm">74,69 εκ. €</span></a><a class="co" href="/etaireia/alphatrust-andromeda/" target="_blank"><span class="cn">ALPHATRUST ΑΝΔΡΟΜΕΔΑ</span><span class="cm">30,71 εκ. €</span></a><a class="co" href="/etaireia/cnl-capital/" target="_blank"><span class="cn">CNL CAPITAL</span><span class="cm">5,88 εκ. €</span></a></div>
+ </div><div class="card">
+  <div class="chdr">
+   <div class="chead">
+     <a class="cname" href="/klados/navtilia/" target="_blank">Ναυτιλία</a>
+     <span class="ccount">2</span>
+   </div>
+   <div class="cmeta">
+     <span>Ανάπτυξη τζίρου <b class="up">+8,0 %</b></span>
+     <span>Κεφ/ποίηση <b>3.724 εκ. €</b></span>
+   </div>
+  </div>
+  <div class="colist"><a class="co" href="/etaireia/star-bulk-carriers/" target="_blank"><span class="cn">STAR BULK CARRIERS</span><span class="cm">2.925 εκ. €</span></a><a class="co" href="/etaireia/safe-bulkers/" target="_blank"><span class="cn">SAFE BULKERS</span><span class="cm">799,1 εκ. €</span></a></div>
+ </div></div>
 
  <div class="foot" data-i18n-html="sectors.foot">Οι εταιρείες κάθε κλάδου εμφανίζονται κατά φθίνουσα κεφαλαιοποίηση. Η <b>κεφαλαιοποίηση είναι η τρέχουσα</b>, με βάση την τελευταία τιμή κλεισίματος — η ίδια που δείχνει και η σελίδα κάθε εταιρείας. Κλικ στο όνομα του κλάδου ανοίγει τη σελίδα του· κλικ σε εταιρεία τη σελίδα της. Η «ανάπτυξη τζίρου» είναι ο μέσος ετήσιος ρυθμός αύξησης του κύκλου εργασιών (CAGR) 2020–2025, σταθμισμένος κατά μέγεθος.</div>
 </div>

@@ -163,6 +163,15 @@
 <script src="../assets/i18n.js"></script>
 </head>
 <body>
+<!-- §137 — ΤΑ ΔΟΧΕΙΑ ΑΥΤΗΣ ΤΗΣ ΣΕΛΙΔΑΣ ΕΙΝΑΙ ΨΗΜΕΝΑ ΣΤΟ HTML.
+     Δεν γράφτηκαν με το χέρι ούτε αντιγράφηκε λογική σε Python: τρέχει το ΙΔΙΟ
+     JavaScript της σελίδας σε headless Chromium (ASSETS/prerender.py) και το
+     αποτέλεσμα γράφεται μέσα στα άδεια <div>/<tbody> που θα γέμιζε έτσι κι αλλιώς.
+     Το JavaScript συνεχίζει να τα ξαναγράφει στο runtime με ΤΙΣ ΙΔΙΕΣ τιμές —
+     ελεγμένο: ίδιο DOM, ίδιο πλήθος κόμβων και γραμμών, μηδέν σφάλματα.
+     ΠΡΟΣΟΧΗ: η γέφυρα ξαναφτιάχνει αυτές τις σελίδες από τα κελύφη, άρα το
+     prerender.py πρέπει να τρέχει ΜΕΤΑ από κάθε build_site_data.py. Αν δεν τρέξει,
+     η σελίδα απλώς επιστρέφει στη συμπεριφορά πριν το §137 — τίποτα δεν σπάει. -->
 <div id="am-nav"></div>
 <div class="wrap">
  <section class="hero">
@@ -178,9 +187,9 @@
     </div>
   </section>
 
- <div id="basisblock" class="basis-block" hidden></div>
+ <div id="basisblock" class="basis-block" hidden><div class="bt">ΕΤΗΣΙΑ ΣΥΓΚΡΙΣΗ</div><div class="bd">Σύγκριση σε επιλεγμένη περίοδο <span class="per">2025</span></div></div>
 
- <div class="basisrow"><div class="page-basis" id="ambasis-page"></div><div class="sep"></div><div class="periodbar"><span class="plbl" data-i18n="cmp.period">Περίοδος</span><select id="periodSel" class="periodSel" onchange="setPeriod(this.value)"></select><span class="pinfo" id="perinfo"></span></div></div>
+ <div class="basisrow"><div class="page-basis" id="ambasis-page"><div class="seg" role="group" aria-label="Βάση δεδομένων"><button type="button" data-b="annual" class="on">Ετήσια</button><button type="button" data-b="interim" class="">Εξάμηνο</button></div></div><div class="sep"></div><div class="periodbar"><span class="plbl" data-i18n="cmp.period">Περίοδος</span><select id="periodSel" class="periodSel" onchange="setPeriod(this.value)"><option value="2026">2026</option><option value="2025" selected="">2025</option><option value="2024">2024</option><option value="2023">2023</option><option value="2022">2022</option><option value="2021">2021</option><option value="2020">2020</option></select><span class="pinfo" id="perinfo">138 από 140 έχουν ενημερωθεί</span></div></div>
  <div class="controls">
   <div class="searchwrap">
    <label class="search">
@@ -190,15 +199,18 @@
    </label>
    <div class="sugg" id="sugg"></div>
   </div>
-  <div class="picked" id="picked"></div>
-  <div class="hint" id="hint"></div>
+  <div class="picked" id="picked"><span class="pchip">ALLWYN
+   <span class="x" onclick="drop('ALLWYN')">×</span></span><span class="pchip">ALPHA REAL ESTATE SERVICES
+   <span class="x" onclick="drop('ALPHA REAL ESTATE SERVICES')">×</span></span><span class="pchip">ALPHATRUST ΑΝΔΡΟΜΕΔΑ
+   <span class="x" onclick="drop('ALPHATRUST ΑΝΔΡΟΜΕΔΑ')">×</span></span></div>
+  <div class="hint" id="hint">Επιλεγμένες 3 από 4. Πρόσθεσε τουλάχιστον δύο για σύγκριση.</div>
  </div>
 
  <div class="controls">
-  <div class="metpick" id="metpick"></div>
+  <div class="metpick" id="metpick"><span class="mchip on" onclick="toggleMet('pe')">P/E <span class="mx">×</span></span><span class="mchip on" onclick="toggleMet('pbv')">P/BV <span class="mx">×</span></span><span class="mchip on" onclick="toggleMet('ev')">EV/EBITDA <span class="mx">×</span></span><span class="mchip on" onclick="toggleMet('roe')">ROE <span class="mx">×</span></span><span class="mchip on" onclick="toggleMet('dy')">Μερισματική απόδοση <span class="mx">×</span></span><span class="mchip on" onclick="toggleMet('nde')">Καθαρός δανεισμός / EBITDA <span class="mx">×</span></span><span class="mchip " onclick="toggleMet('gm')"><span class="mplus">+</span> Μικτό περιθώριο</span><span class="mchip " onclick="toggleMet('nm')"><span class="mplus">+</span> Καθαρό περιθώριο</span><span class="mchip " onclick="toggleMet('cr')"><span class="mplus">+</span> Γενική ρευστότητα</span><span class="mchip " onclick="toggleMet('roa')"><span class="mplus">+</span> ROA</span></div>
  </div>
 
- <div id="out"></div>
+ <div id="out"><div class="tablewrap"><table><thead><tr><th class="l">ΕΤΑΙΡΕΙΑ</th><th>P/E<span class="dirn">χαμηλό = καλύτερο</span></th><th>P/BV<span class="dirn">χαμηλό = καλύτερο</span></th><th>EV/EBITDA<span class="dirn">χαμηλό = καλύτερο</span></th><th>ROE<span class="dirn">υψηλό = καλύτερο</span></th><th>ΜΕΡΙΣΜΑΤΙΚΗ ΑΠΟΔΟΣΗ<span class="dirn">υψηλό = καλύτερο</span></th><th>ΚΑΘΑΡΟΣ ΔΑΝΕΙΣΜΟΣ / EBITDA<span class="dirn">χαμηλό = καλύτερο</span></th></tr></thead><tbody><tr class=""><td class="co"><a href="/etaireia/allwyn/" target="_blank">ALLWYN</a><small>Καταναλωτικά Αγαθά</small></td><td class="b">14,4</td><td class="b">16,5</td><td class="b">8,8</td><td class="g">113 %</td><td class="b">2,6 %</td><td class="b">0,2</td></tr><tr class=""><td class="co"><a href="/etaireia/alpha-real-estate-services/" target="_blank">ALPHA REAL ESTATE SERVICES</a><small>Ακίνητα</small></td><td class="m">13,7</td><td class="m">1,4</td><td class="g">5,0</td><td class="b">10 %</td><td class="m">6,8 %</td><td class="g">-6,5</td></tr><tr class=""><td class="co"><a href="/etaireia/alphatrust-andromeda/" target="_blank">ALPHATRUST ΑΝΔΡΟΜΕΔΑ</a><small>Χρηματοοικονομικά</small></td><td class="g">3,6</td><td class="g">0,8</td><td class="m">—</td><td class="m">22 %</td><td class="g">8,6 %</td><td class="m">—</td></tr></tbody></table></div></div>
 
  <div class="foot">
   <div style="margin-top:8px" data-i18n-html="cmp.foot"><span style="color:var(--mid)">⚠</span> Πρόσεξε ότι εταιρείες <b>διαφορετικών κλάδων</b> δεν αποτιμώνται με τα ίδια κριτήρια:
