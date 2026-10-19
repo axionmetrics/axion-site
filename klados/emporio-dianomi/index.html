@@ -202,7 +202,11 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/fonts/open-sans-greek.woff2">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/fonts/ubuntu-mono-latin-400.woff2">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/fonts/ubuntu-mono-latin-700.woff2">
-<script src="/assets/data.js"></script>
+<!-- §136 — αντί για ολόκληρο το data.js (683 KB gz): μόνο ό,τι διαβάζει αυτή η
+     σελίδα, μετρημένο με Proxy πάνω στο window.AXION. Το πλήρες data.js μένει
+     μόνο στο /company/?tk=, που πρέπει να σερβίρει οποιαδήποτε εταιρεία. -->
+<script src="/assets/core.js"></script>
+<script src="/assets/rows.js"></script>
 <script src="/assets/i18n.js"></script>
 <script>window.AX_SECTOR="Εμπόριο & Διανομή";</script>
 
