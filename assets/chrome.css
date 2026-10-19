@@ -288,3 +288,60 @@
 .na-t{font:800 12px/1.3 inherit;color:#2b4c85;margin-top:9px}
 .na-s{font-size:11px;line-height:1.5;color:#98a3b4;margin-top:7px}
 /* ΣΗΜ: το site είναι light-only — ΚΑΝΕΝΑ prefers-color-scheme block εδώ. */
+
+/* §135 — ΔΕΣΜΕΥΣΗ ΥΨΟΥΣ ΤΗΣ ΠΛΟΗΓΗΣΗΣ (CLS)
+   Τεκμήριο (18/10/2026, PerformanceObserver σε throttled Chromium): η ΜΟΝΗ αξιοσημείωτη
+   μετατόπιση σε κάθε σελίδα ήταν μία — το <main> έπεφτε 282 px τη στιγμή που το chrome.js
+   αντικαθιστούσε το <div id="am-nav"> με την πλοήγηση:
+       wrap prev [0, 0, 412, 915] -> cur [0, 282, 412, 633]   v=0,3079
+   Δεν έφταιγαν ούτε οι γραμματοσειρές ούτε το λογότυπο. Και επειδή η μετατόπιση σέρνει
+   ό,τι υπάρχει από κάτω, όσο ΠΕΡΙΣΣΟΤΕΡΟ περιεχόμενο ψήνουμε στο HTML τόσο ΧΕΙΡΟΤΕΡΟ
+   γίνεται: σε πρωτότυπο με ψημένο τον πίνακα κατάταξης το CLS πήγε 0,396 -> 0,875.
+   Εδώ δεσμεύεται ο χώρος ΠΡΙΝ τρέξει JavaScript, σε δύο μόνο σημεία — στο placeholder
+   και στην ίδια την μπάρα. ΚΑΝΕΝΑ εσωτερικό μπλοκ δεν αγγίζεται, ώστε να μην μπορεί να
+   αλλάξει η διάταξη καμίας σελίδας.
+   Τα ύψη δεν είναι εκτιμήσεις. Η bar1 μετρήθηκε σε 13 τύπους σελίδας × 6 πλάτη και τα
+   όρια αναδίπλωσης βρέθηκαν με δυαδική αναζήτηση (367, 430, 558 px)· η am-upd αλλάζει
+   στα 821 και 1067 px. Κρατήθηκε το ΕΛΑΧΙΣΤΟ κάθε ζώνης (bar1 146/110/73/54), ώστε η
+   δέσμευση να μην κάνει ΚΑΜΙΑ σελίδα ψηλότερη απ' ό,τι είναι σήμερα — το πολύ μένει
+   υπόλοιπο 12 px σε μία σελίδα, δηλαδή CLS ~0,013. Ελληνικά και αγγλικά δίνουν τα ίδια
+   ύψη (ελεγμένο σε 8 πλάτη), άρα η γλώσσα δεν είναι μεταβλητή.
+   Οι σελίδες χωρίς ροή δεδομένων (about / terms / methodology) δεν αποκτούν ποτέ τις
+   λωρίδες am-upd και am-ev, γι' αυτό παίρνουν δική τους δέσμευση μέσω .am-nofeed στο
+   <body> — αλλιώς θα έμενε κενή λωρίδα 124 px. */
+#am-nav,.site-nav{min-height:314px}
+body.am-nofeed #am-nav,body.am-nofeed .site-nav{min-height:190px}
+/* Ο δεσμευμένος χώρος ΒΑΦΕΤΑΙ στα χρώματα των τεσσάρων λωρίδων, ώστε όσο δεν έχει τρέξει
+   ακόμη το chrome.js να μοιάζει με πλοήγηση που φορτώνει — όχι με κενό. */
+/* Και η ίδια η bar1 κρατά το ελάχιστο της ζώνης της: ανάμεσα στο mount() και στο
+   buildNav() η σειρά των tabs δεν υπάρχει ακόμη και η μπάρα είναι 37 px κοντύτερη. Το
+   ελάχιστο δεν μεγαλώνει καμία σελίδα — απλώς δεν την αφήνει να ξεκινήσει πιο χαμηλά. */
+.site-nav .bar1{min-height:146px}
+#am-nav{--b1:146px;background:linear-gradient(#16243d 0 var(--b1),#fff var(--b1) calc(var(--b1) + 44px),#fbfcfe calc(var(--b1) + 44px) calc(100% - 40px),#eef3fa calc(100% - 40px) 100%)}
+body.am-nofeed #am-nav{background:linear-gradient(#16243d 0 var(--b1),#fff var(--b1) 100%)}
+@media(min-width:367px){
+  #am-nav,.site-nav{min-height:278px}
+  body.am-nofeed #am-nav,body.am-nofeed .site-nav{min-height:154px}
+  #am-nav{--b1:110px}
+  .site-nav .bar1{min-height:110px} }
+@media(min-width:430px){
+  #am-nav,.site-nav{min-height:241px}
+  body.am-nofeed #am-nav,body.am-nofeed .site-nav{min-height:117px}
+  #am-nav{--b1:73px}
+  .site-nav .bar1{min-height:73px} }
+@media(min-width:558px){
+  #am-nav,.site-nav{min-height:222px}
+  body.am-nofeed #am-nav,body.am-nofeed .site-nav{min-height:98px}
+  #am-nav{--b1:54px}
+  .site-nav .bar1{min-height:54px} }
+@media(min-width:821px){ #am-nav,.site-nav{min-height:321px} }
+@media(min-width:1067px){ #am-nav,.site-nav{min-height:288px} }
+/* §135 — ήταν στο chrome.js (injectStyle). Το JavaScript το πρόσθετε στο <head> στο
+   runtime· τώρα είναι στατικό, ώστε οι σημαίες να έχουν μέγεθος από την πρώτη ζωγραφιά. */
+.am-right{display:flex;align-items:center;gap:10px}
+.langflags{display:inline-flex;align-items:center;gap:6px}
+.langflags button{all:unset;display:block;line-height:0;cursor:pointer;border-radius:3px;padding:2px;transition:opacity .15s,transform .15s}
+.langflags svg{display:block;width:22px;height:15px;border-radius:2.5px}
+.langflags button[aria-current]{opacity:.35;cursor:default}
+.langflags button:not([aria-current]):hover{transform:translateY(-1px)}
+.langflags button:focus-visible{outline:2px solid #57a5df;outline-offset:2px}

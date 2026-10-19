@@ -28,6 +28,19 @@
 <meta name="twitter:description" content="Δημοσιοποιημένες short θέσεις στις εισηγμένες του Χρηματιστηρίου Αθηνών: ποια funds κρατούν θέσεις σήμερα, σε ποιες εταιρείες και με τι έκθεση σε ευρώ.">
 <meta name="twitter:image" content="https://www.axionmetrics.gr/og-image.png">
 <link rel="stylesheet" href="../assets/chrome.css">
+<!-- §135 — preload ΜΟΝΟ στις σελίδες που φορτώνουν ολόκληρο το data.js (683 KB):
+     εκεί οι γραμματοσειρές φτάνουν μετά τα 5 δευτ. και το swap αναδιατάσσει πίνακες.
+     Μετρημένο, διάμεσος 3 εκτελέσεων: /klados/trapezes/ 1280px CLS 0,364 -> 0,000·
+     /apotelesmata/ 412px 0,126 -> 0,000. ΔΕΝ μπαίνει στις 140 σελίδες εταιρείας:
+     εκεί δεν δίνει τίποτα (CLS 0,005 -> 0,003) και κοστίζει 850 ms στο FCP, γιατί
+     τα 97 KB γραμματοσειρών ανταγωνίζονται το CSS. Όταν σπάσει και το data.js των
+     26 σελίδων, ξαναμετράμε — πιθανότατα θα φύγει και από εδώ. -->
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/fonts/inter-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/fonts/inter-greek.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/fonts/open-sans-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/fonts/open-sans-greek.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/fonts/ubuntu-mono-latin-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/fonts/ubuntu-mono-latin-700.woff2">
 <style>
  :root{--bg:#fff;--phead:#223c66;--text:#1b2740;--muted:#6b7890;--line:#e4e8f0;
   --good:#00922f;--mid:#e08600;--bad:#f01c00;--accent:#1E4FA0;--soft:#f7f9fc;

@@ -71,12 +71,6 @@
      +"</div><div class=\"fbot\">© 2026 Axion Metrics · "+esc(L(FT.bot))+"</div></footer>";
  }
 
- function injectStyle(){
-   if(document.getElementById('am-langtog-css')) return;
-   var st=document.createElement('style'); st.id='am-langtog-css';
-   st.textContent=".am-right{display:flex;align-items:center;gap:10px}"+".langflags{display:inline-flex;align-items:center;gap:6px}"+".langflags button{all:unset;display:block;line-height:0;cursor:pointer;border-radius:3px;padding:2px;transition:opacity .15s,transform .15s}"+".langflags svg{display:block;width:22px;height:15px;border-radius:2.5px}"+".langflags button[aria-current]{opacity:.35;cursor:default}"+".langflags button:not([aria-current]):hover{transform:translateY(-1px)}"+".langflags button:focus-visible{outline:2px solid #57a5df;outline-offset:2px}";
-   document.head.appendChild(st);
- }
 
  function mount(){
    var nm=document.getElementById('am-nav');
@@ -257,6 +251,6 @@
    s.setAttribute('data-cf-beacon','{"token": "a9e573e27dd34f6784b7df2d706c1bee"}');
    document.head.appendChild(s);
  }
- function init(){ injectStyle(); mount(); buildNav(); renderBasis(); renderUpdates(); renderEvents(); syncLangFlags(); setScrollPad(); injectAnalytics(); }
+ function init(){ mount(); buildNav(); renderBasis(); renderUpdates(); renderEvents(); syncLangFlags(); setScrollPad(); injectAnalytics(); }
  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);} else {init();}
 })();

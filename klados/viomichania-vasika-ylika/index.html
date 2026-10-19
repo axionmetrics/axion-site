@@ -189,6 +189,19 @@
  @media(max-width:640px){ .hero .hero-in{padding:20px 20px}.hero .hs{padding:2px 14px} }
 </style>
 <link rel="stylesheet" href="/assets/chrome.css">
+<!-- §135 — preload ΜΟΝΟ στις σελίδες που φορτώνουν ολόκληρο το data.js (683 KB):
+     εκεί οι γραμματοσειρές φτάνουν μετά τα 5 δευτ. και το swap αναδιατάσσει πίνακες.
+     Μετρημένο, διάμεσος 3 εκτελέσεων: /klados/trapezes/ 1280px CLS 0,364 -> 0,000·
+     /apotelesmata/ 412px 0,126 -> 0,000. ΔΕΝ μπαίνει στις 140 σελίδες εταιρείας:
+     εκεί δεν δίνει τίποτα (CLS 0,005 -> 0,003) και κοστίζει 850 ms στο FCP, γιατί
+     τα 97 KB γραμματοσειρών ανταγωνίζονται το CSS. Όταν σπάσει και το data.js των
+     26 σελίδων, ξαναμετράμε — πιθανότατα θα φύγει και από εδώ. -->
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/fonts/inter-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/fonts/inter-greek.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/fonts/open-sans-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/fonts/open-sans-greek.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/fonts/ubuntu-mono-latin-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/fonts/ubuntu-mono-latin-700.woff2">
 <script src="/assets/data.js"></script>
 <script src="/assets/i18n.js"></script>
 <script>window.AX_SECTOR="Βιομηχανία & Βασικά Υλικά";</script>
