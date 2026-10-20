@@ -64,122 +64,173 @@
 @font-face{font-family:'Open Sans';font-style:normal;font-weight:800;font-display:swap;src:url(/assets/fonts/open-sans-math.woff2) format('woff2');unicode-range:U+2205,U+2206,U+220F,U+2208,U+2211,U+221A,U+221E,U+222B,U+2248,U+2260,U+2261,U+2264,U+2265,U+226A,U+226B}
 
  *{box-sizing:border-box;margin:0;padding:0}
- body{font-family:'Open Sans',system-ui,sans-serif;color:#2b3a4a;background:#fff;-webkit-font-smoothing:antialiased}
- .wrap{max-width:1200px;margin:0 auto;padding:0 48px}
- .hero{background:linear-gradient(180deg,#eff7ff 0%,#f7fbff 55%,#ffffff 100%);padding-bottom:56px}
+ :root{--ink:#16243d;--text:#2b3a4a;--muted:#6b8199;--faint:#8199b3;--cyan:#2f80c2;--teal:#57a5df;
+  --line:#e6eef7;--line2:#eaf2fa;--p2:#f7fbff;--up:#2f9e52;--down:#d64530;--gold:#cf7f00;
+  --disp:Inter,system-ui,sans-serif;--sans:'Open Sans',system-ui,sans-serif}
+ body{font-family:var(--sans);color:var(--text);background:#fff;-webkit-font-smoothing:antialiased}
+ .hw{max-width:1180px;margin:0 auto;padding:0 34px}
 
- /* header */
- .nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0 4px}
- .lockup{display:flex;align-items:center;gap:13px}
- .am{font-family:Inter,sans-serif;font-size:38px;font-weight:900;letter-spacing:-.06em;color:#16243d;line-height:1}
- .am span{color:#2f80c2}
- .rule{width:1px;height:32px;background:#d8e2ee}
- .lname{font-family:Inter,sans-serif;font-size:9.5px;font-weight:600;letter-spacing:.22em;color:#8199b3;line-height:1.75}
- .menu{display:flex;align-items:center;gap:34px;font-size:14.5px;font-weight:600;color:#6b8199}
- .menu a{cursor:pointer;color:inherit;text-decoration:none} .menu a:hover{color:#2f80c2}
- /* §118 — επιλογή γλώσσας με σημαίες (η τρέχουσα ανενεργή) */
- /* §125 — επικοινωνία στο header της αρχικής (φωτεινό φόντο, δικό της .menu) */
- .menu .hcontact{display:inline-flex;align-items:center;gap:12px}
- .menu .mrule{width:1px;height:18px;background:#d3dbe6;flex:none}
- .menu a.hmail{display:inline-flex;align-items:center;padding:2px;border-radius:7px;transition:color .13s,transform .13s}
- .menu a.hmail svg{width:17px;height:17px;display:block;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
- .menu a.hmail:hover{transform:translateY(-1px)}
- .menu a.hmail:focus-visible{outline:2px solid #2f80c2;outline-offset:2px}
- @media(prefers-reduced-motion:reduce){ .menu a.hmail:hover{transform:none} }
+ /* ── Κ3: σκούρα ταινία μάρκας ─────────────────────────────────────────────── */
+ .k3{background:var(--ink)}
+ .k3 .bar{display:flex;align-items:center;justify-content:space-between;gap:24px;height:62px}
+ .lockh{display:flex;align-items:center;gap:12px;text-decoration:none}
+ .lockh .am{font-family:var(--disp);font-size:30px;font-weight:900;letter-spacing:-.06em;color:#fff;line-height:1}
+ .lockh .am span{color:#6fb0e8}
+ .lockh .rule{width:1px;height:26px;background:#35486a}
+ .lockh .wm{font-family:var(--disp);font-size:19px;font-weight:900;letter-spacing:-.03em;line-height:1;color:#fff;display:block}
+ .lockh .wm i{font-style:normal;color:#6fb0e8}
+ .lockh .tag{font-family:var(--disp);font-size:9px;font-weight:600;letter-spacing:.22em;color:#7e95b4;margin-top:4px;display:block}
+ .navh{display:flex;align-items:center;gap:26px;font-size:13.5px;font-weight:600;color:#a9bfd8}
+ .navh a{color:inherit;text-decoration:none}
+ .navh a:hover{color:#fff}
  .langflags{display:inline-flex;align-items:center;gap:6px}
  .langflags button{all:unset;display:block;line-height:0;cursor:pointer;border-radius:3px;padding:2px;transition:opacity .15s,transform .15s}
  .langflags svg{display:block;width:22px;height:15px;border-radius:2.5px}
  .langflags button[aria-current]{opacity:.35;cursor:default}
  .langflags button:not([aria-current]):hover{transform:translateY(-1px)}
- .langflags button:focus-visible{outline:2px solid #2f80c2;outline-offset:2px}
- .navspace{width:60px}
+ .langflags button:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+ .hmail{display:inline-flex;align-items:center;padding:2px;border-radius:7px;color:#a9bfd8}
+ .hmail svg{width:17px;height:17px;display:block;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+ .hmail:hover{color:#fff}
+ .mrule{width:1px;height:18px;background:#35486a;display:inline-block}
 
- /* eyebrow */
- .eyebrow{text-align:center;font-family:Inter,sans-serif;font-size:12.5px;font-weight:700;letter-spacing:.16em;color:#57a5df;text-transform:uppercase;padding:26px 0 8px}
+ /* ── ζώνη τίτλου ──────────────────────────────────────────────────────────── */
+ .k3below{background:var(--p2);border-bottom:1px solid var(--line)}
+ .k3below .in2{padding:12px 0 20px}
+ .asofr{text-align:right;margin-bottom:6px;font-size:11.5px;color:var(--muted);line-height:1.5}
+ .asofr b{font-family:var(--disp);font-size:14px;color:var(--ink)}
+ .hcenter{text-align:center}
+ .h1lead{font-family:var(--disp);font-size:20px;font-weight:800;color:var(--ink);letter-spacing:-.015em;line-height:1.3;margin:0}
+ .h1lead em{font-style:normal;color:var(--cyan)}
+ .hwm{font-family:var(--disp);font-weight:900;letter-spacing:-.045em;font-size:36px;line-height:1.05;margin-top:7px}
+ .hwm .a{color:var(--ink)} .hwm .m{color:var(--cyan)}
+ .m-inline{font-size:12.5px;color:var(--muted);margin-top:5px}
+ .m-inline b{color:var(--ink);font-weight:700}
 
- /* hero grid */
- .grid{display:grid;grid-template-columns:1fr 1.02fr;gap:48px;align-items:center;padding:10px 0 0}
+ /* ── ταινία γεγονότων ─────────────────────────────────────────────────────── */
+ .nums{background:#fff;border-bottom:1px solid var(--line);min-height:36px}
+ .mq{overflow:hidden;position:relative;height:36px}
+ .mq-t{display:flex;width:max-content;animation:none}
+ .mq-t.ready{animation:mqx var(--sp,104s) linear infinite}
+ .mq:hover .mq-t,.mq:focus-within .mq-t{animation-play-state:paused}
+ .mq-g{display:flex;flex:none}
+ @keyframes mqx{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
+ .mq::before,.mq::after{content:"";position:absolute;top:0;bottom:0;width:56px;z-index:2;pointer-events:none}
+ .mq::before{left:0;background:linear-gradient(90deg,#fff,rgba(255,255,255,0))}
+ .mq::after{right:0;background:linear-gradient(270deg,#fff,rgba(255,255,255,0))}
+ .ni{display:flex;align-items:center;gap:9px;padding:0 14px;height:36px;text-decoration:none;white-space:nowrap;border-right:1px solid var(--line2);color:inherit}
+ .ni:hover{background:#f6fbff}
+ .ni .d{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:var(--faint)}
+ .ni .dot{width:6px;height:6px;border-radius:50%;flex:none}
+ .ni .dot.div{background:var(--up)}.ni .dot.amk{background:var(--gold)}
+ .ni .dot.index{background:var(--cyan)}.ni .dot.listing{background:#7a67c9}
+ .ni .co{font-family:var(--disp);font-size:12.5px;font-weight:700;color:var(--ink)}
+ .ni .x{font-size:12px;color:var(--muted)}
 
- .wordmark{font-family:Inter,sans-serif;font-weight:900;letter-spacing:-.055em;line-height:.88;font-size:74px}
- .wordmark .a{color:#16243d} .wordmark .m{color:#2f80c2}
- .sub{font-family:Inter,sans-serif;font-size:12px;font-weight:600;letter-spacing:.30em;color:#b3c0cf;margin-top:14px}
- .lead{font-size:17px;line-height:1.62;color:#6b8199;max-width:440px;margin-top:26px}
+ /* ── ταμπλό ───────────────────────────────────────────────────────────────── */
+ .board{background:var(--p2);border-bottom:1px solid var(--line);padding:30px 0 34px}
+ .bh{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+ .bh.ctr{justify-content:center;text-align:center}
+ .bh h2{font-family:var(--disp);font-size:17px;font-weight:800;color:var(--ink);text-transform:uppercase;letter-spacing:.04em}
+ .numrow{display:flex;gap:12px;align-items:stretch;flex-wrap:wrap;min-height:81px}
+ .scards{display:flex;gap:12px;margin:0}
+ .sc{width:auto;padding:12px 18px;background:#fff;border:1px solid var(--line2);border-radius:13px;
+     display:flex;flex-direction:column;justify-content:center;text-align:center}
+ .sc-l{font-size:11px;color:var(--muted)}
+ .sc-n{font-family:var(--disp);font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.15;text-align:center}
+ .sc-n.up{color:var(--up)} .sc-n.dn{color:var(--down)}
+ .pgrid{display:grid;grid-template-rows:auto auto;grid-auto-flow:column;gap:8px}
+ .pt{display:flex;align-items:baseline;gap:9px;padding:7px 13px;width:auto;
+     background:#fff;border:1px solid var(--line2);border-radius:11px}
+ .pt-l{font-size:10.5px;color:var(--muted);line-height:1.3;white-space:nowrap;flex:none}
+ .pt-n{font-family:var(--disp);font-size:17px;font-weight:700;color:var(--ink);line-height:1.2;white-space:nowrap;flex:none}
+ .cols2{display:grid;grid-template-columns:1.35fr 1fr;gap:12px;align-items:start;margin-top:26px;min-height:200px}
+ .pane{background:#fff;border:1px solid var(--line2);border-radius:13px;overflow:hidden}
+ .pane-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:11px 14px;
+   border-bottom:1px solid var(--line2);font-family:var(--disp);font-size:12px;font-weight:700;
+   color:var(--ink);text-transform:uppercase;letter-spacing:.05em;background:#fcfdff;margin:0}
+ .pane-h a{font-family:var(--sans);font-size:11px;font-weight:600;color:var(--cyan);text-decoration:none;text-transform:none;letter-spacing:0}
+ .dv-hd{display:flex;align-items:center;gap:10px;padding:8px 14px;white-space:nowrap;background:#fcfdff;
+   border-bottom:1px solid var(--line2);font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--faint)}
+ .dv{display:flex;align-items:center;gap:10px;padding:9px 14px;border-bottom:1px solid #f1f6fb;text-decoration:none;color:inherit}
+ .dv:last-of-type{border-bottom:0}
+ .dv:hover{background:#f8fbff}
+ .dv-d{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:var(--faint);width:52px;flex:none}
+ .dv-c{flex:1;min-width:0}
+ .dv-c b{display:block;font-family:var(--disp);font-size:12.5px;font-weight:700;color:var(--ink);line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ .dv-c small{display:block;font-size:10.5px;color:var(--faint);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ .dv-c small em{font-style:normal;color:var(--gold)}
+ .dv-a{font-family:var(--disp);font-size:14px;font-weight:800;color:var(--ink);width:92px;text-align:right;flex:none}
+ .dv-y{font-family:var(--disp);font-size:12.5px;font-weight:800;color:var(--cyan);width:70px;text-align:right;flex:none}
+ .dv-y.n{color:#c3cedb;font-weight:600}
+ .mvnote{font-size:10.5px;color:var(--faint);padding:9px 14px;border-top:1px solid #f1f6fb;line-height:1.5}
+ .stack{display:flex;flex-direction:column;gap:12px}
+ .tp{background:#fff;border:1px solid var(--line2);border-radius:13px;overflow:hidden}
+ .tp-h{padding:11px 14px;border-bottom:1px solid var(--line2);font-family:var(--disp);font-size:12px;
+   font-weight:700;color:var(--ink);text-transform:uppercase;letter-spacing:.05em;background:#fcfdff;margin:0}
+ .tp-r{display:flex;gap:12px;align-items:baseline;padding:7px 14px;border-bottom:1px solid #f1f6fb;text-decoration:none;color:inherit}
+ .tp-r:last-child{border-bottom:0}.tp-r:hover{background:#f8fbff}
+ .tp-n{font-family:var(--disp);font-size:14px;font-weight:800;color:var(--cyan);width:62px;flex:none;text-align:right}
+ .tp-c{font-size:12.5px;color:var(--text);line-height:1.35}
 
- .stats{display:flex;gap:40px;margin-top:34px}
- .st .n{font-family:Inter,sans-serif;font-size:31px;font-weight:800;color:#2f80c2;letter-spacing:-.02em;line-height:1}
- .st .l{font-size:12.5px;color:#6b8199;margin-top:5px}
-
- .art{transform:rotateY(-18deg) rotateX(7deg) rotateZ(1deg);transform-style:preserve-3d;
-   filter:drop-shadow(3px 7px 7px rgba(18,52,104,.42))}
- .stage{perspective:1500px;perspective-origin:62% 38%}
-
- /* hero logo wall — decorative, non-interactive; single sprite, one request */
- .sw{display:flex;flex-direction:column;justify-content:center}
- .stage{height:430px;position:relative;pointer-events:none;user-select:none}
- .tilt{position:absolute;inset:0;perspective:1500px;perspective-origin:62% 38%}
- .wall{position:absolute;inset:0;overflow:hidden;
-   transform:rotateY(-18deg) rotateX(7deg) rotateZ(1deg);transform-style:preserve-3d;
-   filter:drop-shadow(3px 7px 9px rgba(18,52,104,.16));
-   -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 13%,#000 87%,transparent 100%);
-           mask-image:linear-gradient(180deg,transparent 0,#000 13%,#000 87%,transparent 100%)}
- .cols{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;height:100%}
- .col{overflow:hidden}
- .cin{display:flex;flex-direction:column;gap:12px;will-change:transform}
- .cin.u{animation:lwup var(--d) linear infinite}
- .cin.d{animation:lwup var(--d) linear infinite reverse}
- @keyframes lwup{from{transform:translate3d(0,0,0)}to{transform:translate3d(0,-50%,0)}}
- .tile{flex:none;height:76px;display:flex;align-items:center;justify-content:center;
+ /* ── λωρίδα λογοτύπων ─────────────────────────────────────────────────────── */
+ .wallstrip{background:#fff;padding:26px 0 2px}
+ .wsrow{display:flex;gap:10px;justify-content:center;overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+ .wsrow .tile{flex:none;width:126px;height:62px;display:flex;align-items:center;justify-content:center;
    border-radius:12px;background:#fff;border:1px solid #e8eff7}
  .tile i{display:block;width:120px;height:36px;background-image:url(assets/logos-sprite.webp);
    background-size:1440px 432px;background-repeat:no-repeat;filter:grayscale(1) opacity(.55)}
- @media (prefers-reduced-motion:reduce){.cin{animation:none}}
 
- /* features */
- .feat{padding:64px 0 78px;background:#fff}
- .feath{text-align:center;margin-bottom:38px}
- .feath h2{font-family:Inter,sans-serif;font-size:29px;font-weight:800;color:#20344a;letter-spacing:-.01em}
- .feath p{font-size:15px;color:#6b8199;margin-top:9px}
+ /* ── κάρτες ───────────────────────────────────────────────────────────────── */
+ .feat{padding:34px 0 60px;background:#fff}
+ .feath{text-align:center;margin-bottom:30px}
+ .feath h2{font-family:var(--disp);font-size:26px;font-weight:800;color:#20344a;letter-spacing:-.01em;text-transform:uppercase}
+ .feath p{font-size:15px;color:var(--muted);margin-top:9px}
  .fgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
- .fcard{background:#fff;border:1px solid #eaf2fa;border-radius:18px;padding:26px 22px;text-align:center;
+ .fcard{background:#fff;border:1px solid var(--line2);border-radius:18px;padding:26px 22px;text-align:center;
    box-shadow:0 10px 26px rgba(47,128,194,.07);text-decoration:none;color:inherit;display:block;
    transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease}
  .fcard:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(47,128,194,.15);border-color:#d7ecfb}
  .ficon{height:92px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center}
  .ficon img{max-height:88px;max-width:128px;width:auto;height:auto;object-fit:contain;display:block}
- .fcard h3{font-family:Inter,sans-serif;font-size:17px;font-weight:700;color:#20344a;margin-bottom:9px}
- .fcard p{font-size:13px;line-height:1.58;color:#6b8199}
+ .fcard h3{font-family:var(--disp);font-size:17px;font-weight:700;color:#20344a;margin-bottom:9px}
+ .fcard p{font-size:13px;line-height:1.58;color:var(--muted)}
 
- /* == ομογενοποίηση: κοινή τυπογραφία επικεφαλίδων == */
- h2{font-family:'Inter',sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.02em}
+ @media(prefers-reduced-motion:reduce){.mq-t{animation:none!important}}
 
- /* ===== mobile ===== */
- @media(max-width:820px){
-   .wrap{padding:0 22px}
-   .grid{grid-template-columns:1fr;gap:22px}
-   .stage{display:none}
-   .wordmark{font-size:clamp(44px,13.5vw,66px)}
-   .lead{font-size:15.5px;margin-top:20px}
-   .stats{gap:22px 34px;margin-top:26px;flex-wrap:wrap}
-   .navspace{display:none}
-   .menu{gap:16px;font-size:13px}
+ /* ── κινητό ───────────────────────────────────────────────────────────────── */
+ @media(max-width:900px){
+   .hw{padding:0 22px}
+   .cols2{grid-template-columns:1fr}
    .fgrid{grid-template-columns:1fr 1fr}
-   .feat{padding:48px 0 60px}
-   .feath h2{font-size:24px}
+   .numrow{flex-direction:column;min-height:0}
+   .scards{flex-wrap:wrap}
+   .sc{flex:1 1 calc(50% - 6px)}
+   .pgrid{grid-auto-flow:row;grid-template-rows:none;grid-template-columns:1fr 1fr}
+   .wsrow .tile:nth-child(n+5){display:none}
+   .feath h2{font-size:22px}
  }
- @media(max-width:440px){
-   .nav{flex-wrap:wrap;gap:10px;justify-content:center;text-align:center}
-   /* §125 — στο κινητό η κάθετη γραμμή φεύγει: η σειρά είναι ήδη κεντραρισμένη και
-      σφιχτή, οπότε δεν χρειάζεται ομαδοποίηση — και κερδίζουμε 25px ώστε το μενού
-      να μη σπάει το περιθώριο 22px της σελίδας. */
-   .menu .hcontact .mrule{display:none} .menu .hcontact{gap:0}
-   .menu{gap:12px}
-   .stats{justify-content:space-between}
+ @media(max-width:560px){
+   .k3 .bar{height:auto;flex-wrap:wrap;gap:10px 16px;padding:12px 0}
+   .lockh,.navh{flex:1 0 100%}
+   .navh{gap:12px 14px;font-size:12px;flex-wrap:wrap}
+   .asofr{text-align:left}
+   .hwm{font-size:28px} .h1lead{font-size:18px}
+   .nums,.mq{height:34px}.ni{height:34px;padding:0 11px}
+   .mq::before,.mq::after{width:28px}
+   .sc{flex:1 1 100%;padding:10px 14px}
+   .sc-n{font-size:23px}
+   .dv-d{width:40px;font-size:10px}
+   .dv-c b{white-space:normal}
+   .dv-c small{white-space:normal}
+   .dv-a{width:74px;font-size:13px}
+   .dv-y{width:52px;font-size:11.5px}
+   .dv,.dv-hd{gap:7px;padding-left:11px;padding-right:11px}
+   .dv-hd{font-size:9px;letter-spacing:.03em}
    .fgrid{grid-template-columns:1fr}
- }
- /* §125 — σε πολύ στενές οθόνες το μενού τυλίγεται αντί να ξεχειλίζει.
-    Προϋπήρχε υπερχείλιση 3px στα 320px· με το εικονίδιο θα γινόταν 15px. */
- @media(max-width:380px){
-   .menu{flex-wrap:wrap;justify-content:center;gap:10px 12px}
+   .wsrow .tile:nth-child(n+4){display:none}
  }
 </style><script type="application/ld+json">
 {
@@ -223,31 +274,46 @@
 </script>
 </head><body>
 
-<div class="hero"><div class="wrap">
- <div class="nav">
-   <div class="lockup">
-     <div class="am">A<span>M</span></div>
-     <div class="rule"></div>
-     <div class="lname">AXION<br>METRICS</div>
-   </div>
-   <div class="menu"><a href="company/" data-i18n="nav.companies">Εταιρείες</a><a href="sectors/" data-i18n="nav.sectors">Κλάδοι</a><a href="index-reviews/" data-i18n="nav.market">Αγορά</a><a href="methodology/" data-i18n="nav.about">Σχετικά</a><div class="langflags" role="group" aria-label="Language"><button type="button" data-langset="el" title="Ελληνικά" aria-label="Ελληνικά"><svg viewBox="0 0 27 18" aria-hidden="true"><rect width="27" height="18" fill="#fff"/><g fill="#0D5EAF"><rect width="27" height="2"/><rect width="27" height="2" y="4"/><rect width="27" height="2" y="8"/><rect width="27" height="2" y="12"/><rect width="27" height="2" y="16"/></g><rect width="10" height="10" fill="#0D5EAF"/><path d="M0 4h10v2H0z M4 0h2v10H4z" fill="#fff"/><rect width="27" height="18" fill="none" stroke="rgba(0,0,0,.18)"/></svg></button><button type="button" data-langset="en" title="English" aria-label="English"><svg viewBox="0 0 60 30" aria-hidden="true"><clipPath id="axukj"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath><rect width="60" height="30" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#axukj)" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/><rect width="60" height="30" fill="none" stroke="rgba(0,0,0,.18)" stroke-width="2"/></svg></button></div><span class="hcontact"><span class="mrule"></span><a class="hmail" href="mailto:info@axionmetrics.gr" title="info@axionmetrics.gr" aria-label="Επικοινωνία: info@axionmetrics.gr"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M3 7l9 6 9-6"/></svg></a></span></div>
-   <div class="navspace"></div>
+<!-- §141 — ΝΕΑ ΑΡΧΙΚΗ. Η σελίδα ΔΕΝ φορτώνει πια μόνο διακόσμηση: παίρνει core.js
+     (κατάλογος εταιρειών + 15 τελευταία γεγονότα) και home.js (συγκεντρωτικά, §139).
+     Τα δοχεία με id είναι ΑΔΕΙΑ στο κέλυφος και γεμίζουν από το render() παρακάτω·
+     το prerender.py (§137) ψήνει το αποτέλεσμα μέσα στο HTML, ώστε να το βλέπει και
+     ο crawler. Η αρχική έχει ΔΙΚΗ ΤΗΣ κεφαλίδα (δεν φορτώνει chrome.js). -->
+<div class="k3"><div class="hw"><div class="bar">
+ <a class="lockh" href="/"><span class="am">A<span>M</span></span><span class="rule"></span>
+  <span><span class="wm">AXION <i>METRICS</i></span><span class="tag">ΜΕΤΡΟΝ ΑΞΙΟΝ</span></span></a>
+ <div class="navh">
+  <a href="company/" data-i18n="nav.companies">Εταιρείες</a>
+  <a href="sectors/" data-i18n="nav.sectors">Κλάδοι</a>
+  <a href="index-reviews/" data-i18n="nav.market">Αγορά</a>
+  <a href="methodology/" data-i18n="nav.about">Σχετικά</a>
+  <div class="langflags" role="group" aria-label="Language"><button type="button" data-langset="el" title="Ελληνικά" aria-label="Ελληνικά"><svg viewBox="0 0 27 18" aria-hidden="true"><rect width="27" height="18" fill="#fff"/><g fill="#0D5EAF"><rect width="27" height="2"/><rect width="27" height="2" y="4"/><rect width="27" height="2" y="8"/><rect width="27" height="2" y="12"/><rect width="27" height="2" y="16"/></g><rect width="10" height="10" fill="#0D5EAF"/><path d="M0 4h10v2H0z M4 0h2v10H4z" fill="#fff"/><rect width="27" height="18" fill="none" stroke="rgba(0,0,0,.18)"/></svg></button><button type="button" data-langset="en" title="English" aria-label="English"><svg viewBox="0 0 60 30" aria-hidden="true"><clipPath id="axukj"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath><rect width="60" height="30" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#axukj)" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/><rect width="60" height="30" fill="none" stroke="rgba(0,0,0,.18)" stroke-width="2"/></svg></button></div><span class="mrule"></span><span class="mrule"></span><a class="hmail" href="mailto:info@axionmetrics.gr" title="info@axionmetrics.gr" aria-label="Επικοινωνία: info@axionmetrics.gr"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M3 7l9 6 9-6"/></svg></a>
  </div>
+</div></div></div>
 
- <div class="eyebrow" data-i18n="home.eyebrow">Θεμελιώδης ανάλυση · Χρηματιστήριο Αθηνών</div>
+<div class="k3below"><div class="hw"><div class="in2">
+ <div class="asofr"><span data-i18n="home.asof">Τελευταία ενημέρωση δεδομένων</span><br><b id="ax-asof"></b></div>
+ <div class="hcenter">
+  <h1 class="h1lead" data-i18n-html="home.h1">Θεμελιώδης ανάλυση των <em>εισηγμένων</em> του Χρηματιστηρίου Αθηνών</h1>
+  <div class="hwm"><span class="a">AXION</span> <span class="m">METRICS</span></div>
+  <div class="m-inline" id="ax-meta"></div>
+ </div>
+</div></div></div>
 
- <div class="grid">
-   <div>
-     <div class="wordmark"><div class="a">AXION</div><div class="m">METRICS</div></div>
-     <div class="sub">ΜΕΤΡΟΝ ΑΞΙΟΝ</div>
-     <p class="lead" data-i18n="home.lead">Δείκτες, σύγκριση με τον κλάδο, ποιότητα κερδών και διαχρονικά trends για 130+ ελληνικές εισηγμένες.</p>
-     <div class="stats"><div class="st"><div class="n">130+</div><div class="l" data-i18n="stat.listed">εισηγμένες</div></div><div class="st"><div class="n">10</div><div class="l" data-i18n="stat.sectors">κλάδοι</div></div><div class="st"><div class="n">26</div><div class="l" data-i18n="stat.ratios">δείκτες</div></div><div class="st"><div class="n">2020→</div><div class="l" data-i18n="stat.coverage">κάλυψη</div></div></div>
-   </div>
-   <div class="sw"><div class="stage" id="logowall" aria-hidden="true"><div class="tilt"><div class="wall"><div class="cols"><div class="col"><div class="cin u" style="--d:62s" id="lw1"></div></div><div class="col"><div class="cin d" style="--d:76s" id="lw2"></div></div><div class="col"><div class="cin u" style="--d:68s" id="lw3"></div></div></div></div></div></div></div>
+<div class="nums" id="ax-tape"></div>
+
+<div class="board"><div class="hw">
+ <div class="bh ctr"><h2 id="ax-seasonh"></h2></div>
+ <div class="numrow" id="ax-nums"></div>
+ <div class="cols2">
+  <div id="ax-divs"></div>
+  <div class="stack" id="ax-tops"></div>
  </div>
 </div></div>
 
-<div class="feat"><div class="wrap">
+<div class="wallstrip"><div class="hw"><div class="wsrow" id="ax-wall" aria-hidden="true"></div></div></div>
+
+<div class="feat"><div class="hw">
  <div class="feath"><h2 data-i18n="feat.h2">Όλα όσα χρειάζεσαι για να αποφασίσεις</h2><p data-i18n="feat.p">Ό,τι χρειάζεσαι για κάθε εισηγμένη — από την εταιρεία μέχρι τον κλάδο και την αγορά.</p></div>
  <div class="fgrid"><a class="fcard" href="company/"><div class="ficon"><img src="assets/icons/company.png" alt="" loading="lazy"></div><h3 data-i18n="card.company.h">Θεμελιώδης ανάλυση εταιρείας</h3><p data-i18n="card.company.p">26 αριθμοδείκτες με κλαδική σύγκριση, ιστορικότητα μεγεθών, μέτοχοι, θυγατρικές, γεγονότα και ποιότητα κερδών (Piotroski).</p></a><a class="fcard" href="compare/"><div class="ficon"><img src="assets/icons/compare.png" alt="" loading="lazy"></div><h3 data-i18n="card.compare.h">Σύγκριση &amp; κατατάξεις</h3><p data-i18n="card.compare.p">Εταιρείες δίπλα-δίπλα σε κάθε δείκτη, και league tables για όλη την αγορά.</p></a><a class="fcard" href="sectors/"><div class="ficon"><img src="assets/icons/sector.png" alt="" loading="lazy"></div><h3 data-i18n="card.sector.h">Ανάλυση κλάδου</h3><p data-i18n="card.sector.p">Κλαδικές διάμεσοι, screener εντός κλάδου και τροχιά ποιότητας.</p></a><a class="fcard" href="index-reviews/"><div class="ficon"><img src="assets/icons/events.png" alt="" loading="lazy"></div><h3 data-i18n="card.events.h">Δείκτες &amp; γεγονότα αγοράς</h3><p data-i18n="card.events.p">Είσοδοι/έξοδοι στους δείκτες FTSE/Athex και ροή εταιρικών γεγονότων (μερίσματα, ΑΜΚ).</p></a></div>
 </div></div>
@@ -257,20 +323,19 @@
      δέχεται τις περισσότερες ΠΡΩΤΕΣ επισκέψεις ήταν η μόνη που δεν μετριόταν. Ίδιο id
      `cf-beacon` με το chrome.js, ώστε αν κάποτε φορτωθεί κι εκείνο να μη διπλομετρήσει. -->
 <script id="cf-beacon" defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "a9e573e27dd34f6784b7df2d706c1bee"}'></script>
+<script src="assets/core.js"></script>
+<script src="assets/home.js"></script>
 <script src="assets/i18n.js"></script>
 <script>
 AX_I18N.add({
+ 'home.h1':{el:'Θεμελιώδης ανάλυση των <em>εισηγμένων</em> του Χρηματιστηρίου Αθηνών',
+            en:'Fundamental analysis of <em>listed companies</em> on the Athens Stock Exchange'},
+ 'home.asof':{el:'Τελευταία ενημέρωση δεδομένων', en:'Data last updated'},
  'home.title':{el:'Θεμελιώδης ανάλυση Χρηματιστηρίου Αθηνών | Axion Metrics', en:'Athens Stock Exchange fundamentals | Axion Metrics'},
- 'home.eyebrow':{el:'Θεμελιώδης ανάλυση · Χρηματιστήριο Αθηνών', en:'Fundamental analysis · Athens Stock Exchange'},
  'nav.companies':{el:'Εταιρείες', en:'Companies'},
  'nav.sectors':{el:'Κλάδοι', en:'Sectors'},
  'nav.market':{el:'Αγορά', en:'Market'},
  'nav.about':{el:'Σχετικά', en:'About'},
- 'home.lead':{el:'Δείκτες, σύγκριση με τον κλάδο, ποιότητα κερδών και διαχρονικά trends για 130+ ελληνικές εισηγμένες.', en:'Ratios, sector benchmarking, earnings quality and long-term trends for 130+ Greek listed companies.'},
- 'stat.listed':{el:'εισηγμένες', en:'listed'},
- 'stat.sectors':{el:'κλάδοι', en:'sectors'},
- 'stat.ratios':{el:'δείκτες', en:'ratios'},
- 'stat.coverage':{el:'κάλυψη', en:'coverage'},
  'feat.h2':{el:'Όλα όσα χρειάζεσαι για να αποφασίσεις', en:'Everything you need to decide'},
  'feat.p':{el:'Ό,τι χρειάζεσαι για κάθε εισηγμένη — από την εταιρεία μέχρι τον κλάδο και την αγορά.', en:'Everything for each listed company — from the company to its sector and the market.'},
  'card.company.h':{el:'Θεμελιώδης ανάλυση εταιρείας', en:'Company fundamentals'},
@@ -285,19 +350,156 @@ AX_I18N.add({
 </script>
 
 <script>
-/* hero logo wall — decorative background, non-interactive, never pauses.
-   All 138 marks come from one sprite (assets/logos-sprite.webp, 12x12 cells). */
+/* §141 — λωρίδα λογοτύπων: ΜΙΑ οριζόντια σειρά από το ίδιο sprite (12x12 κελιά).
+   Διακοσμητική, aria-hidden, χωρίς κίνηση — δεν είναι πια το hero. */
 (function(){
- var C=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139],a=C.map(function(c,i){return i;}),s=20260830;
+ var e=document.getElementById('ax-wall'); if(!e) return;
+ var C=[]; for(var i=0;i<138;i++) C.push(i);
+ var s=20261020, a=C.slice();
  for(var i=a.length-1;i>0;i--){s=(s*1103515245+12345)&0x7fffffff;var j=s%(i+1),t=a[i];a[i]=a[j];a[j]=t;}
- function fill(id,l){var e=document.getElementById(id);if(!e)return;var h='';
-  for(var k=0;k<2;k++)for(var i=0;i<l.length;i++){var ix=l[i];
-   h+='<span class="tile"><i style="background-position:'+(-(ix%12)*120)+'px '+(-Math.floor(ix/12)*36)+'px"></i></span>';}
-  e.innerHTML=h;}
- var n=Math.ceil(a.length/3);
- fill('lw1',a.slice(0,n));fill('lw2',a.slice(n,2*n));fill('lw3',a.slice(2*n));
+ var h='';
+ for(var k=0;k<8;k++){var ix=a[k];
+  h+='<span class="tile"><i style="background-position:'+(-(ix%12)*120)+'px '+(-Math.floor(ix/12)*36)+'px"></i></span>';}
+ e.innerHTML=h;
 })();
 </script>
+<script>
+/* §141 — Ο ΑΠΟΔΟΤΗΣ ΤΗΣ ΑΡΧΙΚΗΣ.
+   Διαβάζει window.AXION (core.js: companies + 15 τελευταία γεγονότα) και
+   window.AXION.home (home.js, §139: διάμεσοι, εξάμηνο, διανομές, κατατάξεις).
+   Γεμίζει ΜΟΝΟ άδεια δοχεία με id — τα ίδια που ψήνει το prerender.py (§137).
+   Ξανατρέχει σε αλλαγή γλώσσας, όπως το block short θέσεων της σελίδας εταιρείας. */
+(function(){
+  var A=window.AXION, H=A&&A.home;
+  if(!A||!H) return;
+
+  function EN(){ try{ return AX_I18N.lang==='en'; }catch(e){ return false; } }
+  function esc(t){return String(t==null?'':t).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  /* υποδιαστολή κατά γλώσσα: κόμμα στα ελληνικά, τελεία στα αγγλικά */
+  function num(v,d){ if(v==null) return '—'; var s=Number(v).toFixed(d); return EN()?s:s.replace('.',','); }
+  function dmy(iso){ var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(iso||''); return m?(m[3]+'.'+m[2]+'.'+m[1].slice(2)):(iso||''); }
+  function dm(iso){ var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(iso||''); return m?(m[3]+'.'+m[2]):(iso||''); }
+  function cut(s,n){ s=String(s||''); return s.length>n ? s.slice(0,n)+'…' : s; }
+
+  var SLUG=(function(){ var m={},L=(A.companies&&A.companies.annual)||[];
+    for(var i=0;i<L.length;i++) m[L[i].tk]=L[i].slug; return m; })();
+  function co(slug){ return slug ? '/etaireia/'+slug+'/' : '/company/'; }
+
+  function T(){ return EN() ? {
+      meta:function(c,s,r){return '<b>'+c+'</b> listed · <b>'+s+'</b> sectors · <b>'+r+'</b> ratios · coverage since <b>2020</b>';},
+      season:function(y){return 'H1 '+y+' results — what the financial statements showed';},
+      rev:'Revenue', ebitda:'EBITDA', np:'Net profit',
+      pe:'P/E', pbv:'P/BV', dy:'Dividend yield', roe:'ROE',
+      divs:'Latest dividends &amp; distributions', all:'all →',
+      cDate:'Date', cCo:'Company', cAmt:'€ / share', cY:'Yield',
+      note:function(n){return n+' dividends and distributions since 2020. The yield is the company’s <b>FY2025</b> dividend yield, not that of this distribution.';},
+      topdy:'Highest dividend yield', toppe:'Lowest P/E — valuation'
+    } : {
+      meta:function(c,s,r){return '<b>'+c+'</b> εισηγμένες · <b>'+s+'</b> κλάδοι · <b>'+r+'</b> αριθμοδείκτες · κάλυψη από το <b>2020</b>';},
+      season:function(y){return 'Αποτελέσματα εξαμήνου '+y+' — τι έδειξαν οι οικονομικές καταστάσεις';},
+      rev:'Πωλήσεις', ebitda:'EBITDA', np:'Καθαρά κέρδη',
+      pe:'P/E', pbv:'P/BV', dy:'Μερισματική απόδοση', roe:'ROE',
+      divs:'Τελευταία μερίσματα &amp; διανομές', all:'όλες →',
+      cDate:'Ημ/νία', cCo:'Εταιρεία', cAmt:'€/μετοχή', cY:'Απόδοση',
+      note:function(n){return n+' μερίσματα και διανομές από το 2020. Η απόδοση είναι η μερισματική απόδοση <b>χρήσης 2025</b> της εταιρείας, όχι της συγκεκριμένης διανομής.';},
+      topdy:'Υψηλότερη μερισματική απόδοση', toppe:'Χαμηλότερο P/E — αποτίμηση'
+    };
+  }
+
+  function tape(t){
+    var E=A.marketEvents||[], out='';
+    for(var i=0;i<E.length;i++){ var e=E[i];
+      out+='<a class="ni" href="'+co(SLUG[e.tk])+'"><span class="d">'+dm(e.d)+'</span>'
+         + '<span class="dot '+esc(e.t)+'"></span><span class="co">'+esc(e.co)+'</span>'
+         + '<span class="x">'+esc(cut(e.x,70))+'</span></a>';
+    }
+    if(!out) return '';
+    /* ΕΝΑ αντίγραφο στο HTML· το δεύτερο (που χρειάζεται η κύλιση) το κλωνοποιεί η
+       mqdup() στο load. Έτσι ο crawler βλέπει κάθε γεγονός μία φορά, όχι δύο. */
+    return '<div class="mq"><div class="mq-t"><div class="mq-g">'+out+'</div></div></div>';
+  }
+
+  function nums(t){
+    var S=H.season||{}, P=H.pulse||{};
+    function card(lab,k){ var v=S[k]&&S[k][0];
+      if(v==null) return '';
+      var up=v>=0;
+      return '<div class="sc"><div class="sc-l">'+lab+'</div>'
+           + '<div class="sc-n '+(up?'up':'dn')+'">'+(up?'▲ +':'▼ ')+num(v,1)+'%</div></div>'; }
+    function pill(lab,k,d,suf){ var v=P[k]&&P[k][0];
+      if(v==null) return '';
+      return '<div class="pt"><div class="pt-l">'+lab+'</div><div class="pt-n">'+num(v,d)+suf+'</div></div>'; }
+    return '<div class="scards">'+card(t.rev,'revenue')+card(t.ebitda,'ebitda')+card(t.np,'net_profit')+'</div>'
+         + '<div class="pgrid">'+pill(t.pe,'pe',2,'x')+pill(t.pbv,'pbv',2,'x')
+         + pill(t.dy,'dy',2,'%')+pill(t.roe,'roe',2,'%')+'</div>';
+  }
+
+  function divs(t){
+    var L=H.divs||[]; if(!L.length) return '';
+    var rows='';
+    for(var i=0;i<L.length;i++){ var p=L[i];
+      /* Η ALPHATRUST ΑΝΔΡΟΜΕΔΑ δίνει €0,2642775532/μετοχή — στρογγυλοποιούμε στα 4
+         δεκαδικά και κρατάμε το ακριβές ποσό στο tooltip. */
+      var a=p.amt||'', ti='', dec=(a.split(',')[1]||'');
+      if(dec.length>4){ ti=' title="'+esc(a)+'"'; a=num(parseFloat(a.replace(/\./g,'').replace(',','.')),4); }
+      else if(a && EN()) a=a.replace(/\./g,'').replace(',','.');
+      var y=(p.dy!=null)?'<span class="dv-y">'+num(p.dy,2)+'%</span>':'<span class="dv-y n">—</span>';
+      var sec=''; try{ sec=AX_I18N.sector(p.s)||p.s||''; }catch(e){ sec=p.s||''; }
+      rows+='<a class="dv" href="'+co(p.slug)+'"'+ti+'><span class="dv-d">'+dm(p.d)+'</span>'
+          + '<span class="dv-c"><b>'+esc(p.co)+'</b><small>'+esc(sec)
+          + (p.extra?' · <em>'+esc(p.extra)+'</em>':'')+'</small></span>'
+          + '<span class="dv-a">€'+esc(a||'—')+'</span>'+y+'</a>';
+    }
+    return '<div class="pane"><h2 class="pane-h">'+t.divs+' <a href="/market-events/">'+t.all+'</a></h2>'
+         + '<div class="dv-hd"><span class="dv-d">'+t.cDate+'</span><span class="dv-c">'+t.cCo+'</span>'
+         + '<span class="dv-a">'+t.cAmt+'</span><span class="dv-y">'+t.cY+'</span></div>'
+         + rows + '<div class="mvnote">'+t.note(H.divcount||0)+'</div></div>';
+  }
+
+  function tops(t){
+    function tp(lab,list,d,suf){
+      if(!list||!list.length) return '';
+      var r='';
+      for(var i=0;i<list.length;i++) r+='<a class="tp-r" href="'+co(list[i].slug)+'">'
+        + '<span class="tp-n">'+num(list[i].v,d)+suf+'</span><span class="tp-c">'+esc(list[i].co)+'</span></a>';
+      return '<div class="tp"><h3 class="tp-h">'+lab+'</h3>'+r+'</div>';
+    }
+    return tp(t.topdy,H.topdy,2,'%')+tp(t.toppe,H.toppe,2,'x');
+  }
+
+  function put(id,html){ var e=document.getElementById(id); if(e) e.innerHTML=html; }
+
+  function render(){
+    var t=T(), cur=(H.periods&&H.periods.cur)||'';
+    put('ax-asof', dmy(H.generated));
+    put('ax-meta', t.meta((H.counts&&H.counts.companies)||'', (H.counts&&H.counts.sectors)||'', 26));
+    put('ax-seasonh', t.season(cur));
+    put('ax-tape', tape(t));
+    put('ax-nums', nums(t));
+    put('ax-divs', divs(t));
+    put('ax-tops', tops(t));
+    mqdup();
+  }
+
+  /* Το δεύτερο αντίγραφο της ταινίας ΔΕΝ μπαίνει όταν τρέχει το prerender.py: εκείνο
+     φορτώνει τη σελίδα από http://127.0.0.1:<port> και ψήνει ό,τι βρει στο DOM. Έτσι
+     στο HTML μένει ένα αντίγραφο· στον επισκέπτη προστίθεται το δεύτερο και η λωρίδα
+     κυλάει. Χωρίς JavaScript η λωρίδα απλώς στέκεται ακίνητη. */
+  function mqdup(){
+    if(location.hostname==='127.0.0.1') return;
+    var T2=document.querySelectorAll('.mq-t');
+    for(var i=0;i<T2.length;i++){
+      var g=T2[i].firstElementChild; if(!g || T2[i].children.length>1) continue;
+      var c=g.cloneNode(true); c.setAttribute('aria-hidden','true');
+      T2[i].appendChild(c); T2[i].className+=' ready';
+    }
+  }
+
+  render();
+  try{ document.addEventListener('axion:langchange', render); }catch(e){}
+})();
+</script>
+
 </body></html>
 
 <!-- redeploy trigger 2026-08-26 -->
