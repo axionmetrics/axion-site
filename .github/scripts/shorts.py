@@ -25,6 +25,17 @@ robots : hcmc.gr → «User-Agent: * / Disallow:» (επιτρέπει τα πά
 Έξοδος : assets/shorts.js   (το site)
          .github/shorts/<YYYY-MM-DD>.json  (αρχείο εκδόσεων — δικό μας ιστορικό)
          .github/shorts/_state.json        (τελευταία επεξεργασμένη έκδοση)
+Δεύτερη πηγή (§140): FCA — https://www.fca.org.uk/publication/documents/aggregated-current-net-short-positions.csv
+         Στήλες: Name of Company · ISIN · Aggregated net short position (%) · Position date (dd/mm/yyyy).
+         Αφορά ΜΟΝΟ μετοχές εισηγμένες σε βρετανικό τόπο διαπραγμάτευσης — από τις δικές μας,
+         μόνο η 34 METLEN ENERGY & METALS (GB00BTQGS779). Κανένα ελληνικό ISIN δεν υπάρχει εκεί.
+
+ΑΔΕΙΑ ΧΡΗΣΗΣ FCA — ΑΝΟΙΧΤΟ: οι όροι (fca.org.uk/legal) δίνουν Open Government Licence για
+         «charts, tables and numerical datasets» της ενότητας Data, αλλά γενικά απαιτούν γραπτή
+         άδεια για αναπαραγωγή σε άλλον ιστότοπο και ζητούν αναφορά πηγής. Τα αρχεία ANSP
+         βρίσκονται σε /publication/documents/, όχι /publication/data/ — δεν είναι σαφές ποια
+         ρήτρα ισχύει. Μέχρι να απαντήσει η FCA, ο διακόπτης FCA_ON ελέγχει τη δημοσίευση.
+
 Σε αποτυχία ή αταίριαστο ISIN → GitHub Issue (ίδιο κανάλι με τον euronext-monitor).
 """
 import json, os, re, sys, io, datetime, hashlib
@@ -39,8 +50,23 @@ DATAJS = os.path.join(ROOT, 'assets', 'data.js')
 ARCH   = os.path.join(ROOT, '.github', 'shorts')
 ALIAS  = os.path.join(ROOT, '.github', 'data', 'fund_aliases.json')
 THRESHOLD = 0.5          # όριο δημοσιοποίησης (Καν. ΕΕ 236/2012, άρ. 6)
+
+# ── §140 — ΔΕΥΤΕΡΗ ΠΗΓΗ: FCA (Ηνωμένο Βασίλειο) ──────────────────────────────
+# Η 34 METLEN ENERGY & METALS είναι από 04/08/2025 εισηγμένη στο LSE ως βρετανική plc
+# με ISIN GB00BTQGS779 (υπάρχει ήδη στον χάρτη meta.isin του master). Οι θέσεις της
+# δηλώνονται και στην FCA, με ΑΛΛΟ καθεστώς:
+#   • Επιτροπή Κεφαλαιαγοράς: ΟΝΟΜΑΣΤΙΚΕΣ θέσεις ≥0,5% (Καν. ΕΕ 236/2012)
+#   • FCA από 13/07/2026    : ΑΝΩΝΥΜΟ ΑΘΡΟΙΣΜΑ όλων των θέσεων από 0,2% (ANSP),
+#                             δημοσίευση κάθε εργάσιμη από 12:00 Λονδίνου, βάση T+2
+# Δεν είναι αντίφαση όταν διαφέρουν — μετρούν διαφορετικό πράγμα. Γι' αυτό μπαίνουν
+# ΔΙΠΛΑ, σε ξεχωριστό κλειδί `fca`, και ΠΟΤΕ δεν αθροίζονται με τα ελληνικά.
+# Αποτυχία της FCA ΔΕΝ ρίχνει τη ροή: η ελληνική πηγή είναι η κύρια.
+FCA_ON   = True          # διακόπτης δημοσίευσης (βλ. ΑΔΕΙΑ ΧΡΗΣΗΣ στο docstring)
+FCA_CSV  = 'https://www.fca.org.uk/publication/documents/aggregated-current-net-short-positions.csv'
+FCA_THR  = 0.2           # κατώφλι αναφοράς του βρετανικού καθεστώτος
+FCA_ATTR = '© The Financial Conduct Authority'
 DEC       = 5            # δεκαδικά που κρατάμε από την πηγή (βλ. ΑΚΡΙΒΕΙΑ στο docstring)
-FMT       = 2            # έκδοση μορφής εξόδου. ΑΥΞΗΣΕ ΤΟ όταν αλλάζει ο τρόπος που γράφονται
+FMT       = 3            # έκδοση μορφής εξόδου. ΑΥΞΗΣΕ ΤΟ όταν αλλάζει ο τρόπος που γράφονται
                          # τα δεδομένα: αναγκάζει πλήρη ανακατασκευή ακόμη κι αν η πηγή είναι ίδια.
 
 def log(*a): print(*a, flush=True)
@@ -119,6 +145,56 @@ def rows_of(sh):
                     'isin':isin,'pct':pct,'date':dt})
     return out
 
+# ---------------------------------------------------------------- FCA (§140)
+def fca_fetch(isin_map):
+    """Επιστρέφει (block, sha) ή (None, None). ΔΕΝ πετάει ποτέ — η FCA είναι δευτερεύουσα."""
+    if not FCA_ON:
+        log('FCA: απενεργοποιημένη (FCA_ON=False)'); return None, None
+    try:
+        raw=get(FCA_CSV, binary=True, timeout=45)
+    except Exception as e:
+        log('FCA: δεν κατεβαίνει το CSV —', e); return None, None
+    sha=hashlib.sha1(raw).hexdigest()[:12]
+    try:
+        import csv
+        txt=raw.decode('utf-8-sig','replace')
+        rd=list(csv.reader(io.StringIO(txt)))
+    except Exception as e:
+        log('FCA: δεν διαβάζεται το CSV —', e); return None, None
+    if not rd or len(rd) < 2:
+        log('FCA: κενό CSV'); return None, None
+    # Εντοπισμός στηλών από την κεφαλίδα· αν αλλάξει η σειρά, δεν σπάει.
+    hdr=[c.strip().lower() for c in rd[0]]
+    def col(*keys, default=None):
+        for i,h in enumerate(hdr):
+            if any(k in h for k in keys): return i
+        return default
+    i_name=col('name of company','company','issuer', default=0)
+    i_isin=col('isin', default=1)
+    i_pct =col('net short position','position (%)','%', default=2)
+    i_date=col('position date','date', default=3)
+    by={}; latest=None; n=0
+    for r in rd[1:]:
+        if len(r) <= max(i_name,i_isin,i_pct,i_date): continue
+        code=(r[i_isin] or '').strip().upper()
+        if not re.match(r'^[A-Z]{2}[A-Z0-9]{9}\d$', code): continue
+        n+=1
+        tk=isin_map.get(code)
+        if not tk: continue
+        try: pct=float((r[i_pct] or '').strip().replace(',','.'))
+        except ValueError: continue
+        d=to_date((r[i_date] or '').strip())
+        if d is None: continue
+        prev=by.get(tk)
+        if prev is None or d >= prev['d']:
+            by[tk]={'p':round(pct,2),'d':d,'co':(r[i_name] or '').strip()}
+        latest=d if (latest is None or d > latest) else latest
+    log('FCA: %d γραμμές στο αρχείο · %d αντιστοιχίστηκαν (%s)'%(n, len(by), ', '.join(sorted(by)) or '—'))
+    if not by:
+        # Δεν είναι σφάλμα από μόνο του: αν η METLEN βγει από τη λίστα, απλώς δεν υπάρχει θέση.
+        return {'rows':{}, 'pub':latest, 'n':n, 'threshold':FCA_THR, 'attr':FCA_ATTR}, sha
+    return {'rows':by, 'pub':latest, 'n':n, 'threshold':FCA_THR, 'attr':FCA_ATTR}, sha
+
 # ---------------------------------------------------------------- χάρτης ISIN
 def isin_from_datajs(path):
     if not os.path.exists(path): die('λείπει το assets/data.js', path)
@@ -191,6 +267,11 @@ def main():
     state_p=os.path.join(ARCH, '_state.json')
     state=json.load(io.open(state_p, encoding='utf-8')) if os.path.exists(state_p) else {}
 
+    # §140 — η FCA κατεβαίνει ΠΡΙΝ τον έλεγχο έκδοσης: μπορεί να έχει αλλάξει ακόμη κι αν
+    # το αρχείο της Επιτροπής Κεφαλαιαγοράς είναι το ίδιο (δημοσιεύει κάθε εργάσιμη).
+    isin=isin_from_datajs(DATAJS)
+    fca_block, fca_sha = fca_fetch(isin)
+
     if local:
         raw=open(local,'rb').read(); src_date=state.get('src') or 'local'; url=local
     else:
@@ -201,8 +282,10 @@ def main():
             die('δεν βρέθηκε ο σύνδεσμος του αρχείου στη σελίδα',
                 'Η σελίδα %s δεν περιέχει πια href προς «…HCMC_disclosed_short_positions_gr.xls». '
                 'Πιθανή αλλαγή δομής — χρειάζεται έλεγχος.'%PAGE)
-        if src_date and state.get('src')==src_date and state.get('fmt')==FMT:
-            log('καμία αλλαγή (έκδοση %s, μορφή %d) — τέλος.'%(src_date, FMT)); return 0
+        if (src_date and state.get('src')==src_date and state.get('fmt')==FMT
+                and state.get('fca')==fca_sha):
+            log('καμία αλλαγή (έκδοση %s, μορφή %d, FCA %s) — τέλος.'
+                %(src_date, FMT, fca_sha or '—')); return 0
         log('νέα έκδοση:', src_date, url)
         try: raw=get(url, binary=True)
         except Exception as e: die('δεν κατεβαίνει το αρχείο', '%s\n%s'%(url, e))
@@ -227,15 +310,18 @@ def main():
                 pub=to_date(sh_pub.cell_value(r,c)) or pub
     pub=pub or src_date
 
-    isin=isin_from_datajs(DATAJS)
     by, unmatched, dups = build(cur_rows, hist_rows, pub, isin, load_aliases())
 
     payload={'pub':pub,'src':src_date,'sha':sha,
              'built':datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
              'threshold':THRESHOLD,'by':by}
+    # §140 — ΔΙΠΛΑ, όχι ανακατεμένα: άλλο καθεστώς, άλλο κατώφλι, χωρίς ονόματα κατόχων.
+    if fca_block: payload['fca']=fca_block
     io.open(OUTJS,'w',encoding='utf-8').write(
-        '/* Axion Metrics — short θέσεις (Επιτροπή Κεφαλαιαγοράς). ΠΑΡΑΓΕΤΑΙ ΑΥΤΟΜΑΤΑ από\n'
-        '   .github/scripts/shorts.py · έκδοση πηγής %s · ΜΗΝ το επεξεργάζεσαι με το χέρι. */\n'
+        '/* Axion Metrics — short θέσεις. ΠΑΡΑΓΕΤΑΙ ΑΥΤΟΜΑΤΑ από .github/scripts/shorts.py\n'
+        '   · ονομαστικές θέσεις ≥0,5%%: Επιτροπή Κεφαλαιαγοράς (έκδοση %s)\n'
+        '   · κλειδί `fca`: ανώνυμο άθροισμα από 0,2%%, Financial Conduct Authority (§140)\n'
+        '   ΜΗΝ το επεξεργάζεσαι με το χέρι. */\n'
         'window.AXION_SHORTS = %s;\n'%(src_date, json.dumps(payload, ensure_ascii=False, separators=(',',':'))))
     io.open(os.path.join(ARCH,'%s.json'%src_date),'w',encoding='utf-8').write(
         json.dumps(payload, ensure_ascii=False, indent=1))
@@ -263,7 +349,7 @@ def main():
               + '\n'.join('- %s'%(' · '.join('`%s`'%x for x in v)) for v in dups.values())
               + '\n\nΑν πρόκειται για την ΙΔΙΑ νομική οντότητα, πρόσθεσέ τα στο '
                 '`.github/data/fund_aliases.json`. Αν είναι διαφορετικοί υπόχρεοι, άφησέ τα ως έχουν.')
-    json.dump({'src':src_date,'sha':sha,'pub':pub,'fmt':FMT,
+    json.dump({'src':src_date,'sha':sha,'pub':pub,'fmt':FMT,'fca':fca_sha,
                'unmatched':sorted(set(list(known_un)+list(unmatched))),
                'dups':sorted(set(list(known_dp)+list(dups)))},
               io.open(state_p,'w',encoding='utf-8'), ensure_ascii=False)
