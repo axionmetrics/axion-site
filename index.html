@@ -174,16 +174,6 @@
  .tp-n{font-family:var(--disp);font-size:14px;font-weight:800;color:var(--cyan);width:62px;flex:none;text-align:right}
  .tp-c{font-size:12.5px;color:var(--text);line-height:1.35}
 
- /* ── λωρίδα λογοτύπων ─────────────────────────────────────────────────────── */
- .wallstrip{background:#fff;padding:26px 0 2px}
- .wsrow{display:flex;gap:10px;justify-content:center;overflow:hidden;
-  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
-          mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
- .wsrow .tile{flex:none;width:126px;height:62px;display:flex;align-items:center;justify-content:center;
-   border-radius:12px;background:#fff;border:1px solid #e8eff7}
- .tile i{display:block;width:120px;height:36px;background-image:url(assets/logos-sprite.webp);
-   background-size:1440px 432px;background-repeat:no-repeat;filter:grayscale(1) opacity(.55)}
-
  /* ── κάρτες ───────────────────────────────────────────────────────────────── */
  .feat{padding:34px 0 60px;background:#fff}
  .feath{text-align:center;margin-bottom:30px}
@@ -210,7 +200,6 @@
    .scards{flex-wrap:wrap}
    .sc{flex:1 1 calc(50% - 6px)}
    .pgrid{grid-auto-flow:row;grid-template-rows:none;grid-template-columns:1fr 1fr}
-   .wsrow .tile:nth-child(n+5){display:none}
    .feath h2{font-size:22px}
  }
  @media(max-width:560px){
@@ -231,7 +220,6 @@
    .dv,.dv-hd{gap:7px;padding-left:11px;padding-right:11px}
    .dv-hd{font-size:9px;letter-spacing:.03em}
    .fgrid{grid-template-columns:1fr}
-   .wsrow .tile:nth-child(n+4){display:none}
  }
 </style><script type="application/ld+json">
 {
@@ -312,8 +300,6 @@
  </div>
 </div></div>
 
-<div class="wallstrip"><div class="hw"><div class="wsrow" id="ax-wall" aria-hidden="true"><span class="tile"><i style="background-position:-1200px -288px"></i></span><span class="tile"><i style="background-position:-960px -216px"></i></span><span class="tile"><i style="background-position:-1080px -216px"></i></span><span class="tile"><i style="background-position:-840px 0px"></i></span><span class="tile"><i style="background-position:-1320px 0px"></i></span><span class="tile"><i style="background-position:-720px -144px"></i></span><span class="tile"><i style="background-position:-120px -216px"></i></span><span class="tile"><i style="background-position:-960px -324px"></i></span></div></div></div>
-
 <div class="feat"><div class="hw">
  <div class="feath"><h2 data-i18n="feat.h2">Όλα όσα χρειάζεσαι για να αποφασίσεις</h2><p data-i18n="feat.p">Ό,τι χρειάζεσαι για κάθε εισηγμένη — από την εταιρεία μέχρι τον κλάδο και την αγορά.</p></div>
  <div class="fgrid"><a class="fcard" href="company/"><div class="ficon"><img src="assets/icons/company.png" alt="" loading="lazy"></div><h3 data-i18n="card.company.h">Θεμελιώδης ανάλυση εταιρείας</h3><p data-i18n="card.company.p">26 αριθμοδείκτες με κλαδική σύγκριση, ιστορικότητα μεγεθών, μέτοχοι, θυγατρικές, γεγονότα και ποιότητα κερδών (Piotroski).</p></a><a class="fcard" href="compare/"><div class="ficon"><img src="assets/icons/compare.png" alt="" loading="lazy"></div><h3 data-i18n="card.compare.h">Σύγκριση &amp; κατατάξεις</h3><p data-i18n="card.compare.p">Εταιρείες δίπλα-δίπλα σε κάθε δείκτη, και league tables για όλη την αγορά.</p></a><a class="fcard" href="sectors/"><div class="ficon"><img src="assets/icons/sector.png" alt="" loading="lazy"></div><h3 data-i18n="card.sector.h">Ανάλυση κλάδου</h3><p data-i18n="card.sector.p">Κλαδικές διάμεσοι, screener εντός κλάδου και τροχιά ποιότητας.</p></a><a class="fcard" href="index-reviews/"><div class="ficon"><img src="assets/icons/events.png" alt="" loading="lazy"></div><h3 data-i18n="card.events.h">Δείκτες &amp; γεγονότα αγοράς</h3><p data-i18n="card.events.p">Είσοδοι/έξοδοι στους δείκτες FTSE/Athex και ροή εταιρικών γεγονότων (μερίσματα, ΑΜΚ).</p></a></div>
@@ -350,20 +336,6 @@ AX_I18N.add({
 });
 </script>
 
-<script>
-/* §141 — λωρίδα λογοτύπων: ΜΙΑ οριζόντια σειρά από το ίδιο sprite (12x12 κελιά).
-   Διακοσμητική, aria-hidden, χωρίς κίνηση — δεν είναι πια το hero. */
-(function(){
- var e=document.getElementById('ax-wall'); if(!e) return;
- var C=[]; for(var i=0;i<138;i++) C.push(i);
- var s=20261020, a=C.slice();
- for(var i=a.length-1;i>0;i--){s=(s*1103515245+12345)&0x7fffffff;var j=s%(i+1),t=a[i];a[i]=a[j];a[j]=t;}
- var h='';
- for(var k=0;k<8;k++){var ix=a[k];
-  h+='<span class="tile"><i style="background-position:'+(-(ix%12)*120)+'px '+(-Math.floor(ix/12)*36)+'px"></i></span>';}
- e.innerHTML=h;
-})();
-</script>
 <script>
 /* §141 — Ο ΑΠΟΔΟΤΗΣ ΤΗΣ ΑΡΧΙΚΗΣ.
    Διαβάζει window.AXION (core.js: companies + 15 τελευταία γεγονότα) και
