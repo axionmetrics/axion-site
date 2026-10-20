@@ -1298,10 +1298,16 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
     var T=en?{t:'Short positions',s:'Hellenic Capital Market Commission · disclosures ≥0.5% of share capital',
               open:'open',closed:'closed',date:'Date',pos:'Position',chg:'Change',dis:'disclosures',
               n:function(f,o,g){return f+' fund'+(f===1?'':'s')+' · '+o+' with an open position · '+g+' disclosures';},
+              fca:function(p,d){return 'FCA (United Kingdom): aggregate open position <b>'+p+'%</b> on '+d+'';},
+              fcaS:'anonymised aggregate of every position from 0.2% — not comparable with the named disclosures above',
+              fcaA:'Source: Financial Conduct Authority',
               foot:'Change is the difference from the same fund’s previous disclosure, computed on the percentages as displayed. “Closed” next to the name means the fund has no currently disclosed position; if it reopens, the label becomes “open”. Inside the list, “closed” on a row marks a disclosure that fell below the 0.5% threshold — in several cases the record simply stops without such a disclosure.'}
              :{t:'Short θέσεις',s:'Επιτροπή Κεφαλαιαγοράς · δημοσιοποιήσεις ≥0,5% του μετοχικού κεφαλαίου',
               open:'ανοιχτή',closed:'κλειστή',date:'Ημερομηνία',pos:'Θέση',chg:'Μεταβολή',dis:'γνωστοπ.',
               n:function(f,o,g){return f+' fund'+(f===1?'':'s')+' · '+o+' με ανοιχτή θέση · '+g+' γνωστοποιήσεις';},
+              fca:function(p,d){return 'FCA (Ηνωμένο Βασίλειο): συνολική ανοιχτή θέση <b>'+p+'%</b> στις '+d;},
+              fcaS:'ανώνυμο άθροισμα όλων των θέσεων από 0,2% — δεν συγκρίνεται με τις ονομαστικές γνωστοποιήσεις από πάνω',
+              fcaA:'Πηγή: Financial Conduct Authority',
               foot:'Η μεταβολή είναι η διαφορά από την προηγούμενη γνωστοποίηση του ίδιου fund, υπολογισμένη στα ποσοστά όπως εμφανίζονται. «Κλειστή» δίπλα στο όνομα = το fund δεν έχει σήμερα δημοσιοποιημένη θέση· αν ξανανοίξει, η ένδειξη γίνεται «ανοιχτή». Μέσα στη λίστα, «κλειστή» σε μια γραμμή σημαίνει ότι η συγκεκριμένη γνωστοποίηση έπεσε κάτω από το όριο του 0,5% — σε αρκετές περιπτώσεις η καταγραφή απλώς σταματά χωρίς τέτοια γνωστοποίηση.'};
 
     var gs=rec.funds.map(function(g){
@@ -1325,10 +1331,23 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
 
     var box=document.getElementById('co-shorts');
     if(!box){ box=document.createElement('div'); box.className='sh'; box.id='co-shorts'; ph.appendChild(box); }
+    /* §140 — ΔΕΥΤΕΡΗ ΠΗΓΗ, ΔΙΠΛΑ ΚΑΙ ΟΧΙ ΑΝΑΚΑΤΕΜΕΝΗ.
+       Για τη 34 METLEN ENERGY & METALS, που είναι από 04/08/2025 εισηγμένη και στο LSE ως
+       βρετανική plc, η FCA δημοσιεύει ΑΝΩΝΥΜΟ ΑΘΡΟΙΣΜΑ όλων των θέσεων από 0,2% — άλλο
+       κατώφλι, χωρίς ονόματα κατόχων. Δεν αθροίζεται ποτέ με τα ελληνικά νούμερα: όταν
+       διαφέρουν δεν είναι αντίφαση, μετρούν διαφορετικό πράγμα. */
+    var fcaHtml='';
+    var F=D.fca && D.fca.rows && D.fca.rows[AX.tk];
+    if(F){
+      fcaHtml='<div class="fca"><div class="l">'+T.fca(dec(Number(F.p).toFixed(2)), gd(F.d))+'</div>'
+             +'<div class="s2">'+T.fcaS+'</div>'
+             +'<div class="a">'+T.fcaA+(D.fca.attr?' · '+esc(D.fca.attr):'')+'</div></div>';
+    }
     box.innerHTML='<div class="hd"><div class="t"><span class="dot"></span>'+T.t+'</div>'
       +'<div class="s">'+T.s+'</div>'
       +'<div class="n">'+T.n(rec.funds.length, rec.nopen, rec.n)+'</div></div>'
       +'<div class="scwrap"><div class="sc">'+gs+'</div></div>'
+      +fcaHtml
       +'<div class="foot">'+T.foot+'</div>';
   }
 

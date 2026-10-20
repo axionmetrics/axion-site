@@ -527,6 +527,14 @@
 .sh .r .p{font-family:var(--disp);font-size:17px;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:8px}
 .sh .r .c{font-family:var(--mono);font-size:13px;font-weight:700;text-align:right}
 .sh .up{color:#ffa78f}.sh .dn{color:#a9dcb4}.sh .nw{color:var(--ink3)}
+/* §140 — η δεύτερη πηγή (FCA) κάθεται ΧΩΡΙΣΤΑ, κάτω από τη λίστα των funds και πάνω από
+   την υποσημείωση: ίδια ζώνη, δικό της πλαίσιο, ώστε να μη διαβαστεί ποτέ ως άλλη μια
+   ονομαστική γνωστοποίηση. Πλάγια γραμμή στο αριστερό άκρο αντί για πλήρες περίγραμμα. */
+.sh .fca{margin-top:11px;padding:9px 0 9px 12px;border-left:3px solid var(--acc);background:rgba(232,132,111,.07);border-radius:0 8px 8px 0}
+.sh .fca .l{font-size:13px;color:var(--ink);font-weight:600;line-height:1.5}
+.sh .fca .l b{font-weight:800;color:#f3b3a4}
+.sh .fca .s2{font-size:12px;color:var(--ink2);font-weight:600;margin-top:3px;line-height:1.5}
+.sh .fca .a{font-size:11px;color:var(--ink3);font-weight:600;margin-top:4px}
 .sh .foot{font-size:12px;color:var(--ink2);font-weight:600;margin-top:10px;line-height:1.55}
 /* Κινητό: το block έσπαγε σε 4 σημεία — (α) η «.ld» (ημερομηνία · πλήθος) ήταν nowrap
    δίπλα στο ποσοστό και έβγαινε έξω από την κάρτα, (β) τα ονόματα των funds κόβονταν με
@@ -558,6 +566,9 @@
   .sh .r .p{font-size:15px;flex-wrap:wrap;gap:5px}
   .sh .r .p .chip{font-size:9.5px;padding:2px 5px}
   .sh .r .d,.sh .r .c{font-size:12px}
+  .sh .fca{padding:8px 0 8px 10px}
+  .sh .fca .l{font-size:12.5px}
+  .sh .fca .s2{font-size:11.5px}
   .sh .foot{font-size:11.5px;line-height:1.5}
 }
 @media (max-width:400px){
