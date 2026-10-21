@@ -1293,18 +1293,25 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
 
   function render(){
     var D=window.AXION_SHORTS; if(!D||!D.by) return;
-    var rec=D.by[AX.tk]; if(!rec||!rec.funds||!rec.funds.length) return;
+    var rec=D.by[AX.tk];
+    var hasRec=!!(rec&&rec.funds&&rec.funds.length);
+    /* §142.1 — 11 COCA-COLA HBC: καμία γνωστοποίηση στην Επιτροπή, αλλά υπάρχει
+       ανώνυμο άθροισμα FCA. Το block βγαίνει κανονικά, με την αριστερή στήλη να
+       λέει ρητά «χωρίς θέση ≥0,5%» αντί να λείπει — η απουσία είναι η πληροφορία. */
+    var F=D.fca && D.fca.rows && D.fca.rows[AX.tk];
+    if(!hasRec && !F) return;
     var en=EN();
     var T=en?{t:'Short positions',s:'Hellenic Capital Market Commission · disclosures ≥0.5% of share capital',
               open:'open',closed:'closed',date:'Date',pos:'Position',chg:'Change',dis:'disclosures',
               n:function(f,o,g){return f+' fund'+(f===1?'':'s')+' · '+o+' with an open position · '+g+' disclosures';},
-              fca:function(p,d){return 'FCA (United Kingdom): aggregate open position <b>'+p+'%</b> on '+d+'';},
-              fcaS:'anonymised aggregate of every position from 0.2% — not comparable with the named disclosures above',
-              fcaA:'Source: Financial Conduct Authority',
               twoS:'two independent sources — they are not added together',
               cmcH:'Hellenic Capital Market Commission · ≥0.5%', cmcC:'named disclosures ≥0.5%',
               fcaH:'FCA United Kingdom · ≥0.2%', fcaC:'anonymised aggregate ≥0.2%',
               none:'no open disclosure',
+              nodN:'no disclosure to the Hellenic Capital Market Commission',
+              nodE:'no ≥0.5% disclosure in the Commission’s file',
+              nodH:'No position ≥0.5%',
+              nodT:'No position has been disclosed by name. The Commission’s threshold is 0.5% of share capital — anything below it is not published at all, neither by holder nor as a total. An empty column here therefore does not mean there are no short positions; it means none reached 0.5%.',
               one:function(n,d){return 'one open disclosure — '+n+', '+d;},
               many:function(k,n,d){return k+' open disclosures — highest: '+n+', '+d;},
               agg:function(d){return 'anonymised aggregate of all positions — '+d;},
@@ -1314,13 +1321,14 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
              :{t:'Short θέσεις',s:'Επιτροπή Κεφαλαιαγοράς · δημοσιοποιήσεις ≥0,5% του μετοχικού κεφαλαίου',
               open:'ανοιχτή',closed:'κλειστή',date:'Ημερομηνία',pos:'Θέση',chg:'Μεταβολή',dis:'γνωστοπ.',
               n:function(f,o,g){return f+' fund'+(f===1?'':'s')+' · '+o+' με ανοιχτή θέση · '+g+' γνωστοποιήσεις';},
-              fca:function(p,d){return 'FCA (Ηνωμένο Βασίλειο): συνολική ανοιχτή θέση <b>'+p+'%</b> στις '+d;},
-              fcaS:'ανώνυμο άθροισμα όλων των θέσεων από 0,2% — δεν συγκρίνεται με τις ονομαστικές γνωστοποιήσεις από πάνω',
-              fcaA:'Πηγή: Financial Conduct Authority',
               twoS:'δύο ανεξάρτητες πηγές — δεν αθροίζονται',
               cmcH:'Επιτροπή Κεφαλαιαγοράς · ≥0,5%', cmcC:'ονομαστικές ≥0,5%',
               fcaH:'FCA Ηνωμένου Βασιλείου · ≥0,2%', fcaC:'ανώνυμο άθροισμα ≥0,2%',
               none:'καμία ανοιχτή γνωστοποίηση',
+              nodN:'καμία γνωστοποίηση στην Επιτροπή Κεφαλαιαγοράς',
+              nodE:'καμία δημοσιοποίηση ≥0,5% στο αρχείο της Επιτροπής',
+              nodH:'Χωρίς θέση ≥0,5%',
+              nodT:'Καμία θέση δεν έχει γνωστοποιηθεί ονομαστικά. Το κατώφλι της Επιτροπής είναι 0,5% του μετοχικού κεφαλαίου — ό,τι είναι κάτω από αυτό δεν δημοσιεύεται καθόλου, ούτε με όνομα ούτε ως σύνολο. Η άδεια στήλη δεν σημαίνει επομένως ότι δεν υπάρχουν short θέσεις· σημαίνει ότι καμία δεν έφτασε το 0,5%.',
               one:function(n,d){return 'μία ανοιχτή γνωστοποίηση — '+n+', '+d;},
               many:function(k,n,d){return k+' ανοιχτές γνωστοποιήσεις — υψηλότερη: '+n+', '+d;},
               agg:function(d){return 'ανώνυμο άθροισμα όλων των θέσεων — '+d;},
@@ -1328,7 +1336,7 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
               fcaF:function(a,d,n){return 'Πηγή: Financial Conduct Authority'+(a?' · '+a:'')+' · αρχείο '+d+' ('+n+' θέσεις)';},
               foot:'Η μεταβολή είναι η διαφορά από την προηγούμενη γνωστοποίηση του ίδιου fund, υπολογισμένη στα ποσοστά όπως εμφανίζονται. «Κλειστή» δίπλα στο όνομα = το fund δεν έχει σήμερα δημοσιοποιημένη θέση· αν ξανανοίξει, η ένδειξη γίνεται «ανοιχτή». Μέσα στη λίστα, «κλειστή» σε μια γραμμή σημαίνει ότι η συγκεκριμένη γνωστοποίηση έπεσε κάτω από το όριο του 0,5% — σε αρκετές περιπτώσεις η καταγραφή απλώς σταματά χωρίς τέτοια γνωστοποίηση.'};
 
-    var gs=rec.funds.map(function(g){
+    var gs=!hasRec?'':rec.funds.map(function(g){
       var rows=g.rows.map(function(r,i){
         var cv=chg(g.rows,i);
         var k=(cv==null||Math.abs(cv)<0.0005)?'nw':(cv>0?'up':'dn');
@@ -1354,10 +1362,9 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
        βρετανική plc, η FCA δημοσιεύει ΑΝΩΝΥΜΟ ΑΘΡΟΙΣΜΑ όλων των θέσεων από 0,2% — άλλο
        κατώφλι, χωρίς ονόματα κατόχων. Δεν αθροίζεται ποτέ με τα ελληνικά νούμερα: όταν
        διαφέρουν δεν είναι αντίφαση, μετρούν διαφορετικό πράγμα. */
-    var F=D.fca && D.fca.rows && D.fca.rows[AX.tk];
     var listHtml='<div class="scwrap"><div class="sc">'+gs+'</div></div>';
 
-    if(!F){
+    if(!F){  /* ΜΙΑ ΠΗΓΗ */
       /* ΜΙΑ ΠΗΓΗ (139 από τις 141 εισηγμένες): τίποτα δεν αλλάζει — μονόστηλο,
          χωρίς ζώνη σύγκρισης και χωρίς κεφαλίδες πηγής. */
       box.innerHTML='<div class="hd"><div class="t"><span class="dot"></span>'+T.t+'</div>'
@@ -1371,33 +1378,39 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
        καθενός — εκεί κρίνεται αν ο αναγνώστης θα τα προσθέσει κατά λάθος. Από κάτω
        δύο στήλες: αριστερά οι ονομαστικές γνωστοποιήσεις, δεξιά η εξήγηση της FCA.
        Το ποσοστό της FCA ΔΕΝ επαναλαμβάνεται στη δεξιά στήλη. */
-    var opens=[]; for(var i=0;i<rec.funds.length;i++) if(rec.funds[i].open) opens.push(rec.funds[i]);
-    var top=null;
-    for(var j=0;j<opens.length;j++) if(!top || opens[j].lp>top.lp) top=opens[j];
+    var opens=[],top=null,i,j;
+    if(hasRec){
+      for(i=0;i<rec.funds.length;i++) if(rec.funds[i].open) opens.push(rec.funds[i]);
+      for(j=0;j<opens.length;j++) if(!top || opens[j].lp>top.lp) top=opens[j];
+    }
     var cmcV = top ? pc(top.lp)+'%' : '—';
-    var cmcE = !top ? T.none
+    var cmcE = !hasRec ? T.nodE
+             : (!top ? T.none
              : (opens.length===1 ? T.one(esc(top.f), gd(top.ld))
-                                 : T.many(opens.length, esc(top.f), gd(top.ld)));
+                                 : T.many(opens.length, esc(top.f), gd(top.ld))));
     var fp=dec(Number(F.p).toFixed(2));
+    /* αριστερή στήλη: η λίστα των funds — ή, όταν δεν υπάρχει καμία, ρητή άρνηση */
+    var leftHtml = hasRec ? listHtml
+      : '<div class="nocard"><div class="h">'+T.nodH+'</div><div class="w">'+T.nodT+'</div></div>';
 
     box.innerHTML='<div class="hd"><div class="t"><span class="dot"></span>'+T.t+'</div>'
       +'<div class="s">'+T.twoS+'</div>'
-      +'<div class="n">'+T.n(rec.funds.length, rec.nopen, rec.n)+'</div></div>'
+      +'<div class="n">'+(hasRec?T.n(rec.funds.length, rec.nopen, rec.n):T.nodN)+'</div></div>'
       +'<div class="cmp">'
         +'<div class="k"><div class="s">'+T.cmcH+'</div><div class="v">'+cmcV+'</div>'
         +'<div class="e">'+cmcE+'</div></div>'
         +'<div class="k f"><div class="s">'+T.fcaH+'</div><div class="v">'+fp+'%</div>'
         +'<div class="e">'+T.agg(gd(F.d))+'</div></div>'
       +'</div>'
-      +'<div class="two">'
+      +'<div class="two'+(hasRec?'':' even')+'">'
         +'<div class="col"><div class="colh"><span class="src">'+T.cmcH.split(' · ')[0]+'</span>'
-        +'<span class="thr">'+T.cmcC+'</span></div>'+listHtml+'</div>'
+        +'<span class="thr">'+T.cmcC+'</span></div>'+leftHtml+'</div>'
         +'<div class="col"><div class="colh"><span class="src">'+T.fcaH.split(' · ')[0]+'</span>'
         +'<span class="thr">'+T.fcaC+'</span></div>'
         +'<div class="fcard"><div class="w">'+T.fcaT+'</div>'
         +'<div class="a">'+T.fcaF(D.fca.attr?esc(D.fca.attr):'', gd(D.fca.pub||F.d), D.fca.n||0)+'</div></div></div>'
       +'</div>'
-      +'<div class="foot">'+T.foot+'</div>';
+      +(hasRec?'<div class="foot">'+T.foot+'</div>':'');
   }
 
   function boot(){ render(); try{ document.addEventListener('axion:langchange', render); }catch(e){} }

@@ -550,8 +550,15 @@
 .sh .fcard .w{font-size:12.5px;color:var(--ink2);font-weight:600;line-height:1.55}
 .sh .fcard .w b{font-weight:800;color:#f3b3a4}
 .sh .fcard .a{font-size:11px;color:var(--ink3);font-weight:600;margin-top:9px}
+/* §142.1 — η αριστερή στήλη όταν η Επιτροπή δεν έχει καμία γνωστοποίηση (11
+   COCA-COLA HBC). Διακεκομμένο περίγραμμα και ουδέτερο φόντο: δεν είναι δεδομένο,
+   είναι η δηλωμένη απουσία δεδομένου — και δεν πρέπει να διαβαστεί ως κάρτα fund. */
+.sh .two.even{grid-template-columns:1fr 1fr}
+.sh .nocard{border:1px dashed var(--line);border-radius:9px;background:rgba(255,255,255,.025);padding:14px 15px}
+.sh .nocard .h{font-family:var(--disp);font-size:22px;font-weight:800;color:var(--ink2);line-height:1.2}
+.sh .nocard .w{font-size:12.5px;color:var(--ink3);font-weight:600;line-height:1.55;margin-top:9px}
 /* κάτω από 860px οι δύο στήλες δεν χωράνε δίπλα-δίπλα: μπαίνουν η μία κάτω από την άλλη */
-@media (max-width:860px){.sh .cmp,.sh .two{grid-template-columns:1fr}}
+@media (max-width:860px){.sh .cmp,.sh .two,.sh .two.even{grid-template-columns:1fr}}
 .sh .foot{font-size:12px;color:var(--ink2);font-weight:600;margin-top:10px;line-height:1.55}
 /* Κινητό: το block έσπαγε σε 4 σημεία — (α) η «.ld» (ημερομηνία · πλήθος) ήταν nowrap
    δίπλα στο ποσοστό και έβγαινε έξω από την κάρτα, (β) τα ονόματα των funds κόβονταν με
@@ -593,6 +600,9 @@
   .sh .colh .thr{margin-left:0;flex:1 1 100%;white-space:normal}
   .sh .col .sc{max-height:min(66vh,520px)}
   .sh .fcard{padding:12px 12px}
+  .sh .nocard{padding:12px 12px}
+  .sh .nocard .h{font-size:19px}
+  .sh .nocard .w{font-size:12px}
   .sh .fcard .w{font-size:12px}
   .sh .foot{font-size:11.5px;line-height:1.5}
 }
