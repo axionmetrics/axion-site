@@ -1408,13 +1408,27 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
                rows:FH.map(function(h){return {d:h[0],p:h[1],x:false};})}],2,T.aggCur);
     }
     var rightHtml=wrap(block(FL?FL.funds:[],2,T.open,true,agg));
+    /* §147 — σημαίες πριν από τους τίτλους των στηλών. Inline SVG και ΟΧΙ emoji: στα Windows
+       τα emoji σημαιών δεν σχεδιάζονται (βγαίνουν «GR»/«GB»). Αναλογία 3:2 για ομοιομορφία·
+       του Ην. Βασιλείου (2:1) κόβεται συμμετρικά (slice). */
+    var FLAG_GR='<span class="flag" aria-hidden="true"><svg viewBox="0 0 27 18" preserveAspectRatio="xMidYMid slice">'
+      +'<rect width="27" height="18" fill="#0D5EAF"/>'
+      +'<path fill="#fff" d="M0 2h27v2H0zM0 6h27v2H0zM0 10h27v2H0zM0 14h27v2H0z"/>'
+      +'<rect width="10" height="10" fill="#0D5EAF"/><path fill="#fff" d="M4 0h2v10H4zM0 4h10v2H0z"/></svg></span>';
+    var FLAG_UK='<span class="flag" aria-hidden="true"><svg viewBox="0 0 60 30" preserveAspectRatio="xMidYMid slice">'
+      +'<clipPath id="axfl-uk"><path d="M30,15h30v15zv15h-30zh-30v-15zv-15h30z"/></clipPath>'
+      +'<path d="M0,0v30h60v-30z" fill="#012169"/>'
+      +'<path d="M0,0L60,30M60,0L0,30" stroke="#fff" stroke-width="6"/>'
+      +'<path d="M0,0L60,30M60,0L0,30" clip-path="url(#axfl-uk)" stroke="#C8102E" stroke-width="4"/>'
+      +'<path d="M30,0v30M0,15h60" stroke="#fff" stroke-width="10"/>'
+      +'<path d="M30,0v30M0,15h60" stroke="#C8102E" stroke-width="6"/></svg></span>';
 
     box.innerHTML='<div class="hd"><div class="t"><span class="dot"></span>'+T.t+'</div>'
       +'<div class="s">'+T.twoS+'</div></div>'
       +'<div class="two even">'
-        +'<div class="col"><div class="lb">'+T.grH+'</div>'
+        +'<div class="col"><div class="lb">'+FLAG_GR+'<span>'+T.grH+'</span></div>'
         +leftHtml+'</div>'
-        +'<div class="col"><div class="lb">'+T.ukH+'</div>'
+        +'<div class="col"><div class="lb">'+FLAG_UK+'<span>'+T.ukH+'</span></div>'
         +rightHtml
         +'<div class="foot src">'+T.fcaF(D.fca.attr?esc(D.fca.attr):'', gd(D.fca.pub||F.d), D.fca.n||0)+'</div></div>'
       +'</div>';

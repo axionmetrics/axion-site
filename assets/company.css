@@ -573,6 +573,10 @@
   margin:0 2px 9px;padding-bottom:8px;border-bottom:1px solid var(--line)}
 /* §145 — χωρίς κόκκινο φόντο στις κάρτες των ανοιχτών θέσεων (μένει μόνο το περίγραμμα και
    η ετικέτα «ανοιχτή»). */
+.sh .col>.lb{display:flex;align-items:center;gap:8px}
+.sh .flag{display:inline-block;flex:none;width:18px;height:12px;border-radius:2px;overflow:hidden;
+  box-shadow:0 0 0 1px rgba(255,255,255,.22)}
+.sh .flag svg{display:block;width:100%;height:100%}
 .sh details.op{background:var(--card)}
 .sh details.op[open]{background:var(--cardh)}
 .sh details.op summary:hover{background:var(--cardh)}
