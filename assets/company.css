@@ -557,6 +557,7 @@
 .sh .nocard{border:1px dashed var(--line);border-radius:9px;background:rgba(255,255,255,.025);padding:14px 15px}
 .sh .nocard .h{font-family:var(--disp);font-size:22px;font-weight:800;color:var(--ink2);line-height:1.2}
 .sh .nocard .w{font-size:12.5px;color:var(--ink3);font-weight:600;line-height:1.55;margin-top:9px}
+.sh .nocard .a{font-size:11px;color:var(--ink3);font-weight:600;margin-top:9px;opacity:.85}
 /* κάτω από 860px οι δύο στήλες δεν χωράνε δίπλα-δίπλα: μπαίνουν η μία κάτω από την άλλη */
 @media (max-width:860px){.sh .cmp,.sh .two,.sh .two.even{grid-template-columns:1fr}}
 .sh .foot{font-size:12px;color:var(--ink2);font-weight:600;margin-top:10px;line-height:1.55}

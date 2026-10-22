@@ -27,8 +27,19 @@ robots : hcmc.gr → «User-Agent: * / Disallow:» (επιτρέπει τα πά
          .github/shorts/_state.json        (τελευταία επεξεργασμένη έκδοση)
 Δεύτερη πηγή (§140): FCA — https://www.fca.org.uk/publication/documents/aggregated-current-net-short-positions.csv
          Στήλες: Name of Company · ISIN · Aggregated net short position (%) · Position date (dd/mm/yyyy).
-         Αφορά ΜΟΝΟ μετοχές εισηγμένες σε βρετανικό τόπο διαπραγμάτευσης — από τις δικές μας,
-         μόνο η 34 METLEN ENERGY & METALS (GB00BTQGS779). Κανένα ελληνικό ISIN δεν υπάρχει εκεί.
+         Αφορά μετοχές εισηγμένες σε βρετανικό τόπο διαπραγμάτευσης. Από τις δικές μας, ΔΥΟ
+         (ελεγμένο 21/10/2026): 34 METLEN ENERGY & METALS (GB00BTQGS779) και
+         11 COCA-COLA HBC (CH0198251305). Κανένα ΕΛΛΗΝΙΚΟ ISIN (GRS…) δεν υπάρχει εκεί.
+Τρίτη πηγή (§142.2): ESMA — κατάλογος ΕΞΑΙΡΟΥΜΕΝΩΝ μετοχών, άρθρο 16 Καν. (ΕΕ) 236/2012.
+         Όταν η ΚΥΡΙΑ αγορά διαπραγμάτευσης μιας μετοχής εισηγμένης στην ΕΕ βρίσκεται σε
+         τρίτη χώρα, τα άρθρα 5 (γνωστοποίηση) και 6 (δημοσιοποίηση) ΔΕΝ εφαρμόζονται: η
+         Επιτροπή Κεφαλαιαγοράς δεν λαμβάνει και δεν δημοσιεύει ΤΙΠΟΤΑ για τη μετοχή, σε
+         κανένα μέγεθος. Αυτό ΔΕΝ είναι το ίδιο με «καμία θέση δεν έφτασε το 0,5%» και
+         πρέπει να φαίνεται ρητά στη σελίδα — αλλιώς η άδεια στήλη διαβάζεται ως απουσία
+         θέσεων. Σήμερα αφορά ΜΟΝΟ την 11 COCA-COLA HBC (κύρια αγορά: LSE από το Brexit·
+         εξαίρεση από 16/03/2021). Η ESMA επαναπροσδιορίζει την κύρια αγορά τουλάχιστον
+         ΚΑΘΕ ΔΙΕΤΙΑ, γι' αυτό ο κατάλογος διαβάζεται σε κάθε εκτέλεση και κάθε μεταβολή
+         ανοίγει Issue.
 
 ΑΔΕΙΑ ΧΡΗΣΗΣ FCA — ΑΝΟΙΧΤΟ: οι όροι (fca.org.uk/legal) δίνουν Open Government Licence για
          «charts, tables and numerical datasets» της ενότητας Data, αλλά γενικά απαιτούν γραπτή
@@ -65,8 +76,16 @@ FCA_ON   = True          # διακόπτης δημοσίευσης (βλ. ΑΔ
 FCA_CSV  = 'https://www.fca.org.uk/publication/documents/aggregated-current-net-short-positions.csv'
 FCA_THR  = 0.2           # κατώφλι αναφοράς του βρετανικού καθεστώτος
 FCA_ATTR = '© The Financial Conduct Authority'
+# ── §142.2 — ΤΡΙΤΗ ΠΗΓΗ: ESMA, κατάλογος εξαιρούμενων μετοχών (άρθρο 16) ─────
+# Δημόσιο Solr του μητρώου της ESMA. Ζητάμε ΜΟΝΟ τις εγγραφές με αρμόδια αρχή την
+# Επιτροπή Κεφαλαιαγοράς (countryCode=GR) — για μετοχή εισηγμένη στο ΧΑ αυτή είναι η
+# αρμόδια αρχή του ενωσιακού τόπου διαπραγμάτευσης. Κάθε ISIN εμφανίζεται πολλαπλά
+# (status NEW / Unchanged / Updated / Not effective yet)· κρατάμε μία εγγραφή ανά ISIN.
+# Λήξη «31/12/9999» = σε ισχύ χωρίς ημερομηνία λήξης.
+ESMA_ON  = True
+ESMA_URL = 'https://registers.esma.europa.eu/solr/esma_registers_mifid_shsexs/select'
 DEC       = 5            # δεκαδικά που κρατάμε από την πηγή (βλ. ΑΚΡΙΒΕΙΑ στο docstring)
-FMT       = 3            # έκδοση μορφής εξόδου. ΑΥΞΗΣΕ ΤΟ όταν αλλάζει ο τρόπος που γράφονται
+FMT       = 4            # έκδοση μορφής εξόδου. ΑΥΞΗΣΕ ΤΟ όταν αλλάζει ο τρόπος που γράφονται
                          # τα δεδομένα: αναγκάζει πλήρη ανακατασκευή ακόμη κι αν η πηγή είναι ίδια.
 
 def log(*a): print(*a, flush=True)
@@ -195,6 +214,45 @@ def fca_fetch(isin_map):
         return {'rows':{}, 'pub':latest, 'n':n, 'threshold':FCA_THR, 'attr':FCA_ATTR}, sha
     return {'rows':by, 'pub':latest, 'n':n, 'threshold':FCA_THR, 'attr':FCA_ATTR}, sha
 
+# ------------------------------------------------- §142.2 ESMA: εξαιρούμενες
+def esma_exempt(isin_map):
+    """Ποιες ΔΙΚΕΣ ΜΑΣ μετοχές εξαιρούνται από τα άρθρα 5 & 6 (άρθρο 16 Καν. 236/2012).
+
+    Επιστρέφει (dict ticker→{'isin':…,'since':'YYYY-MM-DD'}, sha) ή (None, None).
+    ΔΕΝ πετάει ποτέ: η εξαίρεση είναι συμπληρωματική πληροφορία, δεν ρίχνει τη ροή.
+    """
+    if not ESMA_ON:
+        log('ESMA: απενεργοποιημένη (ESMA_ON=False)'); return None, None
+    q=urllib.parse.urlencode({'q':'shs_countryCode:GR','rows':'500','wt':'json',
+                              'fl':'shs_isin,shs_name,shs_exemptionStartDateStr,shs_exemptionEndDateStr'})
+    try:
+        raw=get(ESMA_URL+'?'+q, binary=True, timeout=45)
+        docs=json.loads(raw.decode('utf-8','replace'))['response']['docs']
+    except Exception as e:
+        log('ESMA: δεν διαβάζεται ο κατάλογος —', e); return None, None
+    def iso(d):
+        m=re.match(r'^(\d{2})/(\d{2})/(\d{4})$', (d or '').strip())
+        return '%s-%s-%s'%(m.group(3),m.group(2),m.group(1)) if m else None
+    today=datetime.date.today().isoformat()
+    best={}
+    for d in docs:
+        code=(d.get('shs_isin') or '').strip().upper()
+        end=iso(d.get('shs_exemptionEndDateStr')); start=iso(d.get('shs_exemptionStartDateStr'))
+        if not code or not start: continue
+        if end and end < today: continue          # έληξε
+        if start > today: continue                # δεν ισχύει ακόμη
+        if code not in best or start < best[code]['since']:
+            best[code]={'since':start,'name':(d.get('shs_name') or '').strip()}
+    out={}
+    for code,v in best.items():
+        tk=isin_map.get(code)
+        if tk: out[tk]={'isin':code,'since':v['since']}
+        else:  log('ESMA: εξαιρούμενη εκτός κάλυψης — %s %s'%(code, v['name']))
+    sha=hashlib.sha1(json.dumps(out, sort_keys=True).encode('utf-8')).hexdigest()[:12]
+    log('ESMA: %d εγγραφές GR · %d σε ισχύ · %d δικές μας (%s)'
+        %(len(docs), len(best), len(out), ', '.join(sorted(out)) or '—'))
+    return out, sha
+
 # ---------------------------------------------------------------- χάρτης ISIN
 def isin_from_datajs(path):
     if not os.path.exists(path): die('λείπει το assets/data.js', path)
@@ -271,6 +329,7 @@ def main():
     # το αρχείο της Επιτροπής Κεφαλαιαγοράς είναι το ίδιο (δημοσιεύει κάθε εργάσιμη).
     isin=isin_from_datajs(DATAJS)
     fca_block, fca_sha = fca_fetch(isin)
+    exempt, ex_sha = esma_exempt(isin)
 
     if local:
         raw=open(local,'rb').read(); src_date=state.get('src') or 'local'; url=local
@@ -283,9 +342,9 @@ def main():
                 'Η σελίδα %s δεν περιέχει πια href προς «…HCMC_disclosed_short_positions_gr.xls». '
                 'Πιθανή αλλαγή δομής — χρειάζεται έλεγχος.'%PAGE)
         if (src_date and state.get('src')==src_date and state.get('fmt')==FMT
-                and state.get('fca')==fca_sha):
-            log('καμία αλλαγή (έκδοση %s, μορφή %d, FCA %s) — τέλος.'
-                %(src_date, FMT, fca_sha or '—')); return 0
+                and state.get('fca')==fca_sha and state.get('esma')==ex_sha):
+            log('καμία αλλαγή (έκδοση %s, μορφή %d, FCA %s, ESMA %s) — τέλος.'
+                %(src_date, FMT, fca_sha or '—', ex_sha or '—')); return 0
         log('νέα έκδοση:', src_date, url)
         try: raw=get(url, binary=True)
         except Exception as e: die('δεν κατεβαίνει το αρχείο', '%s\n%s'%(url, e))
@@ -317,10 +376,14 @@ def main():
              'threshold':THRESHOLD,'by':by}
     # §140 — ΔΙΠΛΑ, όχι ανακατεμένα: άλλο καθεστώς, άλλο κατώφλι, χωρίς ονόματα κατόχων.
     if fca_block: payload['fca']=fca_block
+    # §142.2 — ποιες μετοχές ΔΕΝ υπάγονται καν στο ελληνικό καθεστώς. Το site το λέει
+    # ρητά στη σελίδα τους αντί να δείχνει άδεια στήλη.
+    if exempt: payload['exempt']=exempt
     io.open(OUTJS,'w',encoding='utf-8').write(
         '/* Axion Metrics — short θέσεις. ΠΑΡΑΓΕΤΑΙ ΑΥΤΟΜΑΤΑ από .github/scripts/shorts.py\n'
         '   · ονομαστικές θέσεις ≥0,5%%: Επιτροπή Κεφαλαιαγοράς (έκδοση %s)\n'
         '   · κλειδί `fca`: ανώνυμο άθροισμα από 0,2%%, Financial Conduct Authority (§140)\n'
+        '   · κλειδί `exempt`: μετοχές εκτός άρθρων 5 & 6 (άρθρο 16 Καν. 236/2012, ESMA)\n'
         '   ΜΗΝ το επεξεργάζεσαι με το χέρι. */\n'
         'window.AXION_SHORTS = %s;\n'%(src_date, json.dumps(payload, ensure_ascii=False, separators=(',',':'))))
     io.open(os.path.join(ARCH,'%s.json'%src_date),'w',encoding='utf-8').write(
@@ -342,6 +405,21 @@ def main():
               + '\n'.join('- `%s` — %s'%(k,v) for k,v in sorted(unmatched.items()))
               + '\n\nΑν η εταιρεία είναι εντός κάλυψης, συμπλήρωσε το ISIN στο master και τρέξε τη γέφυρα. '
                 'Αν είναι εκτός κάλυψης (π.χ. διαγραμμένη), δεν χρειάζεται ενέργεια.')
+    # §142.2 — ο κατάλογος της ESMA αλλάζει σπάνια αλλά όταν αλλάζει, αλλάζει το νόημα
+    # ολόκληρης της στήλης: μετοχή που μπαίνει σταματά να έχει ελληνικές γνωστοποιήσεις,
+    # μετοχή που βγαίνει αρχίζει να έχει. Κάθε μεταβολή θέλει ανθρώπινο μάτι.
+    if ex_sha and state.get('esma') and state.get('esma')!=ex_sha:
+        old=set((state.get('exempt') or {}).keys()); new=set((exempt or {}).keys())
+        issue('Short θέσεις: άλλαξε ο κατάλογος εξαιρούμενων μετοχών της ESMA',
+              'Ο κατάλογος του άρθρου 16 (Καν. ΕΕ 236/2012 — κύρια αγορά σε τρίτη χώρα) άλλαξε.\n\n'
+              + '- μπήκαν: %s\n- βγήκαν: %s\n- τώρα: %s\n\n'
+                %(', '.join(sorted(new-old)) or '—', ', '.join(sorted(old-new)) or '—',
+                  ', '.join('%s (%s, από %s)'%(k,v['isin'],v['since'])
+                            for k,v in sorted((exempt or {}).items())) or '—')
+              + 'Για όσες ΜΠΗΚΑΝ: η Επιτροπή Κεφαλαιαγοράς παύει να δημοσιεύει γνωστοποιήσεις '
+                'και η σελίδα τους πρέπει να το λέει ρητά (το κάνει αυτόματα από αυτό το κλειδί). '
+                'Για όσες ΒΓΗΚΑΝ: επανέρχονται στο ελληνικό καθεστώς ≥0,5%. '
+                'Πηγή: https://registers.esma.europa.eu/ (esma_registers_mifid_shsexs).')
     if new_dp:
         dups=new_dp
         issue('Short θέσεις: πιθανά διπλά ονόματα fund',
@@ -350,6 +428,7 @@ def main():
               + '\n\nΑν πρόκειται για την ΙΔΙΑ νομική οντότητα, πρόσθεσέ τα στο '
                 '`.github/data/fund_aliases.json`. Αν είναι διαφορετικοί υπόχρεοι, άφησέ τα ως έχουν.')
     json.dump({'src':src_date,'sha':sha,'pub':pub,'fmt':FMT,'fca':fca_sha,
+               'esma':ex_sha,'exempt':exempt or {},
                'unmatched':sorted(set(list(known_un)+list(unmatched))),
                'dups':sorted(set(list(known_dp)+list(dups)))},
               io.open(state_p,'w',encoding='utf-8'), ensure_ascii=False)

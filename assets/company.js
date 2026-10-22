@@ -1300,6 +1300,16 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
        λέει ρητά «χωρίς θέση ≥0,5%» αντί να λείπει — η απουσία είναι η πληροφορία. */
     var F=D.fca && D.fca.rows && D.fca.rows[AX.tk];
     if(!hasRec && !F) return;
+    /* §142.2 — ΕΞΑΙΡΟΥΜΕΝΕΣ ΜΕΤΟΧΕΣ (Άρθρο 16 Καν. 236/2012). Όταν η κύρια αγορά
+       διαπραγμάτευσης είναι σε τρίτη χώρα, τα άρθρα 5 και 6 δεν εφαρμόζονται: η Επιτροπή
+       Κεφαλαιαγοράς δεν λαμβάνει και δεν δημοσιεύει τίποτα, σε κανένα μέγεθος. ΔΕΝ
+       σημαίνει «καμία θέση δεν έφτασε το 0,5%» — άλλο πράγμα.
+       Πηγή: ESMA, κατάλογος εξαιρούμενων μετοχών (registers.esma.europa.eu, esma_registers_mifid_shsexs),
+       ελεγμένος 21/10/2026: μόνη εν ισχύι εγγραφή με αρμόδια αρχή την Επιτροπή
+       Κεφαλαιαγοράς είναι η 11 COCA-COLA HBC. Η ESMA επαναπροσδιορίζει κάθε διετία —
+       το .github/scripts/shorts.py τον διαβάζει σε κάθε εκτέλεση και ανοίγει Issue σε μεταβολή.
+       ΕΔΩ δεν υπάρχει λίστα: έρχεται έτοιμη στο κλειδί `exempt` του shorts.js. */
+    var EX=(!hasRec && D.exempt && D.exempt[AX.tk])?D.exempt[AX.tk]:null;
     var en=EN();
     var T=en?{t:'Short positions',s:'Hellenic Capital Market Commission · disclosures ≥0.5% of share capital',
               open:'open',closed:'closed',date:'Date',pos:'Position',chg:'Change',dis:'disclosures',
@@ -1311,6 +1321,11 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
               nodN:'no disclosure to the Hellenic Capital Market Commission',
               nodE:'no ≥0.5% disclosure in the Commission’s file',
               nodH:'No position ≥0.5%',
+              exN:'exempt from the Greek disclosure regime',
+              exE:'exempt — nothing is disclosed to the Commission',
+              exH:'Outside the Greek regime',
+              exT:'The share is exempt from Articles 5 and 6 of Regulation (EU) 236/2012 because its principal trading venue is the London Stock Exchange. No short position is disclosed to the Hellenic Capital Market Commission — at any size, neither by holder name nor as a total. The competent authority is the FCA, on the right.',
+              exA:function(i,d){return 'ESMA, list of exempted shares · ISIN '+i+' · exempt since '+d;},
               nodT:'No position has been disclosed by name. The Commission’s threshold is 0.5% of share capital — anything below it is not published at all, neither by holder nor as a total. An empty column here therefore does not mean there are no short positions; it means none reached 0.5%.',
               one:function(n,d){return 'one open disclosure — '+n+', '+d;},
               many:function(k,n,d){return k+' open disclosures — highest: '+n+', '+d;},
@@ -1326,6 +1341,11 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
               fcaH:'FCA Ηνωμένου Βασιλείου · ≥0,2%', fcaC:'ανώνυμο άθροισμα ≥0,2%',
               none:'καμία ανοιχτή γνωστοποίηση',
               nodN:'καμία γνωστοποίηση στην Επιτροπή Κεφαλαιαγοράς',
+              exN:'εξαιρεμένη από το ελληνικό καθεστώς γνωστοποιήσεων',
+              exE:'εξαιρεμένη — δεν γνωστοποιείται τίποτα στην Επιτροπή',
+              exH:'Εκτός ελληνικού καθεστώτος',
+              exT:'Η μετοχή εξαιρείται από τα άρθρα 5 και 6 του Κανονισμού (ΕΕ) 236/2012, επειδή κύρια αγορά διαπραγμάτευσής της είναι το Χρηματιστήριο του Λονδίνου. Καμία short θέση δεν γνωστοποιείται στην Επιτροπή Κεφαλαιαγοράς — σε κανένα μέγεθος, ούτε ονομαστικά ούτε ως άθροισμα. Αρμόδια αρχή είναι η FCA, δεξιά.',
+              exA:function(i,d){return 'ESMA, κατάλογος εξαιρούμενων μετοχών · ISIN '+i+' · εξαίρεση από '+d;},
               nodE:'καμία δημοσιοποίηση ≥0,5% στο αρχείο της Επιτροπής',
               nodH:'Χωρίς θέση ≥0,5%',
               nodT:'Καμία θέση δεν έχει γνωστοποιηθεί ονομαστικά. Το κατώφλι της Επιτροπής είναι 0,5% του μετοχικού κεφαλαίου — ό,τι είναι κάτω από αυτό δεν δημοσιεύεται καθόλου, ούτε με όνομα ούτε ως σύνολο. Η άδεια στήλη δεν σημαίνει επομένως ότι δεν υπάρχουν short θέσεις· σημαίνει ότι καμία δεν έφτασε το 0,5%.',
@@ -1384,18 +1404,21 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
       for(j=0;j<opens.length;j++) if(!top || opens[j].lp>top.lp) top=opens[j];
     }
     var cmcV = top ? pc(top.lp)+'%' : '—';
-    var cmcE = !hasRec ? T.nodE
+    var cmcE = EX ? T.exE
+             : !hasRec ? T.nodE
              : (!top ? T.none
              : (opens.length===1 ? T.one(esc(top.f), gd(top.ld))
                                  : T.many(opens.length, esc(top.f), gd(top.ld))));
     var fp=dec(Number(F.p).toFixed(2));
     /* αριστερή στήλη: η λίστα των funds — ή, όταν δεν υπάρχει καμία, ρητή άρνηση */
     var leftHtml = hasRec ? listHtml
-      : '<div class="nocard"><div class="h">'+T.nodH+'</div><div class="w">'+T.nodT+'</div></div>';
+      : (EX ? '<div class="nocard"><div class="h">'+T.exH+'</div><div class="w">'+T.exT+'</div>'
+              +'<div class="a">'+T.exA(EX.isin, gd(EX.since))+'</div></div>'
+            : '<div class="nocard"><div class="h">'+T.nodH+'</div><div class="w">'+T.nodT+'</div></div>');
 
     box.innerHTML='<div class="hd"><div class="t"><span class="dot"></span>'+T.t+'</div>'
       +'<div class="s">'+T.twoS+'</div>'
-      +'<div class="n">'+(hasRec?T.n(rec.funds.length, rec.nopen, rec.n):T.nodN)+'</div></div>'
+      +'<div class="n">'+(hasRec?T.n(rec.funds.length, rec.nopen, rec.n):(EX?T.exN:T.nodN))+'</div></div>'
       +'<div class="cmp">'
         +'<div class="k"><div class="s">'+T.cmcH+'</div><div class="v">'+cmcV+'</div>'
         +'<div class="e">'+cmcE+'</div></div>'
