@@ -569,17 +569,33 @@
   margin:14px 2px 7px;padding-top:10px;border-top:1px solid var(--line)}
 .sh .foot.src{font-size:11px;color:var(--ink3);margin-top:6px}
 .sh .two .foot b{font-weight:800;color:#f3b3a4}
+@media (min-width:761px){.sh .two .rh,.sh .two .r{grid-template-columns:96px 1fr 70px;gap:8px}}
+/* §143.1 — ΜΙΚΡΟΤΕΡΑ FONTS σε ΟΛΟ το block (μονόστηλο και δίστηλο), κατ' εντολή του user
+   22/10/2026. Υπολογιστής εδώ· κινητό στο τέλος του αρχείου, μετά τα @media 760/400. */
 @media (min-width:761px){
-  .sh .two summary{padding:8px 11px;gap:9px}
-  .sh .two .nm b{font-size:14px}
-  .sh .two .meta{gap:8px}
-  .sh .two .meta .lp{font-size:16.5px}
-  .sh .two .meta .ld{font-size:12px}
-  .sh .two .chip{font-size:10px;padding:2px 6px}
-  .sh .two .rh,.sh .two .r{grid-template-columns:96px 1fr 70px;gap:8px}
-  .sh .two .r .d,.sh .two .r .c{font-size:12px}
-  .sh .two .r .p{font-size:15px}
-  .sh .two .foot{font-size:11.5px}
+  .sh .hd .t{font-size:13.5px}
+  .sh .hd .s{font-size:12px}
+  .sh .hd .n{font-size:11px}
+  .sh summary{padding:8px 11px;gap:9px}
+  .sh .nm b{font-size:13.5px}
+  .sh .meta{gap:8px}
+  .sh .meta .lp{font-size:15.5px}
+  .sh .meta .ld{font-size:11.5px}
+  .sh .chip{font-size:9.5px;padding:2px 6px}
+  .sh .rh{font-size:10px}
+  .sh .r .d,.sh .r .c{font-size:11.5px}
+  .sh .r .p{font-size:14px}
+  .sh .cmp .k .s{font-size:10px}
+  .sh .cmp .k .v{font-size:25px}
+  .sh .cmp .k .e{font-size:11px}
+  .sh .colh .src{font-size:11px}
+  .sh .colh .thr{font-size:10.5px}
+  .sh .nocard .h{font-size:19px}
+  .sh .nocard .w{font-size:11.5px}
+  .sh .nocard .a{font-size:10px}
+  .sh .grp{font-size:10px}
+  .sh .foot{font-size:11px}
+  .sh .foot.src{font-size:10px}
 }
 /* Κινητό: το block έσπαγε σε 4 σημεία — (α) η «.ld» (ημερομηνία · πλήθος) ήταν nowrap
    δίπλα στο ποσοστό και έβγαινε έξω από την κάρτα, (β) τα ονόματα των funds κόβονταν με
@@ -634,4 +650,25 @@
   .sh .rh{font-size:9.5px}
   .sh .r .d,.sh .r .c{font-size:11px}
   .sh .r .p{font-size:14px}
+}
+/* §143.1 — κινητό: ίδια μείωση, λίγο ηπιότερη (οι αρχικές τιμές ήταν ήδη μικρότερες) */
+@media (max-width:760px){
+  .sh .hd .t{font-size:13px}
+  .sh .hd .n{font-size:10.5px}
+  .sh .nm b{font-size:13px}
+  .sh .meta .lp{font-size:15px}
+  .sh .meta .ld{font-size:11px}
+  .sh .chip{font-size:9.5px}
+  .sh .r .p{font-size:13.5px}
+  .sh .r .d,.sh .r .c{font-size:11px}
+  .sh .cmp .k .v{font-size:22px}
+  .sh .cmp .k .e{font-size:10.5px}
+  .sh .nocard .h{font-size:17px}
+  .sh .nocard .w{font-size:11px}
+  .sh .grp{font-size:9.5px}
+  .sh .foot{font-size:10.5px}
+}
+@media (max-width:400px){
+  .sh .r .p{font-size:13px}
+  .sh .r .d,.sh .r .c{font-size:10.5px}
 }
