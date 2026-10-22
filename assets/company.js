@@ -1327,9 +1327,8 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
               exA:function(i,d){return 'ESMA, list of exempted shares · ISIN '+i+' · exempt since '+d;},
               nodT:'No position has been disclosed by name. The threshold is 0.5% of share capital — anything below it is not published at all, neither by holder nor as a total. An empty column therefore does not mean there are no short positions; it means none reached 0.5%.',
               fcaF:function(a,d,n){return 'Source: Financial Conduct Authority'+(a?' · '+a:'')+' · file '+d+' ('+n+' positions)';},
-              foot:'Change is the difference from the same fund’s previous disclosure, computed on the percentages as displayed. “Short position history” holds the funds with no currently disclosed position; if a fund reopens a position, it moves back up. Inside a list, “closed” on a row marks a disclosure that fell below the 0.5% threshold — in several cases the record simply stops without such a disclosure.',
               aggN:'Anonymised aggregate', aggCur:'current', pubs:'publications',
-              hist:'Short position history', hn:function(n){return n+' fund'+(n===1?'':'s');}, grH:'Greece (Hellenic Capital Market Commission ≥0.5%)', ukH:'United Kingdom (FCA ≥0.2%)', ukT:function(d,leg){return 'The percentage is an anonymised aggregate of <b>all</b> positions from 0.2%, with no holder names; it is neither comparable with nor additive to the named disclosures in Greece. Change is the difference from the previous publication — the same position date can appear twice with a different percentage when the aggregate is republished after late notifications.'+(leg?' Until '+d+' named positions ≥0.5% were published; that regime has ended and its positions are in “Short position history” — it is not known whether any of them are still open.':'');},}
+              hist:'Short position history', hn:function(n){return n+' fund'+(n===1?'':'s');}, grH:'Greece (Hellenic Capital Market Commission ≥0.5%)', ukH:'United Kingdom (FCA ≥0.2%)',}
              :{t:'Short θέσεις',s:'Επιτροπή Κεφαλαιαγοράς · δημοσιοποιήσεις ≥0,5% του μετοχικού κεφαλαίου',
               open:'ανοιχτή',closed:'κλειστή',date:'Ημερομηνία',pos:'Θέση',chg:'Μεταβολή',dis:'γνωστοπ.',
               twoS:'δύο ανεξάρτητες πηγές — δεν αθροίζονται',
@@ -1339,9 +1338,8 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
               nodH:'Χωρίς θέση ≥0,5%',
               nodT:'Καμία θέση δεν έχει γνωστοποιηθεί ονομαστικά. Το κατώφλι είναι 0,5% του μετοχικού κεφαλαίου — ό,τι είναι κάτω από αυτό δεν δημοσιεύεται καθόλου, ούτε με όνομα ούτε ως σύνολο. Η άδεια στήλη δεν σημαίνει επομένως ότι δεν υπάρχουν short θέσεις· σημαίνει ότι καμία δεν έφτασε το 0,5%.',
               fcaF:function(a,d,n){return 'Πηγή: Financial Conduct Authority'+(a?' · '+a:'')+' · αρχείο '+d+' ('+n+' θέσεις)';},
-              foot:'Η μεταβολή είναι η διαφορά από την προηγούμενη γνωστοποίηση του ίδιου fund, υπολογισμένη στα ποσοστά όπως εμφανίζονται. Στο «Ιστορικό short θέσεων» βρίσκονται τα funds χωρίς σήμερα δημοσιοποιημένη θέση· αν ένα fund ξανανοίξει θέση, επιστρέφει πάνω. Μέσα σε μια λίστα, «κλειστή» σε μια γραμμή σημαίνει ότι η γνωστοποίηση έπεσε κάτω από το όριο του 0,5% — σε αρκετές περιπτώσεις η καταγραφή απλώς σταματά χωρίς τέτοια γνωστοποίηση.',
               aggN:'Ανώνυμο άθροισμα', aggCur:'τρέχον', pubs:'δημοσιεύσεις',
-              hist:'Ιστορικό short θέσεων', hn:function(n){return n+' fund'+(n===1?'':'s');}, grH:'Ελλάδα (Επιτροπή Κεφαλαιαγοράς ≥0,5%)', ukH:'Ην. Βασίλειο (FCA ≥0,2%)', ukT:function(d,leg){return 'Το ποσοστό είναι ανώνυμο άθροισμα <b>όλων</b> των θέσεων από 0,2%, χωρίς ονόματα κατόχων· δεν συγκρίνεται και δεν αθροίζεται με τις ονομαστικές γνωστοποιήσεις στην Ελλάδα. Η μεταβολή είναι η διαφορά από την προηγούμενη δημοσίευση — η ίδια ημερομηνία θέσης μπορεί να εμφανιστεί δύο φορές με άλλο ποσοστό, όταν το άθροισμα ξαναδημοσιεύεται μετά από εκπρόθεσμες γνωστοποιήσεις.'+(leg?' Έως τις '+d+' δημοσιεύονταν ονομαστικές θέσεις ≥0,5%· το καθεστώς αυτό έληξε και οι θέσεις του βρίσκονται στο «Ιστορικό short θέσεων» — δεν είναι γνωστό αν κάποιες παραμένουν ανοιχτές.':'');},};
+              hist:'Ιστορικό short θέσεων', hn:function(n){return n+' fund'+(n===1?'':'s');}, grH:'Ελλάδα (Επιτροπή Κεφαλαιαγοράς ≥0,5%)', ukH:'Ην. Βασίλειο (FCA ≥0,2%)',};
 
     /* Μία λίστα funds — ΙΔΙΟ markup για Επιτροπή και FCA (§143). `k` δεκαδικά, `opT` η
        ετικέτα της ανοιχτής θέσης (στο αρχείο της FCA: «ανοιχτή στη λήξη», όχι «ανοιχτή»). */
@@ -1388,7 +1386,7 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
     if(!F){  /* ΜΙΑ ΠΗΓΗ (139 από τις 141): μονόστηλο, χωρίς ζώνη σύγκρισης. */
       box.innerHTML='<div class="hd"><div class="t"><span class="dot"></span>'+T.t+'</div>'
         +'<div class="s">'+T.s+'</div></div>'
-        +listHtml+'<div class="foot">'+T.foot+'</div>';
+        +listHtml;
       return;
     }
 
@@ -1409,17 +1407,15 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
                lp:FH[0][1], ld:FH[0][0],
                rows:FH.map(function(h){return {d:h[0],p:h[1],x:false};})}],2,T.aggCur);
     }
-    var legEnd=FL?gd(FL.end):gd('2026-07-10');
     var rightHtml=wrap(block(FL?FL.funds:[],2,T.open,true,agg));
 
     box.innerHTML='<div class="hd"><div class="t"><span class="dot"></span>'+T.t+'</div>'
       +'<div class="s">'+T.twoS+'</div></div>'
       +'<div class="two even">'
         +'<div class="col"><div class="lb">'+T.grH+'</div>'
-        +leftHtml+(hasRec?'<div class="foot">'+T.foot+'</div>':'')+'</div>'
+        +leftHtml+'</div>'
         +'<div class="col"><div class="lb">'+T.ukH+'</div>'
         +rightHtml
-        +'<div class="foot">'+T.ukT(legEnd, !!(FL&&FL.funds&&FL.funds.length))+'</div>'
         +'<div class="foot src">'+T.fcaF(D.fca.attr?esc(D.fca.attr):'', gd(D.fca.pub||F.d), D.fca.n||0)+'</div></div>'
       +'</div>';
   }
