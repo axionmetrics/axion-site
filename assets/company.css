@@ -507,7 +507,7 @@
 .sh details.op summary:hover{background:#6a4e70}
 .sh summary:focus-visible{outline:2px solid #f3b3a4;outline-offset:-2px}
 .sh .arw{font-size:10px;color:var(--ink3);transition:transform .15s}
-.sh details[open] .arw{transform:rotate(90deg)}
+.sh details[open]>summary .arw{transform:rotate(90deg)}
 @media (prefers-reduced-motion:reduce){.sh .arw{transition:none}}
 .sh .nm{display:flex;align-items:center;gap:9px;min-width:0}
 .sh .nm b{font-size:16px;font-weight:700;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -567,6 +567,23 @@
    είναι λίγο μικρότερα από τη μονόστηλη λίστα — το πλάτος είναι το μισό. */
 .sh .grp{font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3);
   margin:14px 2px 7px;padding-top:10px;border-top:1px solid var(--line)}
+/* §144 — δύο πλαίσια με ΜΟΝΟ ποσοστό· η πηγή/κατώφλι σε ετικέτα ΠΑΝΩ από το πλαίσιο */
+.sh .cmp .kc{min-width:0}
+.sh .cmp.one{grid-template-columns:1fr;margin-bottom:12px}
+.sh .cmp .lb{font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#f3b3a4;margin:0 2px 6px}
+.sh .cmp .k .v{margin-top:0}
+/* §144 — «Ιστορικό short θέσεων»: πτυσσόμενο μενού κάτω από τις ανοιχτές θέσεις.
+   Δεν μοιάζει με κάρτα fund (χωρίς περίγραμμα/φόντο) — είναι επικεφαλίδα ομάδας. */
+.sh details.hist{border:0;border-radius:0;background:none;overflow:visible;margin-top:10px}
+.sh details.hist[open]{background:none}
+.sh details.hist>summary{display:flex;align-items:center;gap:9px;padding:9px 4px 8px;border-top:1px solid var(--line)}
+.sh details.hist>summary:hover{background:none}
+.sh details.hist>summary:hover .hl{color:var(--ink)}
+.sh details.hist .hl{font-size:11.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--ink2)}
+.sh details.hist .hn{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ink3)}
+.sh details.hist .hb{padding-top:4px}
+.sh .sc>details.hist:first-child{margin-top:0}
+.sh .sc>details.hist:first-child>summary{border-top:0}
 .sh .foot.src{font-size:11px;color:var(--ink3);margin-top:6px}
 .sh .two .foot b{font-weight:800;color:#f3b3a4}
 @media (min-width:761px){.sh .two .rh,.sh .two .r{grid-template-columns:96px 1fr 70px;gap:8px}}
