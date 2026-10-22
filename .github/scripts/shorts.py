@@ -25,6 +25,7 @@ robots : hcmc.gr → «User-Agent: * / Disallow:» (επιτρέπει τα πά
 Έξοδος : assets/shorts.js   (το site)
          .github/shorts/<YYYY-MM-DD>.json  (αρχείο εκδόσεων — δικό μας ιστορικό)
          .github/shorts/_state.json        (τελευταία επεξεργασμένη έκδοση)
+         .github/shorts/fca_history.json   (§143 — ΣΥΣΣΩΡΕΥΤΙΚΟ ιστορικό FCA: ANSP + ονομαστικό ≤10/07/2026)
 Δεύτερη πηγή (§140): FCA — https://www.fca.org.uk/publication/documents/aggregated-current-net-short-positions.csv
          Στήλες: Name of Company · ISIN · Aggregated net short position (%) · Position date (dd/mm/yyyy).
          Αφορά μετοχές εισηγμένες σε βρετανικό τόπο διαπραγμάτευσης. Από τις δικές μας, ΔΥΟ
@@ -76,6 +77,22 @@ FCA_ON   = True          # διακόπτης δημοσίευσης (βλ. ΑΔ
 FCA_CSV  = 'https://www.fca.org.uk/publication/documents/aggregated-current-net-short-positions.csv'
 FCA_THR  = 0.2           # κατώφλι αναφοράς του βρετανικού καθεστώτος
 FCA_ATTR = '© The Financial Conduct Authority'
+# ── §143 — ΙΣΤΟΡΙΚΟ FCA (δικό μας αρχείο, ΣΥΣΣΩΡΕΥΤΙΚΟ) ──────────────────────
+# Η FCA δημοσιεύει, εκτός από το τρέχον ANSP, και πίνακα ΙΣΤΟΡΙΚΩΝ ANSP (κάθε τιμή που
+# αντικαταστάθηκε, με την ημερομηνία που έγινε ιστορική). Δεν τον εμπιστευόμαστε ως
+# μοναδικό αρχείο: στις πρώτες εκδόσεις του νέου καθεστώτος χάθηκαν/διπλασιάστηκαν
+# γραμμές, και ο Handbook (SSR 6.3) επιτρέπει στην FCA να ΑΝΑΘΕΩΡΕΙ δημοσιευμένα ANSP.
+# Γι' αυτό κρατάμε ΔΙΚΟ μας αρχείο `.github/shorts/fca_history.json`:
+#   • κάθε εκτέλεση ενώνει (upsert) το τρέχον + το ιστορικό CSV, ΜΟΝΟ για ISIN της κάλυψής μας
+#   • ΠΟΤΕ δεν σβήνεται γραμμή επειδή εξαφανίστηκε από την FCA
+#   • αν η FCA αλλάξει τιμή για ημερομηνία που ήδη έχουμε, η παλιά κρατιέται στο `rev`
+# Το ΠΑΛΙΟ καθεστώς (ονομαστικές θέσεις ≥0,5%, έως 10/07/2026) είναι ΠΑΓΩΜΕΝΟ: φορτώθηκε
+# μία φορά από το short-positions-daily-update.xlsx στο κλειδί `legacy` και δεν ξαναγγίζεται.
+FCA_HIST_CSV = 'https://www.fca.org.uk/publication/documents/aggregated-historic-net-short-positions.csv'
+FCA_LEGACY_XLSX = 'https://www.fca.org.uk/publication/data/short-positions-daily-update.xlsx'
+FCA_LEGACY_END = '2026-07-10'   # τελευταία έκδοση του ονομαστικού καθεστώτος
+FCA_ARCH = os.path.join(ARCH, 'fca_history.json')
+FCA_CUR_RAW = None
 # ── §142.2 — ΤΡΙΤΗ ΠΗΓΗ: ESMA, κατάλογος εξαιρούμενων μετοχών (άρθρο 16) ─────
 # Δημόσιο Solr του μητρώου της ESMA. Ζητάμε ΜΟΝΟ τις εγγραφές με αρμόδια αρχή την
 # Επιτροπή Κεφαλαιαγοράς (countryCode=GR) — για μετοχή εισηγμένη στο ΧΑ αυτή είναι η
@@ -85,7 +102,7 @@ FCA_ATTR = '© The Financial Conduct Authority'
 ESMA_ON  = True
 ESMA_URL = 'https://registers.esma.europa.eu/solr/esma_registers_mifid_shsexs/select'
 DEC       = 5            # δεκαδικά που κρατάμε από την πηγή (βλ. ΑΚΡΙΒΕΙΑ στο docstring)
-FMT       = 4            # έκδοση μορφής εξόδου. ΑΥΞΗΣΕ ΤΟ όταν αλλάζει ο τρόπος που γράφονται
+FMT       = 5            # έκδοση μορφής εξόδου. ΑΥΞΗΣΕ ΤΟ όταν αλλάζει ο τρόπος που γράφονται
                          # τα δεδομένα: αναγκάζει πλήρη ανακατασκευή ακόμη κι αν η πηγή είναι ίδια.
 
 def log(*a): print(*a, flush=True)
@@ -174,6 +191,7 @@ def fca_fetch(isin_map):
     except Exception as e:
         log('FCA: δεν κατεβαίνει το CSV —', e); return None, None
     sha=hashlib.sha1(raw).hexdigest()[:12]
+    global FCA_CUR_RAW; FCA_CUR_RAW=raw      # §143 — το ίδιο αρχείο τροφοδοτεί και το ιστορικό
     try:
         import csv
         txt=raw.decode('utf-8-sig','replace')
@@ -213,6 +231,142 @@ def fca_fetch(isin_map):
         # Δεν είναι σφάλμα από μόνο του: αν η METLEN βγει από τη λίστα, απλώς δεν υπάρχει θέση.
         return {'rows':{}, 'pub':latest, 'n':n, 'threshold':FCA_THR, 'attr':FCA_ATTR}, sha
     return {'rows':by, 'pub':latest, 'n':n, 'threshold':FCA_THR, 'attr':FCA_ATTR}, sha
+
+# ------------------------------------------------- §143 ιστορικό FCA
+def _csv_rows(raw):
+    import csv
+    rd=list(csv.reader(io.StringIO(raw.decode('utf-8-sig','replace'))))
+    if not rd: return [], []
+    return [c.strip().lower() for c in rd[0]], rd[1:]
+
+def _col(hdr, *keys, default=None):
+    for i,h in enumerate(hdr):
+        if any(k in h for k in keys): return i
+    return default
+
+def fca_ansp_rows(raw, isin_set, historic):
+    """Γραμμές (isin, co, d, p, h) από CSV της FCA — μόνο για ISIN της κάλυψής μας."""
+    hdr, body = _csv_rows(raw)
+    i_name=_col(hdr,'name of company','company', default=0)
+    i_isin=_col(hdr,'isin', default=1)
+    i_pct =_col(hdr,'net short position','%', default=2)
+    i_date=_col(hdr,'position date', default=3)
+    i_hist=_col(hdr,'became histor', default=4) if historic else None
+    out=[]
+    for r in body:
+        need=max(x for x in (i_name,i_isin,i_pct,i_date,i_hist) if x is not None)
+        if len(r) <= need: continue
+        code=(r[i_isin] or '').strip().upper()
+        if code not in isin_set: continue
+        try: p=round(float((r[i_pct] or '').strip().replace(',','.')),2)
+        except ValueError: continue
+        d=to_date((r[i_date] or '').strip())
+        if not d: continue
+        h=to_date((r[i_hist] or '').strip()) if i_hist is not None else None
+        out.append((code,(r[i_name] or '').strip(),d,p,h))
+    return out
+
+def fca_legacy(isin_set):
+    """ΜΙΑ φορά: ονομαστικές θέσεις του παλιού καθεστώτος (≤10/07/2026) για τα ISIN μας."""
+    try: import openpyxl
+    except ImportError:
+        log('FCA legacy: λείπει το openpyxl — παραλείπεται (το αρχείο σπέρνεται χειροκίνητα)'); return None
+    try: raw=get(FCA_LEGACY_XLSX, binary=True, timeout=120)
+    except Exception as e:
+        log('FCA legacy: δεν κατεβαίνει —', e); return None
+    wb=openpyxl.load_workbook(io.BytesIO(raw), read_only=True, data_only=True)
+    out={}
+    for ws in wb.worksheets:
+        for r in ws.iter_rows(values_only=True):
+            if not r or len(r) < 5: continue
+            code=(str(r[2] or '')).strip().upper()
+            if code not in isin_set: continue
+            d=r[4]
+            d=d.strftime('%Y-%m-%d') if hasattr(d,'strftime') else to_date(str(d))
+            try: p=round(float(r[3]),5)
+            except (TypeError, ValueError): continue
+            if not d: continue
+            e=out.setdefault(code, {'co':str(r[1] or '').strip(), 'rows':[]})
+            row={'f':str(r[0] or '').strip(),'d':d,'p':p}
+            if row not in e['rows']: e['rows'].append(row)
+    for e in out.values(): e['rows'].sort(key=lambda x:(x['f'],x['d']))
+    log('FCA legacy: %d ISIN · %d γραμμές'%(len(out), sum(len(e['rows']) for e in out.values())))
+    return out
+
+def fca_history(isin_map, cur_raw):
+    """Ενημερώνει το .github/shorts/fca_history.json και επιστρέφει (arch, sha).
+    ΔΕΝ πετάει ποτέ — σε αποτυχία κρατά ό,τι υπάρχει ήδη."""
+    isin_set=set(isin_map)
+    try: arch=json.load(io.open(FCA_ARCH, encoding='utf-8'))
+    except Exception: arch={}
+    arch.setdefault('ansp', {})
+    today=datetime.date.today().isoformat()
+    if 'legacy' not in arch:
+        lg=fca_legacy(isin_set)
+        if lg is not None: arch['legacy']=lg; arch['legacy_end']=FCA_LEGACY_END
+    rows=[]
+    try:
+        rows+=fca_ansp_rows(get(FCA_HIST_CSV, binary=True, timeout=60), isin_set, True)
+    except Exception as e:
+        log('FCA ιστορικό: δεν κατεβαίνει —', e)
+    if cur_raw:
+        try: rows+=fca_ansp_rows(cur_raw, isin_set, False)
+        except Exception as e: log('FCA τρέχον: δεν διαβάζεται για το ιστορικό —', e)
+    # Κλειδί μιας δημοσίευσης = (ημερομηνία θέσης, ημερομηνία που έγινε ιστορική). Η ΙΔΙΑ
+    # ημερομηνία θέσης μπορεί να δημοσιευτεί δύο φορές με άλλο ποσοστό (π.χ. 34 METLEN,
+    # θέση 15/10/2026: 6,76% → ιστορική 19/10, και 6,47% στο τρέχον) — αυτό ΔΕΝ είναι
+    # αναθεώρηση, είναι δύο διαδοχικά ANSP. Αναθεώρηση = ίδιο (d,h), άλλο ποσοστό.
+    added=revised=0
+    for code,co,d,p,h in rows:
+        e=arch['ansp'].setdefault(code, {'co':co, 'rows':[]})
+        L=e['rows']
+        if h:
+            x=next((r for r in L if r['d']==d and r.get('h')==h), None)
+            if x is not None:
+                if x['p']!=p:
+                    x.setdefault('rev', []).append({'p':x['p'],'at':today}); x['p']=p; revised+=1
+                continue
+            x=next((r for r in L if r['d']==d and not r.get('h') and r['p']==p), None)
+            if x is not None: x['h']=h; continue      # το τρέχον έγινε ιστορικό
+        else:
+            if any(r['d']==d and r['p']==p for r in L): continue
+        L.append({'d':d,'p':p,'h':h,'seen':today}); added+=1
+    for e in arch['ansp'].values():
+        e['rows'].sort(key=lambda r:(r['d'], r.get('h') or '9999-99-99'))
+    blob=json.dumps(arch, ensure_ascii=False, sort_keys=True)
+    sha=hashlib.sha1(blob.encode('utf-8')).hexdigest()[:12]
+    log('FCA ιστορικό: %d ISIN · %d θέσεις · νέες %d · αναθεωρήσεις %d'
+        %(len(arch['ansp']), sum(len(e['rows']) for e in arch['ansp'].values()), added, revised))
+    return arch, sha, revised
+
+def fca_hist_payload(arch, isin_map):
+    """Για το site: ANSP σειρά ανά ticker (νεότερη πρώτη) + ονομαστικό ιστορικό (legacy)."""
+    hist={}; leg={}
+    for code,e in (arch.get('ansp') or {}).items():
+        tk=isin_map.get(code)
+        if not tk: continue
+        # [ημ. θέσης, %, ημ. που έγινε ιστορική ή null = τρέχον] — νεότερη πρώτη
+        hist[tk]=[[r['d'],r['p'],r.get('h')] for r in reversed(e['rows'])]
+    for code,e in (arch.get('legacy') or {}).items():
+        tk=isin_map.get(code)
+        if not tk: continue
+        funds={}
+        for r in e['rows']: funds.setdefault(r['f'], []).append(r)
+        fl=[]
+        for f,rs in funds.items():
+            rs.sort(key=lambda x:x['d']); prev=None; out=[]
+            for r in rs:
+                c=None if prev is None else round(r['p']-prev, DEC); prev=r['p']
+                out.append({'d':r['d'],'p':r['p'],'c':c,'x':(r['p'] < THRESHOLD)})
+            last=rs[-1]
+            # «open» = ήταν ακόμη ≥0,5% όταν έπαψε το ονομαστικό καθεστώς (όχι «ανοιχτή σήμερα»)
+            fl.append({'f':f,'open':last['p'] >= THRESHOLD,'n':len(out),
+                       'lp':last['p'],'ld':last['d'],'rows':list(reversed(out))})
+        op=sorted([g for g in fl if g['open']], key=lambda g:-g['lp'])
+        cl=sorted([g for g in fl if not g['open']], key=lambda g:g['ld'], reverse=True)
+        leg[tk]={'end':arch.get('legacy_end', FCA_LEGACY_END),'funds':op+cl,
+                 'nopen':len(op),'n':sum(g['n'] for g in fl)}
+    return hist, leg
 
 # ------------------------------------------------- §142.2 ESMA: εξαιρούμενες
 def esma_exempt(isin_map):
@@ -329,6 +483,9 @@ def main():
     # το αρχείο της Επιτροπής Κεφαλαιαγοράς είναι το ίδιο (δημοσιεύει κάθε εργάσιμη).
     isin=isin_from_datajs(DATAJS)
     fca_block, fca_sha = fca_fetch(isin)
+    fca_arch, fh_sha, fh_rev = (None, None, 0)
+    if FCA_ON:
+        fca_arch, fh_sha, fh_rev = fca_history(isin, FCA_CUR_RAW)
     exempt, ex_sha = esma_exempt(isin)
 
     if local:
@@ -342,9 +499,10 @@ def main():
                 'Η σελίδα %s δεν περιέχει πια href προς «…HCMC_disclosed_short_positions_gr.xls». '
                 'Πιθανή αλλαγή δομής — χρειάζεται έλεγχος.'%PAGE)
         if (src_date and state.get('src')==src_date and state.get('fmt')==FMT
-                and state.get('fca')==fca_sha and state.get('esma')==ex_sha):
-            log('καμία αλλαγή (έκδοση %s, μορφή %d, FCA %s, ESMA %s) — τέλος.'
-                %(src_date, FMT, fca_sha or '—', ex_sha or '—')); return 0
+                and state.get('fca')==fca_sha and state.get('esma')==ex_sha
+                and state.get('fcah')==fh_sha):
+            log('καμία αλλαγή (έκδοση %s, μορφή %d, FCA %s, ιστορικό FCA %s, ESMA %s) — τέλος.'
+                %(src_date, FMT, fca_sha or '—', fh_sha or '—', ex_sha or '—')); return 0
         log('νέα έκδοση:', src_date, url)
         try: raw=get(url, binary=True)
         except Exception as e: die('δεν κατεβαίνει το αρχείο', '%s\n%s'%(url, e))
@@ -376,6 +534,17 @@ def main():
              'threshold':THRESHOLD,'by':by}
     # §140 — ΔΙΠΛΑ, όχι ανακατεμένα: άλλο καθεστώς, άλλο κατώφλι, χωρίς ονόματα κατόχων.
     if fca_block: payload['fca']=fca_block
+    # §143 — ιστορικό FCA: ANSP σειρά (`hist`) + ονομαστικές θέσεις έως 10/07/2026 (`legacy`).
+    # Το αρχείο γράφεται ΕΔΩ (όχι νωρίτερα) για να μη μένει ενημερωμένο ιστορικό χωρίς shorts.js.
+    if fca_arch is not None:
+        io.open(FCA_ARCH,'w',encoding='utf-8').write(
+            json.dumps(fca_arch, ensure_ascii=False, indent=1, sort_keys=True))
+        h, lg = fca_hist_payload(fca_arch, isin)
+        if fca_block is None and (h or lg):
+            fca_block={'rows':{}, 'pub':None, 'n':0, 'threshold':FCA_THR, 'attr':FCA_ATTR}
+            payload['fca']=fca_block
+        if fca_block is not None:
+            fca_block['hist']=h; fca_block['legacy']=lg
     # §142.2 — ποιες μετοχές ΔΕΝ υπάγονται καν στο ελληνικό καθεστώς. Το site το λέει
     # ρητά στη σελίδα τους αντί να δείχνει άδεια στήλη.
     if exempt: payload['exempt']=exempt
@@ -427,7 +596,11 @@ def main():
               + '\n'.join('- %s'%(' · '.join('`%s`'%x for x in v)) for v in dups.values())
               + '\n\nΑν πρόκειται για την ΙΔΙΑ νομική οντότητα, πρόσθεσέ τα στο '
                 '`.github/data/fund_aliases.json`. Αν είναι διαφορετικοί υπόχρεοι, άφησέ τα ως έχουν.')
-    json.dump({'src':src_date,'sha':sha,'pub':pub,'fmt':FMT,'fca':fca_sha,
+    if fh_rev:
+        issue('Short θέσεις: η FCA αναθεώρησε %d ιστορικές τιμές ANSP'%fh_rev,
+              'Τιμές ANSP που είχαμε ήδη αποθηκεύσει δημοσιεύτηκαν με άλλο ποσοστό. Οι νέες τιμές '
+              'ισχύουν· οι παλιές κρατήθηκαν στο πεδίο `rev` του `.github/shorts/fca_history.json`.')
+    json.dump({'src':src_date,'sha':sha,'pub':pub,'fmt':FMT,'fca':fca_sha,'fcah':fh_sha,
                'esma':ex_sha,'exempt':exempt or {},
                'unmatched':sorted(set(list(known_un)+list(unmatched))),
                'dups':sorted(set(list(known_dp)+list(dups)))},

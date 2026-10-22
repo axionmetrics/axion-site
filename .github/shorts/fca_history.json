@@ -1,0 +1,1134 @@
+{
+ "ansp": {
+  "CH0198251305": {
+   "co": "COCA-COLA HBC AG",
+   "rows": [
+    {
+     "d": "2026-07-03",
+     "h": "2026-07-28",
+     "p": 0.72,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-07-28",
+     "h": "2026-07-31",
+     "p": 0.8,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-07-31",
+     "h": "2026-08-05",
+     "p": 0.9,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-08-05",
+     "h": "2026-08-07",
+     "p": 1.0,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-08-07",
+     "h": "2026-09-01",
+     "p": 1.11,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-09-01",
+     "h": "2026-09-23",
+     "p": 1.2,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-09-23",
+     "h": null,
+     "p": 1.18,
+     "seen": "2026-10-22"
+    }
+   ]
+  },
+  "GB00BTQGS779": {
+   "co": "METLEN ENERGY & METALS PLC",
+   "rows": [
+    {
+     "d": "2026-07-07",
+     "h": "2026-07-15",
+     "p": 10.06,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-07-15",
+     "h": "2026-07-16",
+     "p": 10.0,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-07-16",
+     "h": "2026-07-23",
+     "p": 10.09,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-07-23",
+     "h": "2026-07-24",
+     "p": 9.92,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-07-24",
+     "h": "2026-07-27",
+     "p": 9.93,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-07-27",
+     "h": "2026-07-31",
+     "p": 9.92,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-07-31",
+     "h": "2026-08-03",
+     "p": 9.88,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-08-03",
+     "h": "2026-08-04",
+     "p": 9.81,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-08-04",
+     "h": "2026-08-05",
+     "p": 9.46,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-08-05",
+     "h": "2026-08-06",
+     "p": 9.35,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-08-06",
+     "h": "2026-08-07",
+     "p": 9.34,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-08-07",
+     "h": "2026-08-11",
+     "p": 9.24,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-08-11",
+     "h": "2026-08-13",
+     "p": 9.13,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-08-13",
+     "h": "2026-08-21",
+     "p": 8.84,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-08-21",
+     "h": "2026-09-04",
+     "p": 8.74,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-09-04",
+     "h": "2026-09-07",
+     "p": 8.44,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-09-07",
+     "h": "2026-09-08",
+     "p": 8.24,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-09-08",
+     "h": "2026-09-18",
+     "p": 8.04,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-09-18",
+     "h": "2026-09-22",
+     "p": 8.16,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-09-22",
+     "h": "2026-09-25",
+     "p": 7.89,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-09-25",
+     "h": "2026-10-01",
+     "p": 7.69,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-10-01",
+     "h": "2026-10-02",
+     "p": 7.65,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-10-02",
+     "h": "2026-10-08",
+     "p": 7.51,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-10-08",
+     "h": "2026-10-09",
+     "p": 7.2,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-10-09",
+     "h": "2026-10-12",
+     "p": 7.12,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-10-12",
+     "h": "2026-10-13",
+     "p": 7.32,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-10-13",
+     "h": "2026-10-14",
+     "p": 6.44,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-10-14",
+     "h": "2026-10-15",
+     "p": 6.56,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-10-15",
+     "h": "2026-10-19",
+     "p": 6.76,
+     "seen": "2026-10-22"
+    },
+    {
+     "d": "2026-10-15",
+     "h": null,
+     "p": 6.47,
+     "seen": "2026-10-22"
+    }
+   ]
+  }
+ },
+ "legacy": {
+  "CH0198251305": {
+   "co": "COCA-COLA HBC AG",
+   "rows": [
+    {
+     "d": "2014-12-10",
+     "f": "AKO Capital LLP",
+     "p": 0.5
+    },
+    {
+     "d": "2015-01-07",
+     "f": "AKO Capital LLP",
+     "p": 0.61
+    },
+    {
+     "d": "2015-02-09",
+     "f": "AKO Capital LLP",
+     "p": 0.59
+    },
+    {
+     "d": "2015-04-01",
+     "f": "AKO Capital LLP",
+     "p": 0.48
+    },
+    {
+     "d": "2014-05-22",
+     "f": "Adelphi Capital LLP",
+     "p": 0.5
+    },
+    {
+     "d": "2014-07-31",
+     "f": "Adelphi Capital LLP",
+     "p": 0.61
+    },
+    {
+     "d": "2014-09-30",
+     "f": "Adelphi Capital LLP",
+     "p": 0.75
+    },
+    {
+     "d": "2015-01-30",
+     "f": "Adelphi Capital LLP",
+     "p": 0.8
+    },
+    {
+     "d": "2015-05-19",
+     "f": "Adelphi Capital LLP",
+     "p": 0.7
+    },
+    {
+     "d": "2015-08-13",
+     "f": "Adelphi Capital LLP",
+     "p": 0.44
+    },
+    {
+     "d": "2015-01-05",
+     "f": "BlackRock Investment Management (UK) Limited",
+     "p": 0.5
+    },
+    {
+     "d": "2015-01-23",
+     "f": "BlackRock Investment Management (UK) Limited",
+     "p": 0.49
+    },
+    {
+     "d": "2015-06-17",
+     "f": "BlackRock Investment Management (UK) Limited",
+     "p": 0.5
+    },
+    {
+     "d": "2015-06-19",
+     "f": "BlackRock Investment Management (UK) Limited",
+     "p": 0.48
+    },
+    {
+     "d": "2015-08-12",
+     "f": "BlackRock Investment Management (UK) Limited",
+     "p": 0.51
+    },
+    {
+     "d": "2015-08-13",
+     "f": "BlackRock Investment Management (UK) Limited",
+     "p": 0.49
+    },
+    {
+     "d": "2015-10-07",
+     "f": "BlackRock Investment Management (UK) Limited",
+     "p": 0.5
+    },
+    {
+     "d": "2015-10-15",
+     "f": "BlackRock Investment Management (UK) Limited",
+     "p": 0.49
+    },
+    {
+     "d": "2016-01-11",
+     "f": "BlackRock Investment Management (UK) Limited",
+     "p": 0.5
+    },
+    {
+     "d": "2016-01-13",
+     "f": "BlackRock Investment Management (UK) Limited",
+     "p": 0.49
+    },
+    {
+     "d": "2016-01-14",
+     "f": "BlackRock Investment Management (UK) Limited",
+     "p": 0.5
+    },
+    {
+     "d": "2016-02-02",
+     "f": "BlackRock Investment Management (UK) Limited",
+     "p": 0.49
+    },
+    {
+     "d": "2025-01-17",
+     "f": "Citadel Advisors Europe Limited",
+     "p": 0.5
+    },
+    {
+     "d": "2025-01-24",
+     "f": "Citadel Advisors Europe Limited",
+     "p": 0.6
+    },
+    {
+     "d": "2025-01-31",
+     "f": "Citadel Advisors Europe Limited",
+     "p": 0.57
+    },
+    {
+     "d": "2025-02-05",
+     "f": "Citadel Advisors Europe Limited",
+     "p": 0.61
+    },
+    {
+     "d": "2025-02-12",
+     "f": "Citadel Advisors Europe Limited",
+     "p": 0.54
+    },
+    {
+     "d": "2025-03-10",
+     "f": "Citadel Advisors Europe Limited",
+     "p": 0.44
+    },
+    {
+     "d": "2021-09-20",
+     "f": "Citadel Advisors LLC",
+     "p": 0.5
+    },
+    {
+     "d": "2021-09-22",
+     "f": "Citadel Advisors LLC",
+     "p": 0.48
+    },
+    {
+     "d": "2021-08-02",
+     "f": "Citadel Europe LLP",
+     "p": 0.52
+    },
+    {
+     "d": "2021-08-12",
+     "f": "Citadel Europe LLP",
+     "p": 0.61
+    },
+    {
+     "d": "2021-09-27",
+     "f": "Citadel Europe LLP",
+     "p": 0.57
+    },
+    {
+     "d": "2021-09-30",
+     "f": "Citadel Europe LLP",
+     "p": 0.49
+    },
+    {
+     "d": "2021-10-05",
+     "f": "Citadel Europe LLP",
+     "p": 0.5
+    },
+    {
+     "d": "2021-10-08",
+     "f": "Citadel Europe LLP",
+     "p": 0.47
+    },
+    {
+     "d": "2021-11-05",
+     "f": "Citadel Europe LLP",
+     "p": 0.5
+    },
+    {
+     "d": "2021-11-10",
+     "f": "Citadel Europe LLP",
+     "p": 0.49
+    },
+    {
+     "d": "2021-11-23",
+     "f": "Citadel Europe LLP",
+     "p": 0.5
+    },
+    {
+     "d": "2021-11-29",
+     "f": "Citadel Europe LLP",
+     "p": 0.48
+    },
+    {
+     "d": "2021-11-30",
+     "f": "Citadel Europe LLP",
+     "p": 0.51
+    },
+    {
+     "d": "2021-12-06",
+     "f": "Citadel Europe LLP",
+     "p": 0.49
+    },
+    {
+     "d": "2022-01-24",
+     "f": "GLG Partners LP",
+     "p": 0.51
+    },
+    {
+     "d": "2022-01-26",
+     "f": "GLG Partners LP",
+     "p": 0.4
+    },
+    {
+     "d": "2025-02-13",
+     "f": "Ilex Capital Partners (UK) LLP",
+     "p": 0.54
+    },
+    {
+     "d": "2025-03-13",
+     "f": "Ilex Capital Partners (UK) LLP",
+     "p": 0.45
+    },
+    {
+     "d": "2026-03-20",
+     "f": "Ilex Capital Partners (UK) LLP",
+     "p": 0.6
+    },
+    {
+     "d": "2026-04-01",
+     "f": "Ilex Capital Partners (UK) LLP",
+     "p": 0.7
+    },
+    {
+     "d": "2026-05-20",
+     "f": "Ilex Capital Partners (UK) LLP",
+     "p": 0.69
+    },
+    {
+     "d": "2026-05-28",
+     "f": "Ilex Capital Partners (UK) LLP",
+     "p": 0.59
+    },
+    {
+     "d": "2026-05-29",
+     "f": "Ilex Capital Partners (UK) LLP",
+     "p": 0.6
+    },
+    {
+     "d": "2026-06-01",
+     "f": "Ilex Capital Partners (UK) LLP",
+     "p": 0.58
+    },
+    {
+     "d": "2026-06-12",
+     "f": "Ilex Capital Partners (UK) LLP",
+     "p": 0.49
+    },
+    {
+     "d": "2026-07-03",
+     "f": "Ilex Capital Partners (UK) LLP",
+     "p": 0.52
+    },
+    {
+     "d": "2023-07-05",
+     "f": "Marshall Wace LLP",
+     "p": 0.5
+    },
+    {
+     "d": "2023-07-10",
+     "f": "Marshall Wace LLP",
+     "p": 0.49
+    },
+    {
+     "d": "2023-07-11",
+     "f": "Marshall Wace LLP",
+     "p": 0.5
+    },
+    {
+     "d": "2023-07-31",
+     "f": "Marshall Wace LLP",
+     "p": 0.49
+    },
+    {
+     "d": "2023-12-15",
+     "f": "Marshall Wace LLP",
+     "p": 0.51
+    },
+    {
+     "d": "2024-01-24",
+     "f": "Marshall Wace LLP",
+     "p": 0.49
+    },
+    {
+     "d": "2024-02-21",
+     "f": "Marshall Wace LLP",
+     "p": 0.5
+    },
+    {
+     "d": "2024-04-19",
+     "f": "Marshall Wace LLP",
+     "p": 0.48
+    },
+    {
+     "d": "2014-05-21",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 1.02
+    },
+    {
+     "d": "2014-06-16",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 1.12
+    },
+    {
+     "d": "2014-07-11",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 1.31
+    },
+    {
+     "d": "2014-07-22",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 1.4
+    },
+    {
+     "d": "2014-08-29",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 1.5
+    },
+    {
+     "d": "2014-09-03",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 1.37
+    },
+    {
+     "d": "2014-10-20",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 1.43
+    },
+    {
+     "d": "2014-11-07",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 1.5
+    },
+    {
+     "d": "2014-12-05",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 1.6
+    },
+    {
+     "d": "2015-01-14",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 1.7
+    },
+    {
+     "d": "2015-02-17",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 1.8
+    },
+    {
+     "d": "2015-03-25",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 1.79
+    },
+    {
+     "d": "2015-04-13",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 1.81
+    },
+    {
+     "d": "2015-06-03",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 1.78
+    },
+    {
+     "d": "2015-06-09",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 1.68
+    },
+    {
+     "d": "2015-06-22",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 1.53
+    },
+    {
+     "d": "2015-06-23",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 1.48
+    },
+    {
+     "d": "2015-08-13",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 1.54
+    },
+    {
+     "d": "2015-08-25",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 1.49
+    },
+    {
+     "d": "2015-09-18",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 1.55
+    },
+    {
+     "d": "2015-10-09",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 1.48
+    },
+    {
+     "d": "2015-10-15",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 1.39
+    },
+    {
+     "d": "2015-12-15",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 1.19
+    },
+    {
+     "d": "2016-01-14",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 1.25
+    },
+    {
+     "d": "2016-01-19",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 1.39
+    },
+    {
+     "d": "2016-01-20",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 1.43
+    },
+    {
+     "d": "2016-02-04",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 1.5
+    },
+    {
+     "d": "2016-02-10",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 1.4
+    },
+    {
+     "d": "2016-02-22",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 1.36
+    },
+    {
+     "d": "2016-03-17",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 1.29
+    },
+    {
+     "d": "2016-03-21",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 1.3
+    },
+    {
+     "d": "2016-03-30",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 1.28
+    },
+    {
+     "d": "2016-03-31",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 1.11
+    },
+    {
+     "d": "2016-04-01",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 1.07
+    },
+    {
+     "d": "2016-04-05",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 0.99
+    },
+    {
+     "d": "2016-05-24",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 0.79
+    },
+    {
+     "d": "2016-07-05",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 0.91
+    },
+    {
+     "d": "2016-08-12",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 0.88
+    },
+    {
+     "d": "2016-08-24",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 0.76
+    },
+    {
+     "d": "2016-11-21",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 0.63
+    },
+    {
+     "d": "2016-12-08",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 0.57
+    },
+    {
+     "d": "2017-01-17",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 0.59
+    },
+    {
+     "d": "2017-03-30",
+     "f": "ODEY ASSET MANAGEMENT LLP",
+     "p": 0.44
+    }
+   ]
+  },
+  "GB00BTQGS779": {
+   "co": "Metlen Energy & Metals Plc",
+   "rows": [
+    {
+     "d": "2026-02-06",
+     "f": "AKO Capital LLP",
+     "p": 0.69
+    },
+    {
+     "d": "2026-02-25",
+     "f": "AKO Capital LLP",
+     "p": 0.78
+    },
+    {
+     "d": "2026-02-26",
+     "f": "AKO Capital LLP",
+     "p": 0.83
+    },
+    {
+     "d": "2026-02-27",
+     "f": "AKO Capital LLP",
+     "p": 0.91
+    },
+    {
+     "d": "2026-03-20",
+     "f": "AKO Capital LLP",
+     "p": 1.0
+    },
+    {
+     "d": "2026-04-17",
+     "f": "AKO Capital LLP",
+     "p": 1.1
+    },
+    {
+     "d": "2026-04-22",
+     "f": "AKO Capital LLP",
+     "p": 1.26
+    },
+    {
+     "d": "2026-05-27",
+     "f": "AKO Capital LLP",
+     "p": 1.31
+    },
+    {
+     "d": "2025-09-19",
+     "f": "Covalis Capital LLP",
+     "p": 0.53
+    },
+    {
+     "d": "2025-09-24",
+     "f": "Covalis Capital LLP",
+     "p": 0.49
+    },
+    {
+     "d": "2025-12-04",
+     "f": "Covalis Capital LLP",
+     "p": 0.67
+    },
+    {
+     "d": "2025-12-08",
+     "f": "Covalis Capital LLP",
+     "p": 0.72
+    },
+    {
+     "d": "2025-12-12",
+     "f": "Covalis Capital LLP",
+     "p": 0.8
+    },
+    {
+     "d": "2025-12-31",
+     "f": "Covalis Capital LLP",
+     "p": 0.94
+    },
+    {
+     "d": "2026-01-15",
+     "f": "Covalis Capital LLP",
+     "p": 0.89
+    },
+    {
+     "d": "2026-01-20",
+     "f": "Covalis Capital LLP",
+     "p": 0.9
+    },
+    {
+     "d": "2026-02-04",
+     "f": "Covalis Capital LLP",
+     "p": 0.85
+    },
+    {
+     "d": "2026-02-06",
+     "f": "Covalis Capital LLP",
+     "p": 0.5
+    },
+    {
+     "d": "2026-02-10",
+     "f": "Covalis Capital LLP",
+     "p": 0.46
+    },
+    {
+     "d": "2026-04-09",
+     "f": "ELEVA CAPITAL SAS",
+     "p": 0.55
+    },
+    {
+     "d": "2026-04-13",
+     "f": "ELEVA CAPITAL SAS",
+     "p": 0.62
+    },
+    {
+     "d": "2026-03-04",
+     "f": "GLG Partners LP",
+     "p": 0.5
+    },
+    {
+     "d": "2026-03-09",
+     "f": "GLG Partners LP",
+     "p": 0.48
+    },
+    {
+     "d": "2026-03-03",
+     "f": "JPMorgan Asset Management (UK) Ltd",
+     "p": 0.54
+    },
+    {
+     "d": "2026-03-27",
+     "f": "JPMorgan Asset Management (UK) Ltd",
+     "p": 0.63
+    },
+    {
+     "d": "2026-03-31",
+     "f": "JPMorgan Asset Management (UK) Ltd",
+     "p": 0.76
+    },
+    {
+     "d": "2026-04-01",
+     "f": "JPMorgan Asset Management (UK) Ltd",
+     "p": 0.8
+    },
+    {
+     "d": "2026-04-15",
+     "f": "Kintbury Capital LLP",
+     "p": 0.5
+    },
+    {
+     "d": "2026-04-16",
+     "f": "Kintbury Capital LLP",
+     "p": 0.66
+    },
+    {
+     "d": "2026-04-20",
+     "f": "Kintbury Capital LLP",
+     "p": 0.79
+    },
+    {
+     "d": "2026-04-21",
+     "f": "Kintbury Capital LLP",
+     "p": 0.87
+    },
+    {
+     "d": "2026-04-22",
+     "f": "Kintbury Capital LLP",
+     "p": 0.94
+    },
+    {
+     "d": "2026-04-24",
+     "f": "Kintbury Capital LLP",
+     "p": 1.06
+    },
+    {
+     "d": "2026-04-27",
+     "f": "Kintbury Capital LLP",
+     "p": 1.18
+    },
+    {
+     "d": "2026-04-28",
+     "f": "Kintbury Capital LLP",
+     "p": 1.35
+    },
+    {
+     "d": "2026-05-15",
+     "f": "Kintbury Capital LLP",
+     "p": 1.45
+    },
+    {
+     "d": "2026-05-20",
+     "f": "Kintbury Capital LLP",
+     "p": 1.64
+    },
+    {
+     "d": "2025-10-07",
+     "f": "Marshall Wace LLP",
+     "p": 0.63
+    },
+    {
+     "d": "2025-10-13",
+     "f": "Marshall Wace LLP",
+     "p": 0.7
+    },
+    {
+     "d": "2025-10-16",
+     "f": "Marshall Wace LLP",
+     "p": 0.68
+    },
+    {
+     "d": "2025-11-11",
+     "f": "Marshall Wace LLP",
+     "p": 0.59
+    },
+    {
+     "d": "2025-11-24",
+     "f": "Marshall Wace LLP",
+     "p": 0.37
+    },
+    {
+     "d": "2026-03-17",
+     "f": "Marshall Wace LLP",
+     "p": 0.5
+    },
+    {
+     "d": "2026-03-27",
+     "f": "Marshall Wace LLP",
+     "p": 0.63
+    },
+    {
+     "d": "2026-04-10",
+     "f": "Marshall Wace LLP",
+     "p": 0.72
+    },
+    {
+     "d": "2026-06-19",
+     "f": "Marshall Wace LLP",
+     "p": 0.69
+    },
+    {
+     "d": "2026-06-23",
+     "f": "Marshall Wace LLP",
+     "p": 0.71
+    },
+    {
+     "d": "2026-07-01",
+     "f": "Marshall Wace LLP",
+     "p": 0.69
+    },
+    {
+     "d": "2025-09-25",
+     "f": "Millennium Capital (DIFC) Limited",
+     "p": 0.52
+    },
+    {
+     "d": "2025-09-26",
+     "f": "Millennium Capital (DIFC) Limited",
+     "p": 0.6
+    },
+    {
+     "d": "2025-10-06",
+     "f": "Millennium Capital (DIFC) Limited",
+     "p": 0.72
+    },
+    {
+     "d": "2025-10-14",
+     "f": "Millennium Capital (DIFC) Limited",
+     "p": 0.84
+    },
+    {
+     "d": "2025-10-15",
+     "f": "Millennium Capital (DIFC) Limited",
+     "p": 0.92
+    },
+    {
+     "d": "2025-10-30",
+     "f": "Millennium Capital (DIFC) Limited",
+     "p": 0.88
+    },
+    {
+     "d": "2025-11-17",
+     "f": "Millennium Capital (DIFC) Limited",
+     "p": 0.95
+    },
+    {
+     "d": "2025-11-20",
+     "f": "Millennium Capital (DIFC) Limited",
+     "p": 1.01
+    },
+    {
+     "d": "2025-11-24",
+     "f": "Millennium Capital (DIFC) Limited",
+     "p": 0.0
+    },
+    {
+     "d": "2025-11-12",
+     "f": "Millennium International Management LP",
+     "p": 0.5
+    },
+    {
+     "d": "2025-11-13",
+     "f": "Millennium International Management LP",
+     "p": 0.6
+    },
+    {
+     "d": "2025-11-17",
+     "f": "Millennium International Management LP",
+     "p": 0.77
+    },
+    {
+     "d": "2025-11-18",
+     "f": "Millennium International Management LP",
+     "p": 0.89
+    },
+    {
+     "d": "2025-11-19",
+     "f": "Millennium International Management LP",
+     "p": 0.93
+    },
+    {
+     "d": "2025-11-21",
+     "f": "Millennium International Management LP",
+     "p": 1.01
+    },
+    {
+     "d": "2025-11-24",
+     "f": "Millennium International Management LP",
+     "p": 0.0
+    },
+    {
+     "d": "2026-03-27",
+     "f": "Voleon Capital Management LP",
+     "p": 0.51
+    },
+    {
+     "d": "2026-05-15",
+     "f": "Voleon Capital Management LP",
+     "p": 0.49
+    },
+    {
+     "d": "2026-04-14",
+     "f": "White Creek Capital LLP",
+     "p": 0.51
+    },
+    {
+     "d": "2026-04-29",
+     "f": "White Creek Capital LLP",
+     "p": 0.62
+    },
+    {
+     "d": "2026-05-15",
+     "f": "White Creek Capital LLP",
+     "p": 0.76
+    },
+    {
+     "d": "2026-05-20",
+     "f": "White Creek Capital LLP",
+     "p": 0.68
+    },
+    {
+     "d": "2026-05-27",
+     "f": "White Creek Capital LLP",
+     "p": 0.7
+    },
+    {
+     "d": "2026-06-10",
+     "f": "White Creek Capital LLP",
+     "p": 0.69
+    }
+   ]
+  }
+ },
+ "legacy_end": "2026-07-10"
+}
