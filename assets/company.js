@@ -1277,9 +1277,11 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
   function dec(x){ return EN()?String(x):String(x).replace('.',','); }
   /* 3 δεκαδικά: το αρχείο της Επιτροπής δημοσιεύει έως 5 (π.χ. 1,05351) — με 2 δεκαδικά
      διαφορετικές γνωστοποιήσεις έδειχναν την ίδια τιμή. Ίδια σύμβαση με το /short-positions/. */
-  function pc(v){return (v==null?'—':dec(Number(v).toFixed(3)));}
-  function dl(v){ if(v==null) return '—'; if(Math.abs(v)<0.0005) return dec('0.000');
-    return (v>0?'+':'−')+dec(Math.abs(v).toFixed(3)); }
+  /* `k` = δεκαδικά. Επιτροπή: 3 (βλ. παραπάνω). FCA (§143): 2 — η FCA δημοσιεύει ΜΟΝΟ
+     2 δεκαδικά, και το 6,470 θα υπονοούσε ακρίβεια που δεν υπάρχει. */
+  function pc(v,k){k=k||3; return (v==null?'—':dec(Number(v).toFixed(k)));}
+  function dl(v,k){ k=k||3; if(v==null) return '—'; if(Math.abs(v)<0.5*Math.pow(10,-k)) return dec((0).toFixed(k));
+    return (v>0?'+':'−')+dec(Math.abs(v).toFixed(k)); }
   /* Η μεταβολή ΔΕΝ διαβάζεται από το αποθηκευμένο `c`: εκείνο είναι η αληθινή διαφορά στα 5
      δεκαδικά της πηγής και, στρογγυλεμένο στα 3, δεν βγαίνει πάντα από την αφαίρεση των δύο
      ποσοστών που βλέπει ο αναγνώστης. Υπολογίζεται εδώ από τα εμφανιζόμενα νούμερα (απόκλιση
@@ -1299,6 +1301,11 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
        ανώνυμο άθροισμα FCA. Το block βγαίνει κανονικά, με την αριστερή στήλη να
        λέει ρητά «χωρίς θέση ≥0,5%» αντί να λείπει — η απουσία είναι η πληροφορία. */
     var F=D.fca && D.fca.rows && D.fca.rows[AX.tk];
+    /* §143 — ιστορικό FCA: σειρά του ανώνυμου αθροίσματος + ονομαστικές θέσεις ≤10/07/2026 */
+    var FH=(D.fca && D.fca.hist && D.fca.hist[AX.tk]) || [];
+    var FL=(D.fca && D.fca.legacy && D.fca.legacy[AX.tk]) || null;
+    if(!F && (FH.length || (FL && FL.funds && FL.funds.length)))
+      F=FH.length?{p:FH[0][1],d:FH[0][0]}:null;
     if(!hasRec && !F) return;
     /* §142.2 — ΕΞΑΙΡΟΥΜΕΝΕΣ ΜΕΤΟΧΕΣ (Άρθρο 16 Καν. 236/2012). Όταν η κύρια αγορά
        διαπραγμάτευσης είναι σε τρίτη χώρα, τα άρθρα 5 και 6 δεν εφαρμόζονται: η Επιτροπή
@@ -1332,7 +1339,11 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
               agg:function(d){return 'anonymised aggregate of all positions — '+d;},
               fcaT:'The FCA percentage is an anonymised aggregate of <b>every</b> position from 0.2%, with no holder names. It is neither comparable with nor additive to the named disclosures of the Commission — they measure different things: a different threshold, a different market, a different date.',
               fcaF:function(a,d,n){return 'Source: Financial Conduct Authority'+(a?' · '+a:'')+' · file '+d+' ('+n+' positions)';},
-              foot:'Change is the difference from the same fund’s previous disclosure, computed on the percentages as displayed. “Closed” next to the name means the fund has no currently disclosed position; if it reopens, the label becomes “open”. Inside the list, “closed” on a row marks a disclosure that fell below the 0.5% threshold — in several cases the record simply stops without such a disclosure.'}
+              foot:'Change is the difference from the same fund’s previous disclosure, computed on the percentages as displayed. “Closed” next to the name means the fund has no currently disclosed position; if it reopens, the label becomes “open”. Inside the list, “closed” on a row marks a disclosure that fell below the 0.5% threshold — in several cases the record simply stops without such a disclosure.',
+              aggN:'Anonymised aggregate', aggCur:'current', pubs:'publications',
+              legH:function(d){return 'Named positions ≥0.5% · until '+d;},
+              legOp:'open at end',
+              fcaL:function(d){return 'Change in the aggregate is the difference from the previous FCA publication. The same position date can appear twice with a different percentage: the FCA republishes the aggregate when late notifications arrive. Until '+d+' the FCA published individual positions by holder name at a 0.5% threshold, as the Commission does; that regime has ended and those positions are a closed archive. “Open at end” means the position was still ≥0.5% in the last publication of that regime, not that it is open today.';}}
              :{t:'Short θέσεις',s:'Επιτροπή Κεφαλαιαγοράς · δημοσιοποιήσεις ≥0,5% του μετοχικού κεφαλαίου',
               open:'ανοιχτή',closed:'κλειστή',date:'Ημερομηνία',pos:'Θέση',chg:'Μεταβολή',dis:'γνωστοπ.',
               n:function(f,o,g){return f+' fund'+(f===1?'':'s')+' · '+o+' με ανοιχτή θέση · '+g+' γνωστοποιήσεις';},
@@ -1354,26 +1365,34 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
               agg:function(d){return 'ανώνυμο άθροισμα όλων των θέσεων — '+d;},
               fcaT:'Το ποσοστό της FCA είναι ανώνυμο άθροισμα <b>όλων</b> των θέσεων από 0,2%, χωρίς ονόματα κατόχων. Δεν συγκρίνεται και δεν αθροίζεται με τις ονομαστικές γνωστοποιήσεις της Επιτροπής — μετρούν διαφορετικό πράγμα: άλλο κατώφλι, άλλη αγορά, άλλη ημερομηνία.',
               fcaF:function(a,d,n){return 'Πηγή: Financial Conduct Authority'+(a?' · '+a:'')+' · αρχείο '+d+' ('+n+' θέσεις)';},
-              foot:'Η μεταβολή είναι η διαφορά από την προηγούμενη γνωστοποίηση του ίδιου fund, υπολογισμένη στα ποσοστά όπως εμφανίζονται. «Κλειστή» δίπλα στο όνομα = το fund δεν έχει σήμερα δημοσιοποιημένη θέση· αν ξανανοίξει, η ένδειξη γίνεται «ανοιχτή». Μέσα στη λίστα, «κλειστή» σε μια γραμμή σημαίνει ότι η συγκεκριμένη γνωστοποίηση έπεσε κάτω από το όριο του 0,5% — σε αρκετές περιπτώσεις η καταγραφή απλώς σταματά χωρίς τέτοια γνωστοποίηση.'};
+              foot:'Η μεταβολή είναι η διαφορά από την προηγούμενη γνωστοποίηση του ίδιου fund, υπολογισμένη στα ποσοστά όπως εμφανίζονται. «Κλειστή» δίπλα στο όνομα = το fund δεν έχει σήμερα δημοσιοποιημένη θέση· αν ξανανοίξει, η ένδειξη γίνεται «ανοιχτή». Μέσα στη λίστα, «κλειστή» σε μια γραμμή σημαίνει ότι η συγκεκριμένη γνωστοποίηση έπεσε κάτω από το όριο του 0,5% — σε αρκετές περιπτώσεις η καταγραφή απλώς σταματά χωρίς τέτοια γνωστοποίηση.',
+              aggN:'Ανώνυμο άθροισμα', aggCur:'τρέχον', pubs:'δημοσιεύσεις',
+              legH:function(d){return 'Ονομαστικές θέσεις ≥0,5% · έως '+d;},
+              legOp:'ανοιχτή στη λήξη',
+              fcaL:function(d){return 'Η μεταβολή του αθροίσματος είναι η διαφορά από την προηγούμενη δημοσίευση της FCA. Η ίδια ημερομηνία θέσης μπορεί να εμφανιστεί δύο φορές με άλλο ποσοστό: η FCA ξαναδημοσιεύει το άθροισμα όταν φτάνουν εκπρόθεσμες γνωστοποιήσεις. Έως τις '+d+' η FCA δημοσίευε ονομαστικές θέσεις με κατώφλι 0,5%, όπως η Επιτροπή· το καθεστώς αυτό έληξε και οι θέσεις του είναι κλειστό αρχείο. «Ανοιχτή στη λήξη» σημαίνει ότι η θέση ήταν ακόμη ≥0,5% στην τελευταία δημοσίευση εκείνου του καθεστώτος — όχι ότι είναι ανοιχτή σήμερα.';}};
 
-    var gs=!hasRec?'':rec.funds.map(function(g){
+    /* Μία λίστα funds — ΙΔΙΟ markup για Επιτροπή και FCA (§143). `k` δεκαδικά, `opT` η
+       ετικέτα της ανοιχτής θέσης (στο αρχείο της FCA: «ανοιχτή στη λήξη», όχι «ανοιχτή»). */
+    function fundList(funds,k,opT){ return funds.map(function(g){
       var rows=g.rows.map(function(r,i){
         var cv=chg(g.rows,i);
-        var k=(cv==null||Math.abs(cv)<0.0005)?'nw':(cv>0?'up':'dn');
+        var c=(cv==null||Math.abs(cv)<0.5*Math.pow(10,-k))?'nw':(cv>0?'up':'dn');
         return '<div class="r"><span class="d">'+gd(r.d)+'</span>'
-          +'<span class="p">'+pc(r.p)+'%'+(r.x?' <span class="chip cl">'+T.closed+'</span>':'')+'</span>'
-          +'<span class="c '+k+'">'+dl(cv)+'</span></div>';
+          +'<span class="p">'+pc(r.p,k)+'%'+(r.x?' <span class="chip cl">'+T.closed+'</span>':'')+'</span>'
+          +'<span class="c '+c+'">'+dl(cv,k)+'</span></div>';
       }).join('');
       return '<details class="'+(g.open?'op':'')+'">'
         +'<summary><span class="arw">▶</span>'
         +'<span class="nm"><b title="'+esc(g.f)+'">'+esc(g.f)+'</b>'
         +(g.open?'':'<span class="chip cl">'+T.closed+'</span>')+'</span>'
-        +'<span class="meta"><span class="lp">'+pc(g.lp)+'%</span>'
-        +(g.open?'<span class="chip op">'+T.open+'</span>':'')
-        +'<span class="ld">'+gd(g.ld)+' · '+g.n+' '+T.dis+'</span></span></summary>'
+        +'<span class="meta"><span class="lp">'+pc(g.lp,k)+'%</span>'
+        +(g.open?'<span class="chip op">'+opT+'</span>':'')
+        +'<span class="ld">'+gd(g.ld)+' · '+g.n+' '+(g.u||T.dis)+'</span></span></summary>'
         +'<div class="rows"><div class="rh"><span>'+T.date+'</span><span>'+T.pos+'</span><span class="ra">'+T.chg+'</span></div>'
         +rows+'</div></details>';
-    }).join('');
+    }).join(''); }
+
+    var gs=!hasRec?'':fundList(rec.funds,3,T.open);
 
     var box=document.getElementById('co-shorts');
     if(!box){ box=document.createElement('div'); box.className='sh'; box.id='co-shorts'; ph.appendChild(box); }
@@ -1416,6 +1435,23 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
               +'<div class="a">'+T.exA(EX.isin, gd(EX.since))+'</div></div>'
             : '<div class="nocard"><div class="h">'+T.nodH+'</div><div class="w">'+T.nodT+'</div></div>');
 
+    /* §143 — ΔΥΟ ΠΑΝΟΜΟΙΟΤΥΠΕΣ ΛΙΣΤΕΣ. Δεξιά η FCA έχει πια τη δική της λίστα, ίδιο
+       markup με της Επιτροπής: (1) το ανώνυμο άθροισμα ως μία κάρτα, με γραμμές κάθε
+       δημοσίευση· (2) από κάτω, χωρισμένες με τίτλο, οι ονομαστικές θέσεις του παλιού
+       βρετανικού καθεστώτος (κλειστό αρχείο έως 10/07/2026). Θέσεις πάνω, διευκρινίσεις
+       κάτω — σε κάθε στήλη χωριστά. */
+    var fItems='';
+    if(FH.length){
+      var agg={f:T.aggN, open:!!(D.fca.rows&&D.fca.rows[AX.tk]), n:FH.length, u:T.pubs,
+               lp:FH[0][1], ld:FH[0][0],
+               rows:FH.map(function(h){return {d:h[0],p:h[1],x:false};})};
+      fItems+=fundList([agg],2,T.aggCur);
+    }
+    var legEnd=FL?gd(FL.end):gd('2026-07-10');
+    if(FL && FL.funds && FL.funds.length)
+      fItems+='<div class="grp">'+T.legH(legEnd)+'</div>'+fundList(FL.funds,2,T.legOp);
+    var rightHtml = fItems ? '<div class="scwrap"><div class="sc">'+fItems+'</div></div>' : '';
+
     box.innerHTML='<div class="hd"><div class="t"><span class="dot"></span>'+T.t+'</div>'
       +'<div class="s">'+T.twoS+'</div>'
       +'<div class="n">'+(hasRec?T.n(rec.funds.length, rec.nopen, rec.n):(EX?T.exN:T.nodN))+'</div></div>'
@@ -1425,15 +1461,15 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
         +'<div class="k f"><div class="s">'+T.fcaH+'</div><div class="v">'+fp+'%</div>'
         +'<div class="e">'+T.agg(gd(F.d))+'</div></div>'
       +'</div>'
-      +'<div class="two'+(hasRec?'':' even')+'">'
+      +'<div class="two even">'
         +'<div class="col"><div class="colh"><span class="src">'+T.cmcH.split(' · ')[0]+'</span>'
-        +'<span class="thr">'+T.cmcC+'</span></div>'+leftHtml+'</div>'
+        +'<span class="thr">'+T.cmcC+'</span></div>'+leftHtml
+        +(hasRec?'<div class="foot">'+T.foot+'</div>':'')+'</div>'
         +'<div class="col"><div class="colh"><span class="src">'+T.fcaH.split(' · ')[0]+'</span>'
-        +'<span class="thr">'+T.fcaC+'</span></div>'
-        +'<div class="fcard"><div class="w">'+T.fcaT+'</div>'
-        +'<div class="a">'+T.fcaF(D.fca.attr?esc(D.fca.attr):'', gd(D.fca.pub||F.d), D.fca.n||0)+'</div></div></div>'
-      +'</div>'
-      +(hasRec?'<div class="foot">'+T.foot+'</div>':'');
+        +'<span class="thr">'+T.fcaC+'</span></div>'+rightHtml
+        +'<div class="foot">'+T.fcaT+(fItems?' '+T.fcaL(legEnd):'')+'</div>'
+        +'<div class="foot src">'+T.fcaF(D.fca.attr?esc(D.fca.attr):'', gd(D.fca.pub||F.d), D.fca.n||0)+'</div></div>'
+      +'</div>';
   }
 
   function boot(){ render(); try{ document.addEventListener('axion:langchange', render); }catch(e){} }
