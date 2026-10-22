@@ -1392,13 +1392,10 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
       return;
     }
 
-    /* ΔΥΟ ΠΗΓΕΣ (§144, 22/10/2026). Πάνω δύο πλαίσια με ΜΟΝΟ το ποσοστό· η πηγή και το
-       κατώφλι γράφονται ΠΑΝΩ από κάθε πλαίσιο («Ελλάδα (…)» / «Ην. Βασίλειο (…)») και
-       πουθενά αλλού στις λίστες. Από κάτω δύο στήλες: θέσεις πάνω, διευκρινίσεις κάτω. */
-    var top=null,i;
-    if(hasRec) for(i=0;i<rec.funds.length;i++){ var g0=rec.funds[i]; if(g0.open && (!top || g0.lp>top.lp)) top=g0; }
-    var cmcV = top ? pc(top.lp)+'%' : '—';
-    var fp=(D.fca.rows&&D.fca.rows[AX.tk]) ? dec(Number(F.p).toFixed(2))+'%' : '—';
+    /* ΔΥΟ ΠΗΓΕΣ (§144–§145, 22/10/2026). ΧΩΡΙΣ ζώνη σύγκρισης πάνω (καταργήθηκε στο §145).
+       Δύο στήλες, καθεμία με τίτλο «Ελλάδα (…)» / «Ην. Βασίλειο (…)» — η ΜΟΝΗ αναφορά πηγής
+       και κατωφλίου. Ελλάδα: κάθε ανοιχτή θέση ως ξεχωριστή κάρτα. Ην. Βασίλειο: το
+       άθροισμα. Από κάτω το «Ιστορικό short θέσεων» και οι διευκρινίσεις. */
     var leftHtml = hasRec ? listHtml
       : (EX ? '<div class="nocard"><div class="h">'+T.exH+'</div><div class="w">'+T.exT+'</div>'
               +'<div class="a">'+T.exA(EX.isin, gd(EX.since))+'</div></div>'
@@ -1418,9 +1415,9 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
     box.innerHTML='<div class="hd"><div class="t"><span class="dot"></span>'+T.t+'</div>'
       +'<div class="s">'+T.twoS+'</div></div>'
       +'<div class="two even">'
-        +'<div class="col"><div class="cmp one"><div class="kc"><div class="lb">'+T.grH+'</div><div class="k"><div class="v">'+cmcV+'</div></div></div></div>'
+        +'<div class="col"><div class="lb">'+T.grH+'</div>'
         +leftHtml+(hasRec?'<div class="foot">'+T.foot+'</div>':'')+'</div>'
-        +'<div class="col"><div class="cmp one"><div class="kc"><div class="lb">'+T.ukH+'</div><div class="k f"><div class="v">'+fp+'</div></div></div></div>'
+        +'<div class="col"><div class="lb">'+T.ukH+'</div>'
         +rightHtml
         +'<div class="foot">'+T.ukT(legEnd, !!(FL&&FL.funds&&FL.funds.length))+'</div>'
         +'<div class="foot src">'+T.fcaF(D.fca.attr?esc(D.fca.attr):'', gd(D.fca.pub||F.d), D.fca.n||0)+'</div></div>'

@@ -567,11 +567,16 @@
    είναι λίγο μικρότερα από τη μονόστηλη λίστα — το πλάτος είναι το μισό. */
 .sh .grp{font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3);
   margin:14px 2px 7px;padding-top:10px;border-top:1px solid var(--line)}
-/* §144 — δύο πλαίσια με ΜΟΝΟ ποσοστό· η πηγή/κατώφλι σε ετικέτα ΠΑΝΩ από το πλαίσιο */
-.sh .cmp .kc{min-width:0}
-.sh .cmp.one{grid-template-columns:1fr;margin-bottom:12px}
-.sh .cmp .lb{font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#f3b3a4;margin:0 2px 6px}
-.sh .cmp .k .v{margin-top:0}
+/* §145 — τίτλος στήλης («Ελλάδα (…)» / «Ην. Βασίλειο (…)»). Λευκός: το μόνο κόκκινο κείμενο
+   του block είναι ο τίτλος «Short θέσεις». */
+.sh .col>.lb{font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#fff;
+  margin:0 2px 9px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+/* §145 — χωρίς κόκκινο φόντο στις κάρτες των ανοιχτών θέσεων (μένει μόνο το περίγραμμα και
+   η ετικέτα «ανοιχτή»). */
+.sh details.op{background:var(--card)}
+.sh details.op[open]{background:var(--cardh)}
+.sh details.op summary:hover{background:var(--cardh)}
+.sh .two .foot b{color:#fff}
 /* §144 — «Ιστορικό short θέσεων»: πτυσσόμενο μενού κάτω από τις ανοιχτές θέσεις.
    Δεν μοιάζει με κάρτα fund (χωρίς περίγραμμα/φόντο) — είναι επικεφαλίδα ομάδας. */
 .sh details.hist{border:0;border-radius:0;background:none;overflow:visible;margin-top:10px}
@@ -585,7 +590,7 @@
 .sh .sc>details.hist:first-child{margin-top:0}
 .sh .sc>details.hist:first-child>summary{border-top:0}
 .sh .foot.src{font-size:11px;color:var(--ink3);margin-top:6px}
-.sh .two .foot b{font-weight:800;color:#f3b3a4}
+.sh .two .foot b{font-weight:800}
 @media (min-width:761px){.sh .two .rh,.sh .two .r{grid-template-columns:96px 1fr 70px;gap:8px}}
 /* §143.1 — ΜΙΚΡΟΤΕΡΑ FONTS σε ΟΛΟ το block (μονόστηλο και δίστηλο), κατ' εντολή του user
    22/10/2026. Υπολογιστής εδώ· κινητό στο τέλος του αρχείου, μετά τα @media 760/400. */
