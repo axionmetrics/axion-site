@@ -2,7 +2,7 @@
  "pub": "2026-10-21",
  "src": "2026-10-21",
  "sha": "b6e988d8ca84",
- "built": "2026-10-23T20:02:36Z",
+ "built": "2026-10-23T22:32:03Z",
  "threshold": 0.5,
  "by": {
   "AKTR": {
@@ -2940,13 +2940,13 @@
     "co": "COCA-COLA HBC AG"
    },
    "MTLN": {
-    "p": 6.24,
+    "p": 6.47,
     "d": "2026-10-15",
     "co": "Metlen Energy & Metals Plc"
    }
   },
   "pub": "2026-10-15",
-  "n": 427,
+  "n": 425,
   "threshold": 0.2,
   "attr": "© The Financial Conduct Authority",
   "hist": {
