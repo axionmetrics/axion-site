@@ -115,7 +115,8 @@
 <style>
 .ix-flt{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:20px}
 .ix-lb{font-size:12px;color:var(--muted)}
-.ix-seg{display:inline-flex;border:1px solid #dce2ec;border-radius:9px;overflow:hidden}
+.ix-seg{display:inline-flex;border:1px solid #dce2ec;border-radius:9px;overflow:hidden;max-width:100%}
+@media(max-width:560px){.ix-seg{flex:1 1 100%}.ix-seg button{flex:1;padding:8px 10px;font-size:12px}}
 .ix-seg button{font-family:inherit;font-size:12.5px;font-weight:700;padding:8px 15px;color:#5a6884;background:#fff;border:0;cursor:pointer}
 .ix-seg button.on{background:#223c66;color:#fff}
 .ix-yr{margin-left:auto;font-family:inherit;font-size:12.5px;border:1px solid #e0e5ee;border-radius:8px;padding:7px 11px;color:#42506a;background:#fff}
@@ -190,6 +191,10 @@
    <button data-ix="mid" type="button">Mid Cap</button>
    <button data-ix="market" type="button" data-i18n="ix.market">Δείκτης Αγοράς</button>
   </span>
+  <span class="ix-seg" id="ixSeg2">
+   <button data-ix="msci" type="button">MSCI Greece</button>
+   <button data-ix="mscisc" type="button">MSCI Small Cap</button>
+  </span>
   <select class="ix-yr" id="ixYr">
    <option value="" data-i18n="ix.allyears">Όλα τα έτη</option>
    <option value="2026">2026</option><option value="2025">2025</option><option value="2024">2024</option><option value="2023">2023</option>
@@ -213,13 +218,21 @@ AX_I18N.add({
  'ix.netchange':{el:'καθαρή μεταβολή', en:'net change'},
  'ix.additions':{el:'Εισαγωγές', en:'Additions'},
  'ix.removals':{el:'Εξαγωγές', en:'Removals'},
- 'ix.market':{el:'Δείκτης Αγοράς', en:'Market Index'}
+ 'ix.market':{el:'Δείκτης Αγοράς', en:'Market Index'},
+ 'ix.quarterly':{el:'τριμηνιαία αναθεώρηση', en:'quarterly review'},
+ 'ix.announced':{el:'ανακοινώθηκε', en:'announced'}
 });
 function L(k){return AX_I18N.t(k);}
 function curLang(){return window.AX_I18N?AX_I18N.lang:'el';}
-function perT(p){return curLang()==='en'?String(p).replace('Ιούνιος','June').replace('Δεκέμβριος','December'):p;}
+const MONTH_EN={'Ιανουάριος':'January','Φεβρουάριος':'February','Μάρτιος':'March','Απρίλιος':'April',
+ 'Μάιος':'May','Ιούνιος':'June','Ιούλιος':'July','Αύγουστος':'August','Σεπτέμβριος':'September',
+ 'Οκτώβριος':'October','Νοέμβριος':'November','Δεκέμβριος':'December'};
+function perT(p){ if(curLang()!=='en') return p;
+ return String(p).replace(/^(\S+)/, m=>MONTH_EN[m]||m); }
+function gd(iso){ const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(iso||''); return m?(m[3]+'/'+m[2]+'/'+m[1]):''; }
 
-const INDEX_DATA=(window.AXION&&window.AXION.indexReviews)||{large:[],mid:[],market:[]};
+const INDEX_DATA=(window.AXION&&window.AXION.indexReviews)||{large:[],mid:[],market:[],msci:[],mscisc:[]};
+const QUARTERLY={msci:1,mscisc:1};   // §146 — η MSCI αναθεωρεί Φεβ/Μάι/Αύγ/Νοέ, η FTSE/Χ.Α. δύο φορές τον χρόνο
 let ixCur='large', ixYear='';
 function ixRender(){
  const list=INDEX_DATA[ixCur].filter(r=>!ixYear||r.ym.slice(0,4)===ixYear);
@@ -229,10 +242,16 @@ function ixRender(){
   const net=r.in.length-r.out.length, netTxt=net>0?('+'+net):(net<0?(''+net):'0');
   const inRows=r.in.length?r.in.map(c=>`<div class="ix-r gin"><span class="ic">＋</span><span class="co">${c[0]}</span><span class="tk">${c[1]}</span></div>`).join(''):`<div class="ix-r none">${L('ix.noin')}</div>`;
   const outRows=r.out.length?r.out.map(c=>`<div class="ix-r rout"><span class="ic">－</span><span class="co">${c[0]}</span><span class="tk">${c[1]}</span></div>`).join(''):`<div class="ix-r none">${L('ix.noout')}</div>`;
-  return `<div class="ix-rev"><div class="ix-rh"><span class="rd">${perT(r.period)}</span><span class="rt">${L('ix.semiannual')}</span><span class="net">${L('ix.netchange')} ${netTxt}</span></div><div class="ix-cols"><div class="ix-col in"><div class="ix-ch gin">▲ ${L('ix.additions')} <span class="n">${r.in.length}</span></div>${inRows}</div><div class="ix-col out"><div class="ix-ch rout">▼ ${L('ix.removals')} <span class="n">${r.out.length}</span></div>${outRows}</div></div></div>`;
+  const kind=L(QUARTERLY[ixCur]?'ix.quarterly':'ix.semiannual');
+  const annTxt=r.ann?` · ${L('ix.announced')} ${gd(r.ann)}`:'';
+  return `<div class="ix-rev"><div class="ix-rh"><span class="rd">${perT(r.period)}</span><span class="rt">${kind}${annTxt}</span><span class="net">${L('ix.netchange')} ${netTxt}</span></div><div class="ix-cols"><div class="ix-col in"><div class="ix-ch gin">▲ ${L('ix.additions')} <span class="n">${r.in.length}</span></div>${inRows}</div><div class="ix-col out"><div class="ix-ch rout">▼ ${L('ix.removals')} <span class="n">${r.out.length}</span></div>${outRows}</div></div></div>`;
  }).join('');
 }
-document.getElementById('ixSeg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;[...e.currentTarget.querySelectorAll('button')].forEach(x=>x.classList.remove('on'));b.classList.add('on');ixCur=b.dataset.ix;ixRender();});
+function ixPick(e){const b=e.target.closest('button');if(!b)return;
+ document.querySelectorAll('#ixSeg button,#ixSeg2 button').forEach(x=>x.classList.remove('on'));
+ b.classList.add('on');ixCur=b.dataset.ix;ixRender();}
+document.getElementById('ixSeg').addEventListener('click',ixPick);
+document.getElementById('ixSeg2').addEventListener('click',ixPick);
 document.getElementById('ixYr').addEventListener('change',e=>{ixYear=e.target.value;ixRender();});
 ixRender();
 document.addEventListener('axion:langchange',ixRender);
