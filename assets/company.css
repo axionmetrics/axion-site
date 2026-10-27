@@ -507,7 +507,7 @@
 .sh details.op summary:hover{background:#6a4e70}
 .sh summary:focus-visible{outline:2px solid #f3b3a4;outline-offset:-2px}
 .sh .arw{font-size:10px;color:var(--ink3);transition:transform .15s}
-.sh details[open] .arw{transform:rotate(90deg)}
+.sh details[open]>summary .arw{transform:rotate(90deg)}
 @media (prefers-reduced-motion:reduce){.sh .arw{transition:none}}
 .sh .nm{display:flex;align-items:center;gap:9px;min-width:0}
 .sh .nm b{font-size:16px;font-weight:700;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -561,6 +561,68 @@
 /* κάτω από 860px οι δύο στήλες δεν χωράνε δίπλα-δίπλα: μπαίνουν η μία κάτω από την άλλη */
 @media (max-width:860px){.sh .cmp,.sh .two,.sh .two.even{grid-template-columns:1fr}}
 .sh .foot{font-size:12px;color:var(--ink2);font-weight:600;margin-top:10px;line-height:1.55}
+/* §143 — ΔΥΟ ΠΑΝΟΜΟΙΟΤΥΠΕΣ ΛΙΣΤΕΣ (Επιτροπή | FCA). Κάθε στήλη: θέσεις πάνω, διευκρινίσεις
+   κάτω. Η FCA χωρίζει το τρέχον καθεστώς (ανώνυμο άθροισμα) από το κλειστό αρχείο
+   ονομαστικών θέσεων ≤10/07/2026 με μια γραμμή-τίτλο (.grp). Στις δύο στήλες τα fonts
+   είναι λίγο μικρότερα από τη μονόστηλη λίστα — το πλάτος είναι το μισό. */
+.sh .grp{font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3);
+  margin:14px 2px 7px;padding-top:10px;border-top:1px solid var(--line)}
+/* §145 — τίτλος στήλης («Ελλάδα (…)» / «Ην. Βασίλειο (…)»). Λευκός: το μόνο κόκκινο κείμενο
+   του block είναι ο τίτλος «Short θέσεις». */
+.sh .col>.lb{font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#fff;
+  margin:0 2px 9px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+/* §145 — χωρίς κόκκινο φόντο στις κάρτες των ανοιχτών θέσεων (μένει μόνο το περίγραμμα και
+   η ετικέτα «ανοιχτή»). */
+.sh .col>.lb{display:flex;align-items:center;gap:8px}
+.sh .flag{display:inline-block;flex:none;width:18px;height:12px;border-radius:2px;overflow:hidden;
+  box-shadow:0 0 0 1px rgba(255,255,255,.22)}
+.sh .flag svg{display:block;width:100%;height:100%}
+.sh details.op{background:var(--card)}
+.sh details.op[open]{background:var(--cardh)}
+.sh details.op summary:hover{background:var(--cardh)}
+.sh .two .foot b{color:#fff}
+/* §144 — «Ιστορικό short θέσεων»: πτυσσόμενο μενού κάτω από τις ανοιχτές θέσεις.
+   Δεν μοιάζει με κάρτα fund (χωρίς περίγραμμα/φόντο) — είναι επικεφαλίδα ομάδας. */
+.sh details.hist{border:0;border-radius:0;background:none;overflow:visible;margin-top:10px}
+.sh details.hist[open]{background:none}
+.sh details.hist>summary{display:flex;align-items:center;gap:9px;padding:9px 4px 8px;border-top:1px solid var(--line)}
+.sh details.hist>summary:hover{background:none}
+.sh details.hist>summary:hover .hl{color:var(--ink)}
+.sh details.hist .hl{font-size:11.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--ink2)}
+.sh details.hist .hn{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ink3)}
+.sh details.hist .hb{padding-top:4px}
+.sh .sc>details.hist:first-child{margin-top:0}
+.sh .sc>details.hist:first-child>summary{border-top:0}
+.sh .foot.src{font-size:11px;color:var(--ink3);margin-top:6px}
+.sh .two .foot b{font-weight:800}
+@media (min-width:761px){.sh .two .rh,.sh .two .r{grid-template-columns:96px 1fr 70px;gap:8px}}
+/* §143.1 — ΜΙΚΡΟΤΕΡΑ FONTS σε ΟΛΟ το block (μονόστηλο και δίστηλο), κατ' εντολή του user
+   22/10/2026. Υπολογιστής εδώ· κινητό στο τέλος του αρχείου, μετά τα @media 760/400. */
+@media (min-width:761px){
+  .sh .hd .t{font-size:13.5px}
+  .sh .hd .s{font-size:12px}
+  .sh .hd .n{font-size:11px}
+  .sh summary{padding:8px 11px;gap:9px}
+  .sh .nm b{font-size:13.5px}
+  .sh .meta{gap:8px}
+  .sh .meta .lp{font-size:15.5px}
+  .sh .meta .ld{font-size:11.5px}
+  .sh .chip{font-size:9.5px;padding:2px 6px}
+  .sh .rh{font-size:10px}
+  .sh .r .d,.sh .r .c{font-size:11.5px}
+  .sh .r .p{font-size:14px}
+  .sh .cmp .k .s{font-size:10px}
+  .sh .cmp .k .v{font-size:25px}
+  .sh .cmp .k .e{font-size:11px}
+  .sh .colh .src{font-size:11px}
+  .sh .colh .thr{font-size:10.5px}
+  .sh .nocard .h{font-size:19px}
+  .sh .nocard .w{font-size:11.5px}
+  .sh .nocard .a{font-size:10px}
+  .sh .grp{font-size:10px}
+  .sh .foot{font-size:11px}
+  .sh .foot.src{font-size:10px}
+}
 /* Κινητό: το block έσπαγε σε 4 σημεία — (α) η «.ld» (ημερομηνία · πλήθος) ήταν nowrap
    δίπλα στο ποσοστό και έβγαινε έξω από την κάρτα, (β) τα ονόματα των funds κόβονταν με
    «…», (γ) η γραμμή με in-row chip «κλειστή» έσπρωχνε τη στήλη μεταβολής εκτός πλάτους,
@@ -614,4 +676,25 @@
   .sh .rh{font-size:9.5px}
   .sh .r .d,.sh .r .c{font-size:11px}
   .sh .r .p{font-size:14px}
+}
+/* §143.1 — κινητό: ίδια μείωση, λίγο ηπιότερη (οι αρχικές τιμές ήταν ήδη μικρότερες) */
+@media (max-width:760px){
+  .sh .hd .t{font-size:13px}
+  .sh .hd .n{font-size:10.5px}
+  .sh .nm b{font-size:13px}
+  .sh .meta .lp{font-size:15px}
+  .sh .meta .ld{font-size:11px}
+  .sh .chip{font-size:9.5px}
+  .sh .r .p{font-size:13.5px}
+  .sh .r .d,.sh .r .c{font-size:11px}
+  .sh .cmp .k .v{font-size:22px}
+  .sh .cmp .k .e{font-size:10.5px}
+  .sh .nocard .h{font-size:17px}
+  .sh .nocard .w{font-size:11px}
+  .sh .grp{font-size:9.5px}
+  .sh .foot{font-size:10.5px}
+}
+@media (max-width:400px){
+  .sh .r .p{font-size:13px}
+  .sh .r .d,.sh .r .c{font-size:10.5px}
 }
