@@ -22,9 +22,23 @@
 
 Τρέχει από GitHub Action (root του repo). Αν αποτύχει το fetch, ΔΕΝ γράφει τίποτα.
 """
-import json, re, sys, os, datetime, urllib.request, statistics
+import json, re, sys, os, io, datetime, urllib.request, statistics, subprocess, tempfile, collections
 
 URL     = "https://athens.euronext.com/sites/default/files/json_data_files/stocks_details_el.json"
+# ── §148 — ΗΜΕΡΗΣΙΟΣ ΤΖΙΡΟΣ ΑΠΟ ΤΟ ΗΔΤ ───────────────────────────────────────
+# ΓΙΑΤΙ: το ATVR της MSCI (κατώφλι ένταξης στους δείκτες) θέλει ημερήσια ΑΞΙΑ
+# ΣΥΝΑΛΛΑΓΩΝ. ΚΑΝΕΝΑ από τα 8 json του Euronext Athens δεν τη δίνει — ελέγχθηκαν
+# όλα (stocks_details_el/en, stocks_el/en, indices_details_el, indices_el,
+# etfs_details_el, bonds_details_el). Το Ημερήσιο Δελτίο Τιμών (PDF) τη δίνει.
+# ΑΝΤΙΣΤΟΙΧΙΣΗ: ΟΧΙ με όνομα (το ΗΔΤ γράφει «ΠΡΟΝΤΕΑ (ΚΟ)») αλλά με το ΠΛΗΘΟΣ
+# ΜΕΤΟΧΩΝ, που είναι το 1ο πεδίο κάθε γραμμής και υπάρχει και στο json. Δοκιμή
+# 27/10/2026: 119 από 119 γραμμές με όγκο ταίριαξαν μονοσήμαντα, 0 αταίριαστες.
+# ΠΡΟΣΟΧΗ: πρέπει να ευρετηριάζονται ΚΑΙ τα δύο πεδία πλήθους του json — η 19
+# CREDIA BANK έχει Listed 1.995.632.829 αλλά Total 2.207.890.029, και το ΗΔΤ
+# χρησιμοποιεί το Total.
+HDT_ON   = True
+HDT_IDX  = "https://athens.euronext.com/el/market-data/data-services/statistics/reports-daily"
+LIQ_DIR  = ".github/liquidity"   # ένα json ανά ΜΗΝΑ: {ΣΥΜΒΟΛΟ: {YYYY-MM-DD: [όγκος, τζίρος]}}
 DATA    = "assets/data.js"        # ΕΙΣΟΔΟΣ μόνο (οικονομικά για P/E, P/BV) — ΔΕΝ γράφεται
 CURRENT = "assets/current.js"     # ΕΞΟΔΟΣ: window.AXION_CURRENT
 SNAP_DIR = "snapshots"            # μόνιμο αρχείο στιγμιότυπων τιμών/μετοχών ανά περίοδο
@@ -235,6 +249,101 @@ def save_current(path, curmap):
     body='window.AXION_CURRENT = '+json.dumps(curmap,ensure_ascii=False,separators=(',',':'))+';\n'
     open(path,'w',encoding='utf-8').write(head+body)
 
+# ---------------------------------------------------------------- ΗΔΤ / τζίρος
+_HDT_ROW = re.compile(r'^\s*([\d,]{5,})\s+[\d.]+\s')   # ξεκινά: πλήθος μετοχών, ονομ. αξία
+# Η ουρά: όγκος | συναλλαγές | ΤΖΙΡΟΣ | κεφαλαιοποίηση χιλ.€ | χαμηλό 52εβδ | υψηλό 52εβδ | ICB
+# ⚠ ΣΤΙΣ ΜΕΓΑΛΕΣ ΕΤΑΙΡΕΙΕΣ ΤΖΙΡΟΣ ΚΑΙ ΚΕΦΑΛΑΙΟΠΟΙΗΣΗ ΓΡΑΦΟΝΤΑΙ ΚΟΛΛΗΤΑ, χωρίς κενό:
+#   «44,542,037.1615,808,055.75» = τζίρος 44.542.037,16 + κεφαλ. 15.808.055,75 (EUROBANK).
+# Γι' αυτό ΑΠΑΓΟΡΕΥΕΤΑΙ ο δεικτοδότης από το τέλος (f[-7], f[-5]) — έριχνε ΣΙΩΠΗΛΑ
+# ακριβώς τις πιο εμπορεύσιμες μετοχές (Τράπεζες, ΔΕΗ). Το `\\.\\d{2}` κόβει σωστά το ζεύγος.
+_HDT_TAIL = re.compile(
+    r'\s(?P<vol>\d[\d,]*)\s+(?P<tr>\d[\d,]*)\s+'
+    r'(?P<turn>\d[\d,]*\.\d{2})\s*(?P<mcap>\d[\d,]*\.\d{2})\s+'
+    r'(?:[\d.]+|-{2,})\s+(?:[\d.]+|-{2,})\s+(?P<icb>\d{8})\s*$')
+# Το ΠΡΩΤΟ αριθμητικό πεδίο μετά την επωνυμία = ΤΙΜΗ ΚΛΕΙΣΙΜΑΤΟΣ. Χρειάζεται γιατί το
+# MSCI ορίζει daily traded value = όγκος × ΚΛΕΙΣΙΜΟ (ο τζίρος του ΗΔΤ βγαίνει με τη
+# ΜΕΣΗ τιμή συνεδρίασης — διαφορά ~0,5%%). Κρατάμε και τα δύο.
+_HDT_NM  = re.compile(r'\d{2}/\d{2}/\d{4}\s+\d{2}/\d{2}/\d{4}\s+\S+\s+(?:.+?)\s{2,}([\d.]+)\s')
+_HDT_NM2 = re.compile(r'\d{2}/\d{2}/\d{4}\s+\S+\s+(?:.+?)\s{2,}([\d.]+)\s')
+_HDT_END = re.compile(r'\s(\d{8})\s*$')                  # τελειώνει: κωδικός ICB
+
+def _hdt_latest_url():
+    """Το νεότερο PDF από τη σελίδα ευρετηρίου. ΠΟΤΕ κατασκευασμένο URL: το όνομα
+    έχει αύξοντα αριθμό συνεδρίασης + ελληνική ημερομηνία («ΗΔΤ-2026-204 (27 Οκτ).pdf»),
+    που σπάει σε κάθε αργία."""
+    req=urllib.request.Request(HDT_IDX, headers={'User-Agent':UA})
+    with urllib.request.urlopen(req, timeout=90) as r:
+        html=r.read().decode('utf-8','replace')
+    links=re.findall(r'href="([^"]*/sites/default/files/[^"]*\.pdf)"', html)
+    hdt=[u for u in links if '%CE%97%CE%94%CE%A4' in u or 'ΗΔΤ' in u]
+    if not hdt: return None
+    # ΟΧΙ η σειρά του εγγράφου — η σελίδα τα δίνει παλαιότερο-πρώτο. Παίρνουμε τον
+    # ΜΕΓΑΛΥΤΕΡΟ αύξοντα αριθμό συνεδρίασης από το όνομα: «…-2026-204 (27 Οκτ).pdf».
+    def seq(u):
+        m=re.search(r'-(\d{4})-(\d{1,3})', u)
+        return (int(m.group(1)), int(m.group(2))) if m else (0,0)
+    u=max(hdt, key=seq)
+    return u if u.startswith('http') else 'https://athens.euronext.com'+u
+
+def fetch_turnover(arr):
+    """{ΣΥΜΒΟΛΟ: (όγκος, τζίρος €, κεφαλ. εταιρείας €, κλείσιμο €, μετοχές)} από το ΗΔΤ. ΔΕΝ πετάει ΠΟΤΕ: οι τιμές είναι η
+    κύρια αποστολή αυτού του script και δεν πρέπει να χαθούν για έναν τζίρο."""
+    if not HDT_ON: return {}, None
+    try:
+        url=_hdt_latest_url()
+        if not url: print('  ΗΔΤ: δεν βρέθηκε σύνδεσμος στο ευρετήριο'); return {}, None
+        req=urllib.request.Request(url, headers={'User-Agent':UA})
+        with urllib.request.urlopen(req, timeout=120) as r: pdf=r.read()
+        with tempfile.TemporaryDirectory() as td:
+            f=os.path.join(td,'h.pdf')
+            open(f,'wb').write(pdf)
+            txt=subprocess.run(['pdftotext','-layout',f,'-'],capture_output=True,timeout=180).stdout.decode('utf-8','replace')
+    except Exception as e:
+        print('  ΗΔΤ: δεν διαβάζεται —', e); return {}, None
+    # πλήθος μετοχών → σύμβολο, και από τα ΔΥΟ πεδία του json
+    bysh=collections.defaultdict(set)
+    for x in arr:
+        for k in ('Number Of Securities Listed','Total Number Of Securities'):
+            try: bysh[int(str(x.get(k)).replace(',','').strip())].add(str(x.get('Symbol') or '').strip())
+            except Exception: pass
+    out={}; seen=0; unmatched=[]
+    for L in txt.split('\n'):
+        m=_HDT_ROW.match(L)
+        if not m or not _HDT_END.search(L): continue
+        tm=_HDT_TAIL.search(L)
+        if not tm: continue               # γραμμή χωρίς συναλλαγές
+        vol=int(tm.group('vol').replace(',','')); turn=float(tm.group('turn').replace(',',''))
+        # η κεφαλαιοποίηση στο ΗΔΤ είναι σε ΧΙΛΙΑΔΕΣ ευρώ → ×1000 για ευρώ
+        mcap=float(tm.group('mcap').replace(',',''))*1000.0
+        seen+=1
+        sh=int(m.group(1).replace(',',''))
+        nm=_HDT_NM.search(L) or _HDT_NM2.search(L)
+        try: cl=float(nm.group(1)) if nm else 0.0
+        except Exception: cl=0.0
+        # εφεδρεία: αν δεν διαβάστηκε το κλείσιμο, βγαίνει από κεφαλαιοποίηση ÷ μετοχές
+        if cl<=0 and sh>0: cl=round(mcap/sh,4)
+        syms={y for y in bysh.get(sh,set()) if y}
+        if len(syms)==1: out[syms.pop()]=(vol,turn,mcap,cl,sh)
+        else: unmatched.append(sh)
+    print('  ΗΔΤ: %d γραμμές με όγκο · %d αντιστοιχίστηκαν · %d αταίριαστες'%(seen,len(out),len(unmatched)))
+    return out, (url.rsplit('/',1)[-1] if url else None)
+
+def save_turnover(turn, day):
+    """Συσσωρευτικό αρχείο ΑΝΑ ΜΗΝΑ — ώστε το ετήσιο ιστορικό να μη ξαναγράφεται
+    ολόκληρο σε κάθε commit."""
+    if not turn: return
+    os.makedirs(LIQ_DIR, exist_ok=True)
+    path=os.path.join(LIQ_DIR, day[:7]+'.json')
+    db=json.load(io.open(path,encoding='utf-8')) if os.path.exists(path) else {}
+    for sym,(vol,tv,mc,cl,sh) in turn.items():
+        # [όγκος, τζίρος €, κεφαλαιοποίηση ΕΤΑΙΡΕΙΑΣ €, κλείσιμο €, μετοχές σειράς]
+        # ⚠ Στις μετοχές διπλής σειράς (ΚΟ+ΠΟ) το ΗΔΤ γράφει ΤΗΝ ΙΔΙΑ συνολική
+        # κεφαλαιοποίηση σε ΚΑΙ ΤΙΣ ΔΥΟ γραμμές (π.χ. ΙΝΤΕΡΓΟΥΝΤ-ΞΥΛΕΜΠΟΡΙΑ).
+        # Για το ATVR χρειάζεται η κεφαλαιοποίηση ΤΗΣ ΣΕΙΡΑΣ = μετοχές × κλείσιμο.
+        db.setdefault(sym,{})[day]=[vol, round(tv,2), round(mc,2), cl, sh]
+    io.open(path,'w',encoding='utf-8').write(json.dumps(db,ensure_ascii=False,sort_keys=True,separators=(',',':')))
+    print('  ΗΔΤ: γράφτηκε %s (%d σύμβολα αυτόν τον μήνα)'%(path,len(db)))
+
 def main():
     req=urllib.request.Request(URL, headers={'User-Agent':UA})
     with urllib.request.urlopen(req, timeout=90) as r:
@@ -255,6 +364,12 @@ def main():
             raise SystemExit(f"ΑΚΥΡΟ: πιθανή αναντιστοιχία μονάδων mcap (ratio={med}). Δεν γράφτηκε τίποτα.")
     if not curmap: raise SystemExit("καμία αντιστοίχιση — δεν γράφτηκε τίποτα")
     save_current(CURRENT, curmap)
+    # §148 — ο τζίρος ΜΕΤΑ το current.js: αν σκάσει, οι τιμές έχουν ήδη γραφτεί
+    try:
+        turn,fname=fetch_turnover(arr)
+        if turn: save_turnover(turn, today)
+    except Exception as e:
+        print('  ΗΔΤ: παραλείπεται —', e)
     print(f"ΟΚ: γράφτηκε {CURRENT} για {len(curmap)} εταιρείες ({today}).")
 
 if __name__=='__main__':

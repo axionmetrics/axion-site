@@ -94,14 +94,19 @@ jobs:
         with:
           python-version: '3.11'
 
+      # §148 — το pdftotext (poppler) χρειάζεται για το ΗΔΤ (ημερήσιος τζίρος).
+      # ΔΕΝ είναι κρίσιμο: αν λείψει, οι τιμές γράφονται κανονικά και χάνεται μόνο ο τζίρος.
+      - name: Εγκατάσταση poppler-utils (pdftotext)
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils
+
       - name: Ενημέρωση τρεχουσών τιμών στο current.js
         if: steps.gate.outputs.run == 'true'
         run: python .github/scripts/daily_prices.py
 
-      - name: Commit & push αλλαγές (current.js + snapshots)
+      - name: Commit & push αλλαγές (current.js + snapshots + τζίρος)
         if: steps.gate.outputs.run == 'true'
         run: |
-          git add assets/current.js snapshots/ 2>/dev/null || true
+          git add assets/current.js snapshots/ .github/liquidity/ 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "Καμία αλλαγή — δεν έγινε commit."
           else
