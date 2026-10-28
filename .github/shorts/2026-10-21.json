@@ -2,7 +2,7 @@
  "pub": "2026-10-21",
  "src": "2026-10-21",
  "sha": "b6e988d8ca84",
- "built": "2026-10-27T16:05:29Z",
+ "built": "2026-10-28T16:05:44Z",
  "threshold": 0.5,
  "by": {
   "AKTR": {
@@ -2946,7 +2946,7 @@
    }
   },
   "pub": "2026-10-22",
-  "n": 431,
+  "n": 429,
   "threshold": 0.2,
   "attr": "© The Financial Conduct Authority",
   "hist": {
