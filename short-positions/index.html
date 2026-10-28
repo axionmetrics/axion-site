@@ -143,6 +143,20 @@
  .sp h2 small{font-weight:600;font-size:12px;color:var(--muted)}
  .sp h2 .dot{width:8px;height:8px;border-radius:50%;background:#c2694f;flex:none}
  .sp h2.q .dot{background:#9aa7b8}
+ /* §155 — ζώνη FCA */
+ .sp h2.uk .dot{background:#3b5a8c}
+ .sp .ukx{background:#f4f7fc;border:1px solid #d6e0ef;border-left:3px solid #3b5a8c;
+   border-radius:11px;padding:11px 14px;margin:10px 0 2px;font-size:12.5px;line-height:1.6;color:#44546f}
+ .sp .ukx b{color:#223c66}
+ .sp .ukx .two{display:inline-block;font-weight:700;color:#3b5a8c}
+ .sp .exb{display:inline-block;margin-left:7px;padding:1px 7px;border-radius:999px;
+   background:#eef2f8;border:1px solid #c9d6e8;color:#3b5a8c;font-size:10.5px;font-weight:700;
+   letter-spacing:.02em;white-space:nowrap;vertical-align:1px}
+ .sp .ukh{margin:6px 0 0}
+ .sp .ukh summary{cursor:pointer;font-size:11.5px;color:#6b7a92;list-style:none}
+ .sp .ukh summary::-webkit-details-marker{display:none}
+ .sp .ukh[open] summary{color:#223c66;font-weight:700}
+ .sp .ukf{font-size:11px;color:#8a95a6;margin:7px 2px 0}
  .sp .view{display:none}.sp .view.on{display:block}
  .sp td.mono{font-family:'Ubuntu Mono';font-size:13px;color:var(--muted);white-space:nowrap}
  .sp td.p{font-family:'Inter';font-weight:800;font-size:15px;color:#223c66;text-align:right;white-space:nowrap}
@@ -371,6 +385,25 @@ AX_I18N.add({
  'sp.hx.cl':{el:'Παλαιότερα funds χωρίς τρέχουσα θέση ({n})', en:'Earlier funds with no current position ({n})'},
  'sp.hx.foot':{el:'Η μεταβολή είναι η διαφορά από την προηγούμενη γνωστοποίηση του ίδιου fund, υπολογισμένη στα ποσοστά όπως εμφανίζονται. «Κλειστή» σε γραμμή σημαίνει ότι η γνωστοποίηση έπεσε κάτω από το 0,5%. Το ιστορικό δίνεται μόνο σε ποσοστό: η κεφαλαιοποίηση κάθε παλιάς ημερομηνίας δεν είναι γνωστή, άρα έκθεση σε ευρώ για το παρελθόν δεν υπολογίζεται.',
              en:'Change is the difference from the same fund’s previous disclosure, computed on the percentages as displayed. “Closed” on a row means the disclosure fell below 0.5%. History is given in percentage only: the market capitalisation at each past date is not known, so no euro exposure is computed for the past.'},
+ /* §155 — Ην. Βασίλειο (FCA). Δεύτερη, ΑΝΕΞΑΡΤΗΤΗ πηγή: άλλο κατώφλι (0,2%), ανώνυμο
+    άθροισμα αντί ονομαστικών θέσεων. ΔΕΝ αθροίζεται με την Επιτροπή. */
+ 'sp.uk.h':{el:'Ην. Βασίλειο (FCA ≥0,2%)', en:'United Kingdom (FCA ≥0.2%)'},
+ 'sp.uk.s':{el:'{n} μετοχές · ανώνυμο άθροισμα · αρχείο {d}', en:'{n} shares · anonymised aggregate · file {d}'},
+ 'sp.uk.gr':{el:'Ελλάδα (Επιτροπή Κεφαλαιαγοράς ≥0,5%)', en:'Greece (Hellenic Capital Market Commission ≥0.5%)'},
+ 'sp.uk.two':{el:'δύο ανεξάρτητες πηγές — δεν αθροίζονται', en:'two independent sources — they are not added together'},
+ 'sp.uk.why':{el:'Η FCA δημοσιεύει το ΑΘΡΟΙΣΜΑ των θέσεων χωρίς ονόματα κατόχων, με κατώφλι 0,2% και βήμα 0,1%, σε βάση T+2. Από τις 13/07/2026 σταμάτησε τις ονομαστικές γνωστοποιήσεις — γι’ αυτό εδώ δεν υπάρχουν funds. Ένα μεγαλύτερο ποσοστό στη FCA δεν σημαίνει «περισσότερο short»: μετρά άλλο πράγμα, σε όλες τις αγορές όπου διαπραγματεύεται η μετοχή.',
+             en:'The FCA publishes the AGGREGATE of positions without holder names, with a 0.2% threshold in 0.1% steps, on a T+2 basis. Since 13/07/2026 it has stopped name-level disclosures — which is why no funds appear here. A larger FCA percentage does not mean “more short”: it measures a different thing, across every venue where the share trades.'},
+ 'sp.uk.ex':{el:'Εκτός ελληνικού καθεστώτος', en:'Outside the Greek regime'},
+ 'sp.uk.exT':{el:'Η μετοχή εξαιρείται από τα άρθρα 5 και 6 του Κανονισμού (ΕΕ) 236/2012, επειδή κύρια αγορά διαπραγμάτευσής της είναι το Χρηματιστήριο του Λονδίνου. Στην Ελλάδα δεν γνωστοποιείται καμία short θέση — σε κανένα μέγεθος.',
+             en:'The share is exempt from Articles 5 and 6 of Regulation (EU) 236/2012 because its principal trading venue is the London Stock Exchange. No short position is disclosed in Greece — at any size.'},
+ 'sp.uk.exA':{el:'ESMA, κατάλογος εξαιρούμενων μετοχών · ISIN {i} · εξαίρεση από {d}',
+              en:'ESMA, list of exempted shares · ISIN {i} · exempt since {d}'},
+ 'sp.uk.also':{el:'και στην Ελλάδα', en:'also in Greece'},
+ 'sp.uk.hist':{el:'{n} δημοσιεύσεις', en:'{n} publications'},
+ 'sp.uk.src':{el:'Πηγή: Financial Conduct Authority · {a} · αρχείο {d} ({n} θέσεις)',
+              en:'Source: Financial Conduct Authority · {a} · file {d} ({n} positions)'},
+ 'sp.uk.rev':{el:'Η FCA αναθεωρεί ενίοτε τη θέση της ίδιας ημερομηνίας σε επόμενο αρχείο — γι’ αυτό μια ημερομηνία μπορεί να εμφανίζεται στο ιστορικό πάνω από μία φορά, με διαφορετικό ποσοστό.',
+              en:'The FCA sometimes restates the position for the same date in a later file — so one date can appear in the history more than once, with a different percentage.'},
  'sp.empty':{el:'Δεν υπάρχουν διαθέσιμα στοιχεία short θέσεων αυτή τη στιγμή.', en:'No short-position data is available at the moment.'}
 });
 
@@ -560,6 +593,67 @@ AX_I18N.add({
    }
    return h+'<div class="foot">'+L('sp.hx.foot')+'</div></div>';
  }
+
+ /* ── §155 ζώνη FCA: ΑΝΕΞΑΡΤΗΤΗ πηγή, δεν αθροίζεται με την Επιτροπή ──────────
+    Η FCA δίνει 2 δεκαδικά (βήμα 0,1%), άρα ΟΧΙ το pct() των 3 δεκαδικών της Επιτροπής. */
+ function pct2(v){return (v==null||isNaN(v))?'—':dec(Number(v).toFixed(2))+'%';}
+ function ukRows(){
+   var F=(SH&&SH.fca)||null; if(!F||!F.rows) return [];
+   return Object.keys(F.rows).map(function(tk){
+     var r=F.rows[tk], I=INFO[tk]||{}, h=(F.hist&&F.hist[tk])||[], mc=mcap(tk);
+     var prev=(h.length>1&&typeof h[1][1]==='number')?h[1][1]:null;
+     return {tk:tk,nm:I.name||r.co||tk,sec:I.s||'',p:r.p,d:r.d,
+             chg:(prev==null?null:Math.round((r.p-prev)*100)/100),
+             exp:(mc!=null?mc*r.p/100:null),hist:h,
+             inGr:!!(SH.by&&SH.by[tk]),ex:(SH.exempt&&SH.exempt[tk])||null};
+   }).sort(function(a,b){return (b.exp||0)-(a.exp||0)||b.p-a.p;});
+ }
+ function ukHist(h){
+   if(!h||h.length<2) return '';
+   var rs=h.map(function(r,i){
+     var pv=(i+1<h.length&&typeof h[i+1][1]==='number')?h[i+1][1]:null;
+     var cv=(pv==null)?null:Math.round((r[1]-pv)*100)/100;
+     var c=(cv==null)?'<span class="nw">—</span>'
+        :(Math.abs(cv)<0.005?'<span class="nw">'+dec('0.00')+'</span>'
+        :'<span class="'+(cv>0?'up':'dn')+'">'+(cv>0?'+':'−')+dec(Math.abs(cv).toFixed(2))+'</span>');
+     return '<div class="r"><span class="d">'+gd(r[0])+'</span><span class="p">'+pct2(r[1])
+       +'</span><span class="c">'+c+'</span></div>';
+   }).join('');
+   return '<details class="ukh"><summary>▸ '+f('sp.uk.hist',{n:h.length})+'</summary>'
+     +'<div class="rl"><div class="rh"><span>'+L('sp.c.date')+'</span><span>'+L('sp.c.pos')
+     +'</span><span style="text-align:right">'+L('sp.c.chg')+'</span></div>'+rs+'</div></details>';
+ }
+ function viewUk(){
+   var F=(SH&&SH.fca)||null, R=ukRows(); if(!R.length) return '';
+   var body=R.map(function(c){
+     var badge=c.ex?('<span class="exb" title="'+esc(L('sp.uk.exT'))+' — '
+         +esc(f('sp.uk.exA',{i:c.ex.isin,d:gd(c.ex.since)}))+'">'+L('sp.uk.ex')+'</span>')
+       :(c.inGr?('<span class="exb" style="background:#fdf3ef;border-color:#f0c3b2;color:#9e3c1e">'
+         +L('sp.uk.also')+'</span>'):'');
+     return '<tr><td class="nm">'+coLink(c.tk,c.nm)+badge+'</td>'
+       +'<td class="sc" data-l="'+L('sp.c.sec')+'">'+esc(SEC(c.sec))+'</td>'
+       +'<td class="p op" data-l="'+L('sp.c.pos')+'">'+pct2(c.p)+'</td>'
+       +'<td class="eu" data-l="'+L('sp.c.exp')+'">'+eur(c.exp)+'</td>'
+       +'<td class="mono" data-l="'+L('sp.c.date')+'">'+gd(c.d)+'</td>'
+       +'<td class="mono" style="text-align:right" data-l="'+L('sp.c.chg')+'">'
+       +(c.chg==null?'<span class="nw">—</span>'
+         :(Math.abs(c.chg)<0.005?'<span class="nw">'+dec('0.00')+'</span>'
+           :'<span class="'+(c.chg>0?'up':'dn')+'">'+(c.chg>0?'+':'−')+dec(Math.abs(c.chg).toFixed(2))+'</span>'))
+       +'</td><td class="lst hide-s">'+ukHist(c.hist)+'</td></tr>';
+   }).join('');
+   return '<h2 class="uk"><span class="dot"></span>'+L('sp.uk.h')+' <small>'
+     +f('sp.uk.s',{n:R.length,d:gd(F.pub)})+'</small></h2>'
+     +'<div class="ukx"><b>'+L('sp.uk.gr')+'</b> &nbsp;·&nbsp; <span class="two">'
+     +L('sp.uk.two')+'</span><br>'+L('sp.uk.why')+'</div>'
+     +'<table><thead><tr><th class="l">'+L('sp.c.co')+'</th><th class="l">'+L('sp.c.sec')+'</th>'
+     +'<th style="text-align:right">'+L('sp.c.pos')+'</th>'
+     +'<th style="text-align:right">'+L('sp.c.exp')+'<i class="i">i</i></th>'
+     +'<th class="l">'+L('sp.c.date')+'</th><th style="text-align:right">'+L('sp.c.chg')+'</th>'
+     +'<th class="hide-s"></th></tr></thead><tbody>'+body+'</tbody></table>'
+     +'<div class="ukf">'+L('sp.uk.rev')+'<br>'
+     +f('sp.uk.src',{a:esc(F.attr||''),d:gd(F.pub),n:F.n||0})+'</div>';
+ }
+
  /* ── όψη: ανά εταιρεία ──────────────────────────────────────────────────────── */
  function viewCo(){
    var t1=M.openC.map(function(c,i){
@@ -590,6 +684,7 @@ AX_I18N.add({
      +'<th style="text-align:right">'+L('sp.c.chg')+'</th>'
      +'<th class="hide-s" style="text-align:right">'+L('sp.c.hist')+'</th></tr></thead><tbody>'+t1+'</tbody></table>'
      +explain()
+     +viewUk()
      +'<h2 class="q"><span class="dot"></span>'+L('sp.h.closed')+' <small>'
      +f('sp.h.closedS',{n:M.closedC.length,d:gd(M.first)})+'</small></h2>'
      +'<table><thead><tr><th class="l">'+L('sp.c.co')+'</th><th class="l">'+L('sp.c.sec')+'</th>'
