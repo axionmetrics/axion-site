@@ -331,12 +331,30 @@ def fca_history(isin_map, cur_raw):
         else:
             if any(r['d']==d and r['p']==p for r in L): continue
         L.append({'d':d,'p':p,'h':h,'seen':today}); added+=1
+    # ⚠ ΑΝΑΛΛΟΙΩΤΟ: το ΤΡΕΧΟΝ αρχείο ANSP έχει ΑΚΡΙΒΩΣ ΜΙΑ ανοιχτή θέση ανά ISIN, άρα μέσα
+    # σε κάθε ISIN επιτρέπεται ΜΙΑ μόνο γραμμή χωρίς `h`. Παλιότερες «τρέχουσες» που δεν
+    # εμφανίστηκαν ποτέ στο ιστορικό CSV (η FCA δεν δημοσιεύει κάθε ενδιάμεσο βήμα) έμεναν
+    # ΓΙΑ ΠΑΝΤΑ σημειωμένες ως τρέχουσες — 34 METLEN, θέση 15/10/2026 με 6,24% και 6,47%
+    # δίπλα στο 6,76% που είχε κανονικά κλείσει στις 19/10.
+    # Κλείνουν με `sup` = η ΔΙΚΗ ΜΑΣ ημερομηνία παρατήρησης. Το `h` μένει ΑΠΟΚΛΕΙΣΤΙΚΑ για
+    # την ημερομηνία που δηλώνει η ίδια η FCA — τα δύο δεν ανακατεύονται.
+    # ΑΣΦΑΛΕΙΑ: αν το τρέχον αρχείο δεν διαβάστηκε για κάποιο ISIN, ΔΕΝ κλείνει τίποτε.
+    cur_key={}
+    for code,co,d,p,h in rows:
+        if not h: cur_key[code]=(d,p)
+    closed=0
+    for code,e in arch['ansp'].items():
+        k=cur_key.get(code)
+        if k is None: continue
+        for r in e['rows']:
+            if r.get('h') or r.get('sup'): continue
+            if (r['d'],r['p'])!=k: r['sup']=today; closed+=1
     for e in arch['ansp'].values():
         e['rows'].sort(key=lambda r:(r['d'], r.get('h') or '9999-99-99'))
     blob=json.dumps(arch, ensure_ascii=False, sort_keys=True)
     sha=hashlib.sha1(blob.encode('utf-8')).hexdigest()[:12]
-    log('FCA ιστορικό: %d ISIN · %d θέσεις · νέες %d · αναθεωρήσεις %d'
-        %(len(arch['ansp']), sum(len(e['rows']) for e in arch['ansp'].values()), added, revised))
+    log('FCA ιστορικό: %d ISIN · %d θέσεις · νέες %d · αναθεωρήσεις %d · έκλεισαν %d'
+        %(len(arch['ansp']), sum(len(e['rows']) for e in arch['ansp'].values()), added, revised, closed))
     return arch, sha, revised
 
 def fca_hist_payload(arch, isin_map):
