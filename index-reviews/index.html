@@ -191,10 +191,7 @@
    <button data-ix="mid" type="button">Mid Cap</button>
    <button data-ix="market" type="button" data-i18n="ix.market">Δείκτης Αγοράς</button>
   </span>
-  <span class="ix-seg" id="ixSeg2">
-   <button data-ix="msci" type="button">MSCI Greece</button>
-   <button data-ix="mscisc" type="button">MSCI Small Cap</button>
-  </span>
+  <span class="ix-seg" id="ixSeg2"></span><!-- §161: γεμίζει από το reviews.js· άδειο όταν δεν υπάρχουν άλλοι δείκτες -->
   <select class="ix-yr" id="ixYr">
    <option value="" data-i18n="ix.allyears">Όλα τα έτη</option>
    <option value="2026">2026</option><option value="2025">2025</option><option value="2024">2024</option><option value="2023">2023</option>
@@ -231,11 +228,22 @@ function perT(p){ if(curLang()!=='en') return p;
  return String(p).replace(/^(\S+)/, m=>MONTH_EN[m]||m); }
 function gd(iso){ const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(iso||''); return m?(m[3]+'/'+m[2]+'/'+m[1]):''; }
 
-const INDEX_DATA=(window.AXION&&window.AXION.indexReviews)||{large:[],mid:[],market:[],msci:[],mscisc:[]};
-const QUARTERLY={msci:1,mscisc:1};   // §146 — η MSCI αναθεωρεί Φεβ/Μάι/Αύγ/Νοέ, η FTSE/Χ.Α. δύο φορές τον χρόνο
+const INDEX_DATA=(window.AXION&&window.AXION.indexReviews)||{large:[],mid:[],market:[]};
+// §161 — ονόματα και συχνότητα έρχονται ΑΠΟ ΤΑ ΔΕΔΟΜΕΝΑ, όχι από το HTML. Αν ένας δείκτης
+// δεν παράγεται (διακόπτης κλειστός), δεν υπάρχει ούτε κουμπί ούτε όνομα σε αυτή τη σελίδα.
+const IX_NAMES=(window.AXION&&window.AXION.indexNames)||{};
+const QUARTERLY={}; ((window.AXION&&window.AXION.indexQuarterly)||[]).forEach(k=>QUARTERLY[k]=1);
+const IX_BASE=['large','mid','market'];   // η πρώτη ομάδα μένει στο HTML (έχει δικά της i18n)
+(function(){
+ const host=document.getElementById('ixSeg2'); if(!host) return;
+ const extra=Object.keys(IX_NAMES).filter(k=>IX_BASE.indexOf(k)<0 && (INDEX_DATA[k]||[]).length);
+ if(!extra.length){ host.remove(); return; }
+ host.innerHTML=extra.map(k=>'<button data-ix="'+k+'" type="button">'+IX_NAMES[k]+'</button>').join('');
+ host.addEventListener('click',ixPick);
+})();
 let ixCur='large', ixYear='';
 function ixRender(){
- const list=INDEX_DATA[ixCur].filter(r=>!ixYear||r.ym.slice(0,4)===ixYear);
+ const list=(INDEX_DATA[ixCur]||[]).filter(r=>!ixYear||r.ym.slice(0,4)===ixYear);
  const el=document.getElementById('ixList');
  if(!list.length){el.innerHTML=`<div class="ix-note">${L('ix.empty')}</div>`;return;}
  el.innerHTML=list.map(r=>{
@@ -251,7 +259,7 @@ function ixPick(e){const b=e.target.closest('button');if(!b)return;
  document.querySelectorAll('#ixSeg button,#ixSeg2 button').forEach(x=>x.classList.remove('on'));
  b.classList.add('on');ixCur=b.dataset.ix;ixRender();}
 document.getElementById('ixSeg').addEventListener('click',ixPick);
-document.getElementById('ixSeg2').addEventListener('click',ixPick);
+
 document.getElementById('ixYr').addEventListener('change',e=>{ixYear=e.target.value;ixRender();});
 ixRender();
 document.addEventListener('axion:langchange',ixRender);
