@@ -3,7 +3,7 @@
 "note": "Το γράφει η γέφυρα (§163). Αποτύπωμα περιεχομένου ανά διεύθυνση, ώστε το lastmod του sitemap να ανανεώνεται μόνο σε πραγματική αλλαγή.",
 "pages": {
 "": {
-"fp": "36aab47b0ed6",
+"fp": "523cd26b989f",
 "lastmod": "2026-10-31"
 },
 "about/": {
@@ -11,15 +11,15 @@
 "lastmod": "2026-10-30"
 },
 "apotelesmata/": {
-"fp": "44e328bda230",
+"fp": "f527859f4068",
 "lastmod": "2026-10-31"
 },
 "company/": {
-"fp": "71a22af88605",
+"fp": "e91818e1a841",
 "lastmod": "2026-10-31"
 },
 "compare/": {
-"fp": "59eb5c7a7430",
+"fp": "0a35e25f53bc",
 "lastmod": "2026-10-31"
 },
 "etaireia/admie-symmetochon/": {
@@ -587,79 +587,79 @@
 "lastmod": "2026-10-31"
 },
 "index-reviews/": {
-"fp": "7692b092d48c",
+"fp": "d397cddcd431",
 "lastmod": "2026-10-31"
 },
 "katataxeis/ev-ebitda/": {
-"fp": "baecd9d95028",
-"lastmod": "2026-10-30"
+"fp": "562ee300118d",
+"lastmod": "2026-10-31"
 },
 "katataxeis/katharos-daneismos-ebitda/": {
-"fp": "611821165228",
-"lastmod": "2026-10-30"
+"fp": "5f05296a8bb5",
+"lastmod": "2026-10-31"
 },
 "katataxeis/merismatiki-apodosi/": {
-"fp": "f6ecf6aa4f27",
-"lastmod": "2026-10-30"
+"fp": "af33f945f0d6",
+"lastmod": "2026-10-31"
 },
 "katataxeis/p-bv/": {
-"fp": "2e084656c5aa",
-"lastmod": "2026-10-30"
+"fp": "77ba354c7c56",
+"lastmod": "2026-10-31"
 },
 "katataxeis/p-e/": {
-"fp": "435ee09d87b1",
-"lastmod": "2026-10-30"
+"fp": "ab0c2e9a8bda",
+"lastmod": "2026-10-31"
 },
 "katataxeis/roe/": {
-"fp": "119a93d6d287",
-"lastmod": "2026-10-30"
+"fp": "e11536d73b6c",
+"lastmod": "2026-10-31"
 },
 "klados/akinita/": {
-"fp": "f547e99fd42e",
-"lastmod": "2026-10-30"
+"fp": "5dd51748b55c",
+"lastmod": "2026-10-31"
 },
 "klados/chrimatooikonomika/": {
-"fp": "208c9db78b9a",
-"lastmod": "2026-10-30"
+"fp": "34b079fc62ae",
+"lastmod": "2026-10-31"
 },
 "klados/emporio-dianomi/": {
-"fp": "60b398659500",
-"lastmod": "2026-10-30"
+"fp": "b3f6ef23d49c",
+"lastmod": "2026-10-31"
 },
 "klados/energeia-koinis-ofeleias/": {
-"fp": "cdba9812c206",
-"lastmod": "2026-10-30"
+"fp": "fca6a76f1830",
+"lastmod": "2026-10-31"
 },
 "klados/holding/": {
-"fp": "dd0bc80b084a",
-"lastmod": "2026-10-30"
+"fp": "9786d24d898c",
+"lastmod": "2026-10-31"
 },
 "klados/katanalotika-agatha/": {
-"fp": "072dc68e92a2",
-"lastmod": "2026-10-30"
+"fp": "ece5a2643cb2",
+"lastmod": "2026-10-31"
 },
 "klados/kataskeves-ypodomes-metafores/": {
-"fp": "a97e80202b28",
-"lastmod": "2026-10-30"
+"fp": "4b28f2713ede",
+"lastmod": "2026-10-31"
 },
 "klados/navtilia/": {
-"fp": "e20aaa61489b",
-"lastmod": "2026-10-30"
+"fp": "26764399033d",
+"lastmod": "2026-10-31"
 },
 "klados/technologia-mme-tilepikoinonies/": {
-"fp": "ccf5d089819c",
-"lastmod": "2026-10-30"
+"fp": "91b14d8d53e9",
+"lastmod": "2026-10-31"
 },
 "klados/trapezes/": {
-"fp": "a3328904ff94",
-"lastmod": "2026-10-30"
+"fp": "322ee18f7f61",
+"lastmod": "2026-10-31"
 },
 "klados/viomichania-vasika-ylika/": {
-"fp": "737e5be22aeb",
-"lastmod": "2026-10-30"
+"fp": "a6cb659fbbcd",
+"lastmod": "2026-10-31"
 },
 "market-events/": {
-"fp": "44c617813681",
+"fp": "c9fb98804dd7",
 "lastmod": "2026-10-31"
 },
 "methodology/": {
@@ -667,11 +667,11 @@
 "lastmod": "2026-10-30"
 },
 "sectors/": {
-"fp": "e7bd70cee339",
+"fp": "619ef67c46bb",
 "lastmod": "2026-10-31"
 },
 "short-positions/": {
-"fp": "9a9e27ee991a",
+"fp": "7736d2a232d2",
 "lastmod": "2026-10-31"
 },
 "terms/": {
