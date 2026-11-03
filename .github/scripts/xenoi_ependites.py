@@ -3,42 +3,55 @@
 """
 Ξένοι επενδυτές — Axion Metrics
 ================================
-Μηνιαία σειρά συμμετοχής ξένων επενδυτών στο Euronext Athens, από το
-«Securities Market Monthly Statistical Bulletin (AXIA NUMBERS)».
+Μηνιαία σειρά συμμετοχής και συναλλαγών ξένων επενδυτών στο Euronext Athens,
+από το «AxiaNUMBERS — Securities Market» (μηνιαίο στατιστικό δελτίο).
 
 ΠΗΓΗ — γιατί ΑΥΤΗ και όχι το Mid-Month Report:
   Το Mid-Month Report δίνει ένα στιγμιότυπο ανά έκδοση, ΑΛΛΑΖΕΙ ορισμό στο
   μερίδιο συναλλαγών (οι εκδόσεις 2025 δίνουν σωρευτικό YtD, του 2026
-  δεκαπενθημέρου) και δεν έχει σελίδα αρχείου. Το AXIA NUMBERS Securities
+  δεκαπενθημέρου) και δεν έχει σελίδα αρχείου. Το AxiaNUMBERS Securities
   δίνει ΜΗΝΙΑΙΑ στοιχεία με σταθερές ενότητες και έχει αρχείο ως το 2007.
-  ΜΗΝ τα ανακατεύεις: για το 2019 το AXIA δίνει 64,18% συμμετοχή (με ΤΧΣ)
-  ενώ το Mid-Month 66,4%. Διαφορετικό σύνολο αναφοράς.
+  ΜΗΝ τα ανακατεύεις: για το 2019 το AXIA δίνει 64,18% συμμετοχή ενώ το
+  Mid-Month 66,4%. Διαφορετικό σύνολο αναφοράς.
 
-ΤΙ ΒΓΑΖΕΙ (ανά μήνα):
-  - συμμετοχή ξένων στην κεφαλαιοποίηση   (ενότητα 3.1.1)
-  - αγορές / πωλήσεις ξένων του μήνα       (ενότητα 2.3.1)
-  - καθαρή ροή του μήνα                    (= αγορές - πωλήσεις)
-  - γεωγραφική κατανομή                    (ενότητα 2.3.11, προαιρετικά)
+ΤΙ ΒΓΑΖΕΙ (ανά μήνα), από τη γραμμή «ΙΙ. Foreign Investors»:
+  ενότητα «Investors' Participation in Total Listed Equities»
+      -> συμμετοχή στα assets under custody: πλήθος, %, αξία (εκ. €), %
+  ενότητα «Analysis of the Monthly Trading Activity in Total of Listed
+            Equities of Athex market per Investors Category»
+      -> αγορές/πωλήσεις του μήνα: αξία (εκ. €) και % του τζίρου, net, net YtD
+
+ΔΙΕΥΘΥΝΣΙΟΔΟΤΗΣΗ ΜΕ ΕΤΙΚΕΤΕΣ, ΟΧΙ ΜΕ ΑΡΙΘΜΟΥΣ ΕΝΟΤΗΤΑΣ:
+  Η αρίθμηση ΑΛΛΑΖΕΙ μεταξύ ετών (στο τεύχος 187 του Απρ 2019 τα ίδια
+  στοιχεία ήταν στις 3.1.1 και 2.3.1· στο τεύχος 276 του Σεπ 2026 είναι
+  στις 3.1 και 2.1). Οπότε αγκυρώνουμε στον ΤΙΤΛΟ της ενότητας και στην
+  ετικέτα της γραμμής — ποτέ στο «3.1.1».
+
+ΕΠΑΛΗΘΕΥΣΗ — τρία checks σε κάθε μήνα, αλλιώς ο μήνας απορρίπτεται:
+  1) αγορές - πωλήσεις == net            (ανοχή 0,05 εκ. €)
+  2) αξία ξένων / σύνολο == ποσοστό       (ανοχή 0,03 μονάδες)
+  3) ο μήνας του εξωφύλλου == ο μήνας του τίτλου του τεύχους
 
 ΤΡΟΠΟΣ ΧΡΗΣΗΣ:
-  python xenoi_ependites.py --inventory     # μόνο ο κατάλογος τευχών (χωρίς λήψη)
-  python xenoi_ependites.py --fetch         # λήψη + αποθήκευση PDF στο cache
-  python xenoi_ependites.py                 # πλήρες: λήψη, εξαγωγή, JSON
+  python xenoi_ependites.py --selftest <τεύχος.zip|.pdf>   # έλεγχος σε δείγμα
+  python xenoi_ependites.py --inventory                    # κατάλογος τευχών
+  python xenoi_ependites.py --fetch                        # λήψη στο cache
+  python xenoi_ependites.py                                # πλήρες -> JSON
 
-ΠΡΟΣΟΧΗ (§ΝΕΟ):
-  1) Από το Issue 190 (Ιούλιος 2019) και μετά τα τεύχη είναι **ZIP**. Οι
-     διευθύνσεις /en/documents/... ΔΕΝ έχουν κατάληξη — ο τύπος αναγνωρίζεται
-     από τα πρώτα bytes, ΟΧΙ από το URL.
-  2) Υπάρχουν ΚΕΝΑ στη σειρά τευχών (π.χ. λείπει το 047). Μη θεωρείς ότι ο
-     αριθμός τεύχους αντιστοιχεί γραμμικά σε μήνα.
+ΠΡΟΣΟΧΗ:
+  1) Από το Issue 190 (Ιούλ 2019) και μετά τα τεύχη είναι **ZIP** με το PDF
+     μέσα. Οι διευθύνσεις δεν έχουν κατάληξη — ο τύπος αναγνωρίζεται από τα
+     πρώτα bytes, ΟΧΙ από το URL.
+  2) Υπάρχουν ΚΕΝΑ στη σειρά τευχών (π.χ. λείπει το 047). Ο αριθμός τεύχους
+     ΔΕΝ αντιστοιχεί γραμμικά σε μήνα.
   3) Το δελτίο καθυστερεί 1-2 μήνες. Ο τελευταίος διαθέσιμος μήνας ΔΕΝ είναι
      ο προηγούμενος.
-  4) Η διάταξη των ενοτήτων είναι επαληθευμένη στο τεύχος 187 (Απρ 2019).
-     Για 2020+ ΔΕΝ έχει επαληθευτεί — γι' αυτό η parse_pdf() ΣΠΑΕΙ θορυβωδώς
-     αν δεν βρει ό,τι περιμένει, αντί να γράψει σιωπηλά λάθος νούμερα.
+  4) Η διάταξη είναι ΕΠΑΛΗΘΕΥΜΕΝΗ στο τεύχος 276 (Σεπ 2026). Για παλαιότερα
+     τεύχη δεν έχει επαληθευτεί· όποιος μήνας δεν περάσει τα checks μπαίνει
+     στο "failed" με τον λόγο, ΔΕΝ γράφεται με μαντεμένη τιμή.
 """
 
-import argparse, io, json, os, re, sys, zipfile
+import argparse, io, json, os, re, shutil, subprocess, sys, tempfile, zipfile, datetime
 import urllib.request, urllib.parse
 
 BASE = "https://athens.euronext.com"
@@ -58,6 +71,148 @@ MONTHS = {m: i for i, m in enumerate(
      "August","September","October","November","December"], 1)}
 TITLE_RE = re.compile(r"Issue\s+(\d+)\s*\(\s*([A-Za-z]+)\s+(\d{4})\s*\)")
 
+# ---------------------------------------------------------------- εξαγωγή ----
+
+NUM = r"-?\d{1,3}(?:,\d{3})*(?:\.\d+)?"
+# «ΙΙ.» γράφεται άλλοτε με λατινικό I, άλλοτε με ελληνικό Ι — δέξου και τα δύο.
+FOREIGN = re.compile(r"^\s*[IΙ]{2}\s*\.\s*Foreign\s+Investors\b(.*)$")
+TOTAL   = re.compile(r"^\s*Total\s+(" + NUM + r")\s+(?:100%|" + NUM + r"%)\s+(" + NUM + r")\s")
+
+# Οι τέσσερις πίνακες που έχουν γραμμή «ΙΙ. Foreign Investors». Αγκυρώνουμε
+# στον ΤΙΤΛΟ του πίνακα — όχι στο «2.1»/«3.1», που αλλάζει μεταξύ ετών.
+TABLES = {
+    "trade_total": "Analysis of the Monthly Trading Activity in Total of Listed Equities",
+    "trade_ftse":  "Trading Activity in FTSE/Athex Large Cap",
+    "part_total":  "Participation in Total Listed Equities",
+    "part_ftse":   "Participation in the FTSE/Athex Large Cap Index",
+}
+
+
+def f(s):
+    return float(s.replace(",", "").rstrip("%"))
+
+
+def tables_of(text):
+    """{όνομα πίνακα: [τιμές της γραμμής ΙΙ. Foreign Investors]}.
+
+    Για κάθε γραμμή συνόλου ξένων βρίσκουμε τον ΠΛΗΣΙΕΣΤΕΡΟ ΠΡΟΗΓΟΥΜΕΝΟ τίτλο
+    πίνακα. Αντίστροφα (τίτλος -> πρώτη γραμμή από κάτω) ΔΕΝ δουλεύει: ο ίδιος
+    τίτλος εμφανίζεται και στα περιεχόμενα, και η καταχώρηση των περιεχομένων
+    σπάει σε δύο γραμμές, οπότε η πρώτη δεν έχει τελείες και περνά για σώμα.
+    """
+    lines = text.splitlines()
+    marks = []
+    for i, ln in enumerate(lines):
+        low = re.sub(r"\s+", " ", ln).strip().lower()
+        for name, phrase in TABLES.items():
+            if phrase.lower() in low:
+                marks.append((i, name))
+    out = {}
+    for i, ln in enumerate(lines):
+        m = FOREIGN.match(ln)
+        if not m:
+            continue
+        v = re.findall(NUM + r"%?", m.group(1))
+        if not v:
+            continue
+        prev = [nm for (j, nm) in marks if j < i]
+        if not prev:
+            continue
+        out.setdefault(prev[-1], v)          # η πρώτη γραμμή κάθε πίνακα
+    return out, lines
+
+
+def parse_text(text, period):
+    """Εξαγωγή + επαλήθευση. Σπάει με ValueError αν κάτι δεν βγαίνει."""
+    tb, lines = tables_of(text)
+    r = {"period": period}
+
+    v = tb.get("trade_total")
+    if not v or len(v) < 10:
+        raise ValueError("μηνιαίες συναλλαγές (σύνολο αγοράς): γραμμή ξένων %s" % v)
+    r["buys_m"], r["buys_pct"] = f(v[2]), f(v[3])
+    r["sells_m"], r["sells_pct"] = f(v[6]), f(v[7])
+    r["net_m"], r["net_ytd_m"] = f(v[8]), f(v[9])
+
+    v = tb.get("part_total")
+    if not v or len(v) < 4:
+        raise ValueError("συμμετοχή (σύνολο εισηγμένων): γραμμή ξένων %s" % v)
+    r["part_n"], r["part_val_m"], r["part_pct"] = int(f(v[0])), f(v[2]), f(v[3])
+
+    # σύνολο αγοράς = η γραμμή Total του ΙΔΙΟΥ πίνακα συμμετοχής
+    r["mkt_val_m"] = None
+    start = next((i for i, ln in enumerate(lines)
+                  if FOREIGN.match(ln) and f"{r['part_val_m']:,.2f}" in ln), 0)
+    for j in range(start, min(start + 60, len(lines))):
+        m = TOTAL.match(lines[j])
+        if m:
+            r["mkt_val_m"] = f(m.group(2))
+            break
+
+    # --- check 1: αγορές - πωλήσεις == net ---
+    d = abs((r["buys_m"] - r["sells_m"]) - r["net_m"])
+    if d > 0.05:
+        raise ValueError("αγορές-πωλήσεις != net (διαφορά %.2f εκ. €)" % d)
+
+    # --- check 2: αξία / σύνολο == ποσοστό ---
+    if not r["mkt_val_m"]:
+        raise ValueError("δεν βρέθηκε η γραμμή Total του πίνακα συμμετοχής")
+    calc = r["part_val_m"] / r["mkt_val_m"] * 100.0
+    if abs(calc - r["part_pct"]) > 0.03:
+        raise ValueError("συμμετοχή %.2f%% != αξία/σύνολο %.2f%%"
+                         % (r["part_pct"], calc))
+
+    # --- check 3: μήνας εξωφύλλου ---
+    m = re.search(r"^\s*([A-Za-z]{3,9})\s+(\d{4})\s*$", text[:1500], re.M)
+    if m and MONTHS.get(m.group(1).title()):
+        cover = "%s-%02d" % (m.group(2), MONTHS[m.group(1).title()])
+        if cover != period:
+            raise ValueError("εξώφυλλο %s != τίτλος τεύχους %s" % (cover, period))
+        r["cover_ok"] = True
+    else:
+        r["cover_ok"] = False
+    return r
+
+
+def pdf_text(src):
+    """Κείμενο του PDF. Πρώτα pdftotext (poppler) — είναι ~100x ταχύτερο και το
+    χρειαζόμαστε, γιατί το backfill είναι ~80 τεύχη x 20 σελίδες. Αν λείπει,
+    πέφτει στο pdfplumber. Η εξαγωγή είναι ΕΠΑΛΗΘΕΥΜΕΝΗ ΚΑΙ ΜΕ ΤΑ ΔΥΟ."""
+    raw = src if isinstance(src, bytes) else open(src, "rb").read()
+    exe = shutil.which("pdftotext")
+    if exe:
+        with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as fh:
+            fh.write(raw); tmp = fh.name
+        try:
+            out = subprocess.run([exe, "-layout", tmp, "-"], check=True,
+                                 capture_output=True)
+            txt = out.stdout.decode("utf-8", "replace")
+            if "Foreign Investors" in txt:
+                return txt
+        except Exception:
+            pass
+        finally:
+            os.unlink(tmp)
+    import pdfplumber
+    with pdfplumber.open(io.BytesIO(raw)) as pdf:
+        return "\n".join((p.extract_text() or "") for p in pdf.pages)
+
+
+def pdf_bytes(raw):
+    """Το τεύχος είναι ZIP ή PDF — κρίνεται από τα bytes, όχι από το URL."""
+    if raw[:4] == b"PK\x03\x04":
+        z = zipfile.ZipFile(io.BytesIO(raw))
+        names = [n for n in z.namelist() if n.lower().endswith(".pdf")]
+        if not names:
+            raise ValueError("ZIP χωρίς PDF: %s" % z.namelist()[:5])
+        names.sort(key=lambda n: -z.getinfo(n).file_size)   # το μεγαλύτερο
+        return z.read(names[0]), names[0]
+    if raw[:4] == b"%PDF":
+        return raw, "(απευθείας PDF)"
+    raise ValueError("άγνωστος τύπος αρχείου, πρώτα bytes: %r" % raw[:8])
+
+
+# -------------------------------------------------------------- κατάλογος ----
 
 def fetch(url, timeout=60):
     req = urllib.request.Request(url, headers=UA)
@@ -78,7 +233,7 @@ def inventory():
             m = TITLE_RE.search(a.get_text(" ", strip=True))
             if not m:
                 continue
-            mon = MONTHS.get(m.group(2))
+            mon = MONTHS.get(m.group(2).title())
             if not mon:
                 continue
             period = "%s-%02d" % (m.group(3), mon)
@@ -95,105 +250,141 @@ def inventory():
     return out
 
 
-def pdf_bytes(raw):
-    """Το τεύχος είναι ZIP ή PDF — κρίνεται από τα bytes, όχι από το URL."""
-    if raw[:4] == b"PK\x03\x04":
-        z = zipfile.ZipFile(io.BytesIO(raw))
-        names = [n for n in z.namelist() if n.lower().endswith(".pdf")]
-        if not names:
-            raise ValueError("ZIP χωρίς PDF: %s" % z.namelist()[:5])
-        names.sort(key=lambda n: -z.getinfo(n).file_size)   # το μεγαλύτερο
-        return z.read(names[0]), names[0]
-    if raw[:4] == b"%PDF":
-        return raw, "(απευθείας PDF)"
-    raise ValueError("άγνωστος τύπος αρχείου, πρώτα bytes: %r" % raw[:8])
+def gaps_of(periods):
+    if not periods:
+        return []
+    lo, hi = min(periods), max(periods)
+    y0, m0 = map(int, lo.split("-")); y1, m1 = map(int, hi.split("-"))
+    out = []
+    y, m = y0, m0
+    while (y, m) <= (y1, m1):
+        p = "%04d-%02d" % (y, m)
+        if p not in periods:
+            out.append(p)
+        m += 1
+        if m == 13:
+            y, m = y + 1, 1
+    return out
 
 
-NUM = r"([\d.,]+)"
+def yearly(months):
+    """Ανά έτος: συμμετοχή Δεκεμβρίου (ή του τελευταίου μήνα) + καθαρή ροή."""
+    by = {}
+    for r in months:
+        by.setdefault(int(r["period"][:4]), []).append(r)
+    out = []
+    for y in sorted(by):
+        g = sorted(by[y], key=lambda r: r["period"])
+        n = len(g)
+        out.append({
+            "year": y, "months": n, "last": g[-1]["period"],
+            "part_pct_end": g[-1]["part_pct"],
+            "part_pct_avg": round(sum(r["part_pct"] for r in g) / n, 2),
+            "buys_pct_avg": round(sum(r["buys_pct"] for r in g) / n, 2),
+            "sells_pct_avg": round(sum(r["sells_pct"] for r in g) / n, 2),
+            "net_m": round(sum(r["net_m"] for r in g), 2),
+            "net_ytd_m_reported": g[-1]["net_ytd_m"],
+        })
+    return out
 
-def parse_pdf(text, period):
-    """Εξαγωγή των τριών μεγεθών. ΣΠΑΕΙ αν δεν βρει — δεν μαντεύει.
 
-    ΕΠΑΛΗΘΕΥΜΕΝΟ στο Issue 187 (Απρ 2019):
-      3.1.1 «Total Listed Equities and Main Categories» -> II. Foreign Investors
-      2.3.1 «Analysis of the Monthly Trading Activity ... per Investor Category»
-    Αν η διάταξη άλλαξε στα νεότερα τεύχη, ΕΔΩ είναι το σημείο που διορθώνεις —
-    και ΠΑΝΤΑ με δείγμα μπροστά σου, όχι με εικασία."""
-    res = {"period": period}
-    flat = re.sub(r"[ \t]+", " ", text)
+# ------------------------------------------------------------------- main ----
 
-    m = re.search(r"Foreign\s+Investors.{0,200}?" + NUM + r"\s*%", flat, re.S | re.I)
-    if not m:
-        raise ValueError("%s: δεν βρέθηκε ποσοστό συμμετοχής (3.1.1)" % period)
-    res["cap_pct"] = float(m.group(1).replace(".", "").replace(",", "."))
-
-    # ΤΟ ΣΗΜΕΙΟ ΠΟΥ ΘΕΛΕΙ ΔΕΙΓΜΑ: αγορές/πωλήσεις ξένων του μήνα (2.3.1).
-    # Μένει ασυμπλήρωτο επίτηδες ώσπου να δούμε πραγματικό τεύχος 2020+.
-    res["buys_pct"] = res["sells_pct"] = None
-    return res
+def load_existing():
+    """Τα όσα έχουν ήδη βγει. Το JSON ΕΙΝΑΙ η μνήμη της ροής: κάθε run κατεβάζει
+    μόνο τους μήνες που λείπουν, όχι και τα 80 τεύχη του backfill."""
+    try:
+        with open(OUT, encoding="utf-8") as fh:
+            d = json.load(fh)
+        return {r["period"]: r for r in d.get("months", [])}
+    except Exception:
+        return {}
 
 
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("--selftest", metavar="ΑΡΧΕΙΟ",
+                    help="έλεγχος της εξαγωγής σε ένα τεύχος (.zip ή .pdf)")
     ap.add_argument("--inventory", action="store_true", help="μόνο κατάλογος τευχών")
-    ap.add_argument("--fetch", action="store_true", help="λήψη + αποθήκευση PDF")
+    ap.add_argument("--refresh", action="store_true",
+                    help="ξανακατέβασε και ξαναδιάβασε ΟΛΟΥΣ τους μήνες")
     ap.add_argument("--from", dest="frm", default=FROM_PERIOD)
+    ap.add_argument("--cache", default=os.path.join(tempfile.gettempdir(), "axia"),
+                    help="φάκελος για τα PDF (ΕΚΤΟΣ repo — δεν γίνονται commit)")
     a = ap.parse_args()
 
+    if a.selftest:
+        data, inner = pdf_bytes(open(a.selftest, "rb").read())
+        print("PDF μέσα στο αρχείο: %s" % inner)
+        txt = pdf_text(data)
+        m = re.search(r"^\s*([A-Za-z]{3,9})\s+(\d{4})\s*$", txt[:1500], re.M)
+        if not m or not MONTHS.get(m.group(1).title()):
+            print("ΔΕΝ βρέθηκε μήνας στο εξώφυλλο", file=sys.stderr); sys.exit(1)
+        r = parse_text(txt, "%s-%02d" % (m.group(2), MONTHS[m.group(1).title()]))
+        w = max(len(k) for k in r)
+        for k, v in r.items():
+            print("  %-*s %s" % (w, k, v))
+        print("OK — πέρασαν και τα 3 checks")
+        return
+
     inv = [r for r in inventory() if r["period"] >= a.frm]
-    print("τεύχη από %s: %d  (%s -> %s)" % (
+    print("τεύχη στο αρχείο από %s: %d  (%s -> %s)" % (
         a.frm, len(inv), inv[-1]["period"] if inv else "—",
         inv[0]["period"] if inv else "—"))
-
-    # έλεγχος κενών: ποιοι μήνες λείπουν από το εύρος
-    have = {r["period"] for r in inv}
-    if inv:
-        y0, m0 = map(int, inv[-1]["period"].split("-"))
-        y1, m1 = map(int, inv[0]["period"].split("-"))
-        gaps = ["%04d-%02d" % (y, m)
-                for y in range(y0, y1 + 1) for m in range(1, 13)
-                if (y, m) >= (y0, m0) and (y, m) <= (y1, m1)
-                and "%04d-%02d" % (y, m) not in have]
-        print("κενά: %s" % (", ".join(gaps) if gaps else "κανένα"))
+    print("κενά στον κατάλογο: %s" % (
+        ", ".join(gaps_of({r["period"] for r in inv})) or "κανένα"))
 
     if a.inventory:
         for r in inv:
             print("  %s  Issue %-4d %s" % (r["period"], r["issue"], r["url"]))
         return
 
-    os.makedirs(CACHE, exist_ok=True)
-    rows, failed = [], []
-    for r in inv:
-        dst = os.path.join(CACHE, "%s_issue%d.pdf" % (r["period"], r["issue"]))
+    have = {} if a.refresh else load_existing()
+    todo = [r for r in inv if r["period"] not in have]
+    print("ήδη στο JSON: %d · προς λήψη: %d" % (len(have), len(todo)))
+
+    os.makedirs(a.cache, exist_ok=True)
+    failed = []
+    for r in todo:
+        dst = os.path.join(a.cache, "%s_issue%d.pdf" % (r["period"], r["issue"]))
         try:
             if not os.path.exists(dst):
-                data, inner = pdf_bytes(fetch(r["url"]))
-                with open(dst, "wb") as f:
-                    f.write(data)
-                print("  %s  %s" % (r["period"], inner))
-            if a.fetch:
-                continue
-            import pdfplumber                      # μόνο όταν χρειάζεται
-            with pdfplumber.open(dst) as pdf:
-                text = "\n".join((p.extract_text() or "") for p in pdf.pages)
-            rows.append(parse_pdf(text, r["period"]))
+                data, _ = pdf_bytes(fetch(r["url"]))
+                with open(dst, "wb") as fh:
+                    fh.write(data)
+            row = parse_text(pdf_text(dst), r["period"])
+            row["issue"] = r["issue"]
+            have[r["period"]] = row
+            print("  %s  συμμετοχή %.2f%%  αγορές %.2f%%  πωλήσεις %.2f%%  net %+.2f"
+                  % (r["period"], row["part_pct"], row["buys_pct"],
+                     row["sells_pct"], row["net_m"]))
         except Exception as ex:
-            failed.append((r["period"], str(ex)[:120]))
-            print("  ΑΠΟΤΥΧΙΑ %s: %s" % (r["period"], ex), file=sys.stderr)
+            failed.append({"period": r["period"], "issue": r["issue"],
+                           "why": str(ex)[:160]})
+            print("  ΑΠΟΤΥΧΙΑ %s (Issue %d): %s" % (r["period"], r["issue"], ex),
+                  file=sys.stderr)
 
-    if failed:
-        print("\nαπέτυχαν %d από %d τεύχη" % (len(failed), len(inv)), file=sys.stderr)
-    if a.fetch:
-        print("\nτα PDF αποθηκεύτηκαν στο %s" % CACHE)
-        return
-
-    rows.sort(key=lambda r: r["period"])
+    months = sorted(have.values(), key=lambda r: r["period"])
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
-    json.dump({"source": "AXIA NUMBERS Securities (Euronext Athens)",
-               "category_param": CATEGORY_AXIA_SECURITIES,
-               "rows": rows, "failed": failed},
-              open(OUT, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
-    print("γράφτηκε %s — %d μήνες" % (OUT, len(rows)))
+    with open(OUT, "w", encoding="utf-8") as fh:
+        json.dump({
+            "source": "AxiaNUMBERS — Securities Market (Euronext Athens)",
+            "source_url": LIST + "?field_mig_category_target_id=%d" % CATEGORY_AXIA_SECURITIES,
+            "basis": "συμμετοχή = assets under custody στο ΕΛΚΑΤ · "
+                     "αγορές/πωλήσεις = % του μηνιαίου τζίρου",
+            "generated": datetime.date.today().isoformat(),
+            "from": a.frm,
+            "months": months,
+            "years": yearly(months),
+            "missing": gaps_of({r["period"] for r in months}),
+            "failed": failed,
+        }, fh, ensure_ascii=False, indent=1)
+    print("γράφτηκε %s — %d μήνες (%s -> %s), %d αποτυχίες"
+          % (OUT, len(months),
+             months[0]["period"] if months else "—",
+             months[-1]["period"] if months else "—", len(failed)))
+    if failed:
+        sys.exit(1)
 
 
 if __name__ == "__main__":
