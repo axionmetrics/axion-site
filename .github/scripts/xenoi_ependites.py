@@ -220,34 +220,68 @@ def fetch(url, timeout=60):
         return r.read()
 
 
+FILE_PREFIX = "/sites/default/files/"
+
+
 def inventory():
-    """-> [{'issue':276,'period':'2026-09','title':...,'url':...}] φθίνουσα."""
+    """-> [{'issue':276,'period':'2026-09','title':...,'url':...}] φθίνουσα.
+
+    ΔΥΟ ΜΟΡΦΕΣ ΓΡΑΜΜΗΣ ΣΤΟ ΙΔΙΟ ΑΡΧΕΙΟ (διαπιστώθηκε 03/11/2026, το σημείο
+    αλλαγής είναι μεταξύ Οκτ και Νοε 2024):
+      ΠΑΛΙΑ:  ο τίτλος δείχνει ΚΑΤΕΥΘΕΙΑΝ στο έγγραφο, /en/documents/10180/...
+      ΝΕΑ:    ο τίτλος δείχνει σε ΣΕΛΙΔΑ ανακοίνωσης, /en/more-options/
+              announcements/issue-276-september-2026, και το αρχείο κρέμεται
+              χωριστά στο /sites/default/files/2026-10/Issue 276 (...).zip
+    Γι' αυτό προτιμάμε ΠΑΝΤΑ τον σύνδεσμο αρχείου όταν υπάρχει: το ΟΝΟΜΑ του
+    αρχείου κουβαλά μόνο του τεύχος και μήνα, άρα δεν χρειάζεται αντιστοίχιση
+    με τη γραμμή. Αν λείπει, πέφτουμε στον τίτλο — και τότε αναλαμβάνει η
+    follow_html() στον βρόχο λήψης."""
     from bs4 import BeautifulSoup
-    seen, out = set(), []
+    best, out = {}, []
     for p in range(PAGES):
         url = "%s?field_mig_category_target_id=%d&page=%d" % (
             LIST, CATEGORY_AXIA_SECURITIES, p)
         soup = BeautifulSoup(fetch(url).decode("utf-8", "replace"), "html.parser")
-        rows = 0
+        found = 0
         for a in soup.find_all("a", href=True):
-            m = TITLE_RE.search(a.get_text(" ", strip=True))
+            href = urllib.parse.urljoin(BASE, a["href"])
+            # (1) σύνδεσμος αρχείου — ο τίτλος είναι μέσα στο ΟΝΟΜΑ του
+            txt = urllib.parse.unquote(href.rsplit("/", 1)[-1]) \
+                  if FILE_PREFIX in href else a.get_text(" ", strip=True)
+            m = TITLE_RE.search(txt)
             if not m:
                 continue
             mon = MONTHS.get(m.group(2).title())
             if not mon:
                 continue
-            period = "%s-%02d" % (m.group(3), mon)
-            key = (int(m.group(1)), period)
-            if key in seen:
-                continue
-            seen.add(key); rows += 1
-            out.append({"issue": int(m.group(1)), "period": period,
-                        "title": a.get_text(" ", strip=True),
-                        "url": urllib.parse.urljoin(BASE, a["href"])})
-        if rows == 0:
+            key = (int(m.group(1)), "%s-%02d" % (m.group(3), mon))
+            direct = FILE_PREFIX in href or "/documents/" in href
+            # προτεραιότητα: σύνδεσμος αρχείου > /documents/ > σελίδα ανακοίνωσης
+            rank = 2 if FILE_PREFIX in href else (1 if direct else 0)
+            if key not in best or rank > best[key][0]:
+                best[key] = (rank, href, a.get_text(" ", strip=True) or txt)
+                found += 1
+        if found == 0:
             print("  σελίδα %d: καμία γραμμή — άλλαξε η δομή;" % p, file=sys.stderr)
+    for (issue, period), (rank, href, title) in best.items():
+        out.append({"issue": issue, "period": period, "title": title,
+                    "url": href, "direct": rank > 0})
     out.sort(key=lambda r: r["period"], reverse=True)
     return out
+
+
+def follow_html(raw, url):
+    """Αν αντί για αρχείο ήρθε σελίδα HTML, βρες μέσα της τον σύνδεσμο λήψης.
+
+    Δεύτερη ζώνη ασφαλείας: κρατά τη ροή ζωντανή και στην επόμενη μετακόμιση
+    του site, χωρίς να χρειάζεται να ξέρουμε εκ των προτέρων τη νέα δομή."""
+    from bs4 import BeautifulSoup
+    soup = BeautifulSoup(raw.decode("utf-8", "replace"), "html.parser")
+    for a in soup.find_all("a", href=True):
+        h = urllib.parse.urljoin(url, a["href"])
+        if FILE_PREFIX in h or h.lower().endswith((".zip", ".pdf")):
+            return h
+    raise ValueError("ήρθε HTML και δεν βρέθηκε σύνδεσμος λήψης μέσα της")
 
 
 def gaps_of(periods):
@@ -296,9 +330,16 @@ def load_existing():
     try:
         with open(OUT, encoding="utf-8") as fh:
             d = json.load(fh)
-        return {r["period"]: r for r in d.get("months", [])}
     except Exception:
         return {}
+    if "months" not in d and "rows" in d:
+        # Αρχείο από την ΠΡΩΤΗ εκδοχή του script (κλειδί "rows", χαλαρό regex
+        # που έδινε cap_pct ~16-20% αντί ~60-70%). Δεν κληρονομείται τίποτε.
+        print("ΠΡΟΣΟΧΗ: βρέθηκε JSON παλιάς μορφής (%d γραμμές στο \"rows\") — "
+              "ΑΓΝΟΕΙΤΑΙ και ξαναχτίζεται από την αρχή."
+              % len(d.get("rows") or []), file=sys.stderr)
+        return {}
+    return {r["period"]: r for r in d.get("months", [])}
 
 
 def main():
@@ -349,7 +390,10 @@ def main():
         dst = os.path.join(a.cache, "%s_issue%d.pdf" % (r["period"], r["issue"]))
         try:
             if not os.path.exists(dst):
-                data, _ = pdf_bytes(fetch(r["url"]))
+                raw = fetch(r["url"])
+                if raw[:1] == b"<":                 # σελίδα, όχι αρχείο
+                    raw = fetch(follow_html(raw, r["url"]))
+                data, _ = pdf_bytes(raw)
                 with open(dst, "wb") as fh:
                     fh.write(data)
             row = parse_text(pdf_text(dst), r["period"])
