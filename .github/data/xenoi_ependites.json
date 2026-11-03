@@ -1,0 +1,448 @@
+{
+ "source": "AXIA NUMBERS Securities (Euronext Athens)",
+ "category_param": 4,
+ "rows": [
+  {
+   "period": "2020-01",
+   "cap_pct": 16.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2020-02",
+   "cap_pct": 18.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2020-03",
+   "cap_pct": 20.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2020-04",
+   "cap_pct": 19.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2020-05",
+   "cap_pct": 18.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2020-06",
+   "cap_pct": 17.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2020-07",
+   "cap_pct": 18.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2020-08",
+   "cap_pct": 17.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2020-09",
+   "cap_pct": 1.9,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2020-10",
+   "cap_pct": 1.9,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2020-11",
+   "cap_pct": 1.9,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2020-12",
+   "cap_pct": 1.9,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2021-01",
+   "cap_pct": 1.9,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2021-02",
+   "cap_pct": 1.9,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2021-03",
+   "cap_pct": 1.9,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2021-04",
+   "cap_pct": 301.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2021-05",
+   "cap_pct": 322.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2021-06",
+   "cap_pct": 336.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2021-07",
+   "cap_pct": 352.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2021-08",
+   "cap_pct": 328.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2021-09",
+   "cap_pct": 313.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2021-10",
+   "cap_pct": 343.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2021-11",
+   "cap_pct": 315.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2021-12",
+   "cap_pct": 341.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2022-01",
+   "cap_pct": 329.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2022-02",
+   "cap_pct": 305.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2022-03",
+   "cap_pct": 293.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2022-04",
+   "cap_pct": 345.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2022-05",
+   "cap_pct": 349.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2022-06",
+   "cap_pct": 349.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2022-07",
+   "cap_pct": 360.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2022-08",
+   "cap_pct": 433.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2022-09",
+   "cap_pct": 381.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2022-10",
+   "cap_pct": 380.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2022-11",
+   "cap_pct": 400.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2022-12",
+   "cap_pct": 403.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2023-01",
+   "cap_pct": 334.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2023-02",
+   "cap_pct": 328.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2023-03",
+   "cap_pct": 344.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2023-04",
+   "cap_pct": 358.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2023-05",
+   "cap_pct": 325.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2023-06",
+   "cap_pct": 333.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2023-07",
+   "cap_pct": 309.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2023-08",
+   "cap_pct": 343.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2023-09",
+   "cap_pct": 340.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2023-10",
+   "cap_pct": 337.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2023-11",
+   "cap_pct": 342.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2023-12",
+   "cap_pct": 346.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2024-01",
+   "cap_pct": 317.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2024-02",
+   "cap_pct": 286.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2024-03",
+   "cap_pct": 355.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2024-04",
+   "cap_pct": 333.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2024-05",
+   "cap_pct": 344.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2024-06",
+   "cap_pct": 365.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2024-07",
+   "cap_pct": 394.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2024-08",
+   "cap_pct": 356.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2024-09",
+   "cap_pct": 383.0,
+   "buys_pct": null,
+   "sells_pct": null
+  },
+  {
+   "period": "2024-10",
+   "cap_pct": 388.0,
+   "buys_pct": null,
+   "sells_pct": null
+  }
+ ],
+ "failed": [
+  [
+   "2026-09",
+   "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
+  ],
+  [
+   "2026-08",
+   "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
+  ],
+  [
+   "2026-07",
+   "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
+  ],
+  [
+   "2026-06",
+   "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
+  ],
+  [
+   "2026-05",
+   "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
+  ],
+  [
+   "2026-04",
+   "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
+  ],
+  [
+   "2026-03",
+   "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
+  ],
+  [
+   "2026-02",
+   "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
+  ],
+  [
+   "2026-01",
+   "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
+  ],
+  [
+   "2025-12",
+   "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
+  ],
+  [
+   "2025-11",
+   "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
+  ],
+  [
+   "2025-10",
+   "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
+  ],
+  [
+   "2025-09",
+   "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
+  ],
+  [
+   "2025-08",
+   "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
+  ],
+  [
+   "2025-07",
+   "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
+  ],
+  [
+   "2025-06",
+   "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
+  ],
+  [
+   "2025-05",
+   "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
+  ],
+  [
+   "2025-04",
+   "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
+  ],
+  [
+   "2025-03",
+   "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
+  ],
+  [
+   "2025-02",
+   "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
+  ],
+  [
+   "2025-01",
+   "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
+  ],
+  [
+   "2024-12",
+   "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
+  ],
+  [
+   "2024-11",
+   "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
+  ]
+ ]
+}
