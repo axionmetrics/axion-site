@@ -1,0 +1,95 @@
+name: "Ξένοι επενδυτές — μηνιαίο AxiaNUMBERS"
+
+# Αντλεί από το μηνιαίο δελτίο «AxiaNUMBERS — Securities Market» του Euronext
+# Athens τη συμμετοχή και τις συναλλαγές των ξένων επενδυτών, και τα γράφει στο
+#   .github/data/xenoi_ependites.json
+#
+# ΓΙΑΤΙ ΑΥΤΗ Η ΠΗΓΗ: το Mid-Month Report δίνει στιγμιότυπα, αλλάζει ορισμό στο
+# μερίδιο συναλλαγών μεταξύ 2025 και 2026 και δεν έχει σελίδα αρχείου. Το
+# AxiaNUMBERS έχει σταθερούς πίνακες και αρχείο ως το 2007.
+#
+# ΤΟ JSON ΕΙΝΑΙ Η ΜΝΗΜΗ ΤΗΣ ΡΟΗΣ: κάθε run κατεβάζει μόνο τους μήνες που
+# λείπουν. Το πρώτο run (backfill από 2020-01) κατεβάζει ~80 τεύχη — γι' αυτό
+# το timeout είναι γενναιόδωρο. Τα επόμενα runs κατεβάζουν 0 ή 1 τεύχος.
+# Τα PDF μένουν στο /tmp του runner, ΔΕΝ μπαίνουν στο repo.
+#
+# ΤΟ ΔΕΛΤΙΟ ΚΑΘΥΣΤΕΡΕΙ 1-2 ΜΗΝΕΣ. Δεν υπάρχει λόγος να τρέχει πιο συχνά από
+# μία φορά την εβδομάδα: όποτε βγει το νέο τεύχος, το πιάνει το επόμενο run.
+#
+# Αν ένας μήνας δεν περάσει τους τρεις ελέγχους της parse_text() (αγορές-πωλήσεις
+# == net, αξία/σύνολο == ποσοστό, μήνας εξωφύλλου == μήνας τίτλου), μπαίνει στο
+# "failed" με τον λόγο και το job βγάζει κόκκινο. ΔΕΝ γράφεται μαντεμένη τιμή.
+
+on:
+  schedule:
+    - cron: '41 6 * * 2'          # Τρίτη 06:41 UTC
+  workflow_dispatch:
+    inputs:
+      refresh:
+        description: 'Ξανακατέβασε και ξαναδιάβασε ΟΛΟΥΣ τους μήνες'
+        type: boolean
+        default: false
+      from:
+        description: 'Από ποιον μήνα (ΕΕΕΕ-ΜΜ)'
+        default: '2020-01'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: xenoi-ependites
+  cancel-in-progress: false
+
+jobs:
+  xenoi:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Εξαρτήσεις
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq poppler-utils     # pdftotext: ~100x ταχύτερο
+          python -m pip install --quiet beautifulsoup4 pdfplumber
+
+      - name: Άντληση δελτίων
+        id: run
+        run: |
+          set -euo pipefail
+          ARGS="--from ${{ inputs.from || '2020-01' }}"
+          if [ "${{ inputs.refresh }}" = "true" ]; then ARGS="$ARGS --refresh"; fi
+          python .github/scripts/xenoi_ependites.py $ARGS 2>&1 | tee /tmp/xenoi.log
+          {
+            echo '```'
+            tail -n 120 /tmp/xenoi.log
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Commit & push (.github/data/xenoi_ependites.json)
+        if: always()
+        run: |
+          git add .github/data/xenoi_ependites.json 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "Καμία αλλαγή — δεν έγινε commit."
+          else
+            git config user.name  "axion-bot"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "ξένοι επενδυτές: AxiaNUMBERS $(date -u +%Y-%m-%d)"
+            # Ίδιο μοτίβο με fx-rates.yml: πολλά bot και ο χρήστης σπρώχνουν στο
+            # ίδιο branch· σκέτο push τρώει non-fast-forward ΑΘΟΡΥΒΑ.
+            for i in 1 2 3 4 5; do
+              git fetch origin ${{ github.ref_name }}
+              if git rebase origin/${{ github.ref_name }} && git push; then
+                echo "OK pushed"; exit 0
+              fi
+              git rebase --abort 2>/dev/null || true
+              echo "retry $i ..."; sleep 5
+            done
+            echo "push failed after retries"; exit 1
+          fi
