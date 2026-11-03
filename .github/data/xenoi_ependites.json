@@ -634,6 +634,351 @@
    "mkt_val_m": 87345.36,
    "cover_ok": true,
    "issue": 253
+  },
+  {
+   "period": "2024-11",
+   "buys_m": 1595.26,
+   "buys_pct": 38.44,
+   "sells_m": 2063.02,
+   "sells_pct": 49.71,
+   "net_m": -467.76,
+   "net_ytd_m": 246.28,
+   "part_n": 9865,
+   "part_val_m": 58898.77,
+   "part_pct": 66.78,
+   "mkt_val_m": 88195.68,
+   "cover_ok": true,
+   "issue": 254
+  },
+  {
+   "period": "2024-12",
+   "buys_m": 1479.09,
+   "buys_pct": 54.63,
+   "sells_m": 1655.49,
+   "sells_pct": 61.15,
+   "net_m": -176.4,
+   "net_ytd_m": 69.88,
+   "part_n": 9945,
+   "part_val_m": 60938.16,
+   "part_pct": 65.37,
+   "mkt_val_m": 93224.28,
+   "cover_ok": false,
+   "issue": 255
+  },
+  {
+   "period": "2025-01",
+   "buys_m": 1743.32,
+   "buys_pct": 59.73,
+   "sells_m": 1741.31,
+   "sells_pct": 59.66,
+   "net_m": 2.01,
+   "net_ytd_m": 2.01,
+   "part_n": 10062,
+   "part_val_m": 65353.28,
+   "part_pct": 65.4,
+   "mkt_val_m": 99932.49,
+   "cover_ok": false,
+   "issue": 256
+  },
+  {
+   "period": "2025-02",
+   "buys_m": 2206.29,
+   "buys_pct": 64.06,
+   "sells_m": 2073.92,
+   "sells_pct": 60.22,
+   "net_m": 132.37,
+   "net_ytd_m": 134.39,
+   "part_n": 10140,
+   "part_val_m": 67086.62,
+   "part_pct": 65.78,
+   "mkt_val_m": 101993.75,
+   "cover_ok": false,
+   "issue": 257
+  },
+  {
+   "period": "2025-03",
+   "buys_m": 3439.42,
+   "buys_pct": 69.39,
+   "sells_m": 3220.83,
+   "sells_pct": 64.98,
+   "net_m": 218.59,
+   "net_ytd_m": 352.98,
+   "part_n": 10238,
+   "part_val_m": 70022.75,
+   "part_pct": 66.17,
+   "mkt_val_m": 105827.85,
+   "cover_ok": false,
+   "issue": 258
+  },
+  {
+   "period": "2025-04",
+   "buys_m": 2220.74,
+   "buys_pct": 55.77,
+   "sells_m": 2232.98,
+   "sells_pct": 56.07,
+   "net_m": -12.24,
+   "net_ytd_m": 340.74,
+   "part_n": 10265,
+   "part_val_m": 70695.15,
+   "part_pct": 68.07,
+   "mkt_val_m": 103860.9,
+   "cover_ok": false,
+   "issue": 259
+  },
+  {
+   "period": "2025-05",
+   "buys_m": 2844.22,
+   "buys_pct": 63.3,
+   "sells_m": 2733.43,
+   "sells_pct": 60.84,
+   "net_m": 110.79,
+   "net_ytd_m": 451.53,
+   "part_n": 10295,
+   "part_val_m": 77899.71,
+   "part_pct": 68.69,
+   "mkt_val_m": 113399.97,
+   "cover_ok": false,
+   "issue": 260
+  },
+  {
+   "period": "2025-06",
+   "buys_m": 2560.56,
+   "buys_pct": 61.98,
+   "sells_m": 2557.49,
+   "sells_pct": 61.91,
+   "net_m": 3.07,
+   "net_ytd_m": 454.6,
+   "part_n": 10384,
+   "part_val_m": 78214.98,
+   "part_pct": 68.81,
+   "mkt_val_m": 113671.95,
+   "cover_ok": false,
+   "issue": 261
+  },
+  {
+   "period": "2025-07",
+   "buys_m": 3332.57,
+   "buys_pct": 64.1,
+   "sells_m": 3365.88,
+   "sells_pct": 64.74,
+   "net_m": -33.31,
+   "net_ytd_m": 421.29,
+   "part_n": 10341,
+   "part_val_m": 85435.89,
+   "part_pct": 71.08,
+   "mkt_val_m": 120196.68,
+   "cover_ok": false,
+   "issue": 262
+  },
+  {
+   "period": "2025-08",
+   "buys_m": 3271.17,
+   "buys_pct": 64.74,
+   "sells_m": 3339.77,
+   "sells_pct": 66.1,
+   "net_m": -68.6,
+   "net_ytd_m": 352.69,
+   "part_n": 10436,
+   "part_val_m": 81300.94,
+   "part_pct": 68.83,
+   "mkt_val_m": 118112.17,
+   "cover_ok": false,
+   "issue": 263
+  },
+  {
+   "period": "2025-09",
+   "buys_m": 3331.38,
+   "buys_pct": 66.03,
+   "sells_m": 3370.43,
+   "sells_pct": 66.81,
+   "net_m": -39.06,
+   "net_ytd_m": 313.64,
+   "part_n": 10506,
+   "part_val_m": 82434.27,
+   "part_pct": 69.57,
+   "mkt_val_m": 118484.46,
+   "cover_ok": false,
+   "issue": 264
+  },
+  {
+   "period": "2025-10",
+   "buys_m": 3414.84,
+   "buys_pct": 61.83,
+   "sells_m": 3622.56,
+   "sells_pct": 65.59,
+   "net_m": -207.72,
+   "net_ytd_m": 105.92,
+   "part_n": 10592,
+   "part_val_m": 80903.32,
+   "part_pct": 69.36,
+   "mkt_val_m": 116649.94,
+   "cover_ok": false,
+   "issue": 265
+  },
+  {
+   "period": "2025-11",
+   "buys_m": 3479.11,
+   "buys_pct": 68.06,
+   "sells_m": 3543.68,
+   "sells_pct": 69.32,
+   "net_m": -64.56,
+   "net_ytd_m": 41.36,
+   "part_n": 10649,
+   "part_val_m": 82099.8,
+   "part_pct": 68.68,
+   "mkt_val_m": 119537.26,
+   "cover_ok": false,
+   "issue": 266
+  },
+  {
+   "period": "2025-12",
+   "buys_m": 3029.84,
+   "buys_pct": 68.71,
+   "sells_m": 3054.03,
+   "sells_pct": 69.26,
+   "net_m": -24.19,
+   "net_ytd_m": 17.17,
+   "part_n": 10664,
+   "part_val_m": 82515.21,
+   "part_pct": 68.15,
+   "mkt_val_m": 121080.51,
+   "cover_ok": false,
+   "issue": 267
+  },
+  {
+   "period": "2026-01",
+   "buys_m": 6174.62,
+   "buys_pct": 74.6,
+   "sells_m": 6037.56,
+   "sells_pct": 72.94,
+   "net_m": 137.05,
+   "net_ytd_m": 137.05,
+   "part_n": 10781,
+   "part_val_m": 89857.88,
+   "part_pct": 68.54,
+   "mkt_val_m": 131110.29,
+   "cover_ok": false,
+   "issue": 268
+  },
+  {
+   "period": "2026-02",
+   "buys_m": 4820.79,
+   "buys_pct": 69.0,
+   "sells_m": 4916.17,
+   "sells_pct": 70.36,
+   "net_m": -95.38,
+   "net_ytd_m": 41.68,
+   "part_n": 10900,
+   "part_val_m": 86721.8,
+   "part_pct": 68.27,
+   "mkt_val_m": 127022.36,
+   "cover_ok": false,
+   "issue": 269
+  },
+  {
+   "period": "2026-03",
+   "buys_m": 4765.85,
+   "buys_pct": 67.24,
+   "sells_m": 4826.78,
+   "sells_pct": 68.1,
+   "net_m": -60.93,
+   "net_ytd_m": -19.25,
+   "part_n": 10869,
+   "part_val_m": 84594.89,
+   "part_pct": 69.38,
+   "mkt_val_m": 121926.38,
+   "cover_ok": false,
+   "issue": 270
+  },
+  {
+   "period": "2026-04",
+   "buys_m": 3582.19,
+   "buys_pct": 68.02,
+   "sells_m": 3663.06,
+   "sells_pct": 69.56,
+   "net_m": -80.87,
+   "net_ytd_m": -100.12,
+   "part_n": 10932,
+   "part_val_m": 88991.26,
+   "part_pct": 68.83,
+   "mkt_val_m": 129294.69,
+   "cover_ok": true,
+   "issue": 271
+  },
+  {
+   "period": "2026-05",
+   "buys_m": 5045.21,
+   "buys_pct": 73.8,
+   "sells_m": 4739.51,
+   "sells_pct": 69.33,
+   "net_m": 305.7,
+   "net_ytd_m": 205.58,
+   "part_n": 10927,
+   "part_val_m": 99577.55,
+   "part_pct": 68.53,
+   "mkt_val_m": 145305.67,
+   "cover_ok": true,
+   "issue": 272
+  },
+  {
+   "period": "2026-06",
+   "buys_m": 4456.55,
+   "buys_pct": 70.59,
+   "sells_m": 4298.28,
+   "sells_pct": 68.08,
+   "net_m": 158.27,
+   "net_ytd_m": 363.85,
+   "part_n": 10973,
+   "part_val_m": 102627.35,
+   "part_pct": 68.6,
+   "mkt_val_m": 149598.62,
+   "cover_ok": true,
+   "issue": 273
+  },
+  {
+   "period": "2026-07",
+   "buys_m": 5288.35,
+   "buys_pct": 70.26,
+   "sells_m": 5447.92,
+   "sells_pct": 72.38,
+   "net_m": -159.57,
+   "net_ytd_m": 204.28,
+   "part_n": 11123,
+   "part_val_m": 107411.6,
+   "part_pct": 69.5,
+   "mkt_val_m": 154540.05,
+   "cover_ok": true,
+   "issue": 274
+  },
+  {
+   "period": "2026-08",
+   "buys_m": 4087.05,
+   "buys_pct": 70.85,
+   "sells_m": 4036.6,
+   "sells_pct": 69.98,
+   "net_m": 50.45,
+   "net_ytd_m": 254.72,
+   "part_n": 11176,
+   "part_val_m": 112113.57,
+   "part_pct": 69.48,
+   "mkt_val_m": 161368.44,
+   "cover_ok": true,
+   "issue": 275
+  },
+  {
+   "period": "2026-09",
+   "buys_m": 9769.74,
+   "buys_pct": 81.36,
+   "sells_m": 9297.52,
+   "sells_pct": 77.42,
+   "net_m": 472.22,
+   "net_ytd_m": 726.95,
+   "part_n": 11391,
+   "part_val_m": 115821.9,
+   "part_pct": 70.06,
+   "mkt_val_m": 165308.5,
+   "cover_ok": true,
+   "issue": 276
   }
  ],
  "years": [
@@ -672,135 +1017,42 @@
   },
   {
    "year": 2024,
-   "months": 10,
-   "last": "2024-10",
-   "part_pct_end": 67.43,
-   "part_pct_avg": 65.59,
-   "buys_pct_avg": 60.39,
-   "sells_pct_avg": 58.94,
-   "net_m": 714.04,
-   "net_ytd_m_reported": 714.04
+   "months": 12,
+   "last": "2024-12",
+   "part_pct_end": 65.37,
+   "part_pct_avg": 65.67,
+   "buys_pct_avg": 58.08,
+   "sells_pct_avg": 58.35,
+   "net_m": 69.88,
+   "net_ytd_m_reported": 69.88
+  },
+  {
+   "year": 2025,
+   "months": 12,
+   "last": "2025-12",
+   "part_pct_end": 68.15,
+   "part_pct_avg": 68.22,
+   "buys_pct_avg": 63.98,
+   "sells_pct_avg": 63.79,
+   "net_m": 17.15,
+   "net_ytd_m_reported": 17.17
+  },
+  {
+   "year": 2026,
+   "months": 9,
+   "last": "2026-09",
+   "part_pct_end": 70.06,
+   "part_pct_avg": 69.02,
+   "buys_pct_avg": 71.75,
+   "sells_pct_avg": 70.91,
+   "net_m": 726.94,
+   "net_ytd_m_reported": 726.95
   }
  ],
  "missing": [
   "2023-06"
  ],
  "failed": [
-  {
-   "period": "2026-09",
-   "issue": 276,
-   "why": "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
-  },
-  {
-   "period": "2026-08",
-   "issue": 275,
-   "why": "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
-  },
-  {
-   "period": "2026-07",
-   "issue": 274,
-   "why": "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
-  },
-  {
-   "period": "2026-06",
-   "issue": 273,
-   "why": "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
-  },
-  {
-   "period": "2026-05",
-   "issue": 272,
-   "why": "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
-  },
-  {
-   "period": "2026-04",
-   "issue": 271,
-   "why": "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
-  },
-  {
-   "period": "2026-03",
-   "issue": 270,
-   "why": "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
-  },
-  {
-   "period": "2026-02",
-   "issue": 269,
-   "why": "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
-  },
-  {
-   "period": "2026-01",
-   "issue": 268,
-   "why": "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
-  },
-  {
-   "period": "2025-12",
-   "issue": 267,
-   "why": "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
-  },
-  {
-   "period": "2025-11",
-   "issue": 266,
-   "why": "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
-  },
-  {
-   "period": "2025-10",
-   "issue": 265,
-   "why": "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
-  },
-  {
-   "period": "2025-09",
-   "issue": 264,
-   "why": "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
-  },
-  {
-   "period": "2025-08",
-   "issue": 263,
-   "why": "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
-  },
-  {
-   "period": "2025-07",
-   "issue": 262,
-   "why": "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
-  },
-  {
-   "period": "2025-06",
-   "issue": 261,
-   "why": "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
-  },
-  {
-   "period": "2025-05",
-   "issue": 260,
-   "why": "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
-  },
-  {
-   "period": "2025-04",
-   "issue": 259,
-   "why": "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
-  },
-  {
-   "period": "2025-03",
-   "issue": 258,
-   "why": "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
-  },
-  {
-   "period": "2025-02",
-   "issue": 257,
-   "why": "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
-  },
-  {
-   "period": "2025-01",
-   "issue": 256,
-   "why": "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
-  },
-  {
-   "period": "2024-12",
-   "issue": 255,
-   "why": "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
-  },
-  {
-   "period": "2024-11",
-   "issue": 254,
-   "why": "άγνωστος τύπος αρχείου, πρώτα bytes: b'<!DOCTYP'"
-  },
   {
    "period": "2023-06",
    "issue": 237,
