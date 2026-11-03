@@ -54,6 +54,10 @@
 import argparse, io, json, os, re, shutil, subprocess, sys, tempfile, zipfile, datetime
 import urllib.request, urllib.parse
 
+# Η έκδοση τυπώνεται σε κάθε τρέξιμο, ώστε το log του Action να λέει ΜΟΝΟ του
+# ποια εκδοχή έτρεξε. (03/11/2026: έτρεξαν κατά λάθος δύο παλιότερες.)
+VERSION = "2026-11-03c"
+
 BASE = "https://athens.euronext.com"
 LIST = BASE + "/en/market-data/data-services/statistics/reports-monthly"
 CATEGORY_AXIA_SECURITIES = 4          # field_mig_category_target_id
@@ -162,16 +166,48 @@ def parse_text(text, period):
         raise ValueError("συμμετοχή %.2f%% != αξία/σύνολο %.2f%%"
                          % (r["part_pct"], calc))
 
-    # --- check 3: μήνας εξωφύλλου ---
+    # --- check 3: μήνας εξωφύλλου — ΚΑΤΑΓΡΑΦΕΤΑΙ, ΔΕΝ ΑΠΟΡΡΙΠΤΕΙ ---
+    # Αρχικά απέρριπτε. Το τεύχος 237 («June 2023») έχει εξώφυλλο «July 2023»
+    # και χανόταν ολόκληρος μήνας για ένα τυπογραφικό του δελτίου. Τον πραγματικό
+    # κίνδυνο (λάθος ή διπλό αρχείο) τον πιάνει πολύ καλύτερα ο check 4 παρακάτω,
+    # που ελέγχει τη ΣΥΝΕΧΕΙΑ του net YtD μέσα στη σειρά. Άρα εδώ αρκεί σημαία.
     m = re.search(r"^\s*([A-Za-z]{3,9})\s+(\d{4})\s*$", text[:1500], re.M)
     if m and MONTHS.get(m.group(1).title()):
         cover = "%s-%02d" % (m.group(2), MONTHS[m.group(1).title()])
-        if cover != period:
-            raise ValueError("εξώφυλλο %s != τίτλος τεύχους %s" % (cover, period))
-        r["cover_ok"] = True
+        r["cover_ok"] = (cover == period)
+        if not r["cover_ok"]:
+            r["cover"] = cover
     else:
         r["cover_ok"] = False
     return r
+
+
+def check_series(months):
+    """CHECK 4 — ΣΥΝΕΧΕΙΑ ΤΟΥ net YtD ΜΕΣΑ ΣΤΗ ΣΕΙΡΑ.
+
+    Σε κάθε μήνα πλην Ιανουαρίου: net_ytd(τρέχοντος) - net_ytd(προηγούμενου)
+    πρέπει να ισούται με net(τρέχοντος). Τον Ιανουάριο: net_ytd == net.
+    Αυτό πιάνει αυτό που ο έλεγχος εξωφύλλου δεν πιάνει αξιόπιστα — λάθος ή
+    διπλό αρχείο — γιατί τότε η διαφορά βγαίνει εκατοντάδες εκατομμύρια, όχι
+    δεκάδες λεπτά. Ανοχή 1,0 εκ. €: το net_ytd του δελτίου είναι ανεξάρτητη
+    στρογγυλοποίηση αθροίσματος (μετρημένη απόκλιση ως 0,09 εκ. €).
+    Επιστρέφει λίστα προβλημάτων — ΔΕΝ πετάει μήνες."""
+    by = {r["period"]: r for r in months}
+    out = []
+    for r in months:
+        y, mo = map(int, r["period"].split("-"))
+        if mo == 1:
+            d, ref = abs(r["net_ytd_m"] - r["net_m"]), "net"
+        else:
+            prev = by.get("%04d-%02d" % (y, mo - 1))
+            if not prev:
+                continue
+            d = abs((r["net_ytd_m"] - prev["net_ytd_m"]) - r["net_m"])
+            ref = "net_ytd(%s)" % prev["period"]
+        if d > 1.0:
+            out.append({"period": r["period"],
+                        "why": "ασυνέχεια net YtD ως προς %s: %.2f εκ. €" % (ref, d)})
+    return out
 
 
 def pdf_text(src):
@@ -353,6 +389,7 @@ def main():
     ap.add_argument("--cache", default=os.path.join(tempfile.gettempdir(), "axia"),
                     help="φάκελος για τα PDF (ΕΚΤΟΣ repo — δεν γίνονται commit)")
     a = ap.parse_args()
+    print("xenoi_ependites.py έκδοση %s" % VERSION)
 
     if a.selftest:
         data, inner = pdf_bytes(open(a.selftest, "rb").read())
@@ -409,6 +446,13 @@ def main():
                   file=sys.stderr)
 
     months = sorted(have.values(), key=lambda r: r["period"])
+    breaks = check_series(months)
+    covers = [r["period"] for r in months if not r.get("cover_ok")]
+    for b in breaks:
+        print("  ΑΣΥΝΕΧΕΙΑ %s: %s" % (b["period"], b["why"]), file=sys.stderr)
+    if covers:
+        print("  εξώφυλλο != τίτλος σε: %s (κρατήθηκαν· βλ. check 3)"
+              % ", ".join(covers), file=sys.stderr)
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "w", encoding="utf-8") as fh:
         json.dump({
@@ -422,12 +466,16 @@ def main():
             "years": yearly(months),
             "missing": gaps_of({r["period"] for r in months}),
             "failed": failed,
+            "ytd_breaks": breaks,
+            "cover_mismatch": covers,
         }, fh, ensure_ascii=False, indent=1)
-    print("γράφτηκε %s — %d μήνες (%s -> %s), %d αποτυχίες"
+    print("γράφτηκε %s — %d μήνες (%s -> %s), %d αποτυχίες, "
+          "%d ασυνέχειες net YtD, %d με εξώφυλλο != τίτλο"
           % (OUT, len(months),
              months[0]["period"] if months else "—",
-             months[-1]["period"] if months else "—", len(failed)))
-    if failed:
+             months[-1]["period"] if months else "—",
+             len(failed), len(breaks), len(covers)))
+    if failed or breaks:
         sys.exit(1)
 
 
