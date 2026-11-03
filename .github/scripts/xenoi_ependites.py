@@ -46,17 +46,25 @@
      ΔΕΝ αντιστοιχεί γραμμικά σε μήνα.
   3) Το δελτίο καθυστερεί 1-2 μήνες. Ο τελευταίος διαθέσιμος μήνας ΔΕΝ είναι
      ο προηγούμενος.
-  4) Η διάταξη είναι ΕΠΑΛΗΘΕΥΜΕΝΗ στο τεύχος 276 (Σεπ 2026). Για παλαιότερα
-     τεύχη δεν έχει επαληθευτεί· όποιος μήνας δεν περάσει τα checks μπαίνει
-     στο "failed" με τον λόγο, ΔΕΝ γράφεται με μαντεμένη τιμή.
+  4) ΔΥΟ ΕΠΟΧΕΣ ΔΙΑΤΑΞΗΣ, και οι δύο ΕΠΑΛΗΘΕΥΜΕΝΕΣ σε πραγματικό τεύχος:
+     τεύχος 196 (Ιαν 2020, παλιά) και τεύχος 276 (Σεπ 2026, νέα). Αλλάζουν
+     τίτλοι ενοτήτων, πλήθος στηλών, γραφή αριθμού (ευρωπαϊκή/αμερικανική),
+     ετικέτα γραμμής συνόλου και ο τρόπος που γράφεται η περίοδος. Όποιος
+     μήνας δεν περάσει τους checks μπαίνει στο "failed" με τον λόγο — ΔΕΝ
+     γράφεται ποτέ μαντεμένη τιμή.
+  5) ΣΤΗΝ ΠΑΛΙΑ ΔΙΑΤΑΞΗ ο πίνακας συμμετοχής δίνει κεφαλαιοποίηση ΜΕ και ΧΩΡΙΣ
+     ΤΧΣ (HFSF). Κρατάμε το ΜΕ ΤΧΣ ως part_pct, γιατί ο παρονομαστής του είναι
+     όλη η αγορά — ίδιος ορισμός με το μοναδικό σύνολο της νέας διάταξης. Το
+     ΧΩΡΙΣ μπαίνει δίπλα ως part_pct_exhfsf, ώστε η επιλογή να μπορεί να
+     ξανακριθεί από τη σειρά και όχι από υπόθεση.
 """
 
-import argparse, io, json, os, re, shutil, subprocess, sys, tempfile, zipfile, datetime
+import argparse, collections, io, json, os, re, shutil, subprocess, sys, tempfile, zipfile, datetime
 import urllib.request, urllib.parse
 
 # Η έκδοση τυπώνεται σε κάθε τρέξιμο, ώστε το log του Action να λέει ΜΟΝΟ του
 # ποια εκδοχή έτρεξε. (03/11/2026: έτρεξαν κατά λάθος δύο παλιότερες.)
-VERSION = "2026-11-03c"
+VERSION = "2026-11-03d"
 
 BASE = "https://athens.euronext.com"
 LIST = BASE + "/en/market-data/data-services/statistics/reports-monthly"
@@ -77,81 +85,159 @@ TITLE_RE = re.compile(r"Issue\s+(\d+)\s*\(\s*([A-Za-z]+)\s+(\d{4})\s*\)")
 
 # ---------------------------------------------------------------- εξαγωγή ----
 
-NUM = r"-?\d{1,3}(?:,\d{3})*(?:\.\d+)?"
-# «ΙΙ.» γράφεται άλλοτε με λατινικό I, άλλοτε με ελληνικό Ι — δέξου και τα δύο.
-FOREIGN = re.compile(r"^\s*[IΙ]{2}\s*\.\s*Foreign\s+Investors\b(.*)$")
-TOTAL   = re.compile(r"^\s*Total\s+(" + NUM + r")\s+(?:100%|" + NUM + r"%)\s+(" + NUM + r")\s")
+# ΔΥΟ ΕΠΟΧΕΣ ΔΙΑΤΑΞΗΣ, ΔΥΟ ΜΟΡΦΕΣ ΑΡΙΘΜΟΥ (διαπιστώθηκε 03/11/2026):
+#   ΠΑΛΙΑ (ως Μαρ 2021): ευρωπαϊκή γραφή «33.082,95», χωρίς σύμβολο %, γραμμή
+#       συνόλου «TOTALS», πίνακας συμμετοχής με τίτλο «Total Listed Equities and
+#       Main Categories» και ΕΞΙ ζεύγη στηλών (incl/excl ΤΧΣ × Σύνολο/Κύρια).
+#   ΝΕΑ (από Απρ 2021): αμερικανική γραφή «115,821.90», με %, «Total», τίτλος
+#       «Investors' Participation in Total Listed Equities», ΕΝΑ ζεύγος.
+# Επιπλέον το παλιό PDF έχει ΠΑΡΑΣΙΤΙΚΑ ΚΕΝΑ μέσα στις λέξεις («Inv estors»,
+# «Dom estic», «Gov ernment»), οπότε όλες οι αντιστοιχίσεις ετικετών γίνονται
+# ΑΓΝΟΩΝΤΑΣ τα κενά.
+# ⚠ Η παλιά μορφή αριθμού είναι ο σοβαρός κίνδυνος: με αμερικανικό regex το
+# «3,01» έδινε «3» και «01» — ΣΚΟΥΠΙΔΙΑ ΠΟΥ ΠΕΡΝΟΥΣΑΝ τον έλεγχο πλήθους.
 
-# Οι τέσσερις πίνακες που έχουν γραμμή «ΙΙ. Foreign Investors». Αγκυρώνουμε
-# στον ΤΙΤΛΟ του πίνακα — όχι στο «2.1»/«3.1», που αλλάζει μεταξύ ετών.
+NUM_US = r"-?\d{1,3}(?:,\d{3})*(?:\.\d+)?"
+NUM_EU = r"-?\d{1,3}(?:\.\d{3})*(?:,\d+)?"
+
+
+def euro_format(text):
+    """ΕΥΡΩΠΑΪΚΗ ή ΑΜΕΡΙΚΑΝΙΚΗ γραφή; Κρίνεται από το πλήθος δεκαδικών δύο
+    ψηφίων: στην αμερικανική τα κόμματα χωρίζουν ΠΑΝΤΑ τριάδες, άρα «,05» δεν
+    υπάρχει· στην ευρωπαϊκή δεν υπάρχει «.05»."""
+    eu = len(re.findall(r"\d,\d{2}(?!\d)", text))
+    us = len(re.findall(r"\d\.\d{2}(?!\d)", text))
+    return eu > us
+
+
+def spacey(word):
+    """Regex που δέχεται παράσιτα κενά ΜΕΣΑ στη λέξη («Inv estors»)."""
+    return r"\s*".join(re.escape(c) for c in word if not c.isspace())
+
+
+FOREIGN = re.compile(r"^\s*[I\u0399]\s*[I\u0399]\s*\.\s*"
+                     + spacey("ForeignInvestors") + r"\b(.*)$", re.I)
+TOTALROW = re.compile(r"^\s*" + spacey("TOTAL") + r"S?\b(.*)$", re.I)
+
+# Οι πίνακες που έχουν γραμμή «ΙΙ. Foreign Investors» και μας ενδιαφέρουν.
+# Αγκυρώνουμε στον ΤΙΤΛΟ — ποτέ στο «3.1», που αλλάζει μεταξύ ετών.
 TABLES = {
-    "trade_total": "Analysis of the Monthly Trading Activity in Total of Listed Equities",
-    "trade_ftse":  "Trading Activity in FTSE/Athex Large Cap",
-    "part_total":  "Participation in Total Listed Equities",
-    "part_ftse":   "Participation in the FTSE/Athex Large Cap Index",
+    "trade_total": ["Analysis of the Monthly Trading Activity in Total of Listed Equities"],
+    "trade_ftse":  ["Trading Activity in FTSE / Athex Large Cap",
+                    "Trading Activity in FTSE/Athex Large Cap"],
+    "part_total":  ["Investors' Participation in Total Listed Equities",
+                    "Participation in Total Listed Equities",
+                    "Total Listed Equities and Main Categories"],
+    "part_ftse":   ["Participation in the FTSE/Athex Large Cap Index",
+                    "FTSE / Athex Large Cap & Average Number of Investors"],
 }
+_TAB = [(name, re.sub(r"\s+", "", ph).lower())
+        for name, phrases in TABLES.items() for ph in phrases]
 
 
-def f(s):
-    return float(s.replace(",", "").rstrip("%"))
-
-
-def tables_of(text):
-    """{όνομα πίνακα: [τιμές της γραμμής ΙΙ. Foreign Investors]}.
+def tables_of(text, eu):
+    """{όνομα πίνακα: (τιμές της γραμμής ΙΙ. Foreign Investors, τιμές TOTAL)}.
 
     Για κάθε γραμμή συνόλου ξένων βρίσκουμε τον ΠΛΗΣΙΕΣΤΕΡΟ ΠΡΟΗΓΟΥΜΕΝΟ τίτλο
     πίνακα. Αντίστροφα (τίτλος -> πρώτη γραμμή από κάτω) ΔΕΝ δουλεύει: ο ίδιος
     τίτλος εμφανίζεται και στα περιεχόμενα, και η καταχώρηση των περιεχομένων
     σπάει σε δύο γραμμές, οπότε η πρώτη δεν έχει τελείες και περνά για σώμα.
-    """
+    Κρατάμε ΤΗΝ ΠΡΩΤΗ γραμμή κάθε πίνακα (setdefault): έτσι οι ενδιάμεσοι
+    πίνακες που ΔΕΝ μας ενδιαφέρουν δεν μπορούν να την αντικαταστήσουν.
+    Μαζί κρατάμε και τη γραμμή TOTAL του ΙΔΙΟΥ πίνακα, για τον παρονομαστή."""
+    pat = re.compile((NUM_EU if eu else NUM_US) + r"%?")
     lines = text.splitlines()
-    marks = []
+    marks, out = [], {}
     for i, ln in enumerate(lines):
-        low = re.sub(r"\s+", " ", ln).strip().lower()
-        for name, phrase in TABLES.items():
-            if phrase.lower() in low:
+        flat = re.sub(r"\s+", "", ln).lower()
+        for name, key in _TAB:
+            if key in flat:
                 marks.append((i, name))
-    out = {}
+                break
     for i, ln in enumerate(lines):
         m = FOREIGN.match(ln)
         if not m:
             continue
-        v = re.findall(NUM + r"%?", m.group(1))
-        if not v:
+        vals = pat.findall(m.group(1))
+        if not vals:
             continue
         prev = [nm for (j, nm) in marks if j < i]
         if not prev:
             continue
-        out.setdefault(prev[-1], v)          # η πρώτη γραμμή κάθε πίνακα
-    return out, lines
+        tot = None
+        for j in range(i, min(i + 70, len(lines))):
+            t = TOTALROW.match(lines[j])
+            if t:
+                tv = pat.findall(t.group(1))
+                if len(tv) >= len(vals):
+                    tot = tv
+                break
+        out.setdefault(prev[-1], (vals, tot))
+    return out
+
+
+def period_of(text, eu):
+    """Μήνας/έτος ΑΠΟ ΜΕΣΑ ΑΠΟ ΤΟ PDF, σε τρία επίπεδα — οι δύο εποχές γράφουν
+    την περίοδο αλλιώς:
+      1) ημερομηνία ηη/μμ/εεεε στους πίνακες   (παλιά: «31/01/2020»)
+      2) «AxiaNumbers, January 2020» στο disclaimer (παλιά)
+      3) σκέτη γραμμή «SEPTEMBER 2026» στο εξώφυλλο  (νέα)
+    Το παλιό εξώφυλλο γράφει ΜΟΝΟ «January», χωρίς έτος — γι' αυτό το (3) δεν
+    αρκεί από μόνο του."""
+    d = re.findall(r"\b[0-3]\d/([0-1]\d)/(20\d{2})\b", text)
+    if d:
+        mo, yr = collections.Counter(d).most_common(1)[0][0]
+        return "%s-%s" % (yr, mo)
+    m = re.search(r"Axia\s?Numbers?,?\s+([A-Za-z]{3,9})\s+(20\d{2})", text, re.I)
+    if not m:
+        m = re.search(r"^\s*([A-Za-z]{3,9})\s+(20\d{2})\s*$", text[:1500], re.M)
+    if m and MONTHS.get(m.group(1).title()):
+        return "%s-%02d" % (m.group(2), MONTHS[m.group(1).title()])
+    return None
 
 
 def parse_text(text, period):
     """Εξαγωγή + επαλήθευση. Σπάει με ValueError αν κάτι δεν βγαίνει."""
-    tb, lines = tables_of(text)
-    r = {"period": period}
+    eu = euro_format(text)
 
-    v = tb.get("trade_total")
+    def f(x):
+        x = x.rstrip("%")
+        return float(x.replace(".", "").replace(",", ".")) if eu \
+            else float(x.replace(",", ""))
+
+    tb = tables_of(text, eu)
+    r = {"period": period, "eu_format": eu}
+
+    v, _ = tb.get("trade_total", (None, None))
     if not v or len(v) < 10:
         raise ValueError("μηνιαίες συναλλαγές (σύνολο αγοράς): γραμμή ξένων %s" % v)
     r["buys_m"], r["buys_pct"] = f(v[2]), f(v[3])
     r["sells_m"], r["sells_pct"] = f(v[6]), f(v[7])
     r["net_m"], r["net_ytd_m"] = f(v[8]), f(v[9])
 
-    v = tb.get("part_total")
-    if not v or len(v) < 4:
-        raise ValueError("συμμετοχή (σύνολο εισηγμένων): γραμμή ξένων %s" % v)
-    r["part_n"], r["part_val_m"], r["part_pct"] = int(f(v[0])), f(v[2]), f(v[3])
+    v, tot = tb.get("part_total", (None, None))
+    if not v:
+        raise ValueError("συμμετοχή (σύνολο εισηγμένων): γραμμή ξένων δεν βρέθηκε")
+    # ΠΛΗΘΟΣ ΣΤΗΛΩΝ = ΕΠΟΧΗ. 4 -> νέα διάταξη. 12 -> παλιά με ΤΧΣ (incl στις
+    # θέσεις 2/3, excl στις 4/5, Κύρια Αγορά από τη 6). 8 -> παλιά χωρίς ΤΧΣ.
+    # ΚΡΑΤΑΜΕ ΤΟ incl ΤΧΣ: ο παρονομαστής του είναι ΟΛΗ η αγορά, που είναι ο
+    # ίδιος ορισμός με το μοναδικό σύνολο της νέας διάταξης. Το excl μπαίνει
+    # δίπλα ως part_pct_exhfsf — ΔΕΝ χάνεται, ώστε να κριθεί από τη σειρά.
+    if len(v) == 4:
+        idx = 2
+    elif len(v) in (8, 12):
+        idx = 2
+        if len(v) == 12:
+            r["part_val_exhfsf_m"], r["part_pct_exhfsf"] = f(v[4]), f(v[5])
+    else:
+        raise ValueError("συμμετοχή: ασυνήθιστο πλήθος στηλών (%d): %s" % (len(v), v))
+    r["part_n"], r["part_val_m"], r["part_pct"] = int(f(v[0])), f(v[idx]), f(v[idx + 1])
 
-    # σύνολο αγοράς = η γραμμή Total του ΙΔΙΟΥ πίνακα συμμετοχής
-    r["mkt_val_m"] = None
-    start = next((i for i, ln in enumerate(lines)
-                  if FOREIGN.match(ln) and f"{r['part_val_m']:,.2f}" in ln), 0)
-    for j in range(start, min(start + 60, len(lines))):
-        m = TOTAL.match(lines[j])
-        if m:
-            r["mkt_val_m"] = f(m.group(2))
-            break
+    # Παρονομαστής = το κελί της γραμμής TOTAL στην ΙΔΙΑ ΣΤΗΛΗ. Δουλεύει και
+    # στις δύο εποχές χωρίς να ξέρουμε πόσες στήλες έχει ο πίνακας.
+    if not tot or len(tot) <= idx:
+        raise ValueError("συμμετοχή: δεν βρέθηκε η γραμμή TOTAL του πίνακα")
+    r["mkt_val_m"] = f(tot[idx])
 
     # --- check 1: αγορές - πωλήσεις == net ---
     d = abs((r["buys_m"] - r["sells_m"]) - r["net_m"])
@@ -159,26 +245,20 @@ def parse_text(text, period):
         raise ValueError("αγορές-πωλήσεις != net (διαφορά %.2f εκ. €)" % d)
 
     # --- check 2: αξία / σύνολο == ποσοστό ---
-    if not r["mkt_val_m"]:
-        raise ValueError("δεν βρέθηκε η γραμμή Total του πίνακα συμμετοχής")
     calc = r["part_val_m"] / r["mkt_val_m"] * 100.0
     if abs(calc - r["part_pct"]) > 0.03:
         raise ValueError("συμμετοχή %.2f%% != αξία/σύνολο %.2f%%"
                          % (r["part_pct"], calc))
 
-    # --- check 3: μήνας εξωφύλλου — ΚΑΤΑΓΡΑΦΕΤΑΙ, ΔΕΝ ΑΠΟΡΡΙΠΤΕΙ ---
+    # --- check 3: περίοδος μέσα από το PDF — ΚΑΤΑΓΡΑΦΕΤΑΙ, ΔΕΝ ΑΠΟΡΡΙΠΤΕΙ ---
     # Αρχικά απέρριπτε. Το τεύχος 237 («June 2023») έχει εξώφυλλο «July 2023»
     # και χανόταν ολόκληρος μήνας για ένα τυπογραφικό του δελτίου. Τον πραγματικό
-    # κίνδυνο (λάθος ή διπλό αρχείο) τον πιάνει πολύ καλύτερα ο check 4 παρακάτω,
-    # που ελέγχει τη ΣΥΝΕΧΕΙΑ του net YtD μέσα στη σειρά. Άρα εδώ αρκεί σημαία.
-    m = re.search(r"^\s*([A-Za-z]{3,9})\s+(\d{4})\s*$", text[:1500], re.M)
-    if m and MONTHS.get(m.group(1).title()):
-        cover = "%s-%02d" % (m.group(2), MONTHS[m.group(1).title()])
-        r["cover_ok"] = (cover == period)
-        if not r["cover_ok"]:
-            r["cover"] = cover
-    else:
-        r["cover_ok"] = False
+    # κίνδυνο (λάθος ή διπλό αρχείο) τον πιάνει ο check 4, που ελέγχει τη
+    # ΣΥΝΕΧΕΙΑ του net YtD μέσα στη σειρά.
+    inside = period_of(text, eu)
+    r["cover_ok"] = (inside == period)
+    if inside and not r["cover_ok"]:
+        r["cover"] = inside
     return r
 
 
@@ -395,14 +475,17 @@ def main():
         data, inner = pdf_bytes(open(a.selftest, "rb").read())
         print("PDF μέσα στο αρχείο: %s" % inner)
         txt = pdf_text(data)
-        m = re.search(r"^\s*([A-Za-z]{3,9})\s+(\d{4})\s*$", txt[:1500], re.M)
-        if not m or not MONTHS.get(m.group(1).title()):
-            print("ΔΕΝ βρέθηκε μήνας στο εξώφυλλο", file=sys.stderr); sys.exit(1)
-        r = parse_text(txt, "%s-%02d" % (m.group(2), MONTHS[m.group(1).title()]))
+        eu = euro_format(txt)
+        per = period_of(txt, eu)
+        print("γραφή αριθμών: %s · περίοδος μέσα από το PDF: %s"
+              % ("ευρωπαϊκή" if eu else "αμερικανική", per))
+        if not per:
+            print("ΔΕΝ βρέθηκε περίοδος μέσα στο PDF", file=sys.stderr); sys.exit(1)
+        r = parse_text(txt, per)
         w = max(len(k) for k in r)
         for k, v in r.items():
             print("  %-*s %s" % (w, k, v))
-        print("OK — πέρασαν και τα 3 checks")
+        print("OK — πέρασαν οι checks 1-3 (ο 4 είναι σειριακός)")
         return
 
     inv = [r for r in inventory() if r["period"] >= a.frm]
