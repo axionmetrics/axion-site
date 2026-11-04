@@ -54,7 +54,7 @@
 /* Axion Metrics — shared chrome (nav + footer + basis toggle). Single source for pages 2–11. Do not edit per-page. */
 /* ===== shared site chrome — two-tier nav ===== */
  .site-nav{position:sticky;top:0;z-index:50}
- .site-nav .bar1{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:22px;padding:0 max(22px, calc((100% - 1180px)/2 + 22px));min-height:54px;background:#16243d} .site-nav .bar1 .lock{justify-self:start} .site-nav .bar1 .tabs{justify-self:center;align-self:stretch}
+ .site-nav .bar1{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:22px;padding:0 max(22px, calc((100% - 1180px)/2 + 22px));min-height:54px;background:#12303f} .site-nav .bar1 .lock{justify-self:start} .site-nav .bar1 .tabs{justify-self:center;align-self:stretch}
  .site-nav .lock{display:flex;align-items:center;gap:10px;text-decoration:none;flex:none}
  .site-nav .am{font-family:Inter,sans-serif;font-size:23px;font-weight:900;letter-spacing:-.06em;color:#fff;line-height:1}
  .site-nav .am i{font-style:normal;color:#57a5df}
@@ -86,13 +86,13 @@
     ολόκληρο με το κανονικό footer στο DOMContentLoaded. Υπάρχει για τον crawler, που
     διαβάζει το HTML πριν τρέξει JS — ΟΧΙ κρυμμένος (κρυφοί σύνδεσμοι = ποινή), απλώς
     στυλιζαρισμένος σαν λιτό footer ώστε ένα τυχόν φευγαλέο φανέρωμα να μη ξενίζει. */
- .am-sfoot{background:#0f1f38;color:#6f86ac;margin-top:64px;padding:26px 22px;
+ .am-sfoot{background:#0d2432;color:#6f86ac;margin-top:64px;padding:26px 22px;
    display:flex;flex-wrap:wrap;gap:8px 22px;justify-content:center;
    font-family:Inter,sans-serif;font-size:12.5px}
  .am-sfoot a{color:#aebfd8;text-decoration:none}
  .am-sfoot a:hover{color:#fff}
 
- .site-ft{background:#0f1f38;color:#aebfd8;margin-top:64px}
+ .site-ft{background:#0d2432;color:#abc3d2;margin-top:64px}
  .site-ft .in{max-width:1180px;margin:0 auto;padding:36px 22px 24px;display:grid;grid-template-columns:minmax(170px,250px) repeat(5,auto);gap:30px 26px;justify-content:space-between;align-items:start}
  .site-ft .fbrand{max-width:290px}
  .site-ft .flogo{font-family:Inter,sans-serif;font-weight:900;font-size:20px;color:#fff;letter-spacing:-.03em}
@@ -111,7 +111,7 @@
    stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
  .site-ft .fcontact .sub{font-size:11.5px;color:#6f86ac;margin-top:9px;line-height:1.55;
    max-width:205px;white-space:normal}
- .site-ft .fbot{border-top:1px solid #1e3358;font-size:11.5px;color:#6f86ac;text-align:center;max-width:1180px;margin:0 auto;padding:14px 22px 22px}
+ .site-ft .fbot{border-top:1px solid #1c4254;font-size:11.5px;color:#6f86ac;text-align:center;max-width:1180px;margin:0 auto;padding:14px 22px 22px}
 
  /* ===== basis toggle (Ετήσια / Εξάμηνο) ===== */
  .site-nav .am-basis{justify-self:end;display:flex;align-items:center}
@@ -317,8 +317,8 @@ body.am-nofeed #am-nav,body.am-nofeed .site-nav{min-height:190px}
    buildNav() η σειρά των tabs δεν υπάρχει ακόμη και η μπάρα είναι 37 px κοντύτερη. Το
    ελάχιστο δεν μεγαλώνει καμία σελίδα — απλώς δεν την αφήνει να ξεκινήσει πιο χαμηλά. */
 .site-nav .bar1{min-height:146px}
-#am-nav{--b1:146px;background:linear-gradient(#16243d 0 var(--b1),#fff var(--b1) calc(var(--b1) + 44px),#fbfcfe calc(var(--b1) + 44px) calc(100% - 40px),#eef3fa calc(100% - 40px) 100%)}
-body.am-nofeed #am-nav{background:linear-gradient(#16243d 0 var(--b1),#fff var(--b1) 100%)}
+#am-nav{--b1:146px;background:linear-gradient(#12303f 0 var(--b1),#fff var(--b1) calc(var(--b1) + 44px),#fbfcfe calc(var(--b1) + 44px) calc(100% - 40px),#eef3fa calc(100% - 40px) 100%)}
+body.am-nofeed #am-nav{background:linear-gradient(#12303f 0 var(--b1),#fff var(--b1) 100%)}
 @media(min-width:367px){
   #am-nav,.site-nav{min-height:278px}
   body.am-nofeed #am-nav,body.am-nofeed .site-nav{min-height:154px}

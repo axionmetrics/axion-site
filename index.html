@@ -985,6 +985,83 @@
     }
   }
 
+  /* ───────────────── ΒΕΛΑΚΙΑ ΤΗΣ ΛΩΡΙΔΑΣ ─────────────────────────────
+     Τα δύο βελάκια δεξιά ήταν διακοσμητικά. Τώρα μετακινούν την ταινία
+     κατά ΕΝΑ γεγονός, εμπρός («›») ή πίσω («‹»).
+     ΠΩΣ: η κύλιση είναι CSS animation (mqx, --sp) που σέρνει το .mq-t κατά
+     -50% — δηλαδή κατά ένα ολόκληρο αντίγραφο της ομάδας — σε --sp δευτ.
+     Αντί να ακυρώσουμε την κίνηση και να διαχειριστούμε τη θέση με JS,
+     ΣΚΡΟΛΑΡΟΥΜΕ ΤΟΝ ΧΡΟΝΟ της (Web Animations):
+          dt = διάρκεια × πλάτος_είδησης ÷ πλάτος_ομάδας
+     Έτσι μένει ακέραια η ρυθμισμένη ταχύτητα, η παύση στο hover και η
+     ατέρμονη ροή — αλλάζει μόνο η φάση.
+     ⚠ currentTime < 0 σημαίνει «πριν την αρχή»: η κίνηση παγώνει στο from.
+     Επειδή είναι περιοδική, προσθέτουμε μία περίοδο πριν πάμε πίσω.
+     ⚠ prefers-reduced-motion:reduce → animation:none, δεν υπάρχει χρόνος να
+     σκρολάρει. Τότε μετακινούμε με transform, ακαριαία (ο χρήστης έχει
+     ζητήσει λιγότερη κίνηση, άρα ούτε transition). */
+  var RM=false; try{ RM=window.matchMedia('(prefers-reduced-motion:reduce)').matches; }catch(e){}
+  var tcur=0, toff=0;
+
+  function tmeas(){
+    var t=document.querySelector('.mq-t'); if(!t) return null;
+    var g=t.firstElementChild; if(!g) return null;
+    var it=g.children, w=[], i;
+    for(i=0;i<it.length;i++) w.push(it[i].offsetWidth);
+    if(!w.length || !g.offsetWidth) return null;
+    return {t:t, gw:g.offsetWidth, w:w};
+  }
+
+  function tanim(el){
+    var al=[]; try{ al=el.getAnimations?el.getAnimations():[]; }catch(e){ return null; }
+    var pick=null;
+    for(var i=0;i<al.length;i++){
+      if(al[i].animationName==='mqx') return al[i];
+      if(!pick) pick=al[i];
+    }
+    return pick;
+  }
+
+  function ttween(an,d){
+    if(RM){ an.currentTime=Number(an.currentTime)+d; return; }
+    var t0=0, done=0;
+    function fr(now){
+      if(!t0) t0=now;
+      var p=(now-t0)/340; if(p>1) p=1;
+      var want=d*(1-Math.pow(1-p,3));
+      an.currentTime=Number(an.currentTime)+(want-done); done=want;
+      if(p<1) requestAnimationFrame(fr);
+    }
+    requestAnimationFrame(fr);
+  }
+
+  function tstep(dir){
+    var m=tmeas(); if(!m) return;
+    var n=m.w.length, idx;
+    if(dir>0){ idx=tcur%n; tcur=(tcur+1)%n; }
+    else     { tcur=(tcur-1+n)%n; idx=tcur; }
+    var an=tanim(m.t), tim=(an&&an.effect&&an.effect.getComputedTiming)?an.effect.getComputedTiming():null;
+    var dur=tim?tim.duration:0;
+    if(an && typeof dur==='number' && isFinite(dur) && dur>0){
+      var d=dur*(m.w[idx]/m.gw)*dir;
+      if(an.currentTime==null) an.currentTime=0;
+      if(d<0 && Number(an.currentTime)+d<0) an.currentTime=Number(an.currentTime)+dur;
+      ttween(an,d);
+    }else{
+      toff=(toff+dir*m.w[idx])%m.gw; if(toff<0) toff+=m.gw;
+      m.t.style.transform='translate3d('+(-toff)+'px,0,0)';
+    }
+  }
+
+  /* Τα βελάκια είναι ΕΞΩ από το #ax-tape — δεν τα ξαναγράφει η render(),
+     άρα δένονται μία φορά. */
+  (function(){
+    var nv=document.querySelector('.t-nav'); if(!nv) return;
+    var b=nv.getElementsByTagName('button');
+    if(b[0]) b[0].addEventListener('click', function(){ tstep(-1); });
+    if(b[1]) b[1].addEventListener('click', function(){ tstep(1); });
+  })();
+
   render();
   try{ document.addEventListener('axion:langchange', render); }catch(e){}
 })();
