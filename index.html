@@ -103,13 +103,13 @@
  .m-inline b{color:var(--ink);font-weight:700}
 
  /* ── ταινία γεγονότων ─────────────────────────────────────────────────────── */
- .navbar2{background:#fff;border-bottom:1px solid var(--line)}
+ .navbar2{background:#16243d;border-bottom:1px solid #16243d}
  .navbar2 .in{display:flex;align-items:center;justify-content:center;gap:40px;height:48px}
  .navbar2 a{font-family:var(--disp);font-size:12.5px;font-weight:700;letter-spacing:.07em;
-   text-transform:uppercase;color:var(--ink);text-decoration:none;padding:7px 2px;
-   border-bottom:2px solid transparent}
- .navbar2 a:hover{color:var(--cyan);border-bottom-color:var(--cyan)}
- @media(max-width:620px){.navbar2 .in{gap:22px;height:44px}.navbar2 a{font-size:11.5px;letter-spacing:.04em}}
+   text-transform:uppercase;color:#fff;text-decoration:none;padding:7px 2px;
+   border-bottom:4px solid transparent}
+ .navbar2 a:hover{color:#fff;border-bottom-color:#57a5df}
+ @media(max-width:620px){.navbar2 .in{gap:22px;height:44px}.navbar2 a{letter-spacing:.04em}}
  /* (4) κάρτα short θέσεων */
  .tp-x{margin-left:auto;font-family:var(--disp);font-size:11.5px;font-weight:700;
    color:var(--muted);white-space:nowrap;flex:none}
@@ -485,8 +485,10 @@
    letter-spacing:normal}
  .t-h{font-family:var(--f-disp)} .t-lt,.t-lt2{font-family:var(--f-text)}
  .dv-c b{font-family:var(--f-disp);font-size:var(--s12)}
+ /* Ζ₄: η μπάρα μιλά με τη φωνή των τίτλων (Inter 800), όχι του κειμένου */
  .navbar2 a{font-family:var(--f-disp);font-size:var(--s12);
-   font-weight:var(--w-bold);letter-spacing:var(--ls-caps)}
+   font-weight:var(--w-disp);letter-spacing:.04em}
+ @media(max-width:620px){ .navbar2 a{font-size:var(--s11)} }
  .pane-h,.tp-h,.xh{font-size:var(--s12);font-weight:var(--w-bold);
    text-transform:uppercase;letter-spacing:var(--ls-caps)}
  .xtab summary{font-weight:var(--w-med)}
@@ -523,7 +525,7 @@
  /* οι αριθμοί των γραφημάτων στην ΙΔΙΑ φωνή με τους υπόλοιπους αριθμούς */
  .xch .vl{font-family:var(--f-disp);font-size:var(--s11);font-weight:var(--w-bold)}
  /* ΟΛΕΣ οι μικρές κεφαλαίες ετικέτες: μία οικογένεια, ένα βάρος */
- .navbar2 a,.pane-h,.tp-h,.xh{font-family:var(--f-text);font-weight:var(--w-bold)}
+ .pane-h,.tp-h,.xh{font-family:var(--f-text);font-weight:var(--w-bold)}
  /* τα δύο μικρότερα σήματα στο ίδιο βάρος */
  .lockh .tag{font-weight:var(--w-bold)}
  /* ΤΡΙΤΟ ΠΕΡΑΣΜΑ: τα τελευταία 11,5px του υποσέλιδου και της σημείωσης */
