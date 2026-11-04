@@ -2,14 +2,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title data-i18n="home.title">Θεμελιώδης ανάλυση Χρηματιστηρίου Αθηνών | Axion Metrics</title>
 <meta name="description" content="Δωρεάν θεμελιώδης ανάλυση 133 εισηγμένων του Χρηματιστηρίου Αθηνών: δείκτες αποτίμησης, κερδοφορίας και ρευστότητας, κατατάξεις, συγκρίσεις και εξαμηνιαία στοιχεία.">
+
 <link rel="canonical" href="https://www.axionmetrics.gr/">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="author" content="Axion Metrics">
 <meta name="theme-color" content="#16243d">
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Axion Metrics">
 <meta property="og:title" content="Axion Metrics — Θεμελιώδης ανάλυση ΧΑ">
@@ -25,7 +22,6 @@
 <meta name="twitter:description" content="Δωρεάν θεμελιώδης ανάλυση 133 εισηγμένων του Χρηματιστηρίου Αθηνών: δείκτες αποτίμησης, κερδοφορίας και ρευστότητας, κατατάξεις, συγκρίσεις και εξαμηνιαία στοιχεία.">
 <meta name="twitter:image" content="https://www.axionmetrics.gr/og-image.png">
 <style>
-/* §133 — αυτο-φιλοξενούμενες γραμματοσειρές· βλ. /assets/chrome.css */
 @font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url(/assets/fonts/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 @font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 @font-face{font-family:'Inter';font-style:normal;font-weight:800;font-display:swap;src:url(/assets/fonts/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
@@ -63,7 +59,8 @@
 @font-face{font-family:'Open Sans';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/open-sans-math.woff2) format('woff2');unicode-range:U+2205,U+2206,U+220F,U+2208,U+2211,U+221A,U+221E,U+222B,U+2248,U+2260,U+2261,U+2264,U+2265,U+226A,U+226B}
 @font-face{font-family:'Open Sans';font-style:normal;font-weight:800;font-display:swap;src:url(/assets/fonts/open-sans-math.woff2) format('woff2');unicode-range:U+2205,U+2206,U+220F,U+2208,U+2211,U+221A,U+221E,U+222B,U+2248,U+2260,U+2261,U+2264,U+2265,U+226A,U+226B}
 
- *{box-sizing:border-box;margin:0;padding:0}
+/* §133 — αυτο-φιλοξενούμενες γραμματοσειρές· βλ. /assets/chrome.css */
+*{box-sizing:border-box;margin:0;padding:0}
  :root{--ink:#16243d;--text:#2b3a4a;--muted:#6b8199;--faint:#8199b3;--cyan:#2f80c2;--teal:#57a5df;
   --line:#e6eef7;--line2:#eaf2fa;--p2:#f7fbff;--up:#2f9e52;--down:#d64530;--gold:#cf7f00;
   --disp:Inter,system-ui,sans-serif;--sans:'Open Sans',system-ui,sans-serif}
@@ -95,10 +92,8 @@
  .mrule{width:1px;height:18px;background:#35486a;display:inline-block}
 
  /* ── ζώνη τίτλου ──────────────────────────────────────────────────────────── */
- .k3below{background:var(--p2);border-bottom:1px solid var(--line)}
- .k3below .in2{padding:12px 0 20px}
- .asofr{text-align:right;margin-bottom:6px;font-size:11.5px;color:var(--muted);line-height:1.5}
- .asofr b{font-family:var(--disp);font-size:14px;color:var(--ink)}
+ .k3below{background:#fff;border-bottom:1px solid var(--line)}
+ .k3below .in2{padding:26px 0 20px}
  .hcenter{text-align:center}
  .h1lead{font-family:var(--disp);font-size:20px;font-weight:800;color:var(--ink);letter-spacing:-.015em;line-height:1.3;margin:0}
  .h1lead em{font-style:normal;color:var(--cyan)}
@@ -108,28 +103,20 @@
  .m-inline b{color:var(--ink);font-weight:700}
 
  /* ── ταινία γεγονότων ─────────────────────────────────────────────────────── */
- .nums{background:#fff;border-bottom:1px solid var(--line);min-height:36px}
- .tapehold{position:relative}   /* όρια σελίδας (.hw), όχι οθόνης */
- .mq{overflow:hidden;position:relative;height:36px}
- .mq-t{display:flex;width:max-content;animation:none}
- .mq-t.ready{animation:mqx var(--sp,104s) linear infinite}
- .mq:hover .mq-t,.mq:focus-within .mq-t{animation-play-state:paused}
- .mq-g{display:flex;flex:none}
- @keyframes mqx{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
- .mq::before,.mq::after{content:"";position:absolute;top:0;bottom:0;width:56px;z-index:2;pointer-events:none}
- .mq::before{left:0;background:linear-gradient(90deg,#fff,rgba(255,255,255,0))}
- .mq::after{right:0;background:linear-gradient(270deg,#fff,rgba(255,255,255,0))}
- .ni{display:flex;align-items:center;gap:9px;padding:0 14px;height:36px;text-decoration:none;white-space:nowrap;border-right:1px solid var(--line2);color:inherit}
- .ni:hover{background:#f6fbff}
- .ni .d{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:var(--faint)}
- .ni .dot{width:6px;height:6px;border-radius:50%;flex:none}
- .ni .dot.div{background:var(--up)}.ni .dot.amk{background:var(--gold)}
- .ni .dot.index{background:var(--cyan)}.ni .dot.listing{background:#7a67c9}
- .ni .co{font-family:var(--disp);font-size:12.5px;font-weight:700;color:var(--ink)}
- .ni .x{font-size:12px;color:var(--muted)}
+ .navbar2{background:#fff;border-bottom:1px solid var(--line)}
+ .navbar2 .in{display:flex;align-items:center;justify-content:center;gap:40px;height:48px}
+ .navbar2 a{font-family:var(--disp);font-size:12.5px;font-weight:700;letter-spacing:.07em;
+   text-transform:uppercase;color:var(--ink);text-decoration:none;padding:7px 2px;
+   border-bottom:2px solid transparent}
+ .navbar2 a:hover{color:var(--cyan);border-bottom-color:var(--cyan)}
+ @media(max-width:620px){.navbar2 .in{gap:22px;height:44px}.navbar2 a{font-size:11.5px;letter-spacing:.04em}}
+ /* (4) κάρτα short θέσεων */
+ .tp-x{margin-left:auto;font-family:var(--disp);font-size:11.5px;font-weight:700;
+   color:var(--muted);white-space:nowrap;flex:none}
+ .tp-n.neg{color:var(--down)}
 
  /* ── ταμπλό ───────────────────────────────────────────────────────────────── */
- .board{background:var(--p2);border-bottom:1px solid var(--line);padding:30px 0 34px}
+ .board{background:#fff;border-bottom:1px solid var(--line);padding:30px 0 34px}
  .bh{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:16px}
  .bh.ctr{justify-content:center;text-align:center}
  .bh h2{font-family:var(--disp);font-size:17px;font-weight:800;color:var(--ink);text-transform:uppercase;letter-spacing:.04em}
@@ -167,12 +154,13 @@
  .mvnote{font-size:10.5px;color:var(--faint);padding:9px 14px;border-top:1px solid #f1f6fb;line-height:1.5}
  .stack{display:flex;flex-direction:column;gap:12px}
  .tp{background:#fff;border:1px solid var(--line2);border-radius:13px;overflow:hidden}
- .tp-h{padding:11px 14px;border-bottom:1px solid var(--line2);font-family:var(--disp);font-size:12px;
+ .tp-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:11px 14px;border-bottom:1px solid var(--line2);font-family:var(--disp);font-size:12px;
    font-weight:700;color:var(--ink);text-transform:uppercase;letter-spacing:.05em;background:#fcfdff;margin:0}
  .tp-r{display:flex;gap:12px;align-items:baseline;padding:7px 14px;border-bottom:1px solid #f1f6fb;text-decoration:none;color:inherit}
  .tp-r:last-child{border-bottom:0}.tp-r:hover{background:#f8fbff}
  .tp-n{font-family:var(--disp);font-size:14px;font-weight:800;color:var(--cyan);width:62px;flex:none;text-align:right}
  .tp-c{font-size:12.5px;color:var(--text);line-height:1.35}
+ .tp-h a{font-family:var(--sans);font-size:11px;font-weight:600;color:var(--cyan);text-decoration:none;text-transform:none;letter-spacing:0}
 
  /* ── κάρτες ───────────────────────────────────────────────────────────────── */
  .feat{padding:34px 0 60px;background:#fff}
@@ -206,10 +194,7 @@
    .k3 .bar{height:auto;flex-wrap:wrap;gap:10px 16px;padding:12px 0}
    .lockh,.navh{flex:1 0 100%}
    .navh{gap:12px 14px;font-size:12px;flex-wrap:wrap}
-   .asofr{text-align:left}
    .hwm{font-size:28px} .h1lead{font-size:18px}
-   .nums,.mq{height:34px}.ni{height:34px;padding:0 11px}
-   .mq::before,.mq::after{width:28px}
    .sc{flex:1 1 100%;padding:10px 14px}
    .sc-n{font-size:23px}
    .dv-d{width:40px;font-size:10px}
@@ -221,6 +206,348 @@
    .dv-hd{font-size:9px;letter-spacing:.03em}
    .fgrid{grid-template-columns:1fr}
  }
+
+ /* ═══ ΑΛΛΑΓΕΣ 2ου ΓΥΡΟΥ ═══════════════════════════════════════════════════ */
+ /* (Α) η μπλε κεφαλίδα κρατά το ΠΡΟΗΓΟΥΜΕΝΟ ύψος της, παρότι της έφυγαν
+        τρεις σύνδεσμοι (στο κινητό έπεφτε 120 -> 89px). */
+ .k3 .bar{min-height:62px}
+ /* (Β) οι κάρτες της δεξιάς στήλης στενεύουν στο όριο του κειμένου τους·
+        ό,τι ελευθερώνεται το παίρνει ο πίνακας των μερισμάτων. */
+ @media(min-width:901px){   /* κάτω από αυτό η στήλη είναι ΜΙΑ και πιάνει όλο το πλάτος */
+   .cols2{grid-template-columns:1fr minmax(0,max-content)}
+   .stack{align-items:flex-start}
+   .stack .tp{max-width:100%}
+ }
+ /* (Γ) μεγαλύτερη ημερομηνία δίπλα στην εταιρεία */
+ .dv-d{font-size:13px;width:60px}
+ /* (Δ) χωρίς κλάδο -> χαμηλότερη γραμμή */
+ .dv{padding:7px 14px}
+ /* (Ε) μεγαλύτερη ετικέτα στα pills Πωλήσεις / EBITDA / Καθαρά κέρδη */
+ .sc-l{font-size:13px}
+ /* (ΣΤ) τα αποτελέσματα εξαμήνου ως ενιαίο block */
+ .resblk{background:#fff;border:1px solid var(--line2);border-radius:16px;padding:18px 20px 20px}
+ .resblk .bh{margin-bottom:14px}
+ .resblk .sc,.resblk .pt{background:var(--p2)}
+ @media(max-width:560px){
+   .dv-d{width:48px;font-size:12px}
+   .k3 .bar{min-height:120px}
+   .resblk{padding:14px 14px 16px;border-radius:14px}
+ }
+
+ /* ═══ BLOCK ΑΠΟΤΕΛΕΣΜΑΤΩΝ — ΣΤΑΘΜΙΣΜΕΝΑ ΜΕ ΓΕΓΟΝΟΤΑ (Γ) ═════════════════ */
+ .resblk .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:0 30px}
+ .sc-e{font-family:var(--disp);font-size:11px;font-weight:700;color:var(--faint);
+   margin-top:4px;letter-spacing:.02em}
+ .fx{list-style:none;margin:12px 0 0;padding:0;border-top:1px solid var(--line2)}
+ .fx li{font-size:12px;color:var(--text);padding:7px 0;border-bottom:1px solid #f1f6fb;line-height:1.45}
+ .fx li:last-child{border-bottom:0}
+ .fx li b{font-weight:800}
+ .fx i{font-style:normal;display:block;font-family:var(--disp);font-size:9.5px;font-weight:700;
+   text-transform:uppercase;letter-spacing:.07em;color:var(--faint);margin-bottom:2px}
+ .fx li.w{color:var(--gold)} .fx li.w i{color:var(--gold)}
+ .rnote{text-align:center;font-size:11.5px;color:var(--faint);margin-top:16px;padding-top:13px;
+   border-top:1px solid var(--line2)}
+ .rnote b{color:var(--muted)}
+ @media(max-width:900px){.resblk .g3{grid-template-columns:1fr;gap:22px}}
+
+ /* ═══ ΥΠΟΣΕΛΙΔΟ — το ΙΔΙΟ με τις υπόλοιπες σελίδες (chrome.css) ══════════ */
+ .site-ft{background:#0f1f38;color:#aebfd8;margin-top:64px}
+ .site-ft .in{max-width:1180px;margin:0 auto;padding:36px 22px 24px;display:grid;grid-template-columns:minmax(170px,250px) repeat(5,auto);gap:30px 26px;justify-content:space-between;align-items:start}
+ .site-ft .fbrand{max-width:290px}
+ .site-ft .flogo{font-family:Inter,sans-serif;font-weight:900;font-size:20px;color:#fff;letter-spacing:-.03em}
+ .site-ft .flogo i{font-style:normal;color:#57a5df}
+ .site-ft .ftag{font-size:12px;color:#7d92b6;margin-top:8px;line-height:1.6}
+ .site-ft .fcol h4{font-family:Inter,sans-serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#6f86ac;font-weight:700;margin:0 0 11px}
+ .site-ft .fcol a{display:block;color:#aebfd8;text-decoration:none;font-size:13px;padding:4px 0;white-space:nowrap}
+ .site-ft .fcol a:hover{color:#fff}
+ @media(max-width:1180px){ .site-ft .in{grid-template-columns:repeat(5,auto);gap:28px 24px} .site-ft .fbrand{grid-column:1/-1;max-width:560px} }
+ @media(max-width:980px){ .site-ft .in{grid-template-columns:repeat(3,auto);gap:26px 40px;justify-content:start} }
+ @media(max-width:760px){ .site-ft .in{grid-template-columns:repeat(2,auto);justify-content:start;gap:26px 44px} }
+ /* §125 — στήλη «Επικοινωνία» στο footer. Το .sub έχει μέγιστο πλάτος ώστε να μη
+    τραβάει το πλέγμα· χωρίς αυτό η πρόταση απλώνεται και στενεύει τις άλλες στήλες. */
+ .site-ft .fcontact a{display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+ .site-ft .fcontact a svg{width:14px;height:14px;flex:none;stroke:currentColor;fill:none;
+   stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+ .site-ft .fcontact .sub{font-size:11.5px;color:#6f86ac;margin-top:9px;line-height:1.55;
+   max-width:205px;white-space:normal}
+ .site-ft .fbot{border-top:1px solid #1e3358;font-size:11.5px;color:#6f86ac;text-align:center;max-width:1180px;margin:0 auto;padding:14px 22px 22px}
+ /* η αρχική δεν έχει .board με margin, οπότε μηδενίζουμε το margin-top του footer */
+ .site-ft{margin-top:0}
+
+ /* ═══ ΚΑΡΤΑ SHORT — ΜΙΑ ΣΤΗΛΗ, ΚΩΔΙΚΟΣ ΧΡΗΜΑΤΙΣΤΗΡΙΟΥ ════════════════════ */
+ /* Μία γραμμή ανά εταιρεία· όποια έχει short σε δύο αγορές παίρνει δύο σειρές
+    νούμερα δίπλα στο ίδιο όνομα. ATH = Euronext Athens, LON = London. */
+ .shb .r3{display:flex;align-items:center;gap:12px;padding:8px 14px;
+   border-bottom:1px solid #f1f6fb;text-decoration:none;color:inherit}
+ .shb .r3:last-of-type{border-bottom:0}
+ .shb .r3:hover{background:#f8fbff}
+ .shb .nm{flex:1;min-width:0;font-size:12.5px;color:var(--text);line-height:1.35}
+ .shb .mcol{display:flex;flex-direction:column;gap:3px;align-items:flex-end;flex:none}
+ .shb .ml{display:flex;align-items:baseline;gap:6px;justify-content:flex-end}
+ .shb .ml b{font-family:var(--disp);font-size:13px;font-weight:800;color:var(--down);
+   min-width:46px;text-align:right}
+ .shb .ml u{text-decoration:none;font-family:var(--disp);font-size:10.5px;font-weight:700;
+   color:var(--muted);min-width:76px;text-align:right}
+ .mk{font-style:normal;display:inline-block;font-family:var(--disp);font-size:8.5px;
+   font-weight:800;letter-spacing:.05em;border-radius:4px;padding:1px 4px;flex:none}
+ .mk.ath{background:#eaf2fa;color:#2f80c2}
+ .mk.lon{background:#f3eefc;color:#7a67c9}
+/* ---- block «Ξένοι επενδυτές» — ΣΥΜΠΑΓΗ ΜΟΡΦΗ ------------------------------
+   Το block ΖΕΙ ΜΕΣΑ στο .cols2, ως τρίτο παιδί: η αυτόματη τοποθέτηση του grid
+   το βάζει στήλη 1 / γραμμή 2, δηλαδή ΚΑΤΩ από τα μερίσματα και με ΤΟ ΙΔΙΟ
+   πλάτος μ' αυτά σε κάθε ανάλυση — χωρίς καμία σταθερά σε px.
+   Επειδή το πλάτος δεν ακολουθεί πια το viewport, οι εσωτερικές αλλαγές
+   διάταξης γίνονται με @container, ΟΧΙ με @media. */
+ .xeblk{--surf:#fff;--c1:var(--cyan);--c2:var(--gold);--cpos:var(--cyan);--cneg:var(--down);
+   --grid:var(--line);--axis:var(--ink);--tick:var(--faint);--tile:#fcfdff;--tline:var(--line2);
+   min-width:0;container-type:inline-size;
+   padding:13px 15px 12px;background:var(--surf);
+   border:1px solid var(--line2);border-radius:13px}
+ /* ο τίτλος κρατά το ΥΠΑΡΧΟΝ .bh h2 (17px/800/κεφαλαία): είναι τίτλος ενότητας
+    όπως οι άλλοι της σελίδας και δεν μικραίνει μαζί με τα εσωτερικά */
+ .xeblk .bh{margin:0 0 9px}
+ .xh{color:var(--muted);margin:0 0 6px;display:flex;align-items:center;
+   gap:8px;flex-wrap:wrap}
+ .lg{display:inline-flex;align-items:center;gap:4px;color:var(--muted);
+   text-transform:none;letter-spacing:0}
+ .lg .sw{width:8px;height:8px;border-radius:2px;display:inline-block}
+ .lg i.sw:not(:first-child){margin-left:7px}
+ .xnums{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:0 0 12px}
+ .xn1{padding:6px 8px;border:1px solid var(--tline);border-radius:8px;background:var(--tile)}
+ .xn1 u{display:block;text-decoration:none;color:var(--muted)}
+ .xn1 b{display:block;color:var(--ink);margin:2px 0 0;line-height:1.1}
+ .xn1 b.pos{color:var(--up)}
+ .xn1 s{display:block;text-decoration:none;color:var(--faint);line-height:1.3}
+ .xcharts .xh{display:block}
+ .xcharts .xh .lg{display:flex;margin-top:3px}
+ .xcharts{display:grid;grid-template-columns:420fr 266fr;gap:14px;align-items:start}
+ .xcol{min-width:0}
+ .xch{display:block;width:100%;height:auto;overflow:visible}
+ .xch line{stroke-width:1}
+ .xch .gr{stroke:var(--grid)} .xch .zr{stroke:var(--axis)}
+ .xch .ln{fill:none;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round}
+ .xch .pt{stroke:var(--surf);stroke-width:1.8}
+ .xch .s1{stroke:var(--c1)} .xch .pt.s1,.xch text.s1{fill:var(--c1);stroke:none}
+ .xch .pt.s1{stroke:var(--surf)}
+ .xch .s2{stroke:var(--c2)} .xch .pt.s2,.xch text.s2{fill:var(--c2);stroke:none}
+ .xch .pt.s2{stroke:var(--surf)}
+ .xch .br.pos{fill:var(--cpos)} .xch .br.neg{fill:var(--cneg)}
+ .xch text.vl.pos{fill:var(--cpos)}
+ .lg .sw.s1{background:var(--c1)} .lg .sw.s2{background:var(--c2)}
+ .lg .sw.pos{background:var(--cpos)} .lg .sw.neg{background:var(--cneg)}
+ .xch .tk{fill:var(--tick);font-variant-numeric:tabular-nums}
+ .xch rect{transition:opacity .12s} .xch rect:hover{opacity:.78}
+ .xch circle{cursor:default}
+ .xeblk .xm-w{display:none}          /* η φαρδιά εκδοχή μόνο όταν στοιβάζονται */
+ .xfoot{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;
+   margin:11px 0 0;border-top:1px solid var(--tline);padding-top:8px}
+ .xsrc{flex:0 0 auto;color:var(--faint);padding-top:1px}
+ .xtab{flex:1 1 auto;min-width:0}
+ .xtab summary{cursor:pointer;color:var(--cyan)}
+ .xtab table{border-collapse:collapse;margin:8px 16px 0 0;display:inline-table;
+   vertical-align:top;line-height:1.45}
+ .xtab th,.xtab td{padding:2px 10px 2px 0;text-align:right;white-space:nowrap}
+ .xtab th:first-child,.xtab td:first-child{text-align:left;color:var(--text)}
+ .xtab th{font-weight:600;color:var(--muted);border-bottom:1px solid var(--line2)}
+ .xtab td{color:var(--ink);font-variant-numeric:tabular-nums}
+ .xtab td i{color:var(--faint);font-style:normal}
+ /* ΚΑΤΩ ΑΠΟ 600px ΠΛΑΤΟΥΣ BLOCK: τα δύο γραφήματα δεν χωρούν δίπλα-δίπλα.
+    Το μηνιαίο αλλάζει ΓΕΩΜΕΤΡΙΑ (560x140 αντί 266x160) — δεν τεντώνεται το
+    στενό, γιατί το SVG κρατά τις αναλογίες του και θα γινόταν 2,1x ψηλότερο. */
+ @container (max-width:599px){
+   .xcharts{grid-template-columns:1fr;gap:12px}
+   .xeblk .xm-n{display:none} .xeblk .xm-w{display:block}
+ }
+ @container (max-width:470px){ .xnums{grid-template-columns:1fr 1fr} }
+ @container (max-width:250px){ .xnums{grid-template-columns:1fr} }
+/* ═══ ΛΩΡΙΔΑ ΓΕΓΟΝΟΤΩΝ — ΣΤΥΛ DOW JONES ══════════════════════════════════ */
+/* Το μπλε/μπλε-σκούρο της κεφαλίδας κάνει μόνο του το πάνω όριο, όπως εκεί. */
+ .nums{background:var(--tape,#f3f4f5);border-bottom:1px solid #e3e5e7;border-top:0}
+ .taperow{display:flex;align-items:stretch;gap:0;min-height:52px}
+
+/* ΣΤΑΘΕΡΗ ΕΤΙΚΕΤΑ: δεν κυλά. Στο δικό τους είναι «The Latest» + ημερομηνία. */
+ .t-lead{flex:0 0 auto;display:grid;grid-template-columns:auto 1fr;
+   grid-template-areas:"k t" ". d";align-content:center;column-gap:8px;
+   padding:8px 26px 8px 0}
+ .t-live{grid-area:k;width:9px;height:9px;background:var(--up);align-self:center;
+   margin-top:1px}
+ .t-lt{grid-area:t;font:700 12px/1.25 var(--sans);color:var(--ink)}
+ .t-lt2{grid-area:t;display:none;font:700 11.5px/1.25 var(--sans);color:var(--ink)}
+ .t-ld{grid-area:d;font:400 10.5px/1.3 var(--sans);color:#24679d}
+
+/* ΚΥΛΙΣΗ: σκληρό κόψιμο στα άκρα, ΧΩΡΙΣ fade — όπως στο δικό τους. */
+ /* «ΝΑ ΜΗΝ ΚΟΒΕΤΑΙ»: μια ταινία κύλισης πάντα κόβει στα άκρα. Αντί για σκληρό
+    κόψιμο στη μέση της λέξης (όπως κάνει η δική τους), το κείμενο ΣΒΗΝΕΙ με
+    mask — ίδιο αποτέλεσμα στο πλάτος, χωρίς την εντύπωση «χαλασμένου». */
+ .mq{overflow:hidden;position:relative;flex:1 1 auto;min-width:0;
+   display:flex;align-items:center;
+   -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 48px,#000 calc(100% - 48px),transparent 100%);
+   mask-image:linear-gradient(90deg,transparent 0,#000 48px,#000 calc(100% - 48px),transparent 100%)}
+ .mq-t{display:flex;width:max-content;animation:none}
+ /* ΤΑΧΥΤΗΤΑ — ΤΟ ΜΕΓΕΘΟΣ ΠΟΥ ΡΥΘΜΙΖΟΥΜΕ ΕΙΝΑΙ Η **ΔΙΑΣΧΙΣΗ**:
+    πόση ώρα μένει ορατή μία είδηση, από τη στιγμή που μπαίνει στο δεξί όριο
+    του ΟΡΑΤΟΥ ΕΥΡΟΥΣ ως τη στιγμή που βγαίνει από το αριστερό.
+      διάσχιση = (παράθυρο + πλάτος είδησης) ÷ ταχύτητα
+      --sp     = διαδρομή × διάσχιση ÷ (παράθυρο + μέση είδηση)
+    ⚠ ΤΟ ΠΑΡΑΘΥΡΟ ΔΕΝ ΕΙΝΑΙ ΤΟ ΠΛΑΤΟΣ ΤΗΣ ΟΘΟΝΗΣ: στα 1280px είναι **879px**
+    (η σταθερή ετικέτα τρώει ~200px, τα βελάκια ~70px, τα περιθώρια τα λοιπά).
+    Διαδρομή 2.983px · μέση είδηση 199px (εύρος 157-253px, γι' αυτό η διάσχιση
+    δίνεται ως μέση τιμή ±5%).
+    ΕΠΙΛΟΓΗ ΤΟΥ USER: **15 δευτερόλεπτα ορατή** → --sp **41,5s** (71,9 px/s,
+    νέα είδηση κάθε 2,8s, πραγματικό εύρος 14,4-15,8s). Δοκιμάστηκαν 20s και
+    18s· 26,7s (παλιό 75s) ήταν πολύ αργό. */
+ .mq-t.ready{animation:mqx var(--sp,41.5s) linear infinite}
+ .mq:hover .mq-t,.mq:focus-within .mq-t{animation-play-state:paused}
+ .mq-g{display:flex;flex:none}
+ @keyframes mqx{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
+
+/* ΕΙΔΗΣΗ: δύο γραμμές, πεζά, χωρίς διαχωριστικό — μόνο κενό. */
+ .ti{display:flex;flex-direction:column;justify-content:center;gap:2px;
+   padding:8px 26px 8px 0;text-decoration:none;color:inherit;white-space:nowrap}
+ .ti:hover .t-m{text-decoration:underline;text-underline-offset:2px}
+ /* ΠΑΝΩ: εταιρεία (έντονη, σκούρα) + ημερομηνία. ΚΑΤΩ: το γεγονός. */
+ .t-h{font:700 11.5px/1.3 var(--disp);color:var(--ink);display:flex;
+   align-items:center;gap:7px;letter-spacing:.01em}
+ /* #8199b3 δίνει 2,67:1 στο γκρι — το #5c7085 δίνει 4,64:1 */
+ .t-h em{font:400 10.5px/1.3 var(--sans);font-style:normal;color:#5c7085}
+ /* Το #2f80c2 δίνει 3,82:1 πάνω στο #f3f4f5 — κάτω από το 4,5:1 που θέλει το
+    μικρό κείμενο. Το #24679d δίνει 5,45:1 και κρατά την ίδια απόχρωση. */
+ .t-m{font:400 11.5px/1.3 var(--sans);color:#24679d}
+ .t-k{display:none;width:7px;height:7px;border-radius:50%;flex:none}
+
+/* ΒΕΛΑΚΙΑ ΔΕΞΙΑ */
+ .t-nav{flex:0 0 auto;display:flex;align-items:center;gap:2px;padding-left:14px}
+ .t-nav button{width:26px;height:26px;border:0;background:transparent;cursor:pointer;
+   font:400 20px/1 var(--sans);color:var(--muted);border-radius:50%}
+ .t-nav button:hover{background:rgba(22,36,61,.07);color:var(--ink)}
+
+ @media(max-width:760px){
+   .t-lead{padding-right:16px} .t-lt{font-size:11.5px} .t-ld{font-size:10px}
+   .ti{padding-right:20px} .t-nav{display:none}
+ }
+ /* Στα 390px η σταθερή ετικέτα έτρωγε τα μισά 390 και έμενε ελάχιστος χώρος για
+    τα γεγονότα (μετρημένο σε screenshot). Κάτω από 620px κόβεται η ημερομηνία
+    και ο τίτλος γίνεται «Γεγονότα»· κάτω από 460px μένει μόνο το τετράγωνο. */
+ @media(max-width:620px){
+   .t-lead{padding-right:14px} .t-ld{display:none}
+   .t-lt{display:none} .t-lt2{display:block}
+ }
+ @media(max-width:460px){
+   .t-lead{padding-right:12px} .t-lt2{display:none}
+ }
+
+
+/* ═══ ΚΛΙΜΑΚΑ ΤΥΠΟΓΡΑΦΙΑΣ ════════════════════════════════════════════════ */
+ :root{
+   --f-disp:Inter,system-ui,sans-serif;      /* αριθμοί · λογότυπα · τίτλοι */
+   --f-text:'Open Sans',system-ui,sans-serif;/* κείμενο */
+   --s9:9px;  --s10:10px; --s11:11px; --s12:12px; --s13:13px;
+   --s17:17px; --s20:20px; --s26:26px; --s36:36px;
+   --w-reg:400; --w-med:600; --w-bold:700; --w-disp:800;
+   --ls-caps:.06em; --ls-num:-.02em;
+ }
+ /* ΑΡΙΘΜΟΙ: παντού στοιχισμένα ψηφία — ο λόγος που έφυγε το monospace */
+ .sc-n,.sc-e,.xn1 b,.dv-a,.dv-y,.dv-d,.r3 b,.r3 u,.t-h em,.xch .tk,.xch .vl,
+ .xtab td,.m-inline b,.fx li b{font-variant-numeric:tabular-nums}
+
+ /* 36 — λογότυπο ήρωα */
+ .hwm{font-family:var(--f-disp);font-size:var(--s36);font-weight:var(--w-disp);
+   letter-spacing:var(--ls-num)}
+ /* 26 — οι τρεις μεγάλοι αριθμοί των αποτελεσμάτων */
+ .sc-n{font-family:var(--f-disp);font-size:var(--s26);font-weight:var(--w-disp);
+   letter-spacing:var(--ls-num)}
+ /* 20 — επικεφαλίδα ήρωα, λογότυπα κεφαλίδας/υποσέλιδου, αριθμοί πλακιδίων */
+ .h1lead,.lockh .wm,.flogo,.xn1 b{font-size:var(--s20);font-weight:var(--w-disp)}
+ .lockh .wm,.flogo,.xn1 b{font-family:var(--f-disp);letter-spacing:var(--ls-num)}
+ .h1lead{font-family:var(--f-disp);letter-spacing:-.01em}
+ /* 17 — τίτλοι ενοτήτων (κεφαλαία) */
+ .bh h2,.feath h2{font-family:var(--f-disp);font-size:var(--s17);
+   font-weight:var(--w-disp);text-transform:uppercase;letter-spacing:var(--ls-caps)}
+ /* 13 — ποσά, ποσοστά, ημερομηνίες πινάκων, σύνδεσμοι πλοήγησης */
+ .dv-a,.dv-y,.r3 b{font-family:var(--f-disp);font-size:var(--s13);
+   font-weight:var(--w-disp);letter-spacing:normal;text-transform:none}
+ /* Η ημερομηνία ήταν 13px ενώ το όνομα της εταιρείας 12px — το λιγότερο
+    σημαντικό στοιχείο της γραμμής ήταν το μεγαλύτερο. Πάει στα 12. */
+ /* ⚠ ΟΧΙ Inter ΕΔΩ: το υποσύνολο Inter του site έχει άξονα βάρους **600-900**
+    (fvar wght 600→900) — το 400 ΔΕΝ υπάρχει και ο browser το σφίγγει στο 600,
+    δηλαδή η ημερομηνία θα έβγαινε σχεδόν τόσο έντονη όσο το όνομα (700).
+    Το Open Sans έχει άξονα 400-800. ΚΑΝΟΝΑΣ: --w-reg ΜΟΝΟ με --f-text. */
+ .dv-d{font-family:var(--f-text);font-size:var(--s12);font-weight:var(--w-reg);
+   letter-spacing:normal;text-transform:none}
+ .navh a,.sc-l{font-family:var(--f-text);font-size:var(--s13);
+   font-weight:var(--w-med)}
+ .sc-l{font-weight:var(--w-reg)}
+ /* 12 — τρέχον κείμενο, ονόματα εταιρειών, μενού, κεφαλίδες καρτών */
+ .m-inline,.fx li,.t-m,.xtab table,.xtab summary{font-family:var(--f-text);
+   font-size:var(--s12)}
+ .m-inline b,.fx li b,.dv-c b{font-weight:var(--w-bold)}
+ .t-h,.t-lt,.t-lt2{font-size:var(--s12);font-weight:var(--w-bold);
+   letter-spacing:normal}
+ .t-h{font-family:var(--f-disp)} .t-lt,.t-lt2{font-family:var(--f-text)}
+ .dv-c b{font-family:var(--f-disp);font-size:var(--s12)}
+ .navbar2 a{font-family:var(--f-disp);font-size:var(--s12);
+   font-weight:var(--w-bold);letter-spacing:var(--ls-caps)}
+ .pane-h,.tp-h,.xh{font-size:var(--s12);font-weight:var(--w-bold);
+   text-transform:uppercase;letter-spacing:var(--ls-caps)}
+ .xtab summary{font-weight:var(--w-med)}
+ /* 11 — δευτερεύουσες ετικέτες, λεζάντες γραφημάτων, «όλες →» */
+ .sc-e{font-family:var(--f-disp);font-size:var(--s11);font-weight:var(--w-bold);
+   letter-spacing:normal}
+ .pane-h a,.tp-h a,.xtab summary,.lg,.fcol h4,.xch .vl{font-size:var(--s11)}
+ .pane-h a,.tp-h a{font-family:var(--f-text);font-weight:var(--w-med);
+   text-transform:none;letter-spacing:normal}
+ .lg{font-family:var(--f-text);font-weight:var(--w-reg)}
+ .fcol h4{font-family:var(--f-disp);font-weight:var(--w-bold);
+   text-transform:uppercase;letter-spacing:var(--ls-caps)}
+ /* 10 — μικρές ετικέτες κεφαλίδων στηλών, ημερομηνίες λωρίδας, σημειώσεις */
+ .dv-hd,.dv-hd span,.xn1 u,.fx li i{font-family:var(--f-text);
+   font-size:var(--s10);font-weight:var(--w-med);text-transform:uppercase;
+   letter-spacing:var(--ls-caps)}
+ .t-ld,.t-h em,.xch .tk,.mvnote,.rnote,.xn1 s,.xsrc,.xn{font-family:var(--f-text);
+   font-size:var(--s10);font-weight:var(--w-reg);letter-spacing:normal}
+ .mvnote b,.rnote b,.r3 u{font-weight:var(--w-bold)}
+ .r3 u{font-family:var(--f-disp);font-size:var(--s10)}
+ /* 9 — τα πιο μικρά: υπότιτλος λογοτύπου και σήματα χρηματιστηρίου */
+ .tag{font-family:var(--f-disp);font-size:var(--s9);font-weight:var(--w-med)}
+ .mk{font-family:var(--f-disp);font-size:var(--s9);font-weight:var(--w-bold);
+   letter-spacing:.04em}
+
+ /* ── ΔΕΥΤΕΡΟ ΠΕΡΑΣΜΑ: στόχοι που τους κέρδιζαν πιο ειδικοί παλιοί κανόνες.
+    Βρέθηκαν με ΕΠΑΝΑΛΗΨΗ ΤΟΥ ΕΛΕΓΧΟΥ μετά το πρώτο πέρασμα, όχι με το μάτι. */
+ .site-ft .flogo{font-weight:var(--w-disp);font-size:var(--s20)}
+ .site-ft .ftag{font-family:var(--f-text);font-size:var(--s11);
+   font-weight:var(--w-reg)}
+ .shb .nm{font-family:var(--f-disp);font-size:var(--s12);font-weight:var(--w-bold)}
+ .shb .ml b{font-size:var(--s13);font-weight:var(--w-disp)}
+ .shb .ml u{font-family:var(--f-disp);font-size:var(--s10);font-weight:var(--w-bold)}
+ /* οι αριθμοί των γραφημάτων στην ΙΔΙΑ φωνή με τους υπόλοιπους αριθμούς */
+ .xch .vl{font-family:var(--f-disp);font-size:var(--s11);font-weight:var(--w-bold)}
+ /* ΟΛΕΣ οι μικρές κεφαλαίες ετικέτες: μία οικογένεια, ένα βάρος */
+ .navbar2 a,.pane-h,.tp-h,.xh{font-family:var(--f-text);font-weight:var(--w-bold)}
+ /* τα δύο μικρότερα σήματα στο ίδιο βάρος */
+ .lockh .tag{font-weight:var(--w-bold)}
+ /* ΤΡΙΤΟ ΠΕΡΑΣΜΑ: τα τελευταία 11,5px του υποσέλιδου και της σημείωσης */
+ .site-ft .fcontact .sub,.site-ft .fbot,.rnote,.xsrc{font-family:var(--f-text);
+   font-size:var(--s11);font-weight:var(--w-reg)}
+ /* οι κεφαλαίες ετικέτες του υποσέλιδου στην ίδια οικογένεια με τις άλλες */
+ .site-ft .fcol h4{font-family:var(--f-text);font-weight:var(--w-bold)}
+/* ── ΣΥΜΠΑΓΕΣ BLOCK ΞΕΝΩΝ: ένα σκαλί κάτω, ΣΤΗΝ ΙΔΙΑ ΚΛΙΜΑΚΑ ──────────────
+   Κανένα νέο μέγεθος: 12→11, 11→10, 10,5→9, 20→17. Ο τίτλος της ενότητας
+   μένει 17px γιατί είναι τίτλος ενότητας, όχι στοιχείο του block. */
+ .xeblk .xh{font-size:var(--s11)}
+ .xeblk .lg{font-size:var(--s10)}
+ .xeblk .xn1 u{font-size:var(--s9)}
+ .xeblk .xn1 b{font-size:var(--s17)}
+ .xeblk .xn1 s{font-size:var(--s9)}
+ .xeblk .xsrc,.xeblk .xtab summary{font-size:var(--s10)}
+ .xeblk .xtab table{font-size:var(--s11)}
+ /* μέσα στο SVG τα px είναι μονάδες viewBox, άρα γράφονται εδώ ρητά */
+ .xeblk .xch .tk{font:var(--w-reg) 9px/1 var(--f-text)}
+ .xeblk .xch .vl{font:var(--w-bold) 8px/1 var(--f-disp)}
+ /* knockout: το κείμενο γράφεται ΠΑΝΩ σε περίγραμμα στο χρώμα του
+    φόντου, ώστε να μην μπερδεύεται με τη γραμμή ή τον κάναβο */
+ .xeblk .xch text.vl{paint-order:stroke;stroke:var(--surf);
+   stroke-width:2.5px;stroke-linejoin:round}
 </style><script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -272,146 +599,194 @@
  <a class="lockh" href="/"><span class="am">A<span>M</span></span><span class="rule"></span>
   <span><span class="wm">AXION <i>METRICS</i></span><span class="tag">ΜΕΤΡΟΝ ΑΞΙΟΝ</span></span></a>
  <div class="navh">
-  <a href="company/" data-i18n="nav.companies">Εταιρείες</a>
-  <a href="sectors/" data-i18n="nav.sectors">Κλάδοι</a>
-  <a href="index-reviews/" data-i18n="nav.market">Αγορά</a>
   <a href="methodology/" data-i18n="nav.about">Σχετικά</a>
   <div class="langflags" role="group" aria-label="Language"><button type="button" data-langset="el" title="Ελληνικά" aria-label="Ελληνικά"><svg viewBox="0 0 27 18" aria-hidden="true"><rect width="27" height="18" fill="#fff"/><g fill="#0D5EAF"><rect width="27" height="2"/><rect width="27" height="2" y="4"/><rect width="27" height="2" y="8"/><rect width="27" height="2" y="12"/><rect width="27" height="2" y="16"/></g><rect width="10" height="10" fill="#0D5EAF"/><path d="M0 4h10v2H0z M4 0h2v10H4z" fill="#fff"/><rect width="27" height="18" fill="none" stroke="rgba(0,0,0,.18)"/></svg></button><button type="button" data-langset="en" title="English" aria-label="English"><svg viewBox="0 0 60 30" aria-hidden="true"><clipPath id="axukj"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath><rect width="60" height="30" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#axukj)" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/><rect width="60" height="30" fill="none" stroke="rgba(0,0,0,.18)" stroke-width="2"/></svg></button></div><span class="mrule"></span><span class="mrule"></span><a class="hmail" href="mailto:info@axionmetrics.gr" title="info@axionmetrics.gr" aria-label="Επικοινωνία: info@axionmetrics.gr"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M3 7l9 6 9-6"/></svg></a>
  </div>
 </div></div></div>
+<!-- (1) ΤΑΙΝΙΑ ΓΕΓΟΝΟΤΩΝ: λευκή, κολλητά κάτω από το όριο του μπλε. -->
+<div class="nums"><div class="hw"><div class="taperow">  <div class="t-lead"><span class="t-live"></span>   <span class="t-lt" id="ax-tlabel"></span>   <span class="t-lt2" id="ax-tlabel2"></span>   <span class="t-ld" id="ax-tdate"></span></div>  <div class="mq" id="ax-tape"></div>  <div class="t-nav"><button type="button" aria-label="Προηγούμενα">‹</button>   <button type="button" aria-label="Επόμενα">›</button></div></div></div></div>
 
 <div class="k3below"><div class="hw"><div class="in2">
- <div class="asofr"><span data-i18n="home.asof">Τελευταία ενημέρωση δεδομένων</span><br><b id="ax-asof">02.11.26</b></div>
  <div class="hcenter">
   <h1 class="h1lead" data-i18n-html="home.h1"><em>Θεμελιώδης ανάλυση</em> των <em>εισηγμένων</em> του Χρηματιστηρίου Αθηνών</h1>
   <div class="hwm"><span class="a">AXION</span> <span class="m">METRICS</span></div>
-  <div class="m-inline" id="ax-meta"><b>141</b> εισηγμένες · <b>11</b> κλάδοι · <b>26</b> αριθμοδείκτες · κάλυψη από το <b>2020</b></div>
+  <div class="m-inline" id="ax-meta"></div>
  </div>
 </div></div></div>
 
-<div class="nums"><div class="hw"><div class="tapehold" id="ax-tape"><div class="mq"><div class="mq-t"><div class="mq-g"><a class="ni" href="/etaireia/crediabank/"><span class="d">27.10</span><span class="dot amk"></span><span class="co">CREDIABANK</span><span class="x">ΑΜΚ λόγω συγχώνευσης με απορρόφηση της εισηγμένης «94 EVROPI HOLDINGS»</span></a><a class="ni" href="/etaireia/evropi-holdings/"><span class="d">27.10</span><span class="dot listing"></span><span class="co">ΕΥΡΩΠΗ HOLDINGS</span><span class="x">Παύση διαπραγμάτευσης λόγω συγχώνευσης με απορρόφηση από την «CrediaBa…</span></a><a class="ni" href="/etaireia/papoutsanis/"><span class="d">26.10</span><span class="dot div"></span><span class="co">ΠΑΠΟΥΤΣΑΝΗΣ</span><span class="x">Προμέρισμα χρήσης 2026 €0,0501/μετοχή</span></a><a class="ni" href="/etaireia/capital-maritime-finance/"><span class="d">20.10</span><span class="dot listing"></span><span class="co">CAPITAL MARITIME FINANCE</span><span class="x">Εισαγωγή προς διαπραγμάτευση στην Κύρια Αγορά Euronext Athens</span></a><a class="ni" href="/etaireia/alpha-bank/"><span class="d">19.10</span><span class="dot amk"></span><span class="co">ALPHA BANK</span><span class="x">Εισαγωγή νέων μετοχών</span></a><a class="ni" href="/etaireia/performance-technologies/"><span class="d">16.10</span><span class="dot amk"></span><span class="co">PERFORMANCE TECHNOLOGIES</span><span class="x">ΑΜΚ €32.900 με κεφαλαιοποίηση αποθεματικού υπέρ το άρτιο</span></a><a class="ni" href="/etaireia/attica-media-group/"><span class="d">14.10</span><span class="dot div"></span><span class="co">ATTICA MEDIA GROUP</span><span class="x">Διανομή €0,02/μετοχή</span></a><a class="ni" href="/etaireia/evropi-holdings/"><span class="d">14.10</span><span class="dot amk"></span><span class="co">ΕΥΡΩΠΗ HOLDINGS</span><span class="x">Επιστροφή κεφαλαίου €0,31/μετοχή</span></a><a class="ni" href="/etaireia/alphatrust-andromeda/"><span class="d">12.10</span><span class="dot div"></span><span class="co">ALPHATRUST ΑΝΔΡΟΜΕΔΑ</span><span class="x">Διανομή €0,2643/μετοχή από κέρδη παρελθουσών χρήσεων</span></a><a class="ni" href="/etaireia/safe-bulkers/"><span class="d">12.10</span><span class="dot amk"></span><span class="co">SAFE BULKERS</span><span class="x">Εισαγωγή νέων μετοχών</span></a><a class="ni" href="/etaireia/verallis/"><span class="d">09.10</span><span class="dot listing"></span><span class="co">VERALLIS</span><span class="x">Εισαγωγή προς διαπραγμάτευση στην EN.A. Growth</span></a><a class="ni" href="/etaireia/trastor/"><span class="d">30.09</span><span class="dot amk"></span><span class="co">TRASTOR</span><span class="x">ΑΜΚ €72.873,50 με κεφαλαιοποίηση αποθεματικού</span></a><a class="ni" href="/etaireia/alpha-trust-holdings/"><span class="d">24.09</span><span class="dot listing"></span><span class="co">ALPHA TRUST HOLDINGS</span><span class="x">Διαγραφή των 3.223.944 μετοχών από το Euronext Athens</span></a><a class="ni" href="/etaireia/fourlis-group/"><span class="d">18.09</span><span class="dot amk"></span><span class="co">FOURLIS GROUP</span><span class="x">ΑΜΚ €242.785 με κεφαλαιοποίηση αποθεματικών</span></a><a class="ni" href="/etaireia/ethniki-trapeza-tis-ellados/"><span class="d">17.09</span><span class="dot amk"></span><span class="co">ΕΘΝΙΚΗ ΤΡΑΠΕΖΑ ΤΗΣ ΕΛΛΑΔΟΣ</span><span class="x">Μείωση μετοχικού κεφαλαίου</span></a></div></div></div></div></div></div>
+<!-- (2) ΣΤΑΘΕΡΗ ΓΡΑΜΜΗ ΜΕΝΟΥ στη θέση που είχε η ταινία γεγονότων. -->
+<div class="navbar2"><div class="hw"><div class="in">
+ <a href="company/">Εταιρείες</a>
+ <a href="sectors/">Κλάδοι</a>
+ <a href="index-reviews/">Αγορά</a>
+</div></div></div>
 
 <div class="board"><div class="hw">
+ <div class="resblk">
  <div class="bh ctr"><h2 id="ax-seasonh">Αποτελέσματα εξαμήνου 2026 — τι έδειξαν οι οικονομικές καταστάσεις</h2></div>
- <div class="numrow" id="ax-nums"><div class="scards"><div class="sc"><div class="sc-l">Πωλήσεις</div><div class="sc-n up">▲ +7,6%</div></div><div class="sc"><div class="sc-l">EBITDA</div><div class="sc-n up">▲ +25,9%</div></div><div class="sc"><div class="sc-l">Καθαρά κέρδη</div><div class="sc-n up">▲ +23,2%</div></div></div><div class="pgrid"><div class="pt"><div class="pt-l">P/E</div><div class="pt-n">14,01x</div></div><div class="pt"><div class="pt-l">P/BV</div><div class="pt-n">1,35x</div></div><div class="pt"><div class="pt-l">Μερισματική απόδοση</div><div class="pt-n">3,42%</div></div><div class="pt"><div class="pt-l">ROE</div><div class="pt-n">9,09%</div></div></div></div>
+ <div class="g3" id="ax-res"></div>
+ <div class="rnote" id="ax-rnote"></div>
+ </div><!-- /resblk -->
  <div class="cols2">
-  <div id="ax-divs"><div class="pane"><h2 class="pane-h">Τελευταία μερίσματα &amp; διανομές <a href="/market-events/">όλες →</a></h2><div class="dv-hd"><span class="dv-d">Ημ/νία</span><span class="dv-c">Εταιρεία</span><span class="dv-a">€/μετοχή</span><span class="dv-y">Απόδοση</span></div><a class="dv" href="/etaireia/papoutsanis/"><span class="dv-d">26.10</span><span class="dv-c"><b>ΠΑΠΟΥΤΣΑΝΗΣ</b><small>Καταναλωτικά Αγαθά</small></span><span class="dv-a">€0,0501</span><span class="dv-y">2,31%</span></a><a class="dv" href="/etaireia/attica-media-group/"><span class="dv-d">14.10</span><span class="dv-c"><b>ATTICA MEDIA GROUP</b><small>Τεχνολογία, ΜΜΕ &amp; Τηλεπικοινωνίες</small></span><span class="dv-a">€0,02</span><span class="dv-y">1,40%</span></a><a class="dv" href="/etaireia/alphatrust-andromeda/"><span class="dv-d">12.10</span><span class="dv-c"><b>ALPHATRUST ΑΝΔΡΟΜΕΔΑ</b><small>Χρηματοοικονομικά · <em>από κέρδη παρελθουσών χρήσεων</em></small></span><span class="dv-a">€0,2643</span><span class="dv-y">8,62%</span></a><a class="dv" href="/etaireia/evrofarma/"><span class="dv-d">15.09</span><span class="dv-c"><b>EVROFARMA</b><small>Καταναλωτικά Αγαθά</small></span><span class="dv-a">€0,0601</span><span class="dv-y">1,67%</span></a><a class="dv" href="/etaireia/admie-symmetochon/"><span class="dv-d">28.08</span><span class="dv-c"><b>ΑΔΜΗΕ ΣΥΜΜΕΤΟΧΩΝ</b><small>Ενέργεια &amp; Κοινής Ωφέλειας</small></span><span class="dv-a">€0,0198</span><span class="dv-y">4,62%</span></a><a class="dv" href="/etaireia/evath/"><span class="dv-d">25.08</span><span class="dv-c"><b>ΕΥΑΘ</b><small>Ενέργεια &amp; Κοινής Ωφέλειας</small></span><span class="dv-a">€0,0746</span><span class="dv-y">1,92%</span></a><a class="dv" href="/etaireia/qualco-group/"><span class="dv-d">24.08</span><span class="dv-c"><b>QUALCO GROUP</b><small>Τεχνολογία, ΜΜΕ &amp; Τηλεπικοινωνίες</small></span><span class="dv-a">€0,045</span><span class="dv-y">0,69%</span></a><a class="dv" href="/etaireia/elastron/"><span class="dv-d">20.08</span><span class="dv-c"><b>ΕΛΑΣΤΡΟΝ</b><small>Βιομηχανία &amp; Βασικά Υλικά</small></span><span class="dv-a">€0,105</span><span class="dv-y">4,30%</span></a><div class="mvnote">492 μερίσματα και διανομές από το 2020. Η απόδοση είναι η μερισματική απόδοση <b>χρήσης 2025</b> της εταιρείας, όχι της συγκεκριμένης διανομής.</div></div></div>
-  <div class="stack" id="ax-tops"><div class="tp"><h3 class="tp-h">Υψηλότερη μερισματική απόδοση</h3><a class="tp-r" href="/etaireia/ellaktor/"><span class="tp-n">41,05%</span><span class="tp-c">ELLAKTOR</span></a><a class="tp-r" href="/etaireia/prodea-investments/"><span class="tp-n">29,20%</span><span class="tp-c">PRODEA INVESTMENTS</span></a><a class="tp-r" href="/etaireia/mple-kedros/"><span class="tp-n">8,74%</span><span class="tp-c">ΜΠΛΕ ΚΕΔΡΟΣ</span></a><a class="tp-r" href="/etaireia/alphatrust-andromeda/"><span class="tp-n">8,62%</span><span class="tp-c">ALPHATRUST ΑΝΔΡΟΜΕΔΑ</span></a><a class="tp-r" href="/etaireia/loulis-food-ingredients/"><span class="tp-n">7,99%</span><span class="tp-c">LOULIS FOOD INGREDIENTS</span></a></div><div class="tp"><h3 class="tp-h">Χαμηλότερο P/E — αποτίμηση</h3><a class="tp-r" href="/etaireia/agrotikos-oikos-spyrou/"><span class="tp-n">1,35x</span><span class="tp-c">ΑΓΡΟΤΙΚΟΣ ΟΙΚΟΣ ΣΠΥΡΟΥ</span></a><a class="tp-r" href="/etaireia/ellaktor/"><span class="tp-n">3,00x</span><span class="tp-c">ELLAKTOR</span></a><a class="tp-r" href="/etaireia/alphatrust-andromeda/"><span class="tp-n">3,58x</span><span class="tp-c">ALPHATRUST ΑΝΔΡΟΜΕΔΑ</span></a><a class="tp-r" href="/etaireia/premia-properties/"><span class="tp-n">4,14x</span><span class="tp-c">PREMIA PROPERTIES</span></a><a class="tp-r" href="/etaireia/interlife-asfalistiki/"><span class="tp-n">4,17x</span><span class="tp-c">INTERLIFE ΑΣΦΑΛΙΣΤΙΚΗ</span></a></div></div>
+  <div id="ax-divs"></div>
+  <div class="stack" id="ax-tops"></div>
+  <div class="xeblk">
+   <div class="bh"><h2>Ξένοι επενδυτές στο Χρηματιστήριο Αθηνών</h2></div>
+   <div id="ax-xenoi"></div>
+  </div><!-- /xeblk -->
  </div>
+
 </div></div>
 
-<div class="feat"><div class="hw">
- <div class="feath"><h2 data-i18n="feat.h2">Όλα όσα χρειάζεσαι για να αποφασίσεις</h2><p data-i18n="feat.p">Ό,τι χρειάζεσαι για κάθε εισηγμένη — από την εταιρεία μέχρι τον κλάδο και την αγορά.</p></div>
- <div class="fgrid"><a class="fcard" href="company/"><div class="ficon"><img src="assets/icons/company.png" alt="" loading="lazy"></div><h3 data-i18n="card.company.h">Θεμελιώδης ανάλυση εταιρείας</h3><p data-i18n="card.company.p">26 αριθμοδείκτες με κλαδική σύγκριση, ιστορικότητα μεγεθών, μέτοχοι, θυγατρικές, γεγονότα και ποιότητα κερδών (Piotroski).</p></a><a class="fcard" href="compare/"><div class="ficon"><img src="assets/icons/compare.png" alt="" loading="lazy"></div><h3 data-i18n="card.compare.h">Σύγκριση &amp; κατατάξεις</h3><p data-i18n="card.compare.p">Εταιρείες δίπλα-δίπλα σε κάθε δείκτη, και league tables για όλη την αγορά.</p></a><a class="fcard" href="sectors/"><div class="ficon"><img src="assets/icons/sector.png" alt="" loading="lazy"></div><h3 data-i18n="card.sector.h">Ανάλυση κλάδου</h3><p data-i18n="card.sector.p">Κλαδικές διάμεσοι, screener εντός κλάδου και τροχιά ποιότητας.</p></a><a class="fcard" href="index-reviews/"><div class="ficon"><img src="assets/icons/events.png" alt="" loading="lazy"></div><h3 data-i18n="card.events.h">Δείκτες &amp; γεγονότα αγοράς</h3><p data-i18n="card.events.p">Είσοδοι/έξοδοι στους δείκτες FTSE/Athex και ροή εταιρικών γεγονότων (μερίσματα, ΑΜΚ).</p></a></div>
-</div></div>
+<!-- (3) το block «Όλα όσα χρειάζεσαι για να αποφασίσεις» ΑΦΑΙΡΕΘΗΚΕ. -->
 
 <!-- §86 — ΣΤΑΤΙΣΤΙΚΑ ΣΤΗΝ ΑΡΧΙΚΗ. Η αρχική ΔΕΝ φορτώνει το chrome.js (έχει δική της
      κεφαλίδα/υποσέλιδο), οπότε η injectAnalytics() δεν έτρεχε ποτέ εδώ: η σελίδα που
      δέχεται τις περισσότερες ΠΡΩΤΕΣ επισκέψεις ήταν η μόνη που δεν μετριόταν. Ίδιο id
      `cf-beacon` με το chrome.js, ώστε αν κάποτε φορτωθεί κι εκείνο να μη διπλομετρήσει. -->
-<script id="cf-beacon" defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "a9e573e27dd34f6784b7df2d706c1bee"}'></script>
+
+<!-- (7) ΥΠΟΣΕΛΙΔΟ: ίδιες στήλες με τις άλλες σελίδες. -->
+<footer class="site-ft"><div class="in"><div class="fbrand"><div class="flogo">AXION<i>METRICS</i></div><div class="ftag">Θεμελιώδης ανάλυση για εισηγμένες του Χρηματιστηρίου Αθηνών — δείκτες, σύγκριση κλάδου, ποιότητα &amp; δυναμική.</div></div><div class="fcol"><h4>Εταιρείες</h4><a href="/company/">Σελίδα εταιρείας</a><a href="/compare/">Σύγκριση εταιρειών</a><a href="/rankings/">Κατατάξεις / League tables</a><a href="/apotelesmata/">Τελευταία αποτελέσματα</a></div><div class="fcol"><h4>Κλάδοι</h4><a href="/sectors/">Ευρετήριο κλάδων</a><a href="/sector/">Σελίδα κλάδου</a></div><div class="fcol"><h4>Αγορά</h4><a href="/index-reviews/">Αναθεωρήσεις δεικτών</a><a href="/market-events/">Γεγονότα αγοράς</a><a href="/short-positions/">Short θέσεις</a></div><div class="fcol"><h4>Σχετικά</h4><a href="/methodology/">Μεθοδολογία &amp; δείκτες</a><a href="/about/">Περί</a><a href="/terms/">Όροι χρήσης</a></div><div class="fcol fcontact"><h4>Επικοινωνία</h4><a href="mailto:info@axionmetrics.gr"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><path d="M3 7l9 6 9-6"></path></svg>info@axionmetrics.gr</a><div class="sub">Για διορθώσεις στοιχείων, ερωτήσεις μεθοδολογίας ή συνεργασία.</div></div></div><div class="fbot">© 2026 Axion Metrics · Δεν αποτελεί επενδυτική συμβουλή</div></footer>
 <script src="assets/core.js"></script>
+<script src="assets/current.js"></script>
+<script src="assets/shorts.js"></script>
 <script src="assets/home.js"></script>
 <script src="assets/i18n.js"></script>
 <script>
-AX_I18N.add({
- 'home.h1':{el:'<em>Θεμελιώδης ανάλυση</em> των <em>εισηγμένων</em> του Χρηματιστηρίου Αθηνών',
-            en:'<em>Fundamental analysis</em> of <em>listed companies</em> on the Athens Stock Exchange'},
- 'home.asof':{el:'Τελευταία ενημέρωση δεδομένων', en:'Data last updated'},
- 'home.title':{el:'Θεμελιώδης ανάλυση Χρηματιστηρίου Αθηνών | Axion Metrics', en:'Athens Stock Exchange fundamentals | Axion Metrics'},
- 'nav.companies':{el:'Εταιρείες', en:'Companies'},
- 'nav.sectors':{el:'Κλάδοι', en:'Sectors'},
- 'nav.market':{el:'Αγορά', en:'Market'},
- 'nav.about':{el:'Σχετικά', en:'About'},
- 'feat.h2':{el:'Όλα όσα χρειάζεσαι για να αποφασίσεις', en:'Everything you need to decide'},
- 'feat.p':{el:'Ό,τι χρειάζεσαι για κάθε εισηγμένη — από την εταιρεία μέχρι τον κλάδο και την αγορά.', en:'Everything for each listed company — from the company to its sector and the market.'},
- 'card.company.h':{el:'Θεμελιώδης ανάλυση εταιρείας', en:'Company fundamentals'},
- 'card.company.p':{el:'26 αριθμοδείκτες με κλαδική σύγκριση, ιστορικότητα μεγεθών, μέτοχοι, θυγατρικές, γεγονότα και ποιότητα κερδών (Piotroski).', en:'26 ratios with sector benchmarking, historical figures, shareholders, subsidiaries, events and earnings quality (Piotroski).'},
- 'card.compare.h':{el:'Σύγκριση & κατατάξεις', en:'Comparison & rankings'},
- 'card.compare.p':{el:'Εταιρείες δίπλα-δίπλα σε κάθε δείκτη, και league tables για όλη την αγορά.', en:'Companies side by side on every ratio, plus league tables for the whole market.'},
- 'card.sector.h':{el:'Ανάλυση κλάδου', en:'Sector analysis'},
- 'card.sector.p':{el:'Κλαδικές διάμεσοι, screener εντός κλάδου και τροχιά ποιότητας.', en:'Sector medians, in-sector screener and a quality trajectory.'},
- 'card.events.h':{el:'Δείκτες & γεγονότα αγοράς', en:'Indices & market events'},
- 'card.events.p':{el:'Είσοδοι/έξοδοι στους δείκτες FTSE/Athex και ροή εταιρικών γεγονότων (μερίσματα, ΑΜΚ).', en:'FTSE/Athex index entries/exits and a stream of corporate events (dividends, capital raises).'}
-});
-</script>
-
-<script>
-/* §141 — Ο ΑΠΟΔΟΤΗΣ ΤΗΣ ΑΡΧΙΚΗΣ.
-   Διαβάζει window.AXION (core.js: companies + 15 τελευταία γεγονότα) και
-   window.AXION.home (home.js, §139: διάμεσοι, εξάμηνο, διανομές, κατατάξεις).
-   Γεμίζει ΜΟΝΟ άδεια δοχεία με id — τα ίδια που ψήνει το prerender.py (§137).
-   Ξανατρέχει σε αλλαγή γλώσσας, όπως το block short θέσεων της σελίδας εταιρείας. */
+/* §141 — ΝΕΑ ΑΡΧΙΚΗ. Η σελίδα φορτώνει core.js (κατάλογος + 15 γεγονότα),
+   current.js (κεφαλαιοποιήσεις EOD), shorts.js (short θέσεις) και home.js
+   (συγκεντρωτικά). Τα δοχεία με id είναι ΑΔΕΙΑ στο κέλυφος και τα γεμίζει το
+   render()· το prerender.py τα ψήνει μέσα στο HTML για τον crawler. */
 (function(){
-  var A=window.AXION; if(!A) return;
-  var H=A.home||null;      /* home.js (§139) — μπορεί να λείπει· βλ. ΑΝΘΕΚΤΙΚΟΤΗΤΑ */
+  var A=window.AXION||{}, H=A.home;
 
-  function EN(){ try{ return AX_I18N.lang==='en'; }catch(e){ return false; } }
+  function EN(){ try{ return (document.documentElement.lang||'el').slice(0,2)==='en'; }catch(e){ return false; } }
   function esc(t){return String(t==null?'':t).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-  /* υποδιαστολή κατά γλώσσα: κόμμα στα ελληνικά, τελεία στα αγγλικά */
   function num(v,d){ if(v==null) return '—'; var s=Number(v).toFixed(d); return EN()?s:s.replace('.',','); }
   function dmy(iso){ var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(iso||''); return m?(m[3]+'.'+m[2]+'.'+m[1].slice(2)):(iso||''); }
   function dm(iso){ var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(iso||''); return m?(m[3]+'.'+m[2]):(iso||''); }
-  function cut(s,n){ s=String(s||''); return s.length>n ? s.slice(0,n)+'…' : s; }
-  /* Λωρίδα αρχικής: ΜΟΝΟ η πράξη, όχι η περιγραφή της. Κόβει στο πρώτο « — » ή « (»,
-     εκεί δηλαδή που τελειώνει η πράξη και αρχίζουν οι λεπτομέρειες (ποσά, πλήθη
-     μετοχών, ημερομηνίες αποκοπής, νέα σύνολα). Η ΠΛΗΡΗΣ περιγραφή μένει στο
-     /market-events/ και στην καρτέλα γεγονότων της σελίδας εταιρείας. */
-  function brief(s){ return String(s||'').split(/\s+[—–]\s+|\s+\(/)[0].trim(); }
+
+  var MON_EL=['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου','Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
+  var MON_EN=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var MNOM_EL=['Ιανουάριος','Φεβρουάριος','Μάρτιος','Απρίλιος','Μάιος','Ιούνιος','Ιούλιος','Αύγουστος','Σεπτέμβριος','Οκτώβριος','Νοέμβριος','Δεκέμβριος'];
+  var MSH_EL=['Ιαν','Φεβ','Μαρ','Απρ','Μάι','Ιούν','Ιούλ','Αύγ','Σεπ','Οκτ','Νοέ','Δεκ'];
+  var MSH_EN=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  function longdate(iso){ var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(iso||''); if(!m) return '';
+    var i=+m[2]-1; return EN()? (MON_EN[i]+' '+(+m[3])+', '+m[1]) : (+m[3])+' '+MON_EL[i]+' '+m[1]; }
+  function monthname(ym){ var m=/^(\d{4})-(\d{2})$/.exec(ym||''); if(!m) return '';
+    var i=+m[2]-1; return (EN()?MON_EN[i]:MNOM_EL[i])+' '+m[1]; }
+
+  /* ΛΩΡΙΔΑ — ΣΥΝΤΟΜΕΥΣΗ ΠΕΡΙΓΡΑΦΗΣ.
+     Η λωρίδα δείχνει ΤΗΝ ΠΡΑΞΗ, όχι την περιγραφή της: κρατάμε πράξη + ποσό και
+     πέφτουν η νομική αιτιολόγηση και τα ονόματα τρίτων εταιρειών. Το κόψιμο στο
+     πρώτο « — » / « – » / « (» δεν αρκούσε (έμεναν 60άρια), γι' αυτό μπαίνουν
+     και ρητοί κανόνες. Η ΠΛΗΡΗΣ περιγραφή μένει στο /market-events/ και στην
+     καρτέλα γεγονότων της εταιρείας. */
+  function brief(s){
+    s=String(s||'').split(/\s+[—–]\s+|\s+\(/)[0].trim();
+    /* ⚠ ΜΗ ΒΑΖΕΙΣ \b ΣΕ ΕΛΛΗΝΙΚΑ: το \b της JavaScript είναι ASCII, οπότε
+       δεν «πιάνει» μετά από «ού»/«ών» και ο κανόνας δεν εφαρμόζεται ποτέ. */
+    s=s.replace(/^Εισαγωγή\s+προς\s+διαπραγμάτευση\s+στη/,'Εισαγωγή στη');
+    s=s.replace(/^Παύση\s+διαπραγμάτευσης/,'Παύση');
+    /* «με/από απορρόφηση …» και «λόγω απορρόφησης …»: πέφτει το όνομα του τρίτου */
+    s=s.replace(/\s+(με|από)\s+απορρόφηση\s+.*$/,'');
+    s=s.replace(/\s+λόγω\s+απορρόφησης\s+.*$/,' λόγω απορρόφησης');
+    /* «με κεφαλαιοποίηση αποθεματικού/ών …» → «από αποθεματικό» */
+    s=s.replace(/\s+με\s+κεφαλαιοποίηση\s+αποθεματικ\S*.*$/,' από αποθεματικό');
+    /* ουρές που δεν προσθέτουν πράξη */
+    s=s.replace(/\s+από\s+κέρδη\s+παρελθουσών\s+χρήσεων.*$/,'');
+    s=s.replace(/\s+υπέρ\s+το\s+άρτιο.*$/,'');
+    s=s.replace(/\s+(κατόπιν|σύμφωνα\s+με|βάσει|δυνάμει)\s+.*$/,'');
+    /* «Διαγραφή των N μετοχών από το X» → «Διαγραφή N μετοχών» */
+    s=s.replace(/^Διαγραφή\s+των\s+/,'Διαγραφή ');
+    s=s.replace(/\s+από\s+(το|την)\s+Euronext[^,]*$/,'');
+    s=s.replace(/\s+Euronext\s+Athens\s*$/,'');
+    /* «Προμέρισμα χρήσης 2026 €X» → «Προμέρισμα €X» */
+    s=s.replace(/^(Προμέρισμα|Μέρισμα)\s+χρήσης\s+\d{4}\s+/,'$1 ');
+    s=s.replace(/\s*[,·]\s*$/,'').trim();
+    return s;
+  }
+
 
   var SLUG=(function(){ var m={},L=(A.companies&&A.companies.annual)||[];
     for(var i=0;i<L.length;i++) m[L[i].tk]=L[i].slug; return m; })();
+  var CONAME=(function(){ var m={},L=(A.companies&&A.companies.annual)||[];
+    for(var i=0;i<L.length;i++) m[L[i].tk]=L[i].name; return m; })();
   function co(slug){ return slug ? '/etaireia/'+slug+'/' : '/company/'; }
 
   function T(){ return EN() ? {
       meta:function(c,s,r){return '<b>'+c+'</b> listed · <b>'+s+'</b> sectors · <b>'+r+'</b> ratios · coverage since <b>2020</b>';},
       season:function(y){return 'H1 '+y+' results — what the financial statements showed';},
       rev:'Revenue', ebitda:'EBITDA', np:'Net profit',
-      pe:'P/E', pbv:'P/BV', dy:'Dividend yield', roe:'ROE',
+      medof:function(n){return 'median · '+n+' companies';},
+      rnote:'Median — the change of the <b>typical</b> listed company, not of the market total.',
       divs:'Latest dividends &amp; distributions', all:'all →',
       cDate:'Date', cCo:'Company', cAmt:'€ / share', cY:'Yield',
       note:function(n){return n+' dividends and distributions since 2020. The yield is the company’s <b>FY2025</b> dividend yield, not that of this distribution.';},
-      topdy:'Highest dividend yield', toppe:'Lowest P/E — valuation'
+      shorts:'Short positions in Greek companies',
+      tape:'Latest events', tapeS:'Events',
+      xTitle:'Foreign investors on the Athens Exchange',
+      xSeven:function(n){return n+' years';}, xPart:'participation', xTurn:'share of turnover',
+      xFlow:'Net flow by month, ', xIn:'inflow', xOut:'outflow',
+      xT1:'Market participation', xT2:'Share of turnover',
+      xT3:'Net flow of the month', xT4:'Cumulative ',
+      xS1:function(a,b){return a+' bn € of '+b+' bn';},
+      xS2:function(p){return 'of purchases · '+p+'% of sales';},
+      xS3:function(n){return 'm € · '+n+' active investors';},
+      xS4:'m € net inflows', xSrc:'Source: Euronext Athens',
+      xTab:'The numbers in a table', xYear:'Year', xMonth:'Month', xNet:'Net flow'
     } : {
       meta:function(c,s,r){return '<b>'+c+'</b> εισηγμένες · <b>'+s+'</b> κλάδοι · <b>'+r+'</b> αριθμοδείκτες · κάλυψη από το <b>2020</b>';},
       season:function(y){return 'Αποτελέσματα εξαμήνου '+y+' — τι έδειξαν οι οικονομικές καταστάσεις';},
       rev:'Πωλήσεις', ebitda:'EBITDA', np:'Καθαρά κέρδη',
-      pe:'P/E', pbv:'P/BV', dy:'Μερισματική απόδοση', roe:'ROE',
+      medof:function(n){return 'διάμεσος · '+n+' εταιρείες';},
+      rnote:'Διάμεσος — η μεταβολή της <b>μέσης</b> εισηγμένης, όχι του συνόλου της αγοράς.',
       divs:'Τελευταία μερίσματα &amp; διανομές', all:'όλες →',
       cDate:'Ημ/νία', cCo:'Εταιρεία', cAmt:'€/μετοχή', cY:'Απόδοση',
       note:function(n){return n+' μερίσματα και διανομές από το 2020. Η απόδοση είναι η μερισματική απόδοση <b>χρήσης 2025</b> της εταιρείας, όχι της συγκεκριμένης διανομής.';},
-      topdy:'Υψηλότερη μερισματική απόδοση', toppe:'Χαμηλότερο P/E — αποτίμηση'
+      shorts:'Short θέσεις στις ελληνικές εταιρείες',
+      tape:'Τελευταία γεγονότα', tapeS:'Γεγονότα',
+      xTitle:'Ξένοι επενδυτές στο Χρηματιστήριο Αθηνών',
+      xSeven:function(n){var W=['','Ένας χρόνος','Δύο χρόνια','Τρία χρόνια','Τέσσερα χρόνια','Πέντε χρόνια','Έξι χρόνια','Επτά χρόνια','Οκτώ χρόνια','Εννέα χρόνια','Δέκα χρόνια']; return W[n]||(n+' χρόνια');}, xPart:'συμμετοχή', xTurn:'μερίδιο τζίρου',
+      xFlow:'Καθαρή ροή ανά μήνα, ', xIn:'εισροή', xOut:'εκροή',
+      xT1:'Συμμ/χή στην αγορά', xT2:'Μερίδιο στον τζίρο',
+      xT3:'Καθαρή ροή μήνα', xT4:'Σωρευτικά το ',
+      xS1:function(a,b){return a+' δισ. € από '+b+' δισ.';},
+      xS2:function(p){return 'των αγορών · '+p+'% πωλήσεων';},
+      xS3:function(n){return 'εκ. € · '+n+' ενεργοί επενδυτές';},
+      xS4:'εκ. € καθαρές εισροές', xSrc:'Πηγή: Euronext Athens',
+      xTab:'Τα νούμερα σε πίνακα', xYear:'Έτος', xMonth:'Μήνας', xNet:'Καθαρή ροή'
     };
   }
 
+  /* ───────────────────────── ΛΩΡΙΔΑ ΓΕΓΟΝΟΤΩΝ ───────────────────────── */
   function tape(t){
     var E=A.marketEvents||[], out='';
     for(var i=0;i<E.length;i++){ var e=E[i];
-      out+='<a class="ni" href="'+co(SLUG[e.tk])+'"><span class="d">'+dm(e.d)+'</span>'
-         + '<span class="dot '+esc(e.t)+'"></span><span class="co">'+esc(e.co)+'</span>'
-         + '<span class="x">'+esc(cut(brief(e.x),70))+'</span></a>';
+      out+='<a class="ti" href="'+co(SLUG[e.tk])+'">'
+         + '<span class="t-h"><i class="t-k '+esc(e.t)+'"></i>'+esc(e.co)+'<em>'+dm(e.d)+'</em></span>'
+         + '<span class="t-m">'+esc(brief(e.x))+'</span></a>';
     }
     if(!out) return '';
-    /* ΕΝΑ αντίγραφο στο HTML· το δεύτερο (που χρειάζεται η κύλιση) το κλωνοποιεί η
-       mqdup() στο load. Έτσι ο crawler βλέπει κάθε γεγονός μία φορά, όχι δύο. */
-    return '<div class="mq"><div class="mq-t"><div class="mq-g">'+out+'</div></div></div>';
+    return '<div class="mq-t"><div class="mq-g">'+out+'</div></div>';
   }
 
-  function nums(t){
-    var S=H.season||{}, P=H.pulse||{};
-    function card(lab,k){ var v=S[k]&&S[k][0];
+  /* ───────────────────── ΑΠΟΤΕΛΕΣΜΑΤΑ ΕΞΑΜΗΝΟΥ ─────────────────────
+     ΔΙΑΜΕΣΟΣ ανά εταιρεία — ό,τι παράγει σήμερα η γέφυρα. Το σταθμισμένο
+     μέγεθος (μεταβολή του συνόλου της αγοράς) θα προστεθεί χωριστά. */
+  function res(t){
+    var S=H.season||{};
+    function card(lab,k){ var p=S[k]||[], v=p[0], n=p[1];
       if(v==null) return '';
       var up=v>=0;
-      return '<div class="sc"><div class="sc-l">'+lab+'</div>'
-           + '<div class="sc-n '+(up?'up':'dn')+'">'+(up?'▲ +':'▼ ')+num(v,1)+'%</div></div>'; }
-    function pill(lab,k,d,suf){ var v=P[k]&&P[k][0];
-      if(v==null) return '';
-      return '<div class="pt"><div class="pt-l">'+lab+'</div><div class="pt-n">'+num(v,d)+suf+'</div></div>'; }
-    return '<div class="scards">'+card(t.rev,'revenue')+card(t.ebitda,'ebitda')+card(t.np,'net_profit')+'</div>'
-         + '<div class="pgrid">'+pill(t.pe,'pe',2,'x')+pill(t.pbv,'pbv',2,'x')
-         + pill(t.dy,'dy',2,'%')+pill(t.roe,'roe',2,'%')+'</div>';
+      return '<div class="g3c"><div class="sc"><div class="sc-l">'+lab+'</div>'
+           + '<div class="sc-n '+(up?'up':'dn')+'">'+(up?'▲ +':'▼ ')+num(v,1)+'%</div>'
+           + '<div class="sc-e">'+t.medof(n)+'</div></div></div>';
+    }
+    return card(t.rev,'revenue')+card(t.ebitda,'ebitda')+card(t.np,'net_profit');
   }
 
+  /* ───────────────────────── ΜΕΡΙΣΜΑΤΑ ───────────────────────── */
   function divs(t){
     var L=H.divs||[]; if(!L.length) return '';
     var rows='';
@@ -422,10 +797,8 @@ AX_I18N.add({
       if(dec.length>4){ ti=' title="'+esc(a)+'"'; a=num(parseFloat(a.replace(/\./g,'').replace(',','.')),4); }
       else if(a && EN()) a=a.replace(/\./g,'').replace(',','.');
       var y=(p.dy!=null)?'<span class="dv-y">'+num(p.dy,2)+'%</span>':'<span class="dv-y n">—</span>';
-      var sec=''; try{ sec=AX_I18N.sector(p.s)||p.s||''; }catch(e){ sec=p.s||''; }
       rows+='<a class="dv" href="'+co(p.slug)+'"'+ti+'><span class="dv-d">'+dm(p.d)+'</span>'
-          + '<span class="dv-c"><b>'+esc(p.co)+'</b><small>'+esc(sec)
-          + (p.extra?' · <em>'+esc(p.extra)+'</em>':'')+'</small></span>'
+          + '<span class="dv-c"><b>'+esc(p.co)+'</b></span>'
           + '<span class="dv-a">€'+esc(a||'—')+'</span>'+y+'</a>';
     }
     return '<div class="pane"><h2 class="pane-h">'+t.divs+' <a href="/market-events/">'+t.all+'</a></h2>'
@@ -434,46 +807,168 @@ AX_I18N.add({
          + rows + '<div class="mvnote">'+t.note(H.divcount||0)+'</div></div>';
   }
 
-  function tops(t){
-    function tp(lab,list,d,suf){
-      if(!list||!list.length) return '';
-      var r='';
-      for(var i=0;i<list.length;i++) r+='<a class="tp-r" href="'+co(list[i].slug)+'">'
-        + '<span class="tp-n">'+num(list[i].v,d)+suf+'</span><span class="tp-c">'+esc(list[i].co)+'</span></a>';
-      return '<div class="tp"><h3 class="tp-h">'+lab+'</h3>'+r+'</div>';
+  /* ───────────────────────── SHORT ΘΕΣΕΙΣ ─────────────────────────
+     ΔΕΝ περνούν από τη γέφυρα: διαβάζονται κατευθείαν από το shorts.js (που
+     ανανεώνει το .github/scripts/shorts.py) και το current.js (κεφαλαιοποιήσεις
+     EOD, κάθε βράδυ). Έτσι η κάρτα είναι τόσο φρέσκια όσο οι ίδιες οι πηγές.
+       ATH = ονομαστικές θέσεις ≥0,5% (Επιτροπή Κεφαλαιαγοράς) → `by[tk].tot`
+       LON = ανώνυμο άθροισμα από 0,2% (FCA)                   → `fca.rows[tk].p`
+     Το ποσό σε € είναι ποσοστό × κεφαλαιοποίηση. */
+  function shorts(t){
+    var S=window.AXION_SHORTS, C=window.AXION_CURRENT||{};
+    if(!S) return '';
+    var M={}, tk;
+    var by=S.by||{};
+    for(tk in by){ var p=by[tk]&&by[tk].tot; if(p>0){ (M[tk]=M[tk]||{}).ath=p; } }
+    var fr=(S.fca&&S.fca.rows)||{};
+    for(tk in fr){ var q=fr[tk]&&fr[tk].p; if(q>0){ (M[tk]=M[tk]||{}).lon=q; } }
+    var list=[];
+    for(tk in M) list.push({tk:tk,ath:M[tk].ath||0,lon:M[tk].lon||0});
+    if(!list.length) return '';
+    /* κατάταξη: πρώτα όσες έχουν ελληνική θέση, φθίνουσα· μετά οι μόνο-Λονδίνου */
+    list.sort(function(a,b){ return (b.ath-a.ath) || (b.lon-a.lon); });
+    list=list.slice(0,7);
+    function amt(pct,tkk){ var c=C[tkk]; if(!c||!c.mcap) return '';
+      return '<u>'+num(pct/100*c.mcap/1e6,2)+(EN()?' m €':' εκ. €')+'</u>'; }
+    var rows='';
+    for(var i=0;i<list.length;i++){ var r=list[i];
+      var nm=CONAME[r.tk]||(fr[r.tk]&&fr[r.tk].co)||r.tk, ml='';
+      if(r.ath>0) ml+='<span class="ml"><i class="mk ath">ATH</i><b>'+num(r.ath,2)+'%</b>'+amt(r.ath,r.tk)+'</span>';
+      if(r.lon>0) ml+='<span class="ml"><i class="mk lon">LON</i><b>'+num(r.lon,2)+'%</b>'+amt(r.lon,r.tk)+'</span>';
+      rows+='<a class="r3" href="'+co(SLUG[r.tk])+'"><div class="nm">'+esc(nm)+'</div>'
+          + '<div class="mcol">'+ml+'</div></a>';
     }
-    return tp(t.topdy,H.topdy,2,'%')+tp(t.toppe,H.toppe,2,'x');
+    return '<div class="tp shb"><h3 class="tp-h">'+t.shorts
+         + ' <a href="/short-positions/">'+t.all+'</a></h3>'+rows+'</div>';
+  }
+
+  /* ───────────────────────── ΞΕΝΟΙ ΕΠΕΝΔΥΤΕΣ ─────────────────────────
+     Η γεωμετρία ΥΠΟΛΟΓΙΖΕΤΑΙ — κανένα συντεταγμένο γραμμένο με το χέρι.
+     ⚠ Το μηνιαίο γράφημα έχει ΔΥΟ γεωμετρίες: το SVG με width:100%;height:auto
+     κρατά τις αναλογίες του, οπότε το στενό (δίπλα-δίπλα) θα γινόταν 2,1x
+     ψηλότερο αν τεντωνόταν στο πλήρες πλάτος. Η εναλλαγή γίνεται με @container. */
+  function gr(x,d){ var s=Number(x).toFixed(d), p=s.split('.'), neg=p[0].charAt(0)==='-';
+    var i=p[0].replace('-',''), o='', c=0;
+    for(var k=i.length-1;k>=0;k--){ o=i.charAt(k)+o; if(++c%3===0&&k>0) o=(EN()?',':'.')+o; }
+    return (neg?'-':'')+o+(p[1]?(EN()?'.':',')+p[1]:'');
+  }
+  function chartYears(Y,t){
+    var W=420,H2=160,L=30,R=14,TT=20,B=24, lo=45, hi=75;
+    var px=function(i){ return L+i*(W-L-R)/(Y.length-1); };
+    var py=function(v){ return TT+(hi-v)*(H2-TT-B)/(hi-lo); };
+    var o=['<svg class="xch" viewBox="0 0 '+W+' '+H2+'" role="img" aria-label="'+esc(t.xSeven(Y.length))+'">'];
+    for(var g=50;g<=75;g+=5){ var y=py(g);
+      o.push('<line class="gr" x1="'+L+'" y1="'+y.toFixed(1)+'" x2="'+(W-R)+'" y2="'+y.toFixed(1)+'"/>');
+      o.push('<text class="tk" x="'+(L-5)+'" y="'+(y+3.1).toFixed(1)+'" text-anchor="end">'+g+'%</text>');
+    }
+    for(var i=0;i<Y.length;i++) o.push('<text class="tk" x="'+px(i).toFixed(1)+'" y="'+(H2-7)+'" text-anchor="middle">'+Y[i][0]+'</text>');
+    var ser=[['s2',2,t.xTurn],['s1',1,t.xPart]];
+    for(var s=0;s<2;s++){ var cls=ser[s][0], idx=ser[s][1], pts=[];
+      for(i=0;i<Y.length;i++) pts.push(px(i).toFixed(1)+','+py(Y[i][idx]).toFixed(1));
+      o.push('<polyline class="ln '+cls+'" points="'+pts.join(' ')+'"/>');
+      for(i=0;i<Y.length;i++) o.push('<circle class="pt '+cls+'" cx="'+px(i).toFixed(1)+'" cy="'+py(Y[i][idx]).toFixed(1)+'" r="3.4">'
+        + '<title>'+Y[i][0]+' '+esc(ser[s][2])+': '+gr(Y[i][idx],2)+'%</title></circle>');
+    }
+    /* ετικέτα σε ΚΑΘΕ κουκίδα: η ψηλότερη τιμή της χρονιάς πάνω, η χαμηλότερη
+       κάτω· πρώτη/τελευταία χρονιά στοιχίζονται προς τα μέσα */
+    for(i=0;i<Y.length;i++){
+      var hiCls = Y[i][1]>=Y[i][2] ? 's1' : 's2';
+      for(var k=1;k<=2;k++){
+        var c2=(k===1?'s1':'s2'), up=(c2===hiCls), anc, x;
+        if(i===0){ anc='start'; x=px(i)+4; }
+        else if(i===Y.length-1){ anc='end'; x=px(i)-4; }
+        else { anc='middle'; x=px(i); }
+        o.push('<text class="vl '+c2+'" x="'+x.toFixed(1)+'" y="'+(py(Y[i][k])+(up?-7:13)).toFixed(1)
+             + '" text-anchor="'+anc+'">'+gr(Y[i][k],2)+'%</text>');
+      }
+    }
+    o.push('</svg>'); return o.join('');
+  }
+  function chartMonths(M,W,H2,cls,t){
+    var L=30,R=10,TT=14,B=22,barmax=34, i, v=[];
+    for(i=0;i<M.length;i++) v.push(M[i][1]);
+    var hi=Math.max.apply(null,v.concat([0]))*1.14, lo=Math.min.apply(null,v.concat([0]))*1.30;
+    var py=function(x){ return TT+(hi-x)*(H2-TT-B)/(hi-lo); };
+    var bw=(W-L-R)/M.length, w=Math.min(bw-6,barmax), zero=py(0);
+    var o=['<svg class="xch '+cls+'" viewBox="0 0 '+W+' '+H2+'" role="img" aria-label="'+esc(t.xFlow)+'">'];
+    var gl=[-200,0,200,400];
+    for(i=0;i<gl.length;i++){ var g=gl[i]; if(g<lo||g>hi) continue; var y=py(g);
+      o.push('<line class="'+(g===0?'zr':'gr')+'" x1="'+L+'" y1="'+y.toFixed(1)+'" x2="'+(W-R)+'" y2="'+y.toFixed(1)+'"/>');
+      o.push('<text class="tk" x="'+(L-5)+'" y="'+(y+3.1).toFixed(1)+'" text-anchor="end">'+gr(g,0)+'</text>');
+    }
+    var ex=0;
+    for(i=0;i<M.length;i++){ if(Math.abs(M[i][1])>Math.abs(M[ex][1])) ex=i;
+      var cx=L+(i+0.5)*bw, x=cx-w/2, yy=Math.min(py(M[i][1]),zero), hh=Math.max(Math.abs(py(M[i][1])-zero),1.5);
+      var sh=(EN()?MSH_EN:MSH_EL)[parseInt(M[i][0].slice(5,7),10)-1];
+      o.push('<rect class="br '+(M[i][1]>=0?'pos':'neg')+'" x="'+x.toFixed(1)+'" y="'+yy.toFixed(1)
+           + '" width="'+w.toFixed(1)+'" height="'+hh.toFixed(1)+'" rx="2.5"><title>'+sh+' '+M[i][0].slice(0,4)
+           + ': '+(M[i][1]>=0?'+':'')+gr(M[i][1],2)+(EN()?' m €':' εκ. €')+'</title></rect>');
+      o.push('<text class="tk" x="'+cx.toFixed(1)+'" y="'+(H2-6)+'" text-anchor="middle">'+sh+'</text>');
+    }
+    o.push('<text class="vl '+(M[ex][1]>=0?'pos':'')+'" x="'+(L+(ex+0.5)*bw).toFixed(1)+'" y="'
+         + (py(M[ex][1])-6).toFixed(1)+'" text-anchor="middle">'+(M[ex][1]>=0?'+':'')+gr(M[ex][1],2)+'</text>');
+    o.push('</svg>'); return o.join('');
+  }
+  function xenoi(t){
+    var X=H&&H.xenoi; if(!X||!X.years||!X.years.length||!X.months||!X.months.length) return '';
+    var N=X.now||{}, Y=X.years, M=X.months, yr=M[0][0].slice(0,4), i;
+    var tiles='<div class="xnums">'
+      + '<div class="xn1"><u>'+t.xT1+'</u><b>'+gr(N.part,2)+'%</b><s>'+t.xS1(gr(N.val_m/1000,1),gr(N.mkt_m/1000,1))+'</s></div>'
+      + '<div class="xn1"><u>'+t.xT2+'</u><b>'+gr(N.buys,2)+'%</b><s>'+t.xS2(gr(N.sells,2))+'</s></div>'
+      + '<div class="xn1"><u>'+t.xT3+'</u><b class="'+(N.net>=0?'pos':'')+'">'+(N.net>=0?'+':'')+gr(N.net,2)+'</b><s>'+t.xS3(gr(N.n,0))+'</s></div>'
+      + '<div class="xn1"><u>'+t.xT4+yr+'</u><b class="'+(N.ytd>=0?'pos':'')+'">'+(N.ytd>=0?'+':'')+gr(N.ytd,2)+'</b><s>'+t.xS4+'</s></div>'
+      + '</div>';
+    var charts='<div class="xcharts">'
+      + '<div class="xcol"><h3 class="xh">'+t.xSeven(Y.length)+' <span class="lg"><i class="sw s1"></i>'+t.xPart
+      + '<i class="sw s2"></i>'+t.xTurn+'</span></h3>'+chartYears(Y,t)+'</div>'
+      + '<div class="xcol"><h3 class="xh">'+t.xFlow+yr+' <span class="lg"><i class="sw pos"></i>'+t.xIn
+      + '<i class="sw neg"></i>'+t.xOut+'</span></h3>'
+      + chartMonths(M,266,160,'xm-n',t)+chartMonths(M,560,140,'xm-w',t)+'</div></div>';
+    var r1='',r2='';
+    for(i=0;i<Y.length;i++) r1+='<tr><td>'+Y[i][0]+(Y[i][3]?' <i>('+Y[i][3]+(EN()?'m':'μ')+')</i>':'')
+      + '</td><td>'+gr(Y[i][1],2)+'%</td><td>'+gr(Y[i][2],2)+'%</td></tr>';
+    for(i=0;i<M.length;i++) r2+='<tr><td>'+(EN()?MSH_EN:MSH_EL)[parseInt(M[i][0].slice(5,7),10)-1]+' '+yr
+      + '</td><td colspan="2">'+(M[i][1]>=0?'+':'')+gr(M[i][1],2)+(EN()?' m €':' εκ. €')+'</td></tr>';
+    var tab='<details class="xtab"><summary>'+t.xTab+'</summary>'
+      + '<table><thead><tr><th>'+t.xYear+'</th><th>'+t.xT1+'</th><th>'+t.xT2+'</th></tr></thead><tbody>'+r1+'</tbody></table>'
+      + '<table><thead><tr><th>'+t.xMonth+'</th><th colspan="2">'+t.xNet+'</th></tr></thead><tbody>'+r2+'</tbody></table></details>';
+    return '<h3 class="xh">'+esc(monthname(X.period))+'</h3>'+tiles+charts
+         + '<div class="xfoot">'+tab+'<span class="xsrc">'+t.xSrc+'</span></div>';
   }
 
   function put(id,html){ var e=document.getElementById(id); if(e) e.innerHTML=html; }
+  function txt(id,s){ var e=document.getElementById(id); if(e) e.textContent=s; }
 
-  /* ΑΝΘΕΚΤΙΚΟΤΗΤΑ: η ταινία, η ημερομηνία και η γραμμή πλήθους ζουν στο core.js και
-     αποδίδονται ΠΑΝΤΑ. Το ταμπλό (εξάμηνο, δείκτες, διανομές, κατατάξεις) θέλει το
-     home.js· αν λείπει — π.χ. δεν έχει τρέξει ακόμη η γέφυρα — ολόκληρη η ζώνη
-     ΚΡΥΒΕΤΑΙ αντί να μείνει ένα άδειο κουτί με επικεφαλίδα. */
+  /* ΑΝΘΕΚΤΙΚΟΤΗΤΑ: η ταινία και η γραμμή πλήθους ζουν στο core.js και αποδίδονται
+     ΠΑΝΤΑ. Το ταμπλό θέλει το home.js· αν λείπει — π.χ. δεν έχει τρέξει ακόμη η
+     γέφυρα — ολόκληρη η ζώνη ΚΡΥΒΕΤΑΙ αντί να μείνει άδειο κουτί. */
   function render(){
     var t=T();
-    var gen=(H&&H.generated)||(A.meta&&A.meta.generated)||'';
     var nco=(H&&H.counts&&H.counts.companies)||((A.companies&&A.companies.annual)||[]).length||'';
     var nse=(H&&H.counts&&H.counts.sectors)||((A.meta&&A.meta.sectors)||[]).length||'';
-    put('ax-asof', dmy(gen));
     put('ax-meta', t.meta(nco, nse, 26));
     put('ax-tape', tape(t));
+    txt('ax-tlabel', t.tape); txt('ax-tlabel2', t.tapeS);
+    var E=A.marketEvents||[];
+    txt('ax-tdate', E.length ? longdate(E[0].d) : '');
 
     var board=document.querySelector('.board');
     if(!H){ if(board) board.style.display='none'; mqdup(); return; }
     if(board) board.style.display='';
     put('ax-seasonh', t.season((H.periods&&H.periods.cur)||''));
-    put('ax-nums', nums(t));
+    put('ax-res', res(t));
+    put('ax-rnote', t.rnote);
     put('ax-divs', divs(t));
-    put('ax-tops', tops(t));
+    put('ax-tops', shorts(t));
+    var xh=xenoi(t); put('ax-xenoi', xh);
+    var xb=document.querySelector('.xeblk'); if(xb) xb.style.display = xh ? '' : 'none';
     mqdup();
   }
 
-  /* Το δεύτερο αντίγραφο της ταινίας ΔΕΝ μπαίνει όταν τρέχει το prerender.py: εκείνο
-     φορτώνει τη σελίδα από http://127.0.0.1:<port> και ψήνει ό,τι βρει στο DOM. Έτσι
-     στο HTML μένει ένα αντίγραφο· στον επισκέπτη προστίθεται το δεύτερο και η λωρίδα
-     κυλάει. Χωρίς JavaScript η λωρίδα απλώς στέκεται ακίνητη. */
+  /* Το δεύτερο αντίγραφο της ταινίας ΔΕΝ μπαίνει όταν τρέχει το prerender.py:
+     εκείνο φορτώνει τη σελίδα από http://127.0.0.1:<port> και ψήνει ό,τι βρει
+     στο DOM. Έτσι στο HTML μένει ένα αντίγραφο· στον επισκέπτη προστίθεται το
+     δεύτερο και η λωρίδα κυλάει. Χωρίς JavaScript στέκεται ακίνητη. */
   function mqdup(){
     if(location.hostname==='127.0.0.1') return;
     var T2=document.querySelectorAll('.mq-t');
@@ -488,7 +983,6 @@ AX_I18N.add({
   try{ document.addEventListener('axion:langchange', render); }catch(e){}
 })();
 </script>
-
 </body></html>
 
 <!-- redeploy trigger 2026-08-26 -->

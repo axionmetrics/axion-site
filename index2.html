@@ -1,0 +1,494 @@
+<!DOCTYPE html><html lang="el"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="home.title">Θεμελιώδης ανάλυση Χρηματιστηρίου Αθηνών | Axion Metrics</title>
+<meta name="description" content="Δωρεάν θεμελιώδης ανάλυση 133 εισηγμένων του Χρηματιστηρίου Αθηνών: δείκτες αποτίμησης, κερδοφορίας και ρευστότητας, κατατάξεις, συγκρίσεις και εξαμηνιαία στοιχεία.">
+<link rel="canonical" href="https://www.axionmetrics.gr/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Axion Metrics">
+<meta name="theme-color" content="#16243d">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Axion Metrics">
+<meta property="og:title" content="Axion Metrics — Θεμελιώδης ανάλυση ΧΑ">
+<meta property="og:description" content="Δωρεάν θεμελιώδης ανάλυση 133 εισηγμένων του Χρηματιστηρίου Αθηνών: δείκτες αποτίμησης, κερδοφορίας και ρευστότητας, κατατάξεις, συγκρίσεις και εξαμηνιαία στοιχεία.">
+<meta property="og:url" content="https://www.axionmetrics.gr/">
+<meta property="og:image" content="https://www.axionmetrics.gr/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Axion Metrics — Θεμελιώδης ανάλυση ΧΑ">
+<meta name="twitter:description" content="Δωρεάν θεμελιώδης ανάλυση 133 εισηγμένων του Χρηματιστηρίου Αθηνών: δείκτες αποτίμησης, κερδοφορίας και ρευστότητας, κατατάξεις, συγκρίσεις και εξαμηνιαία στοιχεία.">
+<meta name="twitter:image" content="https://www.axionmetrics.gr/og-image.png">
+<style>
+/* §133 — αυτο-φιλοξενούμενες γραμματοσειρές· βλ. /assets/chrome.css */
+@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url(/assets/fonts/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Inter';font-style:normal;font-weight:800;font-display:swap;src:url(/assets/fonts/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Inter';font-style:normal;font-weight:900;font-display:swap;src:url(/assets/fonts/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url(/assets/fonts/inter-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/inter-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Inter';font-style:normal;font-weight:800;font-display:swap;src:url(/assets/fonts/inter-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Inter';font-style:normal;font-weight:900;font-display:swap;src:url(/assets/fonts/inter-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url(/assets/fonts/inter-greek.woff2) format('woff2');unicode-range:U+0370-0377,U+037A-037F,U+0384-038A,U+038C,U+038E-03A1,U+03A3-03FF}
+@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/inter-greek.woff2) format('woff2');unicode-range:U+0370-0377,U+037A-037F,U+0384-038A,U+038C,U+038E-03A1,U+03A3-03FF}
+@font-face{font-family:'Inter';font-style:normal;font-weight:800;font-display:swap;src:url(/assets/fonts/inter-greek.woff2) format('woff2');unicode-range:U+0370-0377,U+037A-037F,U+0384-038A,U+038C,U+038E-03A1,U+03A3-03FF}
+@font-face{font-family:'Inter';font-style:normal;font-weight:900;font-display:swap;src:url(/assets/fonts/inter-greek.woff2) format('woff2');unicode-range:U+0370-0377,U+037A-037F,U+0384-038A,U+038C,U+038E-03A1,U+03A3-03FF}
+@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url(/assets/fonts/inter-greek-ext.woff2) format('woff2');unicode-range:U+1F00-1FFF}
+@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/inter-greek-ext.woff2) format('woff2');unicode-range:U+1F00-1FFF}
+@font-face{font-family:'Inter';font-style:normal;font-weight:800;font-display:swap;src:url(/assets/fonts/inter-greek-ext.woff2) format('woff2');unicode-range:U+1F00-1FFF}
+@font-face{font-family:'Inter';font-style:normal;font-weight:900;font-display:swap;src:url(/assets/fonts/inter-greek-ext.woff2) format('woff2');unicode-range:U+1F00-1FFF}
+@font-face{font-family:'Open Sans';font-style:normal;font-weight:400;font-display:swap;src:url(/assets/fonts/open-sans-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Open Sans';font-style:normal;font-weight:600;font-display:swap;src:url(/assets/fonts/open-sans-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Open Sans';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/open-sans-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Open Sans';font-style:normal;font-weight:800;font-display:swap;src:url(/assets/fonts/open-sans-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Open Sans';font-style:normal;font-weight:400;font-display:swap;src:url(/assets/fonts/open-sans-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Open Sans';font-style:normal;font-weight:600;font-display:swap;src:url(/assets/fonts/open-sans-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Open Sans';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/open-sans-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Open Sans';font-style:normal;font-weight:800;font-display:swap;src:url(/assets/fonts/open-sans-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Open Sans';font-style:normal;font-weight:400;font-display:swap;src:url(/assets/fonts/open-sans-greek.woff2) format('woff2');unicode-range:U+0370-0377,U+037A-037F,U+0384-038A,U+038C,U+038E-03A1,U+03A3-03FF}
+@font-face{font-family:'Open Sans';font-style:normal;font-weight:600;font-display:swap;src:url(/assets/fonts/open-sans-greek.woff2) format('woff2');unicode-range:U+0370-0377,U+037A-037F,U+0384-038A,U+038C,U+038E-03A1,U+03A3-03FF}
+@font-face{font-family:'Open Sans';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/open-sans-greek.woff2) format('woff2');unicode-range:U+0370-0377,U+037A-037F,U+0384-038A,U+038C,U+038E-03A1,U+03A3-03FF}
+@font-face{font-family:'Open Sans';font-style:normal;font-weight:800;font-display:swap;src:url(/assets/fonts/open-sans-greek.woff2) format('woff2');unicode-range:U+0370-0377,U+037A-037F,U+0384-038A,U+038C,U+038E-03A1,U+03A3-03FF}
+@font-face{font-family:'Open Sans';font-style:normal;font-weight:400;font-display:swap;src:url(/assets/fonts/open-sans-greek-ext.woff2) format('woff2');unicode-range:U+1F00-1FFF}
+@font-face{font-family:'Open Sans';font-style:normal;font-weight:600;font-display:swap;src:url(/assets/fonts/open-sans-greek-ext.woff2) format('woff2');unicode-range:U+1F00-1FFF}
+@font-face{font-family:'Open Sans';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/open-sans-greek-ext.woff2) format('woff2');unicode-range:U+1F00-1FFF}
+@font-face{font-family:'Open Sans';font-style:normal;font-weight:800;font-display:swap;src:url(/assets/fonts/open-sans-greek-ext.woff2) format('woff2');unicode-range:U+1F00-1FFF}
+@font-face{font-family:'Open Sans';font-style:normal;font-weight:400;font-display:swap;src:url(/assets/fonts/open-sans-math.woff2) format('woff2');unicode-range:U+2205,U+2206,U+220F,U+2208,U+2211,U+221A,U+221E,U+222B,U+2248,U+2260,U+2261,U+2264,U+2265,U+226A,U+226B}
+@font-face{font-family:'Open Sans';font-style:normal;font-weight:600;font-display:swap;src:url(/assets/fonts/open-sans-math.woff2) format('woff2');unicode-range:U+2205,U+2206,U+220F,U+2208,U+2211,U+221A,U+221E,U+222B,U+2248,U+2260,U+2261,U+2264,U+2265,U+226A,U+226B}
+@font-face{font-family:'Open Sans';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/open-sans-math.woff2) format('woff2');unicode-range:U+2205,U+2206,U+220F,U+2208,U+2211,U+221A,U+221E,U+222B,U+2248,U+2260,U+2261,U+2264,U+2265,U+226A,U+226B}
+@font-face{font-family:'Open Sans';font-style:normal;font-weight:800;font-display:swap;src:url(/assets/fonts/open-sans-math.woff2) format('woff2');unicode-range:U+2205,U+2206,U+220F,U+2208,U+2211,U+221A,U+221E,U+222B,U+2248,U+2260,U+2261,U+2264,U+2265,U+226A,U+226B}
+
+ *{box-sizing:border-box;margin:0;padding:0}
+ :root{--ink:#16243d;--text:#2b3a4a;--muted:#6b8199;--faint:#8199b3;--cyan:#2f80c2;--teal:#57a5df;
+  --line:#e6eef7;--line2:#eaf2fa;--p2:#f7fbff;--up:#2f9e52;--down:#d64530;--gold:#cf7f00;
+  --disp:Inter,system-ui,sans-serif;--sans:'Open Sans',system-ui,sans-serif}
+ body{font-family:var(--sans);color:var(--text);background:#fff;-webkit-font-smoothing:antialiased}
+ .hw{max-width:1180px;margin:0 auto;padding:0 34px}
+
+ /* ── Κ3: σκούρα ταινία μάρκας ─────────────────────────────────────────────── */
+ .k3{background:var(--ink)}
+ .k3 .bar{display:flex;align-items:center;justify-content:space-between;gap:24px;height:62px}
+ .lockh{display:flex;align-items:center;gap:12px;text-decoration:none}
+ .lockh .am{font-family:var(--disp);font-size:30px;font-weight:900;letter-spacing:-.06em;color:#fff;line-height:1}
+ .lockh .am span{color:#6fb0e8}
+ .lockh .rule{width:1px;height:26px;background:#35486a}
+ .lockh .wm{font-family:var(--disp);font-size:19px;font-weight:900;letter-spacing:-.03em;line-height:1;color:#fff;display:block}
+ .lockh .wm i{font-style:normal;color:#6fb0e8}
+ .lockh .tag{font-family:var(--disp);font-size:9px;font-weight:600;letter-spacing:.22em;color:#7e95b4;margin-top:4px;display:block}
+ .navh{display:flex;align-items:center;gap:26px;font-size:13.5px;font-weight:600;color:#a9bfd8}
+ .navh a{color:inherit;text-decoration:none}
+ .navh a:hover{color:#fff}
+ .langflags{display:inline-flex;align-items:center;gap:6px}
+ .langflags button{all:unset;display:block;line-height:0;cursor:pointer;border-radius:3px;padding:2px;transition:opacity .15s,transform .15s}
+ .langflags svg{display:block;width:22px;height:15px;border-radius:2.5px}
+ .langflags button[aria-current]{opacity:.35;cursor:default}
+ .langflags button:not([aria-current]):hover{transform:translateY(-1px)}
+ .langflags button:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+ .hmail{display:inline-flex;align-items:center;padding:2px;border-radius:7px;color:#a9bfd8}
+ .hmail svg{width:17px;height:17px;display:block;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+ .hmail:hover{color:#fff}
+ .mrule{width:1px;height:18px;background:#35486a;display:inline-block}
+
+ /* ── ζώνη τίτλου ──────────────────────────────────────────────────────────── */
+ .k3below{background:var(--p2);border-bottom:1px solid var(--line)}
+ .k3below .in2{padding:12px 0 20px}
+ .asofr{text-align:right;margin-bottom:6px;font-size:11.5px;color:var(--muted);line-height:1.5}
+ .asofr b{font-family:var(--disp);font-size:14px;color:var(--ink)}
+ .hcenter{text-align:center}
+ .h1lead{font-family:var(--disp);font-size:20px;font-weight:800;color:var(--ink);letter-spacing:-.015em;line-height:1.3;margin:0}
+ .h1lead em{font-style:normal;color:var(--cyan)}
+ .hwm{font-family:var(--disp);font-weight:900;letter-spacing:-.045em;font-size:36px;line-height:1.05;margin-top:7px}
+ .hwm .a{color:var(--ink)} .hwm .m{color:var(--cyan)}
+ .m-inline{font-size:12.5px;color:var(--muted);margin-top:5px}
+ .m-inline b{color:var(--ink);font-weight:700}
+
+ /* ── ταινία γεγονότων ─────────────────────────────────────────────────────── */
+ .nums{background:#fff;border-bottom:1px solid var(--line);min-height:36px}
+ .tapehold{position:relative}   /* όρια σελίδας (.hw), όχι οθόνης */
+ .mq{overflow:hidden;position:relative;height:36px}
+ .mq-t{display:flex;width:max-content;animation:none}
+ .mq-t.ready{animation:mqx var(--sp,104s) linear infinite}
+ .mq:hover .mq-t,.mq:focus-within .mq-t{animation-play-state:paused}
+ .mq-g{display:flex;flex:none}
+ @keyframes mqx{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
+ .mq::before,.mq::after{content:"";position:absolute;top:0;bottom:0;width:56px;z-index:2;pointer-events:none}
+ .mq::before{left:0;background:linear-gradient(90deg,#fff,rgba(255,255,255,0))}
+ .mq::after{right:0;background:linear-gradient(270deg,#fff,rgba(255,255,255,0))}
+ .ni{display:flex;align-items:center;gap:9px;padding:0 14px;height:36px;text-decoration:none;white-space:nowrap;border-right:1px solid var(--line2);color:inherit}
+ .ni:hover{background:#f6fbff}
+ .ni .d{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:var(--faint)}
+ .ni .dot{width:6px;height:6px;border-radius:50%;flex:none}
+ .ni .dot.div{background:var(--up)}.ni .dot.amk{background:var(--gold)}
+ .ni .dot.index{background:var(--cyan)}.ni .dot.listing{background:#7a67c9}
+ .ni .co{font-family:var(--disp);font-size:12.5px;font-weight:700;color:var(--ink)}
+ .ni .x{font-size:12px;color:var(--muted)}
+
+ /* ── ταμπλό ───────────────────────────────────────────────────────────────── */
+ .board{background:var(--p2);border-bottom:1px solid var(--line);padding:30px 0 34px}
+ .bh{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+ .bh.ctr{justify-content:center;text-align:center}
+ .bh h2{font-family:var(--disp);font-size:17px;font-weight:800;color:var(--ink);text-transform:uppercase;letter-spacing:.04em}
+ .numrow{display:flex;gap:12px;align-items:stretch;flex-wrap:wrap;min-height:81px}
+ .scards{display:flex;gap:12px;margin:0}
+ .sc{width:auto;padding:12px 18px;background:#fff;border:1px solid var(--line2);border-radius:13px;
+     display:flex;flex-direction:column;justify-content:center;text-align:center}
+ .sc-l{font-size:11px;color:var(--muted)}
+ .sc-n{font-family:var(--disp);font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.15;text-align:center}
+ .sc-n.up{color:var(--up)} .sc-n.dn{color:var(--down)}
+ .pgrid{display:grid;grid-template-rows:auto auto;grid-auto-flow:column;gap:8px}
+ .pt{display:flex;align-items:baseline;gap:9px;padding:7px 13px;width:auto;
+     background:#fff;border:1px solid var(--line2);border-radius:11px}
+ .pt-l{font-size:10.5px;color:var(--muted);line-height:1.3;white-space:nowrap;flex:none}
+ .pt-n{font-family:var(--disp);font-size:17px;font-weight:700;color:var(--ink);line-height:1.2;white-space:nowrap;flex:none}
+ .cols2{display:grid;grid-template-columns:1.35fr 1fr;gap:12px;align-items:start;margin-top:26px;min-height:200px}
+ .pane{background:#fff;border:1px solid var(--line2);border-radius:13px;overflow:hidden}
+ .pane-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:11px 14px;
+   border-bottom:1px solid var(--line2);font-family:var(--disp);font-size:12px;font-weight:700;
+   color:var(--ink);text-transform:uppercase;letter-spacing:.05em;background:#fcfdff;margin:0}
+ .pane-h a{font-family:var(--sans);font-size:11px;font-weight:600;color:var(--cyan);text-decoration:none;text-transform:none;letter-spacing:0}
+ .dv-hd{display:flex;align-items:center;gap:10px;padding:8px 14px;white-space:nowrap;background:#fcfdff;
+   border-bottom:1px solid var(--line2);font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--faint)}
+ .dv{display:flex;align-items:center;gap:10px;padding:9px 14px;border-bottom:1px solid #f1f6fb;text-decoration:none;color:inherit}
+ .dv:last-of-type{border-bottom:0}
+ .dv:hover{background:#f8fbff}
+ .dv-d{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:var(--faint);width:52px;flex:none}
+ .dv-c{flex:1;min-width:0}
+ .dv-c b{display:block;font-family:var(--disp);font-size:12.5px;font-weight:700;color:var(--ink);line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ .dv-c small{display:block;font-size:10.5px;color:var(--faint);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ .dv-c small em{font-style:normal;color:var(--gold)}
+ .dv-a{font-family:var(--disp);font-size:14px;font-weight:800;color:var(--ink);width:92px;text-align:right;flex:none}
+ .dv-y{font-family:var(--disp);font-size:12.5px;font-weight:800;color:var(--cyan);width:70px;text-align:right;flex:none}
+ .dv-y.n{color:#c3cedb;font-weight:600}
+ .mvnote{font-size:10.5px;color:var(--faint);padding:9px 14px;border-top:1px solid #f1f6fb;line-height:1.5}
+ .stack{display:flex;flex-direction:column;gap:12px}
+ .tp{background:#fff;border:1px solid var(--line2);border-radius:13px;overflow:hidden}
+ .tp-h{padding:11px 14px;border-bottom:1px solid var(--line2);font-family:var(--disp);font-size:12px;
+   font-weight:700;color:var(--ink);text-transform:uppercase;letter-spacing:.05em;background:#fcfdff;margin:0}
+ .tp-r{display:flex;gap:12px;align-items:baseline;padding:7px 14px;border-bottom:1px solid #f1f6fb;text-decoration:none;color:inherit}
+ .tp-r:last-child{border-bottom:0}.tp-r:hover{background:#f8fbff}
+ .tp-n{font-family:var(--disp);font-size:14px;font-weight:800;color:var(--cyan);width:62px;flex:none;text-align:right}
+ .tp-c{font-size:12.5px;color:var(--text);line-height:1.35}
+
+ /* ── κάρτες ───────────────────────────────────────────────────────────────── */
+ .feat{padding:34px 0 60px;background:#fff}
+ .feath{text-align:center;margin-bottom:30px}
+ .feath h2{font-family:var(--disp);font-size:26px;font-weight:800;color:#20344a;letter-spacing:-.01em;text-transform:uppercase}
+ .feath p{font-size:15px;color:var(--muted);margin-top:9px}
+ .fgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+ .fcard{background:#fff;border:1px solid var(--line2);border-radius:18px;padding:26px 22px;text-align:center;
+   box-shadow:0 10px 26px rgba(47,128,194,.07);text-decoration:none;color:inherit;display:block;
+   transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease}
+ .fcard:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(47,128,194,.15);border-color:#d7ecfb}
+ .ficon{height:92px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center}
+ .ficon img{max-height:88px;max-width:128px;width:auto;height:auto;object-fit:contain;display:block}
+ .fcard h3{font-family:var(--disp);font-size:17px;font-weight:700;color:#20344a;margin-bottom:9px}
+ .fcard p{font-size:13px;line-height:1.58;color:var(--muted)}
+
+ @media(prefers-reduced-motion:reduce){.mq-t{animation:none!important}}
+
+ /* ── κινητό ───────────────────────────────────────────────────────────────── */
+ @media(max-width:900px){
+   .hw{padding:0 22px}
+   .cols2{grid-template-columns:1fr}
+   .fgrid{grid-template-columns:1fr 1fr}
+   .numrow{flex-direction:column;min-height:0}
+   .scards{flex-wrap:wrap}
+   .sc{flex:1 1 calc(50% - 6px)}
+   .pgrid{grid-auto-flow:row;grid-template-rows:none;grid-template-columns:1fr 1fr}
+   .feath h2{font-size:22px}
+ }
+ @media(max-width:560px){
+   .k3 .bar{height:auto;flex-wrap:wrap;gap:10px 16px;padding:12px 0}
+   .lockh,.navh{flex:1 0 100%}
+   .navh{gap:12px 14px;font-size:12px;flex-wrap:wrap}
+   .asofr{text-align:left}
+   .hwm{font-size:28px} .h1lead{font-size:18px}
+   .nums,.mq{height:34px}.ni{height:34px;padding:0 11px}
+   .mq::before,.mq::after{width:28px}
+   .sc{flex:1 1 100%;padding:10px 14px}
+   .sc-n{font-size:23px}
+   .dv-d{width:40px;font-size:10px}
+   .dv-c b{white-space:normal}
+   .dv-c small{white-space:normal}
+   .dv-a{width:74px;font-size:13px}
+   .dv-y{width:52px;font-size:11.5px}
+   .dv,.dv-hd{gap:7px;padding-left:11px;padding-right:11px}
+   .dv-hd{font-size:9px;letter-spacing:.03em}
+   .fgrid{grid-template-columns:1fr}
+ }
+</style><script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.axionmetrics.gr/#org",
+      "name": "Axion Metrics",
+      "url": "https://www.axionmetrics.gr/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.axionmetrics.gr/apple-touch-icon.png",
+        "width": 180,
+        "height": 180
+      },
+      "image": "https://www.axionmetrics.gr/og-image.png",
+      "description": "Δωρεάν θεμελιώδης ανάλυση των εισηγμένων του Χρηματιστηρίου Αθηνών — δείκτες αποτίμησης, κερδοφορίας, ρευστότητας, κατατάξεις και συγκρίσεις."
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.axionmetrics.gr/#website",
+      "url": "https://www.axionmetrics.gr/",
+      "name": "Axion Metrics",
+      "inLanguage": "el",
+      "publisher": { "@id": "https://www.axionmetrics.gr/#org" },
+      "description": "Θεμελιώδης ανάλυση 133 εισηγμένων του Χρηματιστηρίου Αθηνών."
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.axionmetrics.gr/#webpage",
+      "url": "https://www.axionmetrics.gr/",
+      "name": "Θεμελιώδης ανάλυση Χρηματιστηρίου Αθηνών",
+      "inLanguage": "el",
+      "isPartOf": { "@id": "https://www.axionmetrics.gr/#website" },
+      "about": { "@id": "https://www.axionmetrics.gr/#org" },
+      "dateModified": "2026-11-02"
+    }
+  ]
+}
+</script>
+</head><body>
+
+<!-- §141 — ΝΕΑ ΑΡΧΙΚΗ. Η σελίδα ΔΕΝ φορτώνει πια μόνο διακόσμηση: παίρνει core.js
+     (κατάλογος εταιρειών + 15 τελευταία γεγονότα) και home.js (συγκεντρωτικά, §139).
+     Τα δοχεία με id είναι ΑΔΕΙΑ στο κέλυφος και γεμίζουν από το render() παρακάτω·
+     το prerender.py (§137) ψήνει το αποτέλεσμα μέσα στο HTML, ώστε να το βλέπει και
+     ο crawler. Η αρχική έχει ΔΙΚΗ ΤΗΣ κεφαλίδα (δεν φορτώνει chrome.js). -->
+<div class="k3"><div class="hw"><div class="bar">
+ <a class="lockh" href="/"><span class="am">A<span>M</span></span><span class="rule"></span>
+  <span><span class="wm">AXION <i>METRICS</i></span><span class="tag">ΜΕΤΡΟΝ ΑΞΙΟΝ</span></span></a>
+ <div class="navh">
+  <a href="company/" data-i18n="nav.companies">Εταιρείες</a>
+  <a href="sectors/" data-i18n="nav.sectors">Κλάδοι</a>
+  <a href="index-reviews/" data-i18n="nav.market">Αγορά</a>
+  <a href="methodology/" data-i18n="nav.about">Σχετικά</a>
+  <div class="langflags" role="group" aria-label="Language"><button type="button" data-langset="el" title="Ελληνικά" aria-label="Ελληνικά"><svg viewBox="0 0 27 18" aria-hidden="true"><rect width="27" height="18" fill="#fff"/><g fill="#0D5EAF"><rect width="27" height="2"/><rect width="27" height="2" y="4"/><rect width="27" height="2" y="8"/><rect width="27" height="2" y="12"/><rect width="27" height="2" y="16"/></g><rect width="10" height="10" fill="#0D5EAF"/><path d="M0 4h10v2H0z M4 0h2v10H4z" fill="#fff"/><rect width="27" height="18" fill="none" stroke="rgba(0,0,0,.18)"/></svg></button><button type="button" data-langset="en" title="English" aria-label="English"><svg viewBox="0 0 60 30" aria-hidden="true"><clipPath id="axukj"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath><rect width="60" height="30" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#axukj)" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/><rect width="60" height="30" fill="none" stroke="rgba(0,0,0,.18)" stroke-width="2"/></svg></button></div><span class="mrule"></span><span class="mrule"></span><a class="hmail" href="mailto:info@axionmetrics.gr" title="info@axionmetrics.gr" aria-label="Επικοινωνία: info@axionmetrics.gr"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M3 7l9 6 9-6"/></svg></a>
+ </div>
+</div></div></div>
+
+<div class="k3below"><div class="hw"><div class="in2">
+ <div class="asofr"><span data-i18n="home.asof">Τελευταία ενημέρωση δεδομένων</span><br><b id="ax-asof">02.11.26</b></div>
+ <div class="hcenter">
+  <h1 class="h1lead" data-i18n-html="home.h1"><em>Θεμελιώδης ανάλυση</em> των <em>εισηγμένων</em> του Χρηματιστηρίου Αθηνών</h1>
+  <div class="hwm"><span class="a">AXION</span> <span class="m">METRICS</span></div>
+  <div class="m-inline" id="ax-meta"><b>141</b> εισηγμένες · <b>11</b> κλάδοι · <b>26</b> αριθμοδείκτες · κάλυψη από το <b>2020</b></div>
+ </div>
+</div></div></div>
+
+<div class="nums"><div class="hw"><div class="tapehold" id="ax-tape"><div class="mq"><div class="mq-t"><div class="mq-g"><a class="ni" href="/etaireia/crediabank/"><span class="d">27.10</span><span class="dot amk"></span><span class="co">CREDIABANK</span><span class="x">ΑΜΚ λόγω συγχώνευσης με απορρόφηση της εισηγμένης «94 EVROPI HOLDINGS»</span></a><a class="ni" href="/etaireia/evropi-holdings/"><span class="d">27.10</span><span class="dot listing"></span><span class="co">ΕΥΡΩΠΗ HOLDINGS</span><span class="x">Παύση διαπραγμάτευσης λόγω συγχώνευσης με απορρόφηση από την «CrediaBa…</span></a><a class="ni" href="/etaireia/papoutsanis/"><span class="d">26.10</span><span class="dot div"></span><span class="co">ΠΑΠΟΥΤΣΑΝΗΣ</span><span class="x">Προμέρισμα χρήσης 2026 €0,0501/μετοχή</span></a><a class="ni" href="/etaireia/capital-maritime-finance/"><span class="d">20.10</span><span class="dot listing"></span><span class="co">CAPITAL MARITIME FINANCE</span><span class="x">Εισαγωγή προς διαπραγμάτευση στην Κύρια Αγορά Euronext Athens</span></a><a class="ni" href="/etaireia/alpha-bank/"><span class="d">19.10</span><span class="dot amk"></span><span class="co">ALPHA BANK</span><span class="x">Εισαγωγή νέων μετοχών</span></a><a class="ni" href="/etaireia/performance-technologies/"><span class="d">16.10</span><span class="dot amk"></span><span class="co">PERFORMANCE TECHNOLOGIES</span><span class="x">ΑΜΚ €32.900 με κεφαλαιοποίηση αποθεματικού υπέρ το άρτιο</span></a><a class="ni" href="/etaireia/attica-media-group/"><span class="d">14.10</span><span class="dot div"></span><span class="co">ATTICA MEDIA GROUP</span><span class="x">Διανομή €0,02/μετοχή</span></a><a class="ni" href="/etaireia/evropi-holdings/"><span class="d">14.10</span><span class="dot amk"></span><span class="co">ΕΥΡΩΠΗ HOLDINGS</span><span class="x">Επιστροφή κεφαλαίου €0,31/μετοχή</span></a><a class="ni" href="/etaireia/alphatrust-andromeda/"><span class="d">12.10</span><span class="dot div"></span><span class="co">ALPHATRUST ΑΝΔΡΟΜΕΔΑ</span><span class="x">Διανομή €0,2643/μετοχή από κέρδη παρελθουσών χρήσεων</span></a><a class="ni" href="/etaireia/safe-bulkers/"><span class="d">12.10</span><span class="dot amk"></span><span class="co">SAFE BULKERS</span><span class="x">Εισαγωγή νέων μετοχών</span></a><a class="ni" href="/etaireia/verallis/"><span class="d">09.10</span><span class="dot listing"></span><span class="co">VERALLIS</span><span class="x">Εισαγωγή προς διαπραγμάτευση στην EN.A. Growth</span></a><a class="ni" href="/etaireia/trastor/"><span class="d">30.09</span><span class="dot amk"></span><span class="co">TRASTOR</span><span class="x">ΑΜΚ €72.873,50 με κεφαλαιοποίηση αποθεματικού</span></a><a class="ni" href="/etaireia/alpha-trust-holdings/"><span class="d">24.09</span><span class="dot listing"></span><span class="co">ALPHA TRUST HOLDINGS</span><span class="x">Διαγραφή των 3.223.944 μετοχών από το Euronext Athens</span></a><a class="ni" href="/etaireia/fourlis-group/"><span class="d">18.09</span><span class="dot amk"></span><span class="co">FOURLIS GROUP</span><span class="x">ΑΜΚ €242.785 με κεφαλαιοποίηση αποθεματικών</span></a><a class="ni" href="/etaireia/ethniki-trapeza-tis-ellados/"><span class="d">17.09</span><span class="dot amk"></span><span class="co">ΕΘΝΙΚΗ ΤΡΑΠΕΖΑ ΤΗΣ ΕΛΛΑΔΟΣ</span><span class="x">Μείωση μετοχικού κεφαλαίου</span></a></div></div></div></div></div></div>
+
+<div class="board"><div class="hw">
+ <div class="bh ctr"><h2 id="ax-seasonh">Αποτελέσματα εξαμήνου 2026 — τι έδειξαν οι οικονομικές καταστάσεις</h2></div>
+ <div class="numrow" id="ax-nums"><div class="scards"><div class="sc"><div class="sc-l">Πωλήσεις</div><div class="sc-n up">▲ +7,6%</div></div><div class="sc"><div class="sc-l">EBITDA</div><div class="sc-n up">▲ +25,9%</div></div><div class="sc"><div class="sc-l">Καθαρά κέρδη</div><div class="sc-n up">▲ +23,2%</div></div></div><div class="pgrid"><div class="pt"><div class="pt-l">P/E</div><div class="pt-n">14,01x</div></div><div class="pt"><div class="pt-l">P/BV</div><div class="pt-n">1,35x</div></div><div class="pt"><div class="pt-l">Μερισματική απόδοση</div><div class="pt-n">3,42%</div></div><div class="pt"><div class="pt-l">ROE</div><div class="pt-n">9,09%</div></div></div></div>
+ <div class="cols2">
+  <div id="ax-divs"><div class="pane"><h2 class="pane-h">Τελευταία μερίσματα &amp; διανομές <a href="/market-events/">όλες →</a></h2><div class="dv-hd"><span class="dv-d">Ημ/νία</span><span class="dv-c">Εταιρεία</span><span class="dv-a">€/μετοχή</span><span class="dv-y">Απόδοση</span></div><a class="dv" href="/etaireia/papoutsanis/"><span class="dv-d">26.10</span><span class="dv-c"><b>ΠΑΠΟΥΤΣΑΝΗΣ</b><small>Καταναλωτικά Αγαθά</small></span><span class="dv-a">€0,0501</span><span class="dv-y">2,31%</span></a><a class="dv" href="/etaireia/attica-media-group/"><span class="dv-d">14.10</span><span class="dv-c"><b>ATTICA MEDIA GROUP</b><small>Τεχνολογία, ΜΜΕ &amp; Τηλεπικοινωνίες</small></span><span class="dv-a">€0,02</span><span class="dv-y">1,40%</span></a><a class="dv" href="/etaireia/alphatrust-andromeda/"><span class="dv-d">12.10</span><span class="dv-c"><b>ALPHATRUST ΑΝΔΡΟΜΕΔΑ</b><small>Χρηματοοικονομικά · <em>από κέρδη παρελθουσών χρήσεων</em></small></span><span class="dv-a">€0,2643</span><span class="dv-y">8,62%</span></a><a class="dv" href="/etaireia/evrofarma/"><span class="dv-d">15.09</span><span class="dv-c"><b>EVROFARMA</b><small>Καταναλωτικά Αγαθά</small></span><span class="dv-a">€0,0601</span><span class="dv-y">1,67%</span></a><a class="dv" href="/etaireia/admie-symmetochon/"><span class="dv-d">28.08</span><span class="dv-c"><b>ΑΔΜΗΕ ΣΥΜΜΕΤΟΧΩΝ</b><small>Ενέργεια &amp; Κοινής Ωφέλειας</small></span><span class="dv-a">€0,0198</span><span class="dv-y">4,62%</span></a><a class="dv" href="/etaireia/evath/"><span class="dv-d">25.08</span><span class="dv-c"><b>ΕΥΑΘ</b><small>Ενέργεια &amp; Κοινής Ωφέλειας</small></span><span class="dv-a">€0,0746</span><span class="dv-y">1,92%</span></a><a class="dv" href="/etaireia/qualco-group/"><span class="dv-d">24.08</span><span class="dv-c"><b>QUALCO GROUP</b><small>Τεχνολογία, ΜΜΕ &amp; Τηλεπικοινωνίες</small></span><span class="dv-a">€0,045</span><span class="dv-y">0,69%</span></a><a class="dv" href="/etaireia/elastron/"><span class="dv-d">20.08</span><span class="dv-c"><b>ΕΛΑΣΤΡΟΝ</b><small>Βιομηχανία &amp; Βασικά Υλικά</small></span><span class="dv-a">€0,105</span><span class="dv-y">4,30%</span></a><div class="mvnote">492 μερίσματα και διανομές από το 2020. Η απόδοση είναι η μερισματική απόδοση <b>χρήσης 2025</b> της εταιρείας, όχι της συγκεκριμένης διανομής.</div></div></div>
+  <div class="stack" id="ax-tops"><div class="tp"><h3 class="tp-h">Υψηλότερη μερισματική απόδοση</h3><a class="tp-r" href="/etaireia/ellaktor/"><span class="tp-n">41,05%</span><span class="tp-c">ELLAKTOR</span></a><a class="tp-r" href="/etaireia/prodea-investments/"><span class="tp-n">29,20%</span><span class="tp-c">PRODEA INVESTMENTS</span></a><a class="tp-r" href="/etaireia/mple-kedros/"><span class="tp-n">8,74%</span><span class="tp-c">ΜΠΛΕ ΚΕΔΡΟΣ</span></a><a class="tp-r" href="/etaireia/alphatrust-andromeda/"><span class="tp-n">8,62%</span><span class="tp-c">ALPHATRUST ΑΝΔΡΟΜΕΔΑ</span></a><a class="tp-r" href="/etaireia/loulis-food-ingredients/"><span class="tp-n">7,99%</span><span class="tp-c">LOULIS FOOD INGREDIENTS</span></a></div><div class="tp"><h3 class="tp-h">Χαμηλότερο P/E — αποτίμηση</h3><a class="tp-r" href="/etaireia/agrotikos-oikos-spyrou/"><span class="tp-n">1,35x</span><span class="tp-c">ΑΓΡΟΤΙΚΟΣ ΟΙΚΟΣ ΣΠΥΡΟΥ</span></a><a class="tp-r" href="/etaireia/ellaktor/"><span class="tp-n">3,00x</span><span class="tp-c">ELLAKTOR</span></a><a class="tp-r" href="/etaireia/alphatrust-andromeda/"><span class="tp-n">3,58x</span><span class="tp-c">ALPHATRUST ΑΝΔΡΟΜΕΔΑ</span></a><a class="tp-r" href="/etaireia/premia-properties/"><span class="tp-n">4,14x</span><span class="tp-c">PREMIA PROPERTIES</span></a><a class="tp-r" href="/etaireia/interlife-asfalistiki/"><span class="tp-n">4,17x</span><span class="tp-c">INTERLIFE ΑΣΦΑΛΙΣΤΙΚΗ</span></a></div></div>
+ </div>
+</div></div>
+
+<div class="feat"><div class="hw">
+ <div class="feath"><h2 data-i18n="feat.h2">Όλα όσα χρειάζεσαι για να αποφασίσεις</h2><p data-i18n="feat.p">Ό,τι χρειάζεσαι για κάθε εισηγμένη — από την εταιρεία μέχρι τον κλάδο και την αγορά.</p></div>
+ <div class="fgrid"><a class="fcard" href="company/"><div class="ficon"><img src="assets/icons/company.png" alt="" loading="lazy"></div><h3 data-i18n="card.company.h">Θεμελιώδης ανάλυση εταιρείας</h3><p data-i18n="card.company.p">26 αριθμοδείκτες με κλαδική σύγκριση, ιστορικότητα μεγεθών, μέτοχοι, θυγατρικές, γεγονότα και ποιότητα κερδών (Piotroski).</p></a><a class="fcard" href="compare/"><div class="ficon"><img src="assets/icons/compare.png" alt="" loading="lazy"></div><h3 data-i18n="card.compare.h">Σύγκριση &amp; κατατάξεις</h3><p data-i18n="card.compare.p">Εταιρείες δίπλα-δίπλα σε κάθε δείκτη, και league tables για όλη την αγορά.</p></a><a class="fcard" href="sectors/"><div class="ficon"><img src="assets/icons/sector.png" alt="" loading="lazy"></div><h3 data-i18n="card.sector.h">Ανάλυση κλάδου</h3><p data-i18n="card.sector.p">Κλαδικές διάμεσοι, screener εντός κλάδου και τροχιά ποιότητας.</p></a><a class="fcard" href="index-reviews/"><div class="ficon"><img src="assets/icons/events.png" alt="" loading="lazy"></div><h3 data-i18n="card.events.h">Δείκτες &amp; γεγονότα αγοράς</h3><p data-i18n="card.events.p">Είσοδοι/έξοδοι στους δείκτες FTSE/Athex και ροή εταιρικών γεγονότων (μερίσματα, ΑΜΚ).</p></a></div>
+</div></div>
+
+<!-- §86 — ΣΤΑΤΙΣΤΙΚΑ ΣΤΗΝ ΑΡΧΙΚΗ. Η αρχική ΔΕΝ φορτώνει το chrome.js (έχει δική της
+     κεφαλίδα/υποσέλιδο), οπότε η injectAnalytics() δεν έτρεχε ποτέ εδώ: η σελίδα που
+     δέχεται τις περισσότερες ΠΡΩΤΕΣ επισκέψεις ήταν η μόνη που δεν μετριόταν. Ίδιο id
+     `cf-beacon` με το chrome.js, ώστε αν κάποτε φορτωθεί κι εκείνο να μη διπλομετρήσει. -->
+<script id="cf-beacon" defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "a9e573e27dd34f6784b7df2d706c1bee"}'></script>
+<script src="assets/core.js"></script>
+<script src="assets/home.js"></script>
+<script src="assets/i18n.js"></script>
+<script>
+AX_I18N.add({
+ 'home.h1':{el:'<em>Θεμελιώδης ανάλυση</em> των <em>εισηγμένων</em> του Χρηματιστηρίου Αθηνών',
+            en:'<em>Fundamental analysis</em> of <em>listed companies</em> on the Athens Stock Exchange'},
+ 'home.asof':{el:'Τελευταία ενημέρωση δεδομένων', en:'Data last updated'},
+ 'home.title':{el:'Θεμελιώδης ανάλυση Χρηματιστηρίου Αθηνών | Axion Metrics', en:'Athens Stock Exchange fundamentals | Axion Metrics'},
+ 'nav.companies':{el:'Εταιρείες', en:'Companies'},
+ 'nav.sectors':{el:'Κλάδοι', en:'Sectors'},
+ 'nav.market':{el:'Αγορά', en:'Market'},
+ 'nav.about':{el:'Σχετικά', en:'About'},
+ 'feat.h2':{el:'Όλα όσα χρειάζεσαι για να αποφασίσεις', en:'Everything you need to decide'},
+ 'feat.p':{el:'Ό,τι χρειάζεσαι για κάθε εισηγμένη — από την εταιρεία μέχρι τον κλάδο και την αγορά.', en:'Everything for each listed company — from the company to its sector and the market.'},
+ 'card.company.h':{el:'Θεμελιώδης ανάλυση εταιρείας', en:'Company fundamentals'},
+ 'card.company.p':{el:'26 αριθμοδείκτες με κλαδική σύγκριση, ιστορικότητα μεγεθών, μέτοχοι, θυγατρικές, γεγονότα και ποιότητα κερδών (Piotroski).', en:'26 ratios with sector benchmarking, historical figures, shareholders, subsidiaries, events and earnings quality (Piotroski).'},
+ 'card.compare.h':{el:'Σύγκριση & κατατάξεις', en:'Comparison & rankings'},
+ 'card.compare.p':{el:'Εταιρείες δίπλα-δίπλα σε κάθε δείκτη, και league tables για όλη την αγορά.', en:'Companies side by side on every ratio, plus league tables for the whole market.'},
+ 'card.sector.h':{el:'Ανάλυση κλάδου', en:'Sector analysis'},
+ 'card.sector.p':{el:'Κλαδικές διάμεσοι, screener εντός κλάδου και τροχιά ποιότητας.', en:'Sector medians, in-sector screener and a quality trajectory.'},
+ 'card.events.h':{el:'Δείκτες & γεγονότα αγοράς', en:'Indices & market events'},
+ 'card.events.p':{el:'Είσοδοι/έξοδοι στους δείκτες FTSE/Athex και ροή εταιρικών γεγονότων (μερίσματα, ΑΜΚ).', en:'FTSE/Athex index entries/exits and a stream of corporate events (dividends, capital raises).'}
+});
+</script>
+
+<script>
+/* §141 — Ο ΑΠΟΔΟΤΗΣ ΤΗΣ ΑΡΧΙΚΗΣ.
+   Διαβάζει window.AXION (core.js: companies + 15 τελευταία γεγονότα) και
+   window.AXION.home (home.js, §139: διάμεσοι, εξάμηνο, διανομές, κατατάξεις).
+   Γεμίζει ΜΟΝΟ άδεια δοχεία με id — τα ίδια που ψήνει το prerender.py (§137).
+   Ξανατρέχει σε αλλαγή γλώσσας, όπως το block short θέσεων της σελίδας εταιρείας. */
+(function(){
+  var A=window.AXION; if(!A) return;
+  var H=A.home||null;      /* home.js (§139) — μπορεί να λείπει· βλ. ΑΝΘΕΚΤΙΚΟΤΗΤΑ */
+
+  function EN(){ try{ return AX_I18N.lang==='en'; }catch(e){ return false; } }
+  function esc(t){return String(t==null?'':t).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  /* υποδιαστολή κατά γλώσσα: κόμμα στα ελληνικά, τελεία στα αγγλικά */
+  function num(v,d){ if(v==null) return '—'; var s=Number(v).toFixed(d); return EN()?s:s.replace('.',','); }
+  function dmy(iso){ var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(iso||''); return m?(m[3]+'.'+m[2]+'.'+m[1].slice(2)):(iso||''); }
+  function dm(iso){ var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(iso||''); return m?(m[3]+'.'+m[2]):(iso||''); }
+  function cut(s,n){ s=String(s||''); return s.length>n ? s.slice(0,n)+'…' : s; }
+  /* Λωρίδα αρχικής: ΜΟΝΟ η πράξη, όχι η περιγραφή της. Κόβει στο πρώτο « — » ή « (»,
+     εκεί δηλαδή που τελειώνει η πράξη και αρχίζουν οι λεπτομέρειες (ποσά, πλήθη
+     μετοχών, ημερομηνίες αποκοπής, νέα σύνολα). Η ΠΛΗΡΗΣ περιγραφή μένει στο
+     /market-events/ και στην καρτέλα γεγονότων της σελίδας εταιρείας. */
+  function brief(s){ return String(s||'').split(/\s+[—–]\s+|\s+\(/)[0].trim(); }
+
+  var SLUG=(function(){ var m={},L=(A.companies&&A.companies.annual)||[];
+    for(var i=0;i<L.length;i++) m[L[i].tk]=L[i].slug; return m; })();
+  function co(slug){ return slug ? '/etaireia/'+slug+'/' : '/company/'; }
+
+  function T(){ return EN() ? {
+      meta:function(c,s,r){return '<b>'+c+'</b> listed · <b>'+s+'</b> sectors · <b>'+r+'</b> ratios · coverage since <b>2020</b>';},
+      season:function(y){return 'H1 '+y+' results — what the financial statements showed';},
+      rev:'Revenue', ebitda:'EBITDA', np:'Net profit',
+      pe:'P/E', pbv:'P/BV', dy:'Dividend yield', roe:'ROE',
+      divs:'Latest dividends &amp; distributions', all:'all →',
+      cDate:'Date', cCo:'Company', cAmt:'€ / share', cY:'Yield',
+      note:function(n){return n+' dividends and distributions since 2020. The yield is the company’s <b>FY2025</b> dividend yield, not that of this distribution.';},
+      topdy:'Highest dividend yield', toppe:'Lowest P/E — valuation'
+    } : {
+      meta:function(c,s,r){return '<b>'+c+'</b> εισηγμένες · <b>'+s+'</b> κλάδοι · <b>'+r+'</b> αριθμοδείκτες · κάλυψη από το <b>2020</b>';},
+      season:function(y){return 'Αποτελέσματα εξαμήνου '+y+' — τι έδειξαν οι οικονομικές καταστάσεις';},
+      rev:'Πωλήσεις', ebitda:'EBITDA', np:'Καθαρά κέρδη',
+      pe:'P/E', pbv:'P/BV', dy:'Μερισματική απόδοση', roe:'ROE',
+      divs:'Τελευταία μερίσματα &amp; διανομές', all:'όλες →',
+      cDate:'Ημ/νία', cCo:'Εταιρεία', cAmt:'€/μετοχή', cY:'Απόδοση',
+      note:function(n){return n+' μερίσματα και διανομές από το 2020. Η απόδοση είναι η μερισματική απόδοση <b>χρήσης 2025</b> της εταιρείας, όχι της συγκεκριμένης διανομής.';},
+      topdy:'Υψηλότερη μερισματική απόδοση', toppe:'Χαμηλότερο P/E — αποτίμηση'
+    };
+  }
+
+  function tape(t){
+    var E=A.marketEvents||[], out='';
+    for(var i=0;i<E.length;i++){ var e=E[i];
+      out+='<a class="ni" href="'+co(SLUG[e.tk])+'"><span class="d">'+dm(e.d)+'</span>'
+         + '<span class="dot '+esc(e.t)+'"></span><span class="co">'+esc(e.co)+'</span>'
+         + '<span class="x">'+esc(cut(brief(e.x),70))+'</span></a>';
+    }
+    if(!out) return '';
+    /* ΕΝΑ αντίγραφο στο HTML· το δεύτερο (που χρειάζεται η κύλιση) το κλωνοποιεί η
+       mqdup() στο load. Έτσι ο crawler βλέπει κάθε γεγονός μία φορά, όχι δύο. */
+    return '<div class="mq"><div class="mq-t"><div class="mq-g">'+out+'</div></div></div>';
+  }
+
+  function nums(t){
+    var S=H.season||{}, P=H.pulse||{};
+    function card(lab,k){ var v=S[k]&&S[k][0];
+      if(v==null) return '';
+      var up=v>=0;
+      return '<div class="sc"><div class="sc-l">'+lab+'</div>'
+           + '<div class="sc-n '+(up?'up':'dn')+'">'+(up?'▲ +':'▼ ')+num(v,1)+'%</div></div>'; }
+    function pill(lab,k,d,suf){ var v=P[k]&&P[k][0];
+      if(v==null) return '';
+      return '<div class="pt"><div class="pt-l">'+lab+'</div><div class="pt-n">'+num(v,d)+suf+'</div></div>'; }
+    return '<div class="scards">'+card(t.rev,'revenue')+card(t.ebitda,'ebitda')+card(t.np,'net_profit')+'</div>'
+         + '<div class="pgrid">'+pill(t.pe,'pe',2,'x')+pill(t.pbv,'pbv',2,'x')
+         + pill(t.dy,'dy',2,'%')+pill(t.roe,'roe',2,'%')+'</div>';
+  }
+
+  function divs(t){
+    var L=H.divs||[]; if(!L.length) return '';
+    var rows='';
+    for(var i=0;i<L.length;i++){ var p=L[i];
+      /* Η ALPHATRUST ΑΝΔΡΟΜΕΔΑ δίνει €0,2642775532/μετοχή — στρογγυλοποιούμε στα 4
+         δεκαδικά και κρατάμε το ακριβές ποσό στο tooltip. */
+      var a=p.amt||'', ti='', dec=(a.split(',')[1]||'');
+      if(dec.length>4){ ti=' title="'+esc(a)+'"'; a=num(parseFloat(a.replace(/\./g,'').replace(',','.')),4); }
+      else if(a && EN()) a=a.replace(/\./g,'').replace(',','.');
+      var y=(p.dy!=null)?'<span class="dv-y">'+num(p.dy,2)+'%</span>':'<span class="dv-y n">—</span>';
+      var sec=''; try{ sec=AX_I18N.sector(p.s)||p.s||''; }catch(e){ sec=p.s||''; }
+      rows+='<a class="dv" href="'+co(p.slug)+'"'+ti+'><span class="dv-d">'+dm(p.d)+'</span>'
+          + '<span class="dv-c"><b>'+esc(p.co)+'</b><small>'+esc(sec)
+          + (p.extra?' · <em>'+esc(p.extra)+'</em>':'')+'</small></span>'
+          + '<span class="dv-a">€'+esc(a||'—')+'</span>'+y+'</a>';
+    }
+    return '<div class="pane"><h2 class="pane-h">'+t.divs+' <a href="/market-events/">'+t.all+'</a></h2>'
+         + '<div class="dv-hd"><span class="dv-d">'+t.cDate+'</span><span class="dv-c">'+t.cCo+'</span>'
+         + '<span class="dv-a">'+t.cAmt+'</span><span class="dv-y">'+t.cY+'</span></div>'
+         + rows + '<div class="mvnote">'+t.note(H.divcount||0)+'</div></div>';
+  }
+
+  function tops(t){
+    function tp(lab,list,d,suf){
+      if(!list||!list.length) return '';
+      var r='';
+      for(var i=0;i<list.length;i++) r+='<a class="tp-r" href="'+co(list[i].slug)+'">'
+        + '<span class="tp-n">'+num(list[i].v,d)+suf+'</span><span class="tp-c">'+esc(list[i].co)+'</span></a>';
+      return '<div class="tp"><h3 class="tp-h">'+lab+'</h3>'+r+'</div>';
+    }
+    return tp(t.topdy,H.topdy,2,'%')+tp(t.toppe,H.toppe,2,'x');
+  }
+
+  function put(id,html){ var e=document.getElementById(id); if(e) e.innerHTML=html; }
+
+  /* ΑΝΘΕΚΤΙΚΟΤΗΤΑ: η ταινία, η ημερομηνία και η γραμμή πλήθους ζουν στο core.js και
+     αποδίδονται ΠΑΝΤΑ. Το ταμπλό (εξάμηνο, δείκτες, διανομές, κατατάξεις) θέλει το
+     home.js· αν λείπει — π.χ. δεν έχει τρέξει ακόμη η γέφυρα — ολόκληρη η ζώνη
+     ΚΡΥΒΕΤΑΙ αντί να μείνει ένα άδειο κουτί με επικεφαλίδα. */
+  function render(){
+    var t=T();
+    var gen=(H&&H.generated)||(A.meta&&A.meta.generated)||'';
+    var nco=(H&&H.counts&&H.counts.companies)||((A.companies&&A.companies.annual)||[]).length||'';
+    var nse=(H&&H.counts&&H.counts.sectors)||((A.meta&&A.meta.sectors)||[]).length||'';
+    put('ax-asof', dmy(gen));
+    put('ax-meta', t.meta(nco, nse, 26));
+    put('ax-tape', tape(t));
+
+    var board=document.querySelector('.board');
+    if(!H){ if(board) board.style.display='none'; mqdup(); return; }
+    if(board) board.style.display='';
+    put('ax-seasonh', t.season((H.periods&&H.periods.cur)||''));
+    put('ax-nums', nums(t));
+    put('ax-divs', divs(t));
+    put('ax-tops', tops(t));
+    mqdup();
+  }
+
+  /* Το δεύτερο αντίγραφο της ταινίας ΔΕΝ μπαίνει όταν τρέχει το prerender.py: εκείνο
+     φορτώνει τη σελίδα από http://127.0.0.1:<port> και ψήνει ό,τι βρει στο DOM. Έτσι
+     στο HTML μένει ένα αντίγραφο· στον επισκέπτη προστίθεται το δεύτερο και η λωρίδα
+     κυλάει. Χωρίς JavaScript η λωρίδα απλώς στέκεται ακίνητη. */
+  function mqdup(){
+    if(location.hostname==='127.0.0.1') return;
+    var T2=document.querySelectorAll('.mq-t');
+    for(var i=0;i<T2.length;i++){
+      var g=T2[i].firstElementChild; if(!g || T2[i].children.length>1) continue;
+      var c=g.cloneNode(true); c.setAttribute('aria-hidden','true');
+      T2[i].appendChild(c); T2[i].className+=' ready';
+    }
+  }
+
+  render();
+  try{ document.addEventListener('axion:langchange', render); }catch(e){}
+})();
+</script>
+
+</body></html>
+
+<!-- redeploy trigger 2026-08-26 -->
