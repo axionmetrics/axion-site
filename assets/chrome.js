@@ -49,7 +49,7 @@
 
  /* §118 — επιλογή γλώσσας με σημαίες: και οι δύο πάντα ορατές, η τρέχουσα ανενεργή */
  var LANGHTML="<div class=\"langflags\" role=\"group\" aria-label=\"Language\"><button type=\"button\" data-langset=\"el\" title=\"Ελληνικά\" aria-label=\"Ελληνικά\"><svg viewBox=\"0 0 27 18\" aria-hidden=\"true\"><rect width=\"27\" height=\"18\" fill=\"#fff\"/><g fill=\"#0D5EAF\"><rect width=\"27\" height=\"2\"/><rect width=\"27\" height=\"2\" y=\"4\"/><rect width=\"27\" height=\"2\" y=\"8\"/><rect width=\"27\" height=\"2\" y=\"12\"/><rect width=\"27\" height=\"2\" y=\"16\"/></g><rect width=\"10\" height=\"10\" fill=\"#0D5EAF\"/><path d=\"M0 4h10v2H0z M4 0h2v10H4z\" fill=\"#fff\"/><rect width=\"27\" height=\"18\" fill=\"none\" stroke=\"rgba(0,0,0,.18)\"/></svg></button><button type=\"button\" data-langset=\"en\" title=\"English\" aria-label=\"English\"><svg viewBox=\"0 0 60 30\" aria-hidden=\"true\"><clipPath id=\"axukj\"><path d=\"M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z\"/></clipPath><rect width=\"60\" height=\"30\" fill=\"#012169\"/><path d=\"M0,0 L60,30 M60,0 L0,30\" stroke=\"#fff\" stroke-width=\"6\"/><path d=\"M0,0 L60,30 M60,0 L0,30\" clip-path=\"url(#axukj)\" stroke=\"#C8102E\" stroke-width=\"4\"/><path d=\"M30,0 v30 M0,15 h60\" stroke=\"#fff\" stroke-width=\"10\"/><path d=\"M30,0 v30 M0,15 h60\" stroke=\"#C8102E\" stroke-width=\"6\"/><rect width=\"60\" height=\"30\" fill=\"none\" stroke=\"rgba(0,0,0,.18)\" stroke-width=\"2\"/></svg></button></div>";
- var NAVHTML="<nav class=\"site-nav\">\n <div class=\"bar1\"><a class=\"lock\" href=\"/\"><span class=\"am\">A<i>M</i></span><span class=\"lrule\"></span><span class=\"lname\">AXION<br>METRICS</span></a><ul class=\"tabs\" id=\"navtabs\"></ul><div class=\"am-right\"><div class=\"am-basis\" id=\"ambasis\"></div>"+LANGHTML+"<span class=\"mrule\"></span><a class=\"am-mail\" id=\"ammail\" href=\"mailto:"+MAIL+"\">"+MAILSVG+"</a></div></div>\n <div class=\"bar2\" id=\"navbar2\"></div>\n <div class=\"am-upd\" id=\"amupd\" hidden></div>\n <div class=\"am-ev\" id=\"amev\" hidden></div>\n</nav>";
+ var NAVHTML="<nav class=\"site-nav\">\n <div class=\"bar1\"><a class=\"lock\" href=\"/\"><span class=\"am\">A<i>M</i></span><span class=\"lrule\"></span><span class=\"lname\"><span class=\"wm\">AXION <i>METRICS</i></span><span class=\"tag\">ΜΕΤΡΟΝ ΑΞΙΟΝ</span></span></a><ul class=\"tabs\" id=\"navtabs\"></ul><div class=\"am-right\"><div class=\"am-basis\" id=\"ambasis\"></div>"+LANGHTML+"<span class=\"mrule\"></span><a class=\"am-mail\" id=\"ammail\" href=\"mailto:"+MAIL+"\">"+MAILSVG+"</a></div></div>\n <div class=\"bar2\" id=\"navbar2\"></div>\n <div class=\"am-ev\" id=\"amev\" hidden></div>\n <div class=\"am-upd\" id=\"amupd\" hidden></div>\n</nav>";
 
  function footerHTML(){
    /* Οι στήλες παράγονται ΑΠΟ ΤΟΝ ΙΔΙΟ πίνακα NAV με το header — καμία χειροκίνητη λίστα,
@@ -187,9 +187,41 @@
               div:{el:'Χρημ.Διανομές',en:'Distributions'},
               listing:{el:'Εισαγωγές/Διαγραφές',en:'Listings/Delistings'},
               index:{el:'Δείκτες',en:'Index changes'}};
- var EV_N=15, EV_PXS=75;   // πλήθος γεγονότων · ταχύτητα κύλισης σε px/δευτερόλεπτο
- function evDate(iso){ var p=String(iso).split('-'); if(p.length!==3) return '';
-   return parseInt(p[2],10)+'/'+parseInt(p[1],10); }
+ /* §166 — 71,9 px/s = η ταχύτητα που επέλεξε ο user στην αρχική (--sp 41,5s
+    για διαδρομή 2.983px). Η ΔΙΑΡΚΕΙΑ μένει υπολογισμένη από το πλάτος (§119.3). */
+ var EV_PREV={el:'Προηγούμενα',en:'Previous'},
+     EV_NEXT={el:'Επόμενα',en:'Next'};
+ var EV_N=15, EV_PXS=71.9;
+ var MON_EL=['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου',
+              'Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
+ var MON_EN=['January','February','March','April','May','June','July','August',
+             'September','October','November','December'];
+ function evDate(iso){ var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(iso||'');
+   return m ? (m[3]+'.'+m[2]) : ''; }
+ function evLong(iso){ var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(iso||''); if(!m) return '';
+   var i=+m[2]-1;
+   return curLang()==='en' ? (MON_EN[i]+' '+(+m[3])+', '+m[1])
+                           : ((+m[3])+' '+MON_EL[i]+' '+m[1]); }
+ /* ΣΥΝΤΟΜΕΥΣΗ ΠΕΡΙΓΡΑΦΗΣ — ίδια με την αρχική: η λωρίδα δείχνει ΤΗΝ ΠΡΑΞΗ,
+    όχι την περιγραφή της. ⚠ ΜΗ ΒΑΖΕΙΣ \b ΣΕ ΕΛΛΗΝΙΚΑ: το \b της JavaScript
+    είναι ASCII και δεν πιάνει μετά από «ού»/«ών». */
+ function evBrief(s){
+   s=String(s||'').split(/\s+[—–]\s+|\s+\(/)[0].trim();
+   s=s.replace(/^Εισαγωγή\s+προς\s+διαπραγμάτευση\s+στη/,'Εισαγωγή στη');
+   s=s.replace(/^Παύση\s+διαπραγμάτευσης/,'Παύση');
+   s=s.replace(/\s+(με|από)\s+απορρόφηση\s+.*$/,'');
+   s=s.replace(/\s+λόγω\s+απορρόφησης\s+.*$/,' λόγω απορρόφησης');
+   s=s.replace(/\s+με\s+κεφαλαιοποίηση\s+αποθεματικ\S*.*$/,' από αποθεματικό');
+   s=s.replace(/\s+από\s+κέρδη\s+παρελθουσών\s+χρήσεων.*$/,'');
+   s=s.replace(/\s+υπέρ\s+το\s+άρτιο.*$/,'');
+   s=s.replace(/\s+(κατόπιν|σύμφωνα\s+με|βάσει|δυνάμει)\s+.*$/,'');
+   s=s.replace(/^Διαγραφή\s+των\s+/,'Διαγραφή ');
+   s=s.replace(/\s+από\s+(το|την)\s+Euronext[^,]*$/,'');
+   s=s.replace(/\s+Euronext\s+Athens\s*$/,'');
+   s=s.replace(/^(Προμέρισμα|Μέρισμα)\s+χρήσης\s+\d{4}\s+/,'$1 ');
+   s=s.replace(/\s*[,·]\s*$/,'').trim();
+   return s;
+ }
  /* Η ΔΙΑΡΚΕΙΑ υπολογίζεται από το ΠΡΑΓΜΑΤΙΚΟ πλάτος του περιεχομένου, όχι σταθερή:
     αλλιώς μια μέρα με μακροσκελή κείμενα γεγονότων θα έτρεχε τη λωρίδα πιο γρήγορα
     από μια μέρα με σύντομα. Έτσι τα px/s μένουν σταθερά. */
@@ -204,21 +236,85 @@
    var E=src.slice(0,EV_N);
    if(!E.length){ el.hidden=true; el.innerHTML=''; return; }
    var one=E.map(function(e){
-     var tag=EV_TYPE[e.t]?L(EV_TYPE[e.t]):String(e.t||'');
-     var inner='<span class="d">'+evDate(e.d)+'</span>'
-             + '<span class="co">'+esc(e.co||e.tk||'')+'</span>'
-             + '<span class="pill p-'+esc(e.t)+'">'+esc(tag)+'</span>'
-             + '<span class="x">'+esc(e.x||'')+'</span>';
+     var inner='<span class="h"><i class="k '+esc(e.t)+'"></i>'+esc(e.co||e.tk||'')
+             + '<em>'+evDate(e.d)+'</em></span>'
+             + '<span class="x">'+esc(evBrief(e.x))+'</span>';
      var href=(typeof AX_CO==='function'&&e.tk)?AX_CO(e.tk):null;
      return href ? '<a class="ev" href="'+href+'">'+inner+'</a>'
                  : '<span class="ev">'+inner+'</span>';
    }).join('');
-   el.innerHTML='<div class="elab"><span class="t">'+esc(L(EV_T))+'</span></div>'
-              + '<div class="eview"><div class="track">'+one+one+'</div></div>';
+   el.innerHTML='<div class="elab"><span class="live"></span>'
+              + '<span class="t">'+esc(L(EV_T))+'</span>'
+              + '<span class="dt">'+esc(evLong(E[0].d))+'</span></div>'
+              + '<div class="eview"><div class="track">'+one+one+'</div></div>'
+              + '<div class="t-nav"><button type="button" aria-label="'+esc(L(EV_PREV))+'">‹</button>'
+              + '<button type="button" aria-label="'+esc(L(EV_NEXT))+'">›</button></div>';
    el.hidden=false;
-   evDur(el); setScrollPad();
+   evDur(el); setScrollPad(); evArrows(el);
    // οι γραμματοσειρές φορτώνουν αργότερα και αλλάζουν το πλάτος -> ξαναμέτρηση
    try{ if(document.fonts&&document.fonts.ready) document.fonts.ready.then(function(){ evDur(el); setScrollPad(); }); }catch(_){}
+ }
+ /* ΒΕΛΑΚΙΑ — ΣΚΡΟΛΑΡΙΣΜΑ ΤΟΥ ΧΡΟΝΟΥ ΤΗΣ ΚΙΝΗΣΗΣ, όχι ανάληψη της θέσης από JS:
+       dt = διάρκεια × πλάτος_είδησης ÷ (πλάτος_διαδρομής ÷ 2)
+    Έτσι μένουν ακέραια η ταχύτητα, η παύση στο hover και η ατέρμονη ροή.
+    ⚠ currentTime < 0 = «πριν την αρχή»: η κίνηση παγώνει στο from. Επειδή είναι
+    περιοδική, προσθέτουμε μία περίοδο πριν πάμε πίσω — και επειδή η λίστα είναι
+    διπλασιασμένη, το άλμα είναι ΟΠΤΙΚΑ ΑΟΡΑΤΟ.
+    ⚠ prefers-reduced-motion: animation:none, δεν υπάρχει χρόνος να σκρολάρει·
+    τότε μετακινούμε με transform, ακαριαία. */
+ var EV_RM=false; try{ EV_RM=window.matchMedia('(prefers-reduced-motion:reduce)').matches; }catch(_){}
+ var evCur=0, evOff=0;
+ function evMeas(){
+   var tr=document.querySelector('#amev .track'); if(!tr) return null;
+   var it=tr.children, n=it.length/2, w=[], tot=0, i;
+   if(n<1) return null;
+   for(i=0;i<n;i++){ w.push(it[i].offsetWidth); tot+=it[i].offsetWidth; }
+   if(!tot) return null;
+   return {tr:tr, gw:tot, w:w};
+ }
+ function evAnim(el){
+   var al=[]; try{ al=el.getAnimations?el.getAnimations():[]; }catch(_){ return null; }
+   var pick=null;
+   for(var i=0;i<al.length;i++){
+     if(al[i].animationName==='amEvRoll') return al[i];
+     if(!pick) pick=al[i];
+   }
+   return pick;
+ }
+ function evTween(an,d){
+   if(EV_RM){ an.currentTime=Number(an.currentTime)+d; return; }
+   var t0=0, done=0;
+   function fr(now){
+     if(!t0) t0=now;
+     var p=(now-t0)/340; if(p>1) p=1;
+     var want=d*(1-Math.pow(1-p,3));
+     an.currentTime=Number(an.currentTime)+(want-done); done=want;
+     if(p<1) requestAnimationFrame(fr);
+   }
+   requestAnimationFrame(fr);
+ }
+ function evStep(dir){
+   var m=evMeas(); if(!m) return;
+   var n=m.w.length, idx;
+   if(dir>0){ idx=evCur%n; evCur=(evCur+1)%n; }
+   else     { evCur=(evCur-1+n)%n; idx=evCur; }
+   var an=evAnim(m.tr),
+       tim=(an&&an.effect&&an.effect.getComputedTiming)?an.effect.getComputedTiming():null,
+       dur=tim?tim.duration:0;
+   if(an && typeof dur==='number' && isFinite(dur) && dur>0){
+     var d=dur*(m.w[idx]/m.gw)*dir;
+     if(an.currentTime==null) an.currentTime=0;
+     if(d<0 && Number(an.currentTime)+d<0) an.currentTime=Number(an.currentTime)+dur;
+     evTween(an,d);
+   }else{
+     evOff=(evOff+dir*m.w[idx])%m.gw; if(evOff<0) evOff+=m.gw;
+     m.tr.style.transform='translate3d('+(-evOff)+'px,0,0)';
+   }
+ }
+ function evArrows(el){
+   var b=el.querySelectorAll('.t-nav button');
+   if(b[0]) b[0].addEventListener('click', function(){ evStep(-1); });
+   if(b[1]) b[1].addEventListener('click', function(){ evStep(1); });
  }
  function syncLangFlags(){
    var mm=document.getElementById('ammail');
