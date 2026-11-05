@@ -23,7 +23,6 @@ robots : hcmc.gr → «User-Agent: * / Disallow:» (επιτρέπει τα πά
 του master). Χωρίς fuzzy ονόματα.
 
 Έξοδος : assets/shorts.js   (το site)
-         .github/shorts/<YYYY-MM-DD>.json  (αρχείο εκδόσεων — δικό μας ιστορικό)
          .github/shorts/_state.json        (τελευταία επεξεργασμένη έκδοση)
          .github/shorts/fca_history.json   (§143 — ΣΥΣΣΩΡΕΥΤΙΚΟ ιστορικό FCA: ANSP + ονομαστικό ≤10/07/2026)
 Δεύτερη πηγή (§140): FCA — https://www.fca.org.uk/publication/documents/aggregated-current-net-short-positions.csv
@@ -573,8 +572,10 @@ def main():
         '   · κλειδί `exempt`: μετοχές εκτός άρθρων 5 & 6 (άρθρο 16 Καν. 236/2012, ESMA)\n'
         '   ΜΗΝ το επεξεργάζεσαι με το χέρι. */\n'
         'window.AXION_SHORTS = %s;\n'%(src_date, json.dumps(payload, ensure_ascii=False, separators=(',',':'))))
-    io.open(os.path.join(ARCH,'%s.json'%src_date),'w',encoding='utf-8').write(
-        json.dumps(payload, ensure_ascii=False, indent=1))
+    # ΔΕΝ γράφεται πια αρχείο `.github/shorts/<YYYY-MM-DD>.json` (05/11/2026). Ήταν
+    # write-only: κανένα script, καμία σελίδα και η γέφυρα δεν το διάβαζαν ποτέ — το
+    # ιστορικό που δείχνει η σελίδα βγαίνει από το `fca_history.json`. Μάζευε 50-77 KB
+    # ανά έκδοση της Επιτροπής χωρίς αναγνώστη.
     # το state γράφεται ΜΕΤΑ τα issues ώστε να μη χαθεί ειδοποίηση αν σκάσει κάτι ενδιάμεσα
 
     log('εταιρείες: %d · με ανοιχτή θέση: %d · γραμμές: %d'%(
