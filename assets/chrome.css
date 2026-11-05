@@ -374,3 +374,32 @@ body.am-nofeed #am-nav{background:linear-gradient(#12303f 0 var(--b1),#fff var(-
 .langflags button[aria-current]{opacity:.35;cursor:default}
 .langflags button:not([aria-current]):hover{transform:translateY(-1px)}
 .langflags button:focus-visible{outline:2px solid #57a5df;outline-offset:2px}
+
+
+/* ═══ §169 — ΚΙΝΗΤΟ: ΤΥΛΙΓΜΑ ΥΠΟΣΕΛΙΔΟΥ ΚΑΙ ΣΤΟΧΟΙ ΑΦΗΣ (05/11/2026) ═══════ */
+/* (α) ΤΙΤΛΟΣ ΗΡΩΑ — το `.hero-in` είναι flex και το h1 είχε `flex:0 0 auto`:
+   αρνιόταν να συρρικνωθεί και κρατούσε το max-content πλάτος του. Μετρημένο
+   στην /apotelesmata/ @375: h1 376px μέσα σε γονέα 347px -> η σελίδα κυλούσε
+   οριζόντια ως τα 390px, δηλαδή σε iPhone SE και σε Android 360.
+   ⚠ ΤΟ `min-width:0` ΜΟΝΟ ΤΟΥ ΔΕΝ ΑΡΚΕΙ — μετρήθηκε: με min-width:0 το h1
+   έμενε 376px, γιατί το `flex:0 0 auto` απαγορεύει ΚΑΙ τη συρρίκνωση. Χρειάζεται
+   ΚΑΙ `flex-shrink:1`. */
+.wrap>.secbox:first-child>.hero-in>h1,.wrap>.hero:first-child>.hero-in>h1,
+.wrap>.mast:first-child>.hero-in>h1{min-width:0;flex-shrink:1}
+
+/* (β) ΥΠΟΣΕΛΙΔΟ — το `white-space:nowrap` των συνδέσμων (§108.6, για να μη
+   σπάει το «Κατατάξεις / League tables») κρατούσε δάπεδο πλάτους 371px σε
+   ΟΛΟΚΛΗΡΟ το site: στα 320px οι δύο στήλες ζητούσαν 162+143 και το κενό
+   άλλα 44. Κάτω από 400px επιτρέπεται τύλιγμα — τα labels μένουν ακέραια,
+   απλώς πάνε σε δεύτερη γραμμή. */
+@media(max-width:400px){
+  .site-ft .fcol a{white-space:normal}
+  .site-ft .in{gap:24px 18px}
+}
+
+/* (γ) ΣΤΟΧΟΙ ΑΦΗΣ — η περιοχή επεκτείνεται με ::after, ΧΩΡΙΣ να αλλάξει ύψος.
+   ⚠ Αν άλλαζε ύψος θα ακύρωνε τη δέσμευση του §135/§166 και θα ήθελε
+   ξαναμέτρημα σε 14 πλάτη. Οι σημαίες: 26x19 -> 32x37. Το γράμμα: 25 -> 37. */
+.langflags button,.am-mail{position:relative}
+.langflags button::after{content:"";position:absolute;inset:-9px -3px}
+.am-mail::after{content:"";position:absolute;inset:-6px}

@@ -557,6 +557,24 @@
     φόντου, ώστε να μην μπερδεύεται με τη γραμμή ή τον κάναβο */
  .xeblk .xch text.vl{paint-order:stroke;stroke:var(--surf);
    stroke-width:2.5px;stroke-linejoin:round}
+
+ /* ═══ §169 — ΚΙΝΗΤΟ: ΤΥΛΙΓΜΑ ΥΠΟΣΕΛΙΔΟΥ ΚΑΙ ΣΤΟΧΟΙ ΑΦΗΣ (05/11/2026) ════ */
+ /* Το `white-space:nowrap` των συνδέσμων του υποσέλιδου (§108.6) κρατούσε
+    δάπεδο πλάτους 371px: στα 320px οι δύο στήλες ζητούσαν 162+143 και το
+    κενό άλλα 44, σε διαθέσιμα 276. Κάτω από 400px τυλίγονται. */
+ @media(max-width:400px){
+   .site-ft .fcol a{white-space:normal}
+   .site-ft .in{gap:24px 18px}
+ }
+ /* Στόχοι αφής: επέκταση περιοχής με ::after, ΧΩΡΙΣ αλλαγή ύψους — αλλιώς
+    ακυρώνεται η δέσμευση ύψους του §135/§166. Μετρημένα @390 πριν:
+    σημαίες 26x19 · γράμμα 21x21 · «Σχετικά» 18 · «όλες →» 37x15 ·
+    «Τα νούμερα σε πίνακα» 193x14. */
+ .langflags button,.hmail,.navh a,.pane-h a,.tp-h a,.xtab summary{position:relative}
+ .langflags button::after{content:"";position:absolute;inset:-9px -3px}
+ .hmail::after,.navh a::after{content:"";position:absolute;inset:-9px -6px}
+ .pane-h a::after,.tp-h a::after{content:"";position:absolute;inset:-11px -10px}
+ .xtab summary::after{content:"";position:absolute;inset:-11px -8px}
 </style><script type="application/ld+json">
 {
   "@context": "https://schema.org",
