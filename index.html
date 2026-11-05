@@ -129,7 +129,7 @@
      display:flex;flex-direction:column;justify-content:center;text-align:center}
  .sc-l{font-size:11px;color:var(--muted)}
  .sc-n{font-family:var(--disp);font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.15;text-align:center}
- .sc-n.up{color:var(--up)} .sc-n.dn{color:var(--down)}
+ .sc-n.up{color:var(--up)} .sc-n.dn{color:var(--down)} .sc-n.nn{color:var(--faint)}
  .pgrid{display:grid;grid-template-rows:auto auto;grid-auto-flow:column;gap:8px}
  .pt{display:flex;align-items:baseline;gap:9px;padding:7px 13px;width:auto;
      background:#fff;border:1px solid var(--line2);border-radius:11px}
@@ -241,6 +241,8 @@
  .resblk .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:0 30px}
  .sc-e{font-family:var(--disp);font-size:11px;font-weight:700;color:var(--faint);
    margin-top:4px;letter-spacing:.02em}
+ .sc-a{color:var(--text);margin-top:2px;white-space:nowrap}
+ .sc-a s{text-decoration:none;color:var(--faint);margin:0 5px}
  .fx{list-style:none;margin:12px 0 0;padding:0;border-top:1px solid var(--line2)}
  .fx li{font-size:12px;color:var(--text);padding:7px 0;border-bottom:1px solid #f1f6fb;line-height:1.45}
  .fx li:last-child{border-bottom:0}
@@ -451,7 +453,7 @@
  }
  /* ΑΡΙΘΜΟΙ: παντού στοιχισμένα ψηφία — ο λόγος που έφυγε το monospace */
  .sc-n,.sc-e,.xn1 b,.dv-a,.dv-y,.dv-d,.r3 b,.r3 u,.t-h em,.xch .tk,.xch .vl,
- .xtab td,.m-inline b,.fx li b{font-variant-numeric:tabular-nums}
+ .xtab td,.m-inline b,.fx li b,.sc-a{font-variant-numeric:tabular-nums}
 
  /* 36 — λογότυπο ήρωα */
  .hwm{font-family:var(--f-disp);font-size:var(--s36);font-weight:var(--w-disp);
@@ -467,8 +469,9 @@
  .bh h2,.feath h2{font-family:var(--f-disp);font-size:var(--s17);
    font-weight:var(--w-disp);text-transform:uppercase;letter-spacing:.04em}
  /* 13 — ποσά, ποσοστά, ημερομηνίες πινάκων, σύνδεσμοι πλοήγησης */
- .dv-a,.dv-y,.r3 b{font-family:var(--f-disp);font-size:var(--s13);
+ .dv-a,.dv-y,.r3 b,.sc-a{font-family:var(--f-disp);font-size:var(--s13);
    font-weight:var(--w-disp);letter-spacing:normal;text-transform:none}
+ .sc-a s{font-family:var(--f-text);font-size:var(--s11);font-weight:var(--w-reg)}
  /* Η ημερομηνία ήταν 13px ενώ το όνομα της εταιρείας 12px — το λιγότερο
     σημαντικό στοιχείο της γραμμής ήταν το μεγαλύτερο. Πάει στα 12. */
  /* ⚠ ΟΧΙ Inter ΕΔΩ: το υποσύνολο Inter του site έχει άξονα βάρους **600-900**
@@ -589,7 +592,7 @@
       "inLanguage": "el",
       "isPartOf": { "@id": "https://www.axionmetrics.gr/#website" },
       "about": { "@id": "https://www.axionmetrics.gr/#org" },
-      "dateModified": "2026-11-04"
+      "dateModified": "2026-11-05"
     }
   ]
 }
@@ -610,7 +613,7 @@
  </div>
 </div></div></div>
 <!-- (1) ΤΑΙΝΙΑ ΓΕΓΟΝΟΤΩΝ: λευκή, κολλητά κάτω από το όριο του μπλε. -->
-<div class="nums"><div class="hw"><div class="taperow">  <div class="t-lead"><span class="t-live"></span>   <span class="t-lt" id="ax-tlabel">Τελευταία γεγονότα</span>   <span class="t-lt2" id="ax-tlabel2">Γεγονότα</span>   <span class="t-ld" id="ax-tdate">30 Οκτωβρίου 2026</span></div>  <div class="mq" id="ax-tape"><div class="mq-t"><div class="mq-g"><a class="ti" href="/etaireia/elve/"><span class="t-h"><i class="t-k div"></i>ΕΛΒΕ<em>30.10</em></span><span class="t-m">Διανομή €0,50/μετοχή</span></a><a class="ti" href="/etaireia/crediabank/"><span class="t-h"><i class="t-k amk"></i>CREDIABANK<em>27.10</em></span><span class="t-m">ΑΜΚ λόγω συγχώνευσης</span></a><a class="ti" href="/etaireia/evropi-holdings/"><span class="t-h"><i class="t-k listing"></i>ΕΥΡΩΠΗ HOLDINGS<em>27.10</em></span><span class="t-m">Παύση λόγω συγχώνευσης</span></a><a class="ti" href="/etaireia/papoutsanis/"><span class="t-h"><i class="t-k div"></i>ΠΑΠΟΥΤΣΑΝΗΣ<em>26.10</em></span><span class="t-m">Προμέρισμα €0,0501/μετοχή</span></a><a class="ti" href="/etaireia/allwyn/"><span class="t-h"><i class="t-k div"></i>ALLWYN<em>21.10</em></span><span class="t-m">Προμερισμα €0,20/μετοχή</span></a><a class="ti" href="/etaireia/capital-maritime-finance/"><span class="t-h"><i class="t-k listing"></i>CAPITAL MARITIME FINANCE<em>20.10</em></span><span class="t-m">Εισαγωγή στην Κύρια Αγορά</span></a><a class="ti" href="/etaireia/alpha-bank/"><span class="t-h"><i class="t-k amk"></i>ALPHA BANK<em>19.10</em></span><span class="t-m">Εισαγωγή νέων μετοχών</span></a><a class="ti" href="/etaireia/performance-technologies/"><span class="t-h"><i class="t-k amk"></i>PERFORMANCE TECHNOLOGIES<em>16.10</em></span><span class="t-m">ΑΜΚ €32.900 από αποθεματικό</span></a><a class="ti" href="/etaireia/attica-media-group/"><span class="t-h"><i class="t-k div"></i>ATTICA MEDIA GROUP<em>14.10</em></span><span class="t-m">Διανομή €0,02/μετοχή</span></a><a class="ti" href="/etaireia/evropi-holdings/"><span class="t-h"><i class="t-k amk"></i>ΕΥΡΩΠΗ HOLDINGS<em>14.10</em></span><span class="t-m">Επιστροφή κεφαλαίου €0,31/μετοχή</span></a><a class="ti" href="/etaireia/alphatrust-andromeda/"><span class="t-h"><i class="t-k div"></i>ALPHATRUST ΑΝΔΡΟΜΕΔΑ<em>12.10</em></span><span class="t-m">Διανομή €0,2643/μετοχή</span></a><a class="ti" href="/etaireia/safe-bulkers/"><span class="t-h"><i class="t-k amk"></i>SAFE BULKERS<em>12.10</em></span><span class="t-m">Εισαγωγή νέων μετοχών</span></a><a class="ti" href="/etaireia/verallis/"><span class="t-h"><i class="t-k listing"></i>VERALLIS<em>09.10</em></span><span class="t-m">Εισαγωγή στην EN.A. Growth</span></a><a class="ti" href="/etaireia/trastor/"><span class="t-h"><i class="t-k amk"></i>TRASTOR<em>30.09</em></span><span class="t-m">ΑΜΚ €72.873,50 από αποθεματικό</span></a><a class="ti" href="/etaireia/alpha-trust-holdings/"><span class="t-h"><i class="t-k listing"></i>ALPHA TRUST HOLDINGS<em>24.09</em></span><span class="t-m">Διαγραφή 3.223.944 μετοχών</span></a></div></div></div>  <div class="t-nav"><button type="button" data-i18n-aria="tape.prev" aria-label="Προηγούμενα">‹</button>   <button type="button" data-i18n-aria="tape.next" aria-label="Επόμενα">›</button></div></div></div></div>
+<div class="nums"><div class="hw"><div class="taperow">  <div class="t-lead"><span class="t-live"></span>   <span class="t-lt" id="ax-tlabel">Τελευταία γεγονότα</span>   <span class="t-lt2" id="ax-tlabel2">Γεγονότα</span>   <span class="t-ld" id="ax-tdate">30 Οκτωβρίου 2026</span></div>  <div class="mq" id="ax-tape"><div class="mq-t"><div class="mq-g"><a class="ti" href="/etaireia/elve/"><span class="t-h"><i class="t-k div"></i>ΕΛΒΕ<em>30.10</em></span><span class="t-m">Διανομή €0,50/μετοχή</span></a><a class="ti" href="/etaireia/crediabank/"><span class="t-h"><i class="t-k amk"></i>CREDIABANK<em>27.10</em></span><span class="t-m">ΑΜΚ λόγω συγχώνευσης</span></a><a class="ti" href="/etaireia/evropi-holdings/"><span class="t-h"><i class="t-k listing"></i>ΕΥΡΩΠΗ HOLDINGS<em>27.10</em></span><span class="t-m">Παύση λόγω συγχώνευσης</span></a><a class="ti" href="/etaireia/papoutsanis/"><span class="t-h"><i class="t-k div"></i>ΠΑΠΟΥΤΣΑΝΗΣ<em>26.10</em></span><span class="t-m">Προμέρισμα €0,0501/μετοχή</span></a><a class="ti" href="/etaireia/allwyn/"><span class="t-h"><i class="t-k div"></i>ALLWYN<em>21.10</em></span><span class="t-m">Προμέρισμα €0,20/μετοχή</span></a><a class="ti" href="/etaireia/capital-maritime-finance/"><span class="t-h"><i class="t-k listing"></i>CAPITAL MARITIME FINANCE<em>20.10</em></span><span class="t-m">Εισαγωγή στην Κύρια Αγορά</span></a><a class="ti" href="/etaireia/alpha-bank/"><span class="t-h"><i class="t-k amk"></i>ALPHA BANK<em>19.10</em></span><span class="t-m">Εισαγωγή νέων μετοχών</span></a><a class="ti" href="/etaireia/performance-technologies/"><span class="t-h"><i class="t-k amk"></i>PERFORMANCE TECHNOLOGIES<em>16.10</em></span><span class="t-m">ΑΜΚ €32.900 από αποθεματικό</span></a><a class="ti" href="/etaireia/attica-media-group/"><span class="t-h"><i class="t-k div"></i>ATTICA MEDIA GROUP<em>14.10</em></span><span class="t-m">Διανομή €0,02/μετοχή</span></a><a class="ti" href="/etaireia/evropi-holdings/"><span class="t-h"><i class="t-k amk"></i>ΕΥΡΩΠΗ HOLDINGS<em>14.10</em></span><span class="t-m">Επιστροφή κεφαλαίου €0,31/μετοχή</span></a><a class="ti" href="/etaireia/alphatrust-andromeda/"><span class="t-h"><i class="t-k div"></i>ALPHATRUST ΑΝΔΡΟΜΕΔΑ<em>12.10</em></span><span class="t-m">Διανομή €0,2643/μετοχή</span></a><a class="ti" href="/etaireia/safe-bulkers/"><span class="t-h"><i class="t-k amk"></i>SAFE BULKERS<em>12.10</em></span><span class="t-m">Εισαγωγή νέων μετοχών</span></a><a class="ti" href="/etaireia/verallis/"><span class="t-h"><i class="t-k listing"></i>VERALLIS<em>09.10</em></span><span class="t-m">Εισαγωγή στην EN.A. Growth</span></a><a class="ti" href="/etaireia/trastor/"><span class="t-h"><i class="t-k amk"></i>TRASTOR<em>30.09</em></span><span class="t-m">ΑΜΚ €72.873,50 από αποθεματικό</span></a><a class="ti" href="/etaireia/alpha-trust-holdings/"><span class="t-h"><i class="t-k listing"></i>ALPHA TRUST HOLDINGS<em>24.09</em></span><span class="t-m">Διαγραφή 3.223.944 μετοχών</span></a></div></div></div>  <div class="t-nav"><button type="button" data-i18n-aria="tape.prev" aria-label="Προηγούμενα">‹</button>   <button type="button" data-i18n-aria="tape.next" aria-label="Επόμενα">›</button></div></div></div></div>
 
 <div class="k3below"><div class="hw"><div class="in2">
  <div class="hcenter">
@@ -630,8 +633,8 @@
 <div class="board"><div class="hw">
  <div class="resblk">
  <div class="bh ctr"><h2 id="ax-seasonh">Αποτελέσματα εξαμήνου 2026 — τι έδειξαν οι οικονομικές καταστάσεις</h2></div>
- <div class="g3" id="ax-res"><div class="g3c"><div class="sc"><div class="sc-l">Πωλήσεις</div><div class="sc-n up">▲ +7,6%</div><div class="sc-e">διάμεσος · 127 εταιρείες</div></div></div><div class="g3c"><div class="sc"><div class="sc-l">EBITDA</div><div class="sc-n up">▲ +25,9%</div><div class="sc-e">διάμεσος · 102 εταιρείες</div></div></div><div class="g3c"><div class="sc"><div class="sc-l">Καθαρά κέρδη</div><div class="sc-n up">▲ +23,2%</div><div class="sc-e">διάμεσος · 102 εταιρείες</div></div></div></div>
- <div class="rnote" id="ax-rnote">Διάμεσος — η μεταβολή της <b>μέσης</b> εισηγμένης, όχι του συνόλου της αγοράς.</div>
+ <div class="g3" id="ax-res"><div class="g3c"><div class="sc"><div class="sc-l">Πωλήσεις</div><div class="sc-n up">▲ +16,4%</div><div class="sc-a">63,45 δισ. €<s>από</s>54,53</div><div class="sc-e">σύνολο · 127 εταιρείες</div></div></div><div class="g3c"><div class="sc"><div class="sc-l">EBITDA</div><div class="sc-n up">▲ +39,9%</div><div class="sc-a">10,21 δισ. €<s>από</s>7,30</div><div class="sc-e">σύνολο · 113 εταιρείες</div></div></div><div class="g3c"><div class="sc"><div class="sc-l">Καθαρά κέρδη</div><div class="sc-n up">▲ +41,2%</div><div class="sc-a">7,45 δισ. €<s>από</s>5,27</div><div class="sc-e">σύνολο · 133 εταιρείες</div></div></div></div>
+ <div class="rnote" id="ax-rnote">Άθροισμα των δημοσιευμένων μεγεθών — η μεταβολή του <b>συνόλου</b> της αγοράς, όχι της μέσης εισηγμένης. Οι ALLWYN και BALLY'S INTRALOT άλλαξαν οντότητα μέσα στην περίοδο — χωρίς αυτές: πωλήσεις <b>+12,5%</b>, EBITDA <b>+38,8%</b>, καθαρά κέρδη <b>+45,0%</b>.</div>
  </div><!-- /resblk -->
  <div class="cols2">
   <div id="ax-divs"><div class="pane"><h2 class="pane-h">Τελευταία μερίσματα &amp; διανομές <a href="/market-events/">όλες →</a></h2><div class="dv-hd"><span class="dv-d">Ημ/νία</span><span class="dv-c">Εταιρεία</span><span class="dv-a">€/μετοχή</span><span class="dv-y">Απόδοση</span></div><a class="dv" href="/etaireia/elve/"><span class="dv-d">30.10</span><span class="dv-c"><b>ΕΛΒΕ</b></span><span class="dv-a">€0,50</span><span class="dv-y">17,14%</span></a><a class="dv" href="/etaireia/papoutsanis/"><span class="dv-d">26.10</span><span class="dv-c"><b>ΠΑΠΟΥΤΣΑΝΗΣ</b></span><span class="dv-a">€0,0501</span><span class="dv-y">2,31%</span></a><a class="dv" href="/etaireia/allwyn/"><span class="dv-d">21.10</span><span class="dv-c"><b>ALLWYN</b></span><span class="dv-a">€0,20</span><span class="dv-y">2,62%</span></a><a class="dv" href="/etaireia/attica-media-group/"><span class="dv-d">14.10</span><span class="dv-c"><b>ATTICA MEDIA GROUP</b></span><span class="dv-a">€0,02</span><span class="dv-y">1,40%</span></a><a class="dv" href="/etaireia/alphatrust-andromeda/"><span class="dv-d">12.10</span><span class="dv-c"><b>ALPHATRUST ΑΝΔΡΟΜΕΔΑ</b></span><span class="dv-a">€0,2643</span><span class="dv-y">8,62%</span></a><a class="dv" href="/etaireia/evrofarma/"><span class="dv-d">15.09</span><span class="dv-c"><b>EVROFARMA</b></span><span class="dv-a">€0,0601</span><span class="dv-y">1,67%</span></a><a class="dv" href="/etaireia/admie-symmetochon/"><span class="dv-d">28.08</span><span class="dv-c"><b>ΑΔΜΗΕ ΣΥΜΜΕΤΟΧΩΝ</b></span><span class="dv-a">€0,0198</span><span class="dv-y">4,62%</span></a><a class="dv" href="/etaireia/evath/"><span class="dv-d">25.08</span><span class="dv-c"><b>ΕΥΑΘ</b></span><span class="dv-a">€0,0746</span><span class="dv-y">1,92%</span></a><div class="mvnote">494 μερίσματα και διανομές από το 2020. Η απόδοση είναι η μερισματική απόδοση <b>χρήσης 2025</b> της εταιρείας, όχι της συγκεκριμένης διανομής.</div></div></div>
@@ -728,10 +731,18 @@ try{AX_I18N.add({"f.about":{"el":"Περί","en":"About the project"},"f.bot":{"
 
   function T(){ return EN() ? {
       meta:function(c,s,r){return '<b>'+c+'</b> listed · <b>'+s+'</b> sectors · <b>'+r+'</b> ratios · coverage since <b>2020</b>';},
-      season:function(y){return 'H1 '+y+' results — what the financial statements showed';},
+      season:function(y){return 'H1 '+y+' results — what did the financial statements show';},
       rev:'Revenue', ebitda:'EBITDA', np:'Net profit',
-      medof:function(n){return 'median · '+n+' companies';},
-      rnote:'Median — the change of the <b>typical</b> listed company, not of the market total.',
+      sumof:function(n){return 'total · '+n+' companies';},
+      bn:'bn €', from:'from',
+      rlab:['revenue','EBITDA','net profit'],
+      rnote:function(n,x){
+        var s='Sum of the reported figures — the change of the market <b>total</b>,'
+            + ' not of the typical listed company.';
+        if(!n.length) return s;
+        s+=' '+n.join(' and ')+' changed entity within the period';
+        return s+(x.length?' — excluding '+(n.length>1?'them':'it')+': '+x.join(', ')+'.':'.');
+      },
       divs:'Latest dividends &amp; distributions', all:'all →',
       cDate:'Date', cCo:'Company', cAmt:'€ / share', cY:'Yield',
       note:function(n){return n+' dividends and distributions since 2020. The yield is the company’s <b>FY2025</b> dividend yield, not that of this distribution.';},
@@ -751,8 +762,17 @@ try{AX_I18N.add({"f.about":{"el":"Περί","en":"About the project"},"f.bot":{"
       meta:function(c,s,r){return '<b>'+c+'</b> εισηγμένες · <b>'+s+'</b> κλάδοι · <b>'+r+'</b> αριθμοδείκτες · κάλυψη από το <b>2020</b>';},
       season:function(y){return 'Αποτελέσματα εξαμήνου '+y+' — τι έδειξαν οι οικονομικές καταστάσεις';},
       rev:'Πωλήσεις', ebitda:'EBITDA', np:'Καθαρά κέρδη',
-      medof:function(n){return 'διάμεσος · '+n+' εταιρείες';},
-      rnote:'Διάμεσος — η μεταβολή της <b>μέσης</b> εισηγμένης, όχι του συνόλου της αγοράς.',
+      sumof:function(n){return 'σύνολο · '+n+' εταιρείες';},
+      bn:'δισ. €', from:'από',
+      rlab:['πωλήσεις','EBITDA','καθαρά κέρδη'],
+      rnote:function(n,x){
+        var s='Άθροισμα των δημοσιευμένων μεγεθών — η μεταβολή του <b>συνόλου</b>'
+            + ' της αγοράς, όχι της μέσης εισηγμένης.';
+        if(!n.length) return s;
+        s+=' '+(n.length>1?'Οι '+n.join(' και ')+' άλλαξαν':'Η '+n[0]+' άλλαξε')
+           +' οντότητα μέσα στην περίοδο';
+        return s+(x.length?' — χωρίς '+(n.length>1?'αυτές':'αυτήν')+': '+x.join(', ')+'.':'.');
+      },
       divs:'Τελευταία μερίσματα &amp; διανομές', all:'όλες →',
       cDate:'Ημ/νία', cCo:'Εταιρεία', cAmt:'€/μετοχή', cY:'Απόδοση',
       note:function(n){return n+' μερίσματα και διανομές από το 2020. Η απόδοση είναι η μερισματική απόδοση <b>χρήσης 2025</b> της εταιρείας, όχι της συγκεκριμένης διανομής.';},
@@ -784,18 +804,42 @@ try{AX_I18N.add({"f.about":{"el":"Περί","en":"About the project"},"f.bot":{"
   }
 
   /* ───────────────────── ΑΠΟΤΕΛΕΣΜΑΤΑ ΕΞΑΜΗΝΟΥ ─────────────────────
-     ΔΙΑΜΕΣΟΣ ανά εταιρεία — ό,τι παράγει σήμερα η γέφυρα. Το σταθμισμένο
-     μέγεθος (μεταβολή του συνόλου της αγοράς) θα προστεθεί χωριστά. */
+     §168 — ΑΘΡΟΙΣΜΑ της αγοράς: ποσοστό ΚΑΙ απόλυτα. Ο τίτλος ρωτά «τι
+     έδειξαν οι οικονομικές καταστάσεις», άρα απαντά το σύνολο — και το
+     σύνολο δεν σημαίνει τίποτε χωρίς το μέγεθός του, γι' αυτό μπαίνουν και
+     τα δύο εξάμηνα σε δισεκατομμύρια. Αν το άθροισμα του προηγούμενου
+     εξαμήνου δεν είναι θετικό, η γέφυρα στέλνει p:null: δείχνουμε «—» και
+     κρατάμε τα απόλυτα, που εξακολουθούν να λένε την αλήθεια.
+     Η σημείωση κάτω από τις κάρτες ονοματίζει τις αλλαγές οντότητας της
+     περιόδου — ο κατάλογος έρχεται από το Excel μέσω της γέφυρας. */
   function res(t){
     var S=H.season||{};
-    function card(lab,k){ var p=S[k]||[], v=p[0], n=p[1];
-      if(v==null) return '';
-      var up=v>=0;
+    function card(lab,k){ var p=S[k]; if(!p) return '';
+      var v=p.p, up=(v>=0), cl=(v==null?'nn':(up?'up':'dn'));
+      var pct=(v==null)?'—':((up?'▲ +':'▼ ')+num(v,1)+'%');
       return '<div class="g3c"><div class="sc"><div class="sc-l">'+lab+'</div>'
-           + '<div class="sc-n '+(up?'up':'dn')+'">'+(up?'▲ +':'▼ ')+num(v,1)+'%</div>'
-           + '<div class="sc-e">'+t.medof(n)+'</div></div></div>';
+           + '<div class="sc-n '+cl+'">'+pct+'</div>'
+           + '<div class="sc-a">'+num(p.b/1e9,2)+' '+t.bn
+           + '<s>'+t.from+'</s>'+num(p.a/1e9,2)+'</div>'
+           + '<div class="sc-e">'+t.sumof(p.n)+'</div></div></div>';
     }
     return card(t.rev,'revenue')+card(t.ebitda,'ebitda')+card(t.np,'net_profit');
+  }
+
+  /* Η σημείωση των αποτελεσμάτων: σταθερή πρόταση + ΟΝΟΜΑΤΑ των εταιρειών που
+     άλλαξαν οντότητα μέσα στην περίοδο και το ίδιο άθροισμα χωρίς αυτές.
+     Τίποτε δεν είναι γραμμένο με το χέρι: ονόματα και ποσοστά από τη γέφυρα. */
+  function rnote(t){
+    var S=H.season||{}, E=S.echange||[], K=['revenue','ebitda','net_profit'];
+    var nm=[], xs=[], i;
+    /* ΟΝΟΜΑ ΒΑΣΗΣ και στα αγγλικά: το πεδίο `en` κρατά τη νομική επωνυμία
+       («BALLY'S INTRALOT Α.Ε.»), που μέσα σε αγγλική πρόταση διαβάζεται ως
+       λάθος. Το `name` είναι ό,τι δείχνει όλο το site για την εταιρεία. */
+    for(i=0;i<E.length;i++) nm.push(esc(E[i].name));
+    for(i=0;i<K.length;i++){ var x=S[K[i]]&&S[K[i]].x;
+      if(x && x.p!=null) xs.push(t.rlab[i]+' <b>'+(x.p>=0?'+':'')+num(x.p,1)+'%</b>');
+    }
+    return t.rnote(nm,xs);
   }
 
   /* ───────────────────────── ΜΕΡΙΣΜΑΤΑ ───────────────────────── */
@@ -969,7 +1013,7 @@ try{AX_I18N.add({"f.about":{"el":"Περί","en":"About the project"},"f.bot":{"
     if(board) board.style.display='';
     put('ax-seasonh', t.season((H.periods&&H.periods.cur)||''));
     put('ax-res', res(t));
-    put('ax-rnote', t.rnote);
+    put('ax-rnote', rnote(t));
     put('ax-divs', divs(t));
     put('ax-tops', shorts(t));
     var xh=xenoi(t); put('ax-xenoi', xh);

@@ -1,26 +1,26 @@
 {
-"generated": "2026-11-04",
+"generated": "2026-11-05",
 "note": "Το γράφει η γέφυρα (§163). Αποτύπωμα περιεχομένου ανά διεύθυνση, ώστε το lastmod του sitemap να ανανεώνεται μόνο σε πραγματική αλλαγή.",
 "pages": {
 "": {
-"fp": "6097c4336c6c",
-"lastmod": "2026-11-04"
+"fp": "fb1cc2b3372c",
+"lastmod": "2026-11-05"
 },
 "about/": {
 "fp": "bad60b8de921",
 "lastmod": "2026-11-04"
 },
 "apotelesmata/": {
-"fp": "5e10be5000cc",
-"lastmod": "2026-11-04"
+"fp": "199206dcccf6",
+"lastmod": "2026-11-05"
 },
 "company/": {
-"fp": "f1392a028538",
-"lastmod": "2026-11-04"
+"fp": "5de661378e83",
+"lastmod": "2026-11-05"
 },
 "compare/": {
-"fp": "29f21d7c2e7a",
-"lastmod": "2026-11-04"
+"fp": "cb30d19fd7d7",
+"lastmod": "2026-11-05"
 },
 "etaireia/admie-symmetochon/": {
 "fp": "e34f5e79ac6b",
@@ -39,8 +39,8 @@
 "lastmod": "2026-11-04"
 },
 "etaireia/allwyn/": {
-"fp": "8d6187db70bc",
-"lastmod": "2026-11-04"
+"fp": "892d4e5671d5",
+"lastmod": "2026-11-05"
 },
 "etaireia/alpha-asset-management/": {
 "fp": "ea0323bd773d",
@@ -587,8 +587,8 @@
 "lastmod": "2026-11-04"
 },
 "index-reviews/": {
-"fp": "37d32239b3bf",
-"lastmod": "2026-11-04"
+"fp": "2b27f1400544",
+"lastmod": "2026-11-05"
 },
 "katataxeis/ev-ebitda/": {
 "fp": "979d1ea35490",
@@ -659,20 +659,20 @@
 "lastmod": "2026-11-04"
 },
 "market-events/": {
-"fp": "a9ec072a59f5",
-"lastmod": "2026-11-04"
+"fp": "157fcc82f595",
+"lastmod": "2026-11-05"
 },
 "methodology/": {
 "fp": "28e33a92b86e",
 "lastmod": "2026-11-04"
 },
 "sectors/": {
-"fp": "659871ad3751",
-"lastmod": "2026-11-04"
+"fp": "36ed4b1ac1fe",
+"lastmod": "2026-11-05"
 },
 "short-positions/": {
-"fp": "8102a5f07369",
-"lastmod": "2026-11-04"
+"fp": "20ed69d79389",
+"lastmod": "2026-11-05"
 },
 "terms/": {
 "fp": "e45a9f4d29e3",
