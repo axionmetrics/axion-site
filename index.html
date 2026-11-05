@@ -1055,79 +1055,77 @@ try{AX_I18N.add({"f.about":{"el":"Περί","en":"About the project"},"f.bot":{"
 
   /* ───────────────── ΒΕΛΑΚΙΑ ΤΗΣ ΛΩΡΙΔΑΣ ─────────────────────────────
      Τα δύο βελάκια δεξιά ήταν διακοσμητικά. Τώρα μετακινούν την ταινία
-     κατά ΕΝΑ γεγονός, εμπρός («›») ή πίσω («‹»).
-     ΠΩΣ: η κύλιση είναι CSS animation (mqx, --sp) που σέρνει το .mq-t κατά
-     -50% — δηλαδή κατά ένα ολόκληρο αντίγραφο της ομάδας — σε --sp δευτ.
-     Αντί να ακυρώσουμε την κίνηση και να διαχειριστούμε τη θέση με JS,
-     ΣΚΡΟΛΑΡΟΥΜΕ ΤΟΝ ΧΡΟΝΟ της (Web Animations):
-          dt = διάρκεια × πλάτος_είδησης ÷ πλάτος_ομάδας
-     Έτσι μένει ακέραια η ρυθμισμένη ταχύτητα, η παύση στο hover και η
-     ατέρμονη ροή — αλλάζει μόνο η φάση.
-     ⚠ currentTime < 0 σημαίνει «πριν την αρχή»: η κίνηση παγώνει στο from.
-     Επειδή είναι περιοδική, προσθέτουμε μία περίοδο πριν πάμε πίσω.
-     ⚠ prefers-reduced-motion:reduce → animation:none, δεν υπάρχει χρόνος να
-     σκρολάρει. Τότε μετακινούμε με transform, ακαριαία (ο χρήστης έχει
-     ζητήσει λιγότερη κίνηση, άρα ούτε transition). */
+     κατά ΕΝΑ γεγονός. ΤΩΡΑ: ΚΡΑΤΗΜΑ.
+     Όσο κρατάς πατημένο ένα βελάκι, η λωρίδα επιταχύνει ομαλά προς εκείνη την
+     πλευρά και τρέχει· αφήνεις και επιστρέφει στην κανονική ροή.
+     ΦΟΡΑ (απόφαση χρήστη 05/11/2026): «›» σπρώχνει τη λωρίδα ΔΕΞΙΑ, «‹»
+     ΑΡΙΣΤΕΡΑ — το βελάκι δείχνει πού πάει η ΛΩΡΙΔΑ, όχι πού πάει η ανάγνωση.
+     ΠΩΣ: αλλάζει ΜΟΝΟ ο ρυθμός αναπαραγωγής (playbackRate) του ίδιου CSS
+     animation (mqx). Η JavaScript δεν αναλαμβάνει τη θέση καρέ-καρέ, οπότε η
+     κίνηση μένει στη μονάδα γραφικών και δεν κολλάει.
+     ⚠ Το animation κυλά ΜΠΡΟΣΤΑ· αρνητικός ρυθμός το πάει προς το 0 και εκεί
+     ΤΕΛΕΙΩΝΕΙ. Η tguard() κρατά το currentTime ψηλά προσθέτοντας περιόδους —
+     οπτικά αόρατο, γιατί η λίστα είναι διπλασιασμένη (§119.4).
+     ⚠ prefers-reduced-motion:reduce → animation:none· δεν υπάρχει τίποτε να
+     επιταχυνθεί, άρα τα βελάκια ΚΡΥΒΟΝΤΑΙ αντί να ψεύδονται. */
+  var T_HOLD=3.5;
   var RM=false; try{ RM=window.matchMedia('(prefers-reduced-motion:reduce)').matches; }catch(e){}
-  var tcur=0, toff=0;
 
-  function tmeas(){
+  function tanim(){
     var t=document.querySelector('.mq-t'); if(!t) return null;
-    var g=t.firstElementChild; if(!g) return null;
-    var it=g.children, w=[], i;
-    for(i=0;i<it.length;i++) w.push(it[i].offsetWidth);
-    if(!w.length || !g.offsetWidth) return null;
-    return {t:t, gw:g.offsetWidth, w:w};
+    var al=[]; try{ al=t.getAnimations?t.getAnimations():[]; }catch(e){ return null; }
+    for(var i=0;i<al.length;i++) if(al[i].animationName==='mqx') return al[i];
+    return al[0]||null;
   }
-
-  function tanim(el){
-    var al=[]; try{ al=el.getAnimations?el.getAnimations():[]; }catch(e){ return null; }
-    var pick=null;
-    for(var i=0;i<al.length;i++){
-      if(al[i].animationName==='mqx') return al[i];
-      if(!pick) pick=al[i];
-    }
-    return pick;
+  function tdur(an){
+    var tim=(an&&an.effect&&an.effect.getComputedTiming)?an.effect.getComputedTiming():null;
+    var d=tim?tim.duration:0;
+    return (typeof d==='number'&&isFinite(d)&&d>0)?d:0;
   }
-
-  function ttween(an,d){
-    if(RM){ an.currentTime=Number(an.currentTime)+d; return; }
-    var t0=0, done=0;
+  function tguard(an,dur){
+    if(!an||!dur) return;
+    var t=Number(an.currentTime)||0;
+    if(t<dur*2) an.currentTime=t+dur*60;
+    else if(t>dur*600) an.currentTime=t-dur*500;
+  }
+  var tst={raf:0};
+  function tramp(to,ms){
+    var an=tanim(), dur=tdur(an); if(!an||!dur) return;
+    var from=Number(an.playbackRate), t0=0;
+    if(tst.raf){ cancelAnimationFrame(tst.raf); tst.raf=0; }
     function fr(now){
       if(!t0) t0=now;
-      var p=(now-t0)/340; if(p>1) p=1;
-      var want=d*(1-Math.pow(1-p,3));
-      an.currentTime=Number(an.currentTime)+(want-done); done=want;
-      if(p<1) requestAnimationFrame(fr);
+      var p=(now-t0)/ms; if(p>1) p=1;
+      an.playbackRate=from+(to-from)*(1-Math.pow(1-p,3));
+      tguard(an,dur);
+      tst.raf = p<1 ? requestAnimationFrame(fr) : 0;
     }
-    requestAnimationFrame(fr);
-  }
-
-  function tstep(dir){
-    var m=tmeas(); if(!m) return;
-    var n=m.w.length, idx;
-    if(dir>0){ idx=tcur%n; tcur=(tcur+1)%n; }
-    else     { tcur=(tcur-1+n)%n; idx=tcur; }
-    var an=tanim(m.t), tim=(an&&an.effect&&an.effect.getComputedTiming)?an.effect.getComputedTiming():null;
-    var dur=tim?tim.duration:0;
-    if(an && typeof dur==='number' && isFinite(dur) && dur>0){
-      var d=dur*(m.w[idx]/m.gw)*dir;
-      if(an.currentTime==null) an.currentTime=0;
-      if(d<0 && Number(an.currentTime)+d<0) an.currentTime=Number(an.currentTime)+dur;
-      ttween(an,d);
-    }else{
-      toff=(toff+dir*m.w[idx])%m.gw; if(toff<0) toff+=m.gw;
-      m.t.style.transform='translate3d('+(-toff)+'px,0,0)';
-    }
+    tst.raf=requestAnimationFrame(fr);
   }
 
   /* Τα βελάκια είναι ΕΞΩ από το #ax-tape — δεν τα ξαναγράφει η render(),
      άρα δένονται μία φορά. */
   (function(){
     var nv=document.querySelector('.t-nav'); if(!nv) return;
-    var b=nv.getElementsByTagName('button');
-    if(b[0]) b[0].addEventListener('click', function(){ tstep(-1); });
-    if(b[1]) b[1].addEventListener('click', function(){ tstep(1); });
+    if(RM){ nv.style.display='none'; return; }
+    var b=nv.getElementsByTagName('button'), held=0;
+    function go(r){ held=r; tramp(r,240); }
+    function stop(){ if(!held) return; held=0; tramp(1,420); }
+    var pair=[[b[0],T_HOLD],[b[1],-T_HOLD]];
+    for(var i=0;i<pair.length;i++)(function(btn,rate){
+      if(!btn) return;
+      btn.addEventListener('pointerdown', function(e){ e.preventDefault(); go(rate); });
+      btn.addEventListener('pointerup', stop);
+      btn.addEventListener('pointerleave', stop);
+      btn.addEventListener('pointercancel', stop);
+      btn.addEventListener('keydown', function(e){
+        if(e.key!=='Enter' && e.key!==' ') return;
+        e.preventDefault(); go(rate); setTimeout(stop,450);
+      });
+    })(pair[i][0], pair[i][1]);
+    window.addEventListener('pointerup', stop);
+    window.addEventListener('blur', stop);
+    setInterval(function(){ if(!tst.raf){ var a=tanim(); tguard(a,tdur(a)); } }, 2000);
   })();
 
   render();

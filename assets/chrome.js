@@ -255,66 +255,69 @@
    try{ if(document.fonts&&document.fonts.ready) document.fonts.ready.then(function(){ evDur(el); setScrollPad(); }); }catch(_){}
  }
  /* ΒΕΛΑΚΙΑ — ΣΚΡΟΛΑΡΙΣΜΑ ΤΟΥ ΧΡΟΝΟΥ ΤΗΣ ΚΙΝΗΣΗΣ, όχι ανάληψη της θέσης από JS:
-       dt = διάρκεια × πλάτος_είδησης ÷ (πλάτος_διαδρομής ÷ 2)
-    Έτσι μένουν ακέραια η ταχύτητα, η παύση στο hover και η ατέρμονη ροή.
-    ⚠ currentTime < 0 = «πριν την αρχή»: η κίνηση παγώνει στο from. Επειδή είναι
-    περιοδική, προσθέτουμε μία περίοδο πριν πάμε πίσω — και επειδή η λίστα είναι
-    διπλασιασμένη, το άλμα είναι ΟΠΤΙΚΑ ΑΟΡΑΤΟ.
-    ⚠ prefers-reduced-motion: animation:none, δεν υπάρχει χρόνος να σκρολάρει·
-    τότε μετακινούμε με transform, ακαριαία. */
+    ΚΡΑΤΗΜΑ (§170, 05/11/2026): όσο κρατάς πατημένο ένα βελάκι, η λωρίδα
+    επιταχύνει ομαλά προς εκείνη την πλευρά· αφήνεις και γυρίζει στην κανονική
+    ροή. «›» σπρώχνει τη λωρίδα ΔΕΞΙΑ, «‹» ΑΡΙΣΤΕΡΑ.
+    Αλλάζει ΜΟΝΟ ο playbackRate του ίδιου animation (amEvRoll) — η θέση δεν
+    περνά ποτέ στη JavaScript, άρα η κίνηση μένει στη μονάδα γραφικών.
+    ⚠ Αρνητικός ρυθμός οδηγεί το currentTime στο 0 και το animation τελειώνει·
+    η evGuard() το κρατά ψηλά προσθέτοντας περιόδους (αόρατο, η λίστα είναι
+    διπλασιασμένη).
+    ⚠ prefers-reduced-motion: animation:none· τα βελάκια κρύβονται. */
+ var EV_HOLD=3.5;
  var EV_RM=false; try{ EV_RM=window.matchMedia('(prefers-reduced-motion:reduce)').matches; }catch(_){}
- var evCur=0, evOff=0;
- function evMeas(){
+ function evAnim(){
    var tr=document.querySelector('#amev .track'); if(!tr) return null;
-   var it=tr.children, n=it.length/2, w=[], tot=0, i;
-   if(n<1) return null;
-   for(i=0;i<n;i++){ w.push(it[i].offsetWidth); tot+=it[i].offsetWidth; }
-   if(!tot) return null;
-   return {tr:tr, gw:tot, w:w};
+   var al=[]; try{ al=tr.getAnimations?tr.getAnimations():[]; }catch(_){ return null; }
+   for(var i=0;i<al.length;i++) if(al[i].animationName==='amEvRoll') return al[i];
+   return al[0]||null;
  }
- function evAnim(el){
-   var al=[]; try{ al=el.getAnimations?el.getAnimations():[]; }catch(_){ return null; }
-   var pick=null;
-   for(var i=0;i<al.length;i++){
-     if(al[i].animationName==='amEvRoll') return al[i];
-     if(!pick) pick=al[i];
-   }
-   return pick;
+ function evAnimDur(an){
+   var tim=(an&&an.effect&&an.effect.getComputedTiming)?an.effect.getComputedTiming():null;
+   var d=tim?tim.duration:0;
+   return (typeof d==='number'&&isFinite(d)&&d>0)?d:0;
  }
- function evTween(an,d){
-   if(EV_RM){ an.currentTime=Number(an.currentTime)+d; return; }
-   var t0=0, done=0;
+ function evGuard(an,dur){
+   if(!an||!dur) return;
+   var t=Number(an.currentTime)||0;
+   if(t<dur*2) an.currentTime=t+dur*60;
+   else if(t>dur*600) an.currentTime=t-dur*500;
+ }
+ var evSt={raf:0};
+ function evRamp(to,ms){
+   var an=evAnim(), dur=evAnimDur(an); if(!an||!dur) return;
+   var from=Number(an.playbackRate), t0=0;
+   if(evSt.raf){ cancelAnimationFrame(evSt.raf); evSt.raf=0; }
    function fr(now){
      if(!t0) t0=now;
-     var p=(now-t0)/340; if(p>1) p=1;
-     var want=d*(1-Math.pow(1-p,3));
-     an.currentTime=Number(an.currentTime)+(want-done); done=want;
-     if(p<1) requestAnimationFrame(fr);
+     var p=(now-t0)/ms; if(p>1) p=1;
+     an.playbackRate=from+(to-from)*(1-Math.pow(1-p,3));
+     evGuard(an,dur);
+     evSt.raf = p<1 ? requestAnimationFrame(fr) : 0;
    }
-   requestAnimationFrame(fr);
- }
- function evStep(dir){
-   var m=evMeas(); if(!m) return;
-   var n=m.w.length, idx;
-   if(dir>0){ idx=evCur%n; evCur=(evCur+1)%n; }
-   else     { evCur=(evCur-1+n)%n; idx=evCur; }
-   var an=evAnim(m.tr),
-       tim=(an&&an.effect&&an.effect.getComputedTiming)?an.effect.getComputedTiming():null,
-       dur=tim?tim.duration:0;
-   if(an && typeof dur==='number' && isFinite(dur) && dur>0){
-     var d=dur*(m.w[idx]/m.gw)*dir;
-     if(an.currentTime==null) an.currentTime=0;
-     if(d<0 && Number(an.currentTime)+d<0) an.currentTime=Number(an.currentTime)+dur;
-     evTween(an,d);
-   }else{
-     evOff=(evOff+dir*m.w[idx])%m.gw; if(evOff<0) evOff+=m.gw;
-     m.tr.style.transform='translate3d('+(-evOff)+'px,0,0)';
-   }
+   evSt.raf=requestAnimationFrame(fr);
  }
  function evArrows(el){
-   var b=el.querySelectorAll('.t-nav button');
-   if(b[0]) b[0].addEventListener('click', function(){ evStep(-1); });
-   if(b[1]) b[1].addEventListener('click', function(){ evStep(1); });
+   var nv=el.querySelector('.t-nav'); if(!nv) return;
+   if(EV_RM){ nv.style.display='none'; return; }
+   var b=nv.querySelectorAll('button'), held=0;
+   function go(r){ held=r; evRamp(r,240); }
+   function stop(){ if(!held) return; held=0; evRamp(1,420); }
+   var pair=[[b[0],EV_HOLD],[b[1],-EV_HOLD]];
+   for(var i=0;i<pair.length;i++)(function(btn,rate){
+     if(!btn) return;
+     btn.addEventListener('pointerdown', function(e){ e.preventDefault(); go(rate); });
+     btn.addEventListener('pointerup', stop);
+     btn.addEventListener('pointerleave', stop);
+     btn.addEventListener('pointercancel', stop);
+     btn.addEventListener('keydown', function(e){
+       if(e.key!=='Enter' && e.key!==' ') return;
+       e.preventDefault(); go(rate); setTimeout(stop,450);
+     });
+   })(pair[i][0], pair[i][1]);
+   window.addEventListener('pointerup', stop);
+   window.addEventListener('blur', stop);
+   setInterval(function(){ if(!evSt.raf){ var a=evAnim(); evGuard(a,evAnimDur(a)); } }, 2000);
  }
  function syncLangFlags(){
    var mm=document.getElementById('ammail');
