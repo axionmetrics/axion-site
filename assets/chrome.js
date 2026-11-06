@@ -239,7 +239,10 @@
      var inner='<span class="h"><i class="k '+esc(e.t)+'"></i>'+esc(e.co||e.tk||'')
              + '<em>'+evDate(e.d)+'</em></span>'
              + '<span class="x">'+esc(evBrief(e.x))+'</span>';
-     var href=(typeof AX_CO==='function'&&e.tk)?AX_CO(e.tk):null;
+     /* §171 — βλ. render.js: προορισμός η αναλυτική γραμμή του γεγονότος. */
+     var href=(e.id!==undefined&&e.id!==null)
+            ? '/market-events/#ev'+encodeURIComponent(e.id)
+            : ((typeof AX_CO==='function'&&e.tk)?AX_CO(e.tk):null);
      return href ? '<a class="ev" href="'+href+'">'+inner+'</a>'
                  : '<span class="ev">'+inner+'</span>';
    }).join('');

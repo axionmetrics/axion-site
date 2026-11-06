@@ -55,6 +55,9 @@ window.AX_KATATAXI=function(metricKey){
     /* §167 — aria-label: δεν υπήρχε τρόπος να μεταφραστεί. Συμβατό προς τα πίσω. */
     els=root.querySelectorAll('[data-i18n-aria]');
     for(i=0;i<els.length;i++){ var va=t(els[i].getAttribute('data-i18n-aria')); if(va!=null) els[i].setAttribute('aria-label',va); }
+    /* §167 — aria-label: δεν υπήρχε τρόπος να μεταφραστεί. Συμβατό προς τα πίσω. */
+    els=root.querySelectorAll('[data-i18n-aria]');
+    for(i=0;i<els.length;i++){ var va=t(els[i].getAttribute('data-i18n-aria')); if(va!=null) els[i].setAttribute('aria-label',va); }
     document.documentElement.setAttribute('lang', LANG==='en'?'en':'el');
     var togs=root.querySelectorAll('[data-langtog]');
     for(i=0;i<togs.length;i++){ togs[i].textContent = (LANG==='en'?'ΕΛ':'EN'); }

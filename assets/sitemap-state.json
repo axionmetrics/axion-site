@@ -1,26 +1,26 @@
 {
-"generated": "2026-11-05",
+"generated": "2026-11-06",
 "note": "Το γράφει η γέφυρα (§163). Αποτύπωμα περιεχομένου ανά διεύθυνση, ώστε το lastmod του sitemap να ανανεώνεται μόνο σε πραγματική αλλαγή.",
 "pages": {
 "": {
-"fp": "34b58ce8d647",
-"lastmod": "2026-11-05"
+"fp": "b99b4b19b453",
+"lastmod": "2026-11-06"
 },
 "about/": {
 "fp": "bad60b8de921",
 "lastmod": "2026-11-04"
 },
 "apotelesmata/": {
-"fp": "199206dcccf6",
-"lastmod": "2026-11-05"
+"fp": "701ef2876a3b",
+"lastmod": "2026-11-06"
 },
 "company/": {
-"fp": "5de661378e83",
-"lastmod": "2026-11-05"
+"fp": "34c6f563c688",
+"lastmod": "2026-11-06"
 },
 "compare/": {
-"fp": "cb30d19fd7d7",
-"lastmod": "2026-11-05"
+"fp": "1982b0630eec",
+"lastmod": "2026-11-06"
 },
 "etaireia/admie-symmetochon/": {
 "fp": "e34f5e79ac6b",
@@ -587,8 +587,8 @@
 "lastmod": "2026-11-04"
 },
 "index-reviews/": {
-"fp": "2b27f1400544",
-"lastmod": "2026-11-05"
+"fp": "2ba4193521c0",
+"lastmod": "2026-11-06"
 },
 "katataxeis/ev-ebitda/": {
 "fp": "979d1ea35490",
@@ -659,20 +659,20 @@
 "lastmod": "2026-11-04"
 },
 "market-events/": {
-"fp": "157fcc82f595",
-"lastmod": "2026-11-05"
+"fp": "b0d097bfa2d1",
+"lastmod": "2026-11-06"
 },
 "methodology/": {
 "fp": "28e33a92b86e",
 "lastmod": "2026-11-04"
 },
 "sectors/": {
-"fp": "36ed4b1ac1fe",
-"lastmod": "2026-11-05"
+"fp": "fb04a2b11120",
+"lastmod": "2026-11-06"
 },
 "short-positions/": {
-"fp": "20ed69d79389",
-"lastmod": "2026-11-05"
+"fp": "c685142db2db",
+"lastmod": "2026-11-06"
 },
 "terms/": {
 "fp": "e45a9f4d29e3",
