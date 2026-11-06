@@ -54,7 +54,7 @@
 /* Axion Metrics — shared chrome (nav + footer + basis toggle). Single source for pages 2–11. Do not edit per-page. */
 /* ===== shared site chrome — two-tier nav ===== */
  .site-nav{position:sticky;top:0;z-index:50}
- .site-nav .bar1{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:22px;padding:0 max(22px, calc((100% - 1180px)/2 + 22px));min-height:54px;background:#12303f} .site-nav .bar1 .lock{justify-self:start} .site-nav .bar1 .tabs{justify-self:center;align-self:stretch}
+ .site-nav .bar1{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:22px;padding:0 max(22px, calc((100% - 1180px)/2 + 22px));min-height:62px;background:#12303f} .site-nav .bar1 .lock{justify-self:start} .site-nav .bar1 .tabs{justify-self:center;align-self:stretch}
  .site-nav .lock{display:flex;align-items:center;gap:10px;text-decoration:none;flex:none}
  /* §166 — ΤΟ ΣΗΜΑ ΤΗΣ ΑΡΧΙΚΗΣ. Το γαλάζιο είναι #6fb0e8 (όχι #57a5df):
     η αρχική το χρησιμοποιεί και στο «M» και στο «METRICS». */
@@ -64,7 +64,7 @@
  .site-nav .lname{display:block}
  .site-nav .lname .wm{display:block;font-family:Inter,sans-serif;font-size:20px;font-weight:800;letter-spacing:-.02em;line-height:1;color:#fff}
  .site-nav .lname .wm i{font-style:normal;color:#6fb0e8}
- .site-nav .lname .tag{display:block;font-family:Inter,sans-serif;font-size:9px;font-weight:700;letter-spacing:.22em;line-height:1;color:#7e95b4;margin-top:4px}
+ .site-nav .lname .tag{display:block;font-family:Inter,sans-serif;font-size:9px;font-weight:700;letter-spacing:.22em;color:#7e95b4;margin-top:4px}
  /* §166 — Η ΦΩΝΗ ΤΗΣ .navbar2 ΤΗΣ ΑΡΧΙΚΗΣ: Inter 800, κεφαλαία, ls .04em,
     υπογράμμιση 4px #57a5df. ⚠ Το πάχος μπαίνει στο ΙΔΙΟ το <li> (διάφανο
     σε ηρεμία), ΟΧΙ στο :hover — αλλιώς το κουτί ψηλώνει και το κείμενο τινάζεται. */
@@ -358,13 +358,13 @@ body.am-nofeed #am-nav{background:linear-gradient(#12303f 0 var(--b1),#fff var(-
   #am-nav{--b1:75px}
   .site-nav .bar1{min-height:75px} }
 @media(min-width:577px){
-  #am-nav,.site-nav{min-height:234px}
-  body.am-nofeed #am-nav,body.am-nofeed .site-nav{min-height:98px}
-  #am-nav{--b1:54px}
-  .site-nav .bar1{min-height:54px} }
-@media(min-width:821px){ #am-nav,.site-nav{min-height:333px} }
-@media(min-width:935px){ #am-nav,.site-nav{min-height:321px} }
-@media(min-width:1067px){ #am-nav,.site-nav{min-height:300px} }
+  #am-nav,.site-nav{min-height:242px}
+  body.am-nofeed #am-nav,body.am-nofeed .site-nav{min-height:106px}
+  #am-nav{--b1:62px}
+  .site-nav .bar1{min-height:62px} }
+@media(min-width:821px){ #am-nav,.site-nav{min-height:341px} }
+@media(min-width:935px){ #am-nav,.site-nav{min-height:329px} }
+@media(min-width:1067px){ #am-nav,.site-nav{min-height:308px} }
 /* §135 — ήταν στο chrome.js (injectStyle). Το JavaScript το πρόσθετε στο <head> στο
    runtime· τώρα είναι στατικό, ώστε οι σημαίες να έχουν μέγεθος από την πρώτη ζωγραφιά. */
 .am-right{display:flex;align-items:center;gap:10px}
