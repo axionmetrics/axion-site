@@ -3,7 +3,7 @@
 "note": "Το γράφει η γέφυρα (§163). Αποτύπωμα περιεχομένου ανά διεύθυνση, ώστε το lastmod του sitemap να ανανεώνεται μόνο σε πραγματική αλλαγή.",
 "pages": {
 "": {
-"fp": "b99b4b19b453",
+"fp": "6dc9304c28cf",
 "lastmod": "2026-11-06"
 },
 "about/": {
@@ -11,15 +11,15 @@
 "lastmod": "2026-11-04"
 },
 "apotelesmata/": {
-"fp": "701ef2876a3b",
+"fp": "67ff7e75d647",
 "lastmod": "2026-11-06"
 },
 "company/": {
-"fp": "34c6f563c688",
+"fp": "bb8bc31e00b4",
 "lastmod": "2026-11-06"
 },
 "compare/": {
-"fp": "1982b0630eec",
+"fp": "3866d4db089d",
 "lastmod": "2026-11-06"
 },
 "etaireia/admie-symmetochon/": {
@@ -111,8 +111,8 @@
 "lastmod": "2026-11-04"
 },
 "etaireia/briq-properties/": {
-"fp": "ed5c5c0cf7a4",
-"lastmod": "2026-11-04"
+"fp": "4f7b0fb905a4",
+"lastmod": "2026-11-06"
 },
 "etaireia/capital-maritime-finance/": {
 "fp": "abfde40d7da6",
@@ -587,7 +587,7 @@
 "lastmod": "2026-11-04"
 },
 "index-reviews/": {
-"fp": "2ba4193521c0",
+"fp": "6c55d48a2777",
 "lastmod": "2026-11-06"
 },
 "katataxeis/ev-ebitda/": {
@@ -659,7 +659,7 @@
 "lastmod": "2026-11-04"
 },
 "market-events/": {
-"fp": "b0d097bfa2d1",
+"fp": "4faa31de8a83",
 "lastmod": "2026-11-06"
 },
 "methodology/": {
@@ -667,11 +667,11 @@
 "lastmod": "2026-11-04"
 },
 "sectors/": {
-"fp": "fb04a2b11120",
+"fp": "d60165f0944a",
 "lastmod": "2026-11-06"
 },
 "short-positions/": {
-"fp": "c685142db2db",
+"fp": "40e6fb26ec88",
 "lastmod": "2026-11-06"
 },
 "terms/": {
