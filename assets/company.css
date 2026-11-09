@@ -517,6 +517,13 @@
 .sh .chip{font-size:11px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;padding:3px 8px;border-radius:5px;white-space:nowrap}
 .sh .chip.op{background:#b2644f;color:#fff3ef;border:1px solid #d08167}
 .sh .chip.cl{background:#5a6188;color:#e4e9f7;border:1px solid #717aaa}
+/* §173 — «τελευταία γνωστή»: διακεκομμένο περίγραμμα χωρίς γέμισμα. Η αβεβαιότητα
+   φαίνεται· δεν μπορεί να διαβαστεί ούτε ως ανοιχτή (.op) ούτε ως κλειστή (.cl). */
+.sh .chip.lk{background:transparent;color:#9aa3c0;border:1px dashed #6b7490}
+/* §173 — η ρητή δήλωση «καμία ανοιχτή θέση», στη θέση του κενού */
+.sh .noopen{display:flex;align-items:center;gap:9px;border:1px dashed var(--line);border-radius:8px;
+  padding:11px 14px;font-size:13px;font-weight:700;color:var(--ink2)}
+.sh .noopen::before{content:"";width:7px;height:7px;border-radius:50%;background:#5a6188;flex:none}
 .sh .rows{padding:3px 12px 10px}
 .sh .rh{display:grid;grid-template-columns:118px 1fr 86px;gap:10px;padding:4px 7px 6px;
   font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--ink3)}
@@ -608,6 +615,7 @@
   .sh .meta .lp{font-size:15.5px}
   .sh .meta .ld{font-size:11.5px}
   .sh .chip{font-size:9.5px;padding:2px 6px}
+  .sh .noopen{font-size:12px;padding:10px 12px;gap:8px}
   .sh .rh{font-size:10px}
   .sh .r .d,.sh .r .c{font-size:11.5px}
   .sh .r .p{font-size:14px}

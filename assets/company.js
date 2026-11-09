@@ -1328,6 +1328,7 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
               nodT:'No position has been disclosed by name. The threshold is 0.5% of share capital — anything below it is not published at all, neither by holder nor as a total. An empty column therefore does not mean there are no short positions; it means none reached 0.5%.',
               fcaF:function(a,d,n){return 'Source: Financial Conduct Authority'+(a?' · '+a:'')+' · file '+d+' ('+n+' positions)';},
               aggN:'Anonymised aggregate', aggCur:'current', pubs:'publications',
+              noopen:'No open short position', lastk:'last known',
               hist:'Short position history', hn:function(n){return n+' fund'+(n===1?'':'s');}, grH:'Greece (Hellenic Capital Market Commission ≥0.5%)', ukH:'United Kingdom (FCA ≥0.2%)',}
              :{t:'Short θέσεις',s:'Επιτροπή Κεφαλαιαγοράς · δημοσιοποιήσεις ≥0,5% του μετοχικού κεφαλαίου',
               open:'ανοιχτή',closed:'κλειστή',date:'Ημερομηνία',pos:'Θέση',chg:'Μεταβολή',dis:'γνωστοπ.',
@@ -1339,6 +1340,7 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
               nodT:'Καμία θέση δεν έχει γνωστοποιηθεί ονομαστικά. Το κατώφλι είναι 0,5% του μετοχικού κεφαλαίου — ό,τι είναι κάτω από αυτό δεν δημοσιεύεται καθόλου, ούτε με όνομα ούτε ως σύνολο. Η άδεια στήλη δεν σημαίνει επομένως ότι δεν υπάρχουν short θέσεις· σημαίνει ότι καμία δεν έφτασε το 0,5%.',
               fcaF:function(a,d,n){return 'Πηγή: Financial Conduct Authority'+(a?' · '+a:'')+' · αρχείο '+d+' ('+n+' θέσεις)';},
               aggN:'Ανώνυμο άθροισμα', aggCur:'τρέχον', pubs:'δημοσιεύσεις',
+              noopen:'Καμία ανοικτή short θέση', lastk:'τελευταία γνωστή',
               hist:'Ιστορικό short θέσεων', hn:function(n){return n+' fund'+(n===1?'':'s');}, grH:'Ελλάδα (Επιτροπή Κεφαλαιαγοράς ≥0,5%)', ukH:'Ην. Βασίλειο (FCA ≥0,2%)',};
 
     /* Μία λίστα funds — ΙΔΙΟ markup για Επιτροπή και FCA (§143). `k` δεκαδικά, `opT` η
@@ -1354,7 +1356,13 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
       return '<details class="'+(g.open?'op':'')+'">'
         +'<summary><span class="arw">▶</span>'
         +'<span class="nm"><b title="'+esc(g.f)+'">'+esc(g.f)+'</b>'
-        +((g.open||inHist)?'':'<span class="chip cl">'+T.closed+'</span>')+'</span>'
+        /* §173 — ΚΑΘΕ ΙΣΤΟΡΙΚΗ ΘΕΣΗ ΔΗΛΩΝΕΙ ΚΑΤΑΣΤΑΣΗ. Μέσα στο ιστορικό δεν αρκεί
+           ο τίτλος του μενού: η λίστα της FCA περιέχει και θέσεις που ήταν ΑΚΟΜΗ
+           ανοιχτές στην τελευταία δημοσίευση ονομάτων (10/07/2026) — αυτές παίρνουν
+           «τελευταία γνωστή», ΟΧΙ «κλειστή», γιατί δεν ξέρουμε αν έκλεισαν. Το
+           `wasOpen` το βάζει η block() πριν μηδενίσει το `open`. */
+        +(g.wasOpen?'<span class="chip lk">'+T.lastk+'</span>'
+          :(g.open?'':'<span class="chip cl">'+T.closed+'</span>'))+'</span>'
         +'<span class="meta"><span class="lp">'+pc(g.lp,k)+'%</span>'
         +(g.open?'<span class="chip op">'+opT+'</span>':'')
         +'<span class="ld">'+gd(g.ld)+' · '+g.n+' '+(g.u||T.dis)+'</span></span></summary>'
@@ -1371,10 +1379,15 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
       var op=[],cl=[];
       (funds||[]).forEach(function(g){ if(g.open && !allHist) op.push(g); else cl.push(g); });
       var h=(lead||'')+fundList(op,k,opT);
+      /* §173 — ΤΟ ΚΕΝΟ ΔΕΝ ΕΙΝΑΙ ΠΛΗΡΟΦΟΡΙΑ. Χωρίς ανοιχτή θέση γραφόταν ΤΙΠΟΤΑ και
+         ο αναγνώστης πήγαινε κατευθείαν στο «Ιστορικό» χωρίς να ξέρει τι σημαίνει.
+         ⚠ ΜΟΝΟ στην ελληνική στήλη (allHist=false): η βρετανική δείχνει ανώνυμο
+         άθροισμα που μπορεί να είναι ανοιχτό — εκεί «καμία ανοιχτή» θα ήταν ψέμα. */
+      if(!op.length && !allHist) h+='<div class="noopen">'+T.noopen+'</div>';
       if(cl.length)
         h+='<details class="hist"><summary><span class="arw">▶</span>'
           +'<span class="hl">'+T.hist+'</span><span class="hn">'+T.hn(cl.length)+'</span></summary>'
-          +'<div class="hb">'+fundList(cl.map(function(g){var o={};for(var q in g)o[q]=g[q];o.open=false;return o;}),k,opT,true)+'</div></details>';
+          +'<div class="hb">'+fundList(cl.map(function(g){var o={};for(var q in g)o[q]=g[q];o.wasOpen=!!g.open;o.open=false;return o;}),k,opT,true)+'</div></details>';
       return h;
     }
     function wrap(h){ return h?'<div class="scwrap"><div class="sc">'+h+'</div></div>':''; }
