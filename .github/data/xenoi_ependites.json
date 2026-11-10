@@ -2,7 +2,7 @@
  "source": "AxiaNUMBERS — Securities Market (Euronext Athens)",
  "source_url": "https://athens.euronext.com/en/market-data/data-services/statistics/reports-monthly?field_mig_category_target_id=4",
  "basis": "συμμετοχή = assets under custody στο ΕΛΚΑΤ · αγορές/πωλήσεις = % του μηνιαίου τζίρου",
- "generated": "2026-11-03",
+ "generated": "2026-11-10",
  "from": "2020-01",
  "months": [
   {
@@ -1265,6 +1265,22 @@
    "mkt_val_m": 165308.5,
    "cover_ok": true,
    "issue": 276
+  },
+  {
+   "period": "2026-10",
+   "eu_format": false,
+   "buys_m": 5791.19,
+   "buys_pct": 73.55,
+   "sells_m": 5645.96,
+   "sells_pct": 71.7,
+   "net_m": 145.23,
+   "net_ytd_m": 872.17,
+   "part_n": 11507,
+   "part_val_m": 110095.36,
+   "part_pct": 69.67,
+   "mkt_val_m": 158027.04,
+   "cover_ok": true,
+   "issue": 277
   }
  ],
  "years": [
@@ -1336,14 +1352,14 @@
   },
   {
    "year": 2026,
-   "months": 9,
-   "last": "2026-09",
-   "part_pct_end": 70.06,
-   "part_pct_avg": 69.02,
-   "buys_pct_avg": 71.75,
-   "sells_pct_avg": 70.91,
-   "net_m": 726.94,
-   "net_ytd_m_reported": 726.95
+   "months": 10,
+   "last": "2026-10",
+   "part_pct_end": 69.67,
+   "part_pct_avg": 69.09,
+   "buys_pct_avg": 71.93,
+   "sells_pct_avg": 70.98,
+   "net_m": 872.17,
+   "net_ytd_m_reported": 872.17
   }
  ],
  "missing": [],
