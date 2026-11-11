@@ -19,6 +19,17 @@ name: "Ξένοι επενδυτές — μηνιαίο AxiaNUMBERS"
 # Αν ένας μήνας δεν περάσει τους τρεις ελέγχους της parse_text() (αγορές-πωλήσεις
 # == net, αξία/σύνολο == ποσοστό, μήνας εξωφύλλου == μήνας τίτλου), μπαίνει στο
 # "failed" με τον λόγο και το job βγάζει κόκκινο. ΔΕΝ γράφεται μαντεμένη τιμή.
+#
+# ── ΕΙΔΟΠΟΙΗΣΗ EMAIL (11/11/2026) ────────────────────────────────────────────
+# Ίδιο μοτίβο με το results-reconciler.yml: ΕΝΑ σταθερό issue (label: xenoi) και
+# το ΣΧΟΛΙΟ είναι το κανάλι του email — οι επεξεργασίες σώματος είναι σιωπηλές
+# και δεν στέλνουν ποτέ ειδοποίηση. Το @mention του ιδιοκτήτη μπαίνει σε κάθε
+# σχόλιο, αλλιώς δεν φτάνει τίποτε.
+#
+# ⚠ ΔΙΑΦΟΡΑ ΑΠΟ ΤΟΝ RECONCILER, ΣΚΟΠΙΜΗ: εκείνος σχολιάζει ΚΑΙ στο «όλα καθαρά»
+# επειδή είναι σκοπός του να επιβεβαιώνει. Εδώ το δελτίο βγαίνει ΜΙΑ φορά τον
+# μήνα ενώ η ροή τρέχει κάθε Τρίτη — σχόλιο σε κάθε run θα ήταν 3 άχρηστα email
+# τον μήνα. Σχολιάζει ΜΟΝΟ όταν υπάρχει κάτι: νέος μήνας ή πρόβλημα.
 
 on:
   schedule:
@@ -35,6 +46,7 @@ on:
 
 permissions:
   contents: write
+  issues: write                   # για το issue/σχόλιο της ειδοποίησης
 
 concurrency:
   group: xenoi-ependites
@@ -58,6 +70,15 @@ jobs:
           sudo apt-get install -y -qq poppler-utils     # pdftotext: ~100x ταχύτερο
           python -m pip install --quiet beautifulsoup4 pdfplumber
 
+      # Το JSON ΠΡΙΝ το τρέξιμο — είναι η βάση σύγκρισης για το «τι άλλαξε».
+      # Κρατιέται αντίγραφο αντί για `git show HEAD:...` ώστε να δουλεύει και σε
+      # run μετά από χειροκίνητη επέμβαση στο αρχείο.
+      - name: Φωτογραφία του JSON πριν
+        run: |
+          set -euo pipefail
+          cp .github/data/xenoi_ependites.json "$RUNNER_TEMP/xenoi_before.json" 2>/dev/null \
+            || echo '{}' > "$RUNNER_TEMP/xenoi_before.json"
+
       - name: Άντληση δελτίων
         id: run
         run: |
@@ -70,6 +91,182 @@ jobs:
             tail -n 120 /tmp/xenoi.log
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
+
+      # Συγκρίνει πριν/μετά και φτιάχνει την αναφορά. Τρέχει ΠΑΝΤΑ: αν το script
+      # έσκασε (δίκτυο, αλλαγή διάταξης), θέλουμε email γι' αυτό ακριβώς.
+      - name: Τι άλλαξε
+        id: diff
+        if: always()
+        env:
+          BEFORE: ${{ runner.temp }}/xenoi_before.json
+          AFTER: .github/data/xenoi_ependites.json
+          REPORT: ${{ runner.temp }}/xenoi_report.md
+          RUN_OUTCOME: ${{ steps.run.outcome }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, os
+
+          def load(p):
+              try:
+                  with open(p, encoding='utf-8') as f:
+                      return json.load(f)
+              except Exception:
+                  return {}
+
+          def num(v, dec=2, sign=False):
+              if v is None:
+                  return '—'
+              s = ('%+.*f' if sign else '%.*f') % (dec, v)
+              return s.replace('.', ',')
+
+          before, after = load(os.environ['BEFORE']), load(os.environ['AFTER'])
+          bm = {r.get('period') for r in (before.get('months') or [])}
+          am = {r.get('period'): r for r in (after.get('months') or [])}
+          new = sorted(p for p in am if p and p not in bm)
+          failed  = after.get('failed') or []
+          breaks  = after.get('ytd_breaks') or []
+          missing = after.get('missing') or []
+          run_ok  = os.environ.get('RUN_OUTCOME') == 'success'
+          # Στο πρώτο γέμισμα (κενό «πριν») δεν στέλνουμε 82 γραμμές πίνακα.
+          backfill = not bm and len(new) > 6
+
+          L = ['## 🌍 Ξένοι επενδυτές — AxiaNUMBERS', '']
+          if not run_ok:
+              L += ['> 🔴 **Το script τερμάτισε με σφάλμα.** Δες το '
+                    '[log του run](%s).' % os.environ['RUN_URL'], '']
+
+          if new and not backfill:
+              L += ['### 📥 Νέοι μήνες (%d)' % len(new), '',
+                    '| Μήνας | Συμμετοχή | Αγορές | Πωλήσεις | Καθαρή ροή | Σωρευτικά έτους | Τεύχος |',
+                    '|---|---:|---:|---:|---:|---:|---:|']
+              for p in new:
+                  r = am[p]
+                  L.append('| **%s** | %s%% | %s%% | %s%% | %s | %s | %s |' % (
+                      p, num(r.get('part_pct')), num(r.get('buys_pct')),
+                      num(r.get('sells_pct')), num(r.get('net_m'), sign=True),
+                      num(r.get('net_ytd_m'), sign=True), r.get('issue', '—')))
+              L.append('')
+          elif new:
+              L += ['### 📥 Πρώτο γέμισμα: %d μήνες (%s → %s)'
+                    % (len(new), new[0], new[-1]), '']
+
+          if failed or breaks or missing:
+              L += ['### ⚠ Προβλήματα', '']
+              for f in failed:
+                  L.append('- **ΑΠΟΤΥΧΙΑ %s** (τεύχος %s): %s'
+                           % (f.get('period'), f.get('issue', '—'), f.get('why', '')))
+              for b in breaks:
+                  L.append('- **ΑΣΥΝΕΧΕΙΑ net YtD %s**: %s'
+                           % (b.get('period'), b.get('why', '')))
+              if missing:
+                  L.append('- **Κενά στη σειρά:** %s' % ', '.join(missing))
+              L.append('')
+
+          # Το cover_mismatch ΔΕΝ είναι πρόβλημα: ο script κρατά τις γραμμές
+          # (check 3). Μπαίνει ως σημείωση και ΜΟΝΟ για τους νέους μήνες — η
+          # πλήρης λίστα είναι 17 παλιά τεύχη και θα ήταν θόρυβος σε κάθε email.
+          cov = [p for p in (after.get('cover_mismatch') or []) if p in set(new)]
+          if cov:
+              L += ['_Εξώφυλλο ≠ τίτλος (κρατήθηκαν): %s._' % ', '.join(cov), '']
+
+          ms = sorted(am)
+          if ms:
+              L += ['**Σειρά:** %d μήνες, %s → %s.' % (len(ms), ms[0], ms[-1]), '']
+
+          # Η υπενθύμιση που θα είχε γλιτώσει τη σύγχυση της 11/11/2026: η ροή
+          # γράφει ΜΟΝΟ το JSON. Τα νούμερα της αρχικής ζουν στο assets/home.js.
+          L += ['---',
+                '_Η ροή ενημερώνει **μόνο** το `.github/data/xenoi_ependites.json`._',
+                '_Για να τα δει το site: **pull → γέφυρα → prerender → commit+push**._']
+
+          with open(os.environ['REPORT'], 'w', encoding='utf-8') as fh:
+              fh.write('\n'.join(L) + '\n')
+
+          has_new  = bool(new)
+          has_prob = bool(failed or breaks or not run_ok)
+          with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as fh:
+              fh.write('has_new=%s\n'  % str(has_new).lower())
+              fh.write('has_prob=%s\n' % str(has_prob).lower())
+              fh.write('new_count=%d\n' % len(new))
+              fh.write('last=%s\n' % (ms[-1] if ms else ''))
+          print('νέοι μήνες: %d · προβλήματα: %s' % (len(new), has_prob))
+          PY
+
+      - name: Ειδοποίηση (issue + σχόλιο = email)
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OWNER: ${{ github.repository_owner }}
+          HAS_NEW: ${{ steps.diff.outputs.has_new }}
+          HAS_PROB: ${{ steps.diff.outputs.has_prob }}
+          NEW_COUNT: ${{ steps.diff.outputs.new_count }}
+          LAST: ${{ steps.diff.outputs.last }}
+          REPORT: ${{ runner.temp }}/xenoi_report.md
+        run: |
+          set -euo pipefail
+          # Αν το προηγούμενο βήμα δεν άφησε outputs/αναφορά, κάτι έσκασε ΜΕΣΑ στη
+          # ροή ειδοποίησης — αυτό ακριβώς δεν πρέπει να περάσει σιωπηλά.
+          if [ -z "${HAS_NEW}" ] && [ -z "${HAS_PROB}" ]; then
+            HAS_PROB=true; HAS_NEW=false; NEW_COUNT=0; LAST="—"
+            printf '## 🌍 Ξένοι επενδυτές — AxiaNUMBERS\n\n> 🔴 Το βήμα σύγκρισης δεν ολοκληρώθηκε. Δες το log του run.\n' > "$REPORT"
+          fi
+
+          # ΣΙΩΠΗ ΟΤΑΝ ΔΕΝ ΤΡΕΧΕΙ ΤΙΠΟΤΑ: το δελτίο βγαίνει μηνιαίως, η ροή τρέχει
+          # εβδομαδιαίως — 3 στα 4 runs δεν έχουν να πουν τίποτα.
+          if [ "${HAS_NEW:-false}" != "true" ] && [ "${HAS_PROB:-false}" != "true" ]; then
+            echo "Καμία αλλαγή, κανένα πρόβλημα — καμία ειδοποίηση."
+            NUM=$(gh issue list --label xenoi --state open --limit 1 --json number --jq '.[0].number' 2>/dev/null || echo "")
+            if [ -n "$NUM" ]; then gh issue close "$NUM" --comment "✅ Καθαρό run — το προηγούμενο πρόβλημα πέρασε. Κλείνει αυτόματα."; fi
+            exit 0
+          fi
+
+          gh label create xenoi --color 2F80C2 --description "Ξένοι επενδυτές — AxiaNUMBERS" 2>/dev/null || true
+
+          TITLE="🌍 Ξένοι επενδυτές — AxiaNUMBERS"
+          BODY="$RUNNER_TEMP/issue_body.md"
+          COMMENT="$RUNNER_TEMP/issue_comment.md"
+          NOW=$(date -u '+%Y-%m-%d %H:%M')
+
+          printf '@%s\n\n' "$OWNER" > "$BODY"
+          cat "$REPORT" >> "$BODY"
+
+          NUM=$(gh issue list --label xenoi --state all --limit 1 --json number --jq '.[0].number' 2>/dev/null || echo "")
+          CREATED=0
+          if [ -z "$NUM" ]; then
+            URL=$(gh issue create --title "$TITLE" --body-file "$BODY" --label xenoi)
+            NUM=$(basename "$URL")
+            CREATED=1
+            STATE="OPEN"
+            gh issue edit "$NUM" --add-assignee "$OWNER" || echo "::warning::Απέτυχε η ανάθεση (το @mention ισχύει)"
+            echo "Opened new issue: $URL"
+          else
+            STATE=$(gh issue view "$NUM" --json state --jq .state)
+            gh issue edit "$NUM" --body-file "$BODY"
+          fi
+
+          # ΤΟ ΣΧΟΛΙΟ ΕΙΝΑΙ ΤΟ ΚΑΝΑΛΙ ΤΟΥ EMAIL — κουβαλά ολόκληρη την αναφορά.
+          # (Στη δημιουργία παραλείπεται: το ίδιο το issue ειδοποίησε ήδη.)
+          if [ "$CREATED" = "0" ]; then
+            if [ "${HAS_PROB}" = "true" ] && [ "${HAS_NEW}" = "true" ]; then
+              printf '@%s 📥 %s νέος/οι μήνας/ες (τελευταίος **%s**) — ΚΑΙ προβλήματα. %sZ\n\n---\n\n' "$OWNER" "$NEW_COUNT" "$LAST" "$NOW" > "$COMMENT"
+            elif [ "${HAS_PROB}" = "true" ]; then
+              printf '@%s ⚠ Πρόβλημα στη ροή — %sZ.\n\n---\n\n' "$OWNER" "$NOW" > "$COMMENT"
+            else
+              printf '@%s 📥 Νέα δεδομένα: %s μήνας/ες, τελευταίος **%s** — %sZ.\n\n---\n\n' "$OWNER" "$NEW_COUNT" "$LAST" "$NOW" > "$COMMENT"
+            fi
+            cat "$REPORT" >> "$COMMENT"
+            gh issue comment "$NUM" --body-file "$COMMENT"
+          fi
+
+          if [ "${HAS_PROB}" = "true" ]; then
+            if [ "$STATE" = "CLOSED" ]; then gh issue reopen "$NUM"; fi
+            echo "Issue #$NUM — ανοιχτό (πρόβλημα)"
+          else
+            if [ "$STATE" = "OPEN" ]; then gh issue close "$NUM"; fi
+            echo "Issue #$NUM — νέα δεδομένα, κλειστό"
+          fi
 
       - name: Commit & push (.github/data/xenoi_ependites.json)
         if: always()
