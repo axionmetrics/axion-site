@@ -314,8 +314,7 @@
   <div class="secbox">
     <div class="stripe"></div>
     <div class="hero-in">
-      <h1 data-i18n="sp.h1">Short θέσεις στο Χρηματιστήριο Αθηνών</h1>
-      <p class="hero-desc" id="spDesc">Δημοσιοποιημένες καθαρές αρνητικές θέσεις ≥0,5% του μετοχικού κεφαλαίου — πηγή: Επιτροπή Κεφαλαιαγοράς. Τελευταία ενημέρωση 10/11/2026.</p>
+      <h1 data-i18n="sp.h1">Short θέσεις Ελληνικών εισηγμένων</h1>
     </div>
   </div>
   <div class="sp-sum" id="spTiles"><p class="n"><b>6</b><em>ανοιχτές θέσεις</em><b>6</b><em>εταιρείες</em><b>2</b><em>funds</em></p><div class="fl"><i><span class="rk">1</span><span class="fn">AKO Capital LLP</span><span class="fe">72,8 εκ. €</span></i><i><span class="rk">2</span><span class="fn">Qube Research &amp; Technologies Limited</span><span class="fe">72,6 εκ. €</span></i></div></div>
@@ -343,9 +342,7 @@
 <script>
 AX_I18N.add({
  'sp.title':{el:'Short θέσεις — Axion Metrics', en:'Short positions — Axion Metrics'},
- 'sp.h1':{el:'Short θέσεις στο Χρηματιστήριο Αθηνών', en:'Short positions on the Athens Stock Exchange'},
- 'sp.desc':{el:'Δημοσιοποιημένες καθαρές αρνητικές θέσεις ≥0,5% του μετοχικού κεφαλαίου — πηγή: Επιτροπή Κεφαλαιαγοράς. Τελευταία ενημέρωση {d}.',
-            en:'Disclosed net short positions of ≥0.5% of share capital — source: Hellenic Capital Market Commission. Last update {d}.'},
+ 'sp.h1':{el:'Short θέσεις Ελληνικών εισηγμένων', en:'Short positions in Greek listed companies'},
  'sp.view':{el:'Όψη', en:'View'},
  'sp.byco':{el:'Ανά εταιρεία', en:'By company'},
  'sp.byfu':{el:'Ανά fund', en:'By fund'},
@@ -754,8 +751,7 @@ AX_I18N.add({
  }
 
  var elT=document.getElementById('spTiles'), elCo=document.getElementById('spVco'),
-     elFu=document.getElementById('spVfu'), elD=document.getElementById('spDesc'),
-     elN=document.getElementById('spNote'),
+     elFu=document.getElementById('spVfu'), elN=document.getElementById('spNote'),
      bCo=document.getElementById('spBco'), bFu=document.getElementById('spBfu');
 
  function render(){
@@ -763,9 +759,8 @@ AX_I18N.add({
    if(!M||!M.nco){
      elT.innerHTML=''; elN.textContent='';
      elCo.innerHTML='<div class="empty">'+L('sp.empty')+'</div>'; elFu.innerHTML='';
-     elD.textContent=''; return;
+     return;
    }
-   elD.textContent=f('sp.desc',{d:gd((window.AXION_SHORTS&&AXION_SHORTS.pub)||'')});
    elT.innerHTML=sumbar();
    elCo.innerHTML=viewCo();
    elFu.innerHTML=viewFu();
