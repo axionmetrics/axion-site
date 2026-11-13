@@ -132,13 +132,24 @@
     window.AXION (data.js) για ονόματα/slug/κλάδο, window.AXION_CURRENT (current.js)
     για την κεφαλαιοποίηση → έκθεση σε ευρώ. Αν λείπει το shorts.js η σελίδα δείχνει
     κενή κατάσταση αντί να σπάει. */
- .sp-tiles{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 4px}
- .sp-tiles .t{flex:1 1 130px;background:#f7f9fc;border:1px solid var(--line);
-   border-left:3px solid #c2694f;border-radius:11px;padding:11px 14px}
- .sp-tiles .t b{display:block;font-family:'Inter';font-size:24px;font-weight:800;color:#223c66;line-height:1.1}
- .sp-tiles .t span{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
- .sp-tiles .t.hi{background:#fdf3ef;border-color:#f0c3b2;border-left-color:#9e3c1e;flex:1 1 185px}
- .sp-tiles .t.hi b{color:#9e3c1e;font-size:22px;white-space:nowrap}
+ /* §178 — ΣΥΝΟΨΗ ΧΩΡΙΣ ΠΛΑΚΙΔΙΑ. Τρία νούμερα σε μία σειρά και από κάτω τα funds
+    αριθμημένα, ένα ανά γραμμή. Η αρίθμηση είναι η ΙΔΙΑ τυπογραφία με τη στήλη κατάταξης
+    των πινάκων (td.rk) — δεν εισάγεται νέο μοτίβο. Η λίστα κόβεται στα 520px: στα 1280
+    το ποσό θα στοιχιζόταν στην άκρη της σελίδας, ~900px μακριά από το όνομα του fund. */
+ .sp-sum{margin:16px 0 4px}
+ .sp-sum .n{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px;margin:0}
+ .sp-sum .n b{font-family:'Inter';font-size:20px;font-weight:800;color:#223c66;line-height:1}
+ .sp-sum .n em{font-style:normal;font-size:11px;font-weight:700;letter-spacing:.04em;
+   text-transform:uppercase;color:var(--muted);margin-right:4px}
+ .sp-sum .fl{margin-top:6px;padding-top:6px;border-top:1px solid #eef1f6;max-width:520px;
+   display:flex;flex-direction:column;gap:3px}
+ .sp-sum .fl i{display:flex;align-items:baseline;gap:9px;font-style:normal;min-width:0}
+ .sp-sum .rk{flex:none;font-family:'Ubuntu Mono',ui-monospace,monospace;font-weight:700;
+   font-size:12px;color:#b9c3d0;width:14px;text-align:right}
+ .sp-sum .fn{font-family:'Inter';font-weight:600;font-size:12.5px;color:#2d3f5e;
+   flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ .sp-sum .fe{font-family:'Inter';font-weight:700;font-size:12.5px;color:#9e3c1e;
+   flex:none;white-space:nowrap}
  /* §177 — επικεφαλίδα αγοράς: σημαία + χώρα + αγορά. Η σημαία είναι inline SVG,
     ΟΧΙ emoji: τα regional-indicator ζεύγη δεν αποδίδονται ως σημαίες σε Windows/Chrome
     (εμφανίζονται ως δύο γράμματα), που είναι η πλειοψηφία των επισκεπτών. */
@@ -194,10 +205,11 @@
    /* ο τίτλος της σελίδας είναι μακρύς· το chrome.css βάζει flex:none στο h1 του hero,
       οπότε σε 390px δεν αναδιπλωνόταν και έσπρωχνε τη σελίδα στα 450px (οριζόντια κύλιση). */
    .wrap.sp>.secbox:first-child>.hero-in>h1{flex:1 1 100%;min-width:0}
-   .sp-tiles{gap:8px}
-   .sp-tiles .t,.sp-tiles .t.hi{flex:1 1 calc(50% - 4px);padding:9px 12px}
-   .sp-tiles .t b,.sp-tiles .t.hi b{font-size:20px}
-   .sp-tiles .t span{font-size:10px}
+   /* σε 390px το «Qube Research & Technologies Limited» δεν χωρά σε μία γραμμή:
+      δεύτερη γραμμή αντί για αποσιωπητικά — το όνομα του fund είναι η πληροφορία */
+   .sp-sum .fn{white-space:normal;overflow:visible;line-height:1.35}
+   .sp-sum .fl i{align-items:flex-start}
+   .sp-sum .rk{line-height:1.35}
    .sp h2{flex-wrap:wrap;margin:22px 2px 8px;row-gap:2px}
    .sp h2 .mkt{flex:1 1 100%;margin-left:30px}
    .sp h2 .mkt:before{content:none}
@@ -306,7 +318,7 @@
       <p class="hero-desc" id="spDesc">Δημοσιοποιημένες καθαρές αρνητικές θέσεις ≥0,5% του μετοχικού κεφαλαίου — πηγή: Επιτροπή Κεφαλαιαγοράς. Τελευταία ενημέρωση 10/11/2026.</p>
     </div>
   </div>
-  <div class="sp-tiles" id="spTiles"><div class="t"><b>6</b><span>ανοιχτές θέσεις</span></div><div class="t"><b>6</b><span>εταιρείες σήμερα</span></div><div class="t"><b>2</b><span>funds σήμερα</span></div><div class="t hi"><b>145,4 εκ. €</b><span>συνολική έκθεση</span></div><div class="t"><b>16</b><span>εταιρείες ιστορικά</span></div><div class="t"><b>23</b><span>funds ιστορικά</span></div><div class="t"><b>407</b><span>γνωστοποιήσεις</span></div></div>
+  <div class="sp-sum" id="spTiles"><p class="n"><b>6</b><em>ανοιχτές θέσεις</em><b>6</b><em>εταιρείες</em><b>2</b><em>funds</em></p><div class="fl"><i><span class="rk">1</span><span class="fn">AKO Capital LLP</span><span class="fe">72,8 εκ. €</span></i><i><span class="rk">2</span><span class="fn">Qube Research &amp; Technologies Limited</span><span class="fe">72,6 εκ. €</span></i></div></div>
   <div class="controls" style="margin-top:14px">
     <div class="crow">
       <span class="lbl" data-i18n="sp.view">Όψη</span>
@@ -340,12 +352,8 @@ AX_I18N.add({
  'sp.hint':{el:'Οι ανοιχτές θέσεις πάντα πρώτες· το ιστορικό από κάτω.', en:'Open positions always first; history below.'},
  /* πλακίδια */
  'sp.k.pos':{el:'ανοιχτές θέσεις', en:'open positions'},
- 'sp.k.coNow':{el:'εταιρείες σήμερα', en:'companies today'},
- 'sp.k.fuNow':{el:'funds σήμερα', en:'funds today'},
- 'sp.k.exp':{el:'συνολική έκθεση', en:'total exposure'},
- 'sp.k.coAll':{el:'εταιρείες ιστορικά', en:'companies ever'},
- 'sp.k.fuAll':{el:'funds ιστορικά', en:'funds ever'},
- 'sp.k.rows':{el:'γνωστοποιήσεις', en:'disclosures'},
+ 'sp.k.coNow':{el:'εταιρείες', en:'companies'},
+ 'sp.k.fuNow':{el:'funds', en:'funds'},
  /* επικεφαλίδες ενοτήτων */
  /* §177 — επικεφαλίδες αγοράς (ίδια μορφή και στις δύο αγορές) */
  'sp.m.gr':{el:'Ελλάδα', en:'Greece'},
@@ -731,11 +739,18 @@ AX_I18N.add({
      +'</details>';
  }
 
- function tiles(){
-   var T=[[M.npos,'sp.k.pos',''],[M.openC.length,'sp.k.coNow',''],[M.openF.length,'sp.k.fuNow','']];
-   if(M.anyExp) T.push([eur(M.totExp),'sp.k.exp',' hi']);
-   T.push([M.nco,'sp.k.coAll',''],[M.nfu,'sp.k.fuAll',''],[M.nrows,'sp.k.rows','']);
-   return T.map(function(t){return '<div class="t'+t[2]+'"><b>'+t[0]+'</b><span>'+L(t[1])+'</span></div>';}).join('');
+ /* §178 — η σύνοψη. Τα funds έρχονται από το M.openF, που είναι ΗΔΗ ταξινομημένο
+    φθίνουσα κατά έκθεση — ίδια σειρά με την όψη «ανά fund», άρα η αρίθμηση συμφωνεί. */
+ function sumbar(){
+   var T=[[M.npos,'sp.k.pos'],[M.openC.length,'sp.k.coNow'],[M.openF.length,'sp.k.fuNow']];
+   var h='<p class="n">'+T.map(function(t){
+     return '<b>'+t[0]+'</b><em>'+L(t[1])+'</em>';}).join('')+'</p>';
+   if(!M.openF.length) return h;
+   h+='<div class="fl">'+M.openF.map(function(F,i){
+     return '<i><span class="rk">'+(i+1)+'</span><span class="fn">'+esc(F.f)+'</span>'
+       +'<span class="fe">'+(F.exp!=null?eur(F.exp):'\u2014')+'</span></i>';
+   }).join('')+'</div>';
+   return h;
  }
 
  var elT=document.getElementById('spTiles'), elCo=document.getElementById('spVco'),
@@ -751,7 +766,7 @@ AX_I18N.add({
      elD.textContent=''; return;
    }
    elD.textContent=f('sp.desc',{d:gd((window.AXION_SHORTS&&AXION_SHORTS.pub)||'')});
-   elT.innerHTML=tiles();
+   elT.innerHTML=sumbar();
    elCo.innerHTML=viewCo();
    elFu.innerHTML=viewFu();
    elN.textContent=L('sp.note');
