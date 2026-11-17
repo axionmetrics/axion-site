@@ -2,7 +2,7 @@
  "source": "AxiaNUMBERS — Securities Market (Euronext Athens)",
  "source_url": "https://athens.euronext.com/en/market-data/data-services/statistics/reports-monthly?field_mig_category_target_id=4",
  "basis": "συμμετοχή = assets under custody στο ΕΛΚΑΤ · αγορές/πωλήσεις = % του μηνιαίου τζίρου",
- "generated": "2026-11-10",
+ "generated": "2026-11-17",
  "from": "2020-01",
  "months": [
   {
