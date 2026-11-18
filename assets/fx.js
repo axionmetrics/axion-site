@@ -1,4 +1,4 @@
 /* Axion Metrics — ισοτιμίες ΕΚΤ (§160). Παράγεται ΑΥΤΟΜΑΤΑ από το
    .github/scripts/fx_rates.py. ΜΗΝ το επεξεργάζεσαι με το χέρι.
    ΦΟΡΑ: ξένο νόμισμα ανά 1 ευρώ → ευρώ = ξένο / ισοτιμία */
-window.AXION_FX = {"updated":"2026-11-17T22:47:57Z","source":"ECB reference rates (EXR D.<CUR>.EUR.SP00.A)","rule":"ξένο νόμισμα ανά 1 ευρώ → ευρώ = ξένο / ισοτιμία","latest":{"USD":{"rate":1.0989,"date":"2026-11-17"}}};
+window.AXION_FX = {"updated":"2026-11-18T22:29:27Z","source":"ECB reference rates (EXR D.<CUR>.EUR.SP00.A)","rule":"ξένο νόμισμα ανά 1 ευρώ → ευρώ = ξένο / ισοτιμία","latest":{"USD":{"rate":1.0968,"date":"2026-11-18"}}};
