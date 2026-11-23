@@ -519,6 +519,11 @@
  @media(max-width:620px){ .navbar2 a{font-size:var(--s11)} }
  .pane-h,.tp-h,.xh{font-size:var(--s12);font-weight:var(--w-disp);
    text-transform:uppercase;letter-spacing:.04em}
+ /* §184 — οι τίτλοι «Τελευταία μερίσματα & διανομές» (.pane-h) και «Short θέσεις στις ελληνικές
+    εταιρείες» (.tp-h) στο ΙΔΙΟ μέγεθος με τον τίτλο ενότητας «Ξένοι επενδυτές…» (.bh h2, 17). */
+ .pane-h,.tp-h{font-size:var(--s17)}
+ /* με 17px ο τίτλος γεμίζει τη γραμμή στο κινητό: το «όλες →» δεν σπάει σε δύο γραμμές */
+ .pane-h a,.tp-h a{white-space:nowrap;flex:none}
  .xtab summary{font-weight:var(--w-med)}
  /* 11 — δευτερεύουσες ετικέτες, λεζάντες γραφημάτων, «όλες →» */
  .sc-e{font-family:var(--f-disp);font-size:var(--s11);font-weight:var(--w-bold);
