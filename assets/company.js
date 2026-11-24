@@ -1102,7 +1102,7 @@ const CATEN={'Κερδοφορία':'Profitability','Ρευστότητα':'Liqu
   const nY=YEARS.length, HI=YEARS.slice(0,nY-1), yl=YEARS[nY-1];
   const i6=HAS6?AXI.latest.idx:null, y6=HAS6?AXI.latest.period:null;
   const HALF=new Set(['roa','roe','roic','eps','atr','etr']);
-  const OPEN0=new Set(['Κερδοφορία','Αποτίμηση']);
+  const OPEN0=new Set(['Κερδοφορία']);
   const note=(t)=>`<span class="na" title="${esc(t)}">—<sup class="ast">*</sup></span>`;
   const dash='<span class="na">—</span>';
   function aCell(it,i){
