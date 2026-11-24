@@ -52,7 +52,7 @@ AX_I18N.add({
  // §68 — ΚΑΘΑΡΑ ΚΕΡΔΗ έναντι ΚΕΡΔΩΝ ΜΕΤΑ ΦΟΡΩΝ. Εμφανίζεται ΜΟΝΟ όταν τα δύο διαφέρουν.
  'co.np.s.mi':{el:'Τα καθαρά κέρδη (ή ζημίες) είναι όσα αναλογούν στους μετόχους της μητρικής, χωρίς το μερίδιο <b>«μη ελεγχουσών συμμετοχών σε θυγατρικές»</b>.', en:'Net profit (or loss) is the share attributable to the parent company\u2019s shareholders, excluding the share of <b>non-controlling interests in subsidiaries</b>.'},
  'co.m.ppi':{el:'PPI', en:'PPI'},
- 'co.na.banks':{el:'Not applicable to banks', en:'Not applicable to banks'},
+ 'co.na.banks':{el:'Δεν εφαρμόζεται σε τράπεζες', en:'Not applicable to banks'},
  'co.m.mcap':{el:'Κεφαλαιοποίηση', en:'Market cap'},
  'co.m.pe':{el:'P/E', en:'P/E'},
  'co.m.pbv':{el:'P/BV', en:'P/BV'},
@@ -162,6 +162,34 @@ AX_I18N.add({
  'co.basis.annual':{el:'ΕΤΗΣΙΑ', en:'ANNUAL'},
  'co.basis.interim':{el:'ΕΞΑΜΗΝΟ', en:'INTERIM'}
 });
+// §185 — κλειδιά της νέας διάταξης (Μεγέθη περιόδου · Αριθμοδείκτες · compact blocks)
+AX_I18N.add({
+ 'co.ph.per':{el:'Μεγέθη περιόδου', en:'Period figures'},
+ 'co.ph.shorts':{el:'Short θέσεις', en:'Short positions'},
+ 'co.per.fig':{el:'Μέγεθος', en:'Figure'},
+ 'co.per.unit':{el:'(εκ. €)', en:'(€M)'},
+ 'co.per.annual':{el:'Ετήσια {y}', en:'Annual {y}'},
+ 'co.per.h1':{el:'6Μ {y}', en:'6M {y}'},
+ 'co.per.q1':{el:'3Μ {y}', en:'3M {y}'},
+ 'co.per.q3':{el:'9Μ {y}', en:'9M {y}'},
+ 'co.per.px':{el:'Τιμές {d}', en:'Prices {d}'},
+ 'co.per.note':{el:'Η μεταβολή συγκρίνει με την ίδια περίοδο πέρσι. Το P/E του 6μήνου υπολογίζεται με τα κέρδη 12μήνου (TTM) και το P/BV με τα ίδια κεφάλαια της 30/06. Οι στήλες «Τιμές {d}» εφαρμόζουν την κεφαλαιοποίηση της {d}.',
+                en:'Changes compare with the same period a year earlier. The 6M P/E uses trailing twelve-month earnings (TTM) and the P/BV uses equity at 30/06. The «Prices {d}» columns apply the market capitalisation of {d}.'},
+ 'co.per.note1':{el:'Η μεταβολή συγκρίνει με την προηγούμενη χρήση. Η στήλη «Τιμές {d}» εφαρμόζει την κεφαλαιοποίηση της {d}.',
+                 en:'Changes compare with the previous fiscal year. The «Prices {d}» column applies the market capitalisation of {d}.'},
+ 'co.per.note0':{el:'Η μεταβολή συγκρίνει με την προηγούμενη χρήση.', en:'Changes compare with the previous fiscal year.'},
+ 'co.per.fnp':{el:'{p}: ', en:'{p}: '},
+ 'co.eb.s.axv':{el:' Υπολογισμός Axion: <b>{v}</b>.', en:' Axion calculation: <b>{v}</b>.'},
+ 'co.rt.sector':{el:'Κλάδος', en:'Sector'},
+ 'co.rt.close':{el:'κλείσιμο', en:'close'},
+ 'co.rt.n1':{el:'δείκτης', en:'ratio'},
+ 'co.rt.nn':{el:'δείκτες', en:'ratios'},
+ 'co.rt.half':{el:'μισού έτους, μη ετησιοποιημένο', en:'half-year, not annualised'},
+ 'co.geo.all':{el:'Όλες οι οντότητες', en:'All entities'},
+ 'co.geo.entity':{el:'οντότητα', en:'entity'},
+ 'co.geo.listedh':{el:'Εισηγμένες', en:'Listed'},
+ 'co.ff':{el:'Free float', en:'Free float'}
+});
 function L(k){var v=AX_I18N.t(k);return v==null?'':v;}
 function SEC(n){return AX_I18N.sector(n);}
 function curLang(){return window.AX_I18N?AX_I18N.lang:'el';}
@@ -169,7 +197,11 @@ function EN(){return curLang()==='en';}
 function LOC(){return EN()?'en-US':'el-GR';}
 document.addEventListener('axion:langchange',function(){location.reload();});
 
-const AXBASIS=(function(){try{var u=new URLSearchParams(location.search).get('basis');var b=u||localStorage.getItem('am-basis')||'annual';return (window.AXION&&window.AXION.meta&&window.AXION.meta.bases.indexOf(b)>-1)?b:'annual';}catch(e){return 'annual';}})();
+// §185 — Η ΣΕΛΙΔΑ ΔΕΙΧΝΕΙ ΠΑΝΤΑ ΕΤΗΣΙΑ ΚΑΙ 6ΜΗΝΟ ΜΑΖΙ. Ο διακόπτης «Ετήσια | Εξάμηνο» καταργήθηκε:
+// η βάση της σελίδας είναι η ετήσια (τροχιά, ιστορικό δεικτών, διανομές) και τα 6μηνα
+// μεγέθη/δείκτες διαβάζονται παράλληλα από το AXION.companies.interim (AXI παρακάτω).
+// Το ?basis=interim και το localStorage 'am-basis' αγνοούνται εδώ.
+const AXBASIS='annual';
 const _AXC=(window.AXION&&window.AXION.companies&&window.AXION.companies[AXBASIS])||[];
 // §75 — στις στατικές σελίδες /etaireia/<slug>/ δεν υπάρχει ?tk=· το κέλυφος ψήνει AX_TK.
 let _tk=new URLSearchParams(location.search).get('tk')||window.AX_TK||null;
@@ -191,6 +223,14 @@ const AXY=(function(){
        return (AX&&_L.find(function(c){return c.tk===AX.tk;}))||AX; }catch(e){ return AX; }
 })();
 const DIV_SLUGS_UI=['dps','dy','payout'];
+// §185 — η 6μηνη εγγραφή της ίδιας εταιρείας. Στήλες 6Μ εμφανίζονται ΜΟΝΟ όταν το 6μηνο
+// είναι νεότερο από την τελευταία χρήση (π.χ. 6Μ 2026 μετά τη χρήση 2025)· ένα 6μηνο της
+// ίδιας χρονιάς με την τελευταία χρήση είναι ήδη παλιό και δεν προστίθεται.
+const AXI=(function(){ try{ var _L=(window.AXION&&window.AXION.companies&&window.AXION.companies.interim)||[];
+  return (AX&&_L.find(function(c){return c.tk===AX.tk;}))||null; }catch(e){ return null; } })();
+const SD=function(d){ return String(d==null?'':d).replace(/\/(\d\d)(\d\d)$/,'/<span class="cy">$1</span>$2'); };
+const HAS6=!!(AXI && !AXI.nodata && AXI.latest && AXI.latest.idx!=null && AX && AX.latest &&
+  Number(AXI.latest.period)>Number(AX.latest.period));
 const IS_BANK = !!(AX && AX.s==='Τράπεζες');   // banks: EBITDA-family δεν εφαρμόζεται
 const NA_METRIC = new Set(['ebitda']);
 const NA_RATIO  = new Set(['ebitdam','evebitda','gm','cogs','selling','dio']);
@@ -533,129 +573,109 @@ const FN=(function(){
 })();
 const FN_N=(function(){ const o={}; FN.forEach(function(f,i){ o[f.key]=i+1; }); return o; })();
 function FNMARK(key){ const n=key?FN_N[key]:0; return n?`<sup class="fnm">${n}</sup>`:''; }
-document.getElementById('latest').innerHTML=METRICS.map(m=>{
-  // τράπεζες: EBITDA→Κέρδη προ προβλέψεων, Συν. δανεισμός→Δάνεια, Καθ. δανεισμός→Καταθέσεις
-  const sw = IS_BANK ? BANK_SWAP[m.key] : null;
-  const arr = company.metrics[sw?sw.k:m.key] || [];
-  const v = arr[li];
-  const label = (sw ? L(sw.l) : m.label) + FNMARK(sw?null:m.key);
-  const val=(IS_BANK&&!sw&&NA_METRIC.has(m.key))?`<span class="na-bank">${L('co.na.banks')}</span>`:(m.unit==='eur'?(v==null?'—':`${fMil(v)}<small>${EURSUF()}</small>`):fX(v));
-  const uni=(m.key==='mcap'||m.key==='pe'||m.key==='pbv')?' uni':'';
-  // §45 — EBITDA: δύο μεγέθη. Το `metrics.ebitda` είναι Ο ΔΙΚΟΣ ΜΑΣ υπολογισμός (τροφοδοτεί
-  // κατατάξεις/δείκτες), το `ebitda_rep` ό,τι ΑΝΑΚΟΙΝΩΣΕ η εταιρεία, το `ebitda_kind` τι είδους.
-  // Η εξήγηση ΔΕΝ μπαίνει εδώ — πάει αποκλειστικά στη λωρίδα (#eb-strip).
-  if(m.key==='ebitda' && !sw && !(IS_BANK&&NA_METRIC.has(m.key))){
-    const eb=EB_STATE;
-    if(eb.s!=='na'){
-      const money=x=>`${fMil(x)}<small>${EURSUF()}</small>`;
-      const kindLab=k=>k?`(${k})`:L('co.eb.plain');
-      // ΕΝΤΟΣ ΑΝΟΧΗΣ ('same') και ΠΑΛΙΟ ΣΧΗΜΑ ('legacy'): ΣΚΕΤΟΣ ΑΡΙΘΜΟΣ, σε **κανονικό**
-      // πλακίδιο (.cell/.v) — πανομοιότυπο με ΤΖΙΡΟ/ΚΑΘΑΡΑ ΚΕΡΔΗ. Καμία ετικέτα προέλευσης:
-      // όταν τα δύο μεγέθη συμφωνούν, η απόδοση σε πηγή δεν πληροφορεί (απόφαση χρήστη).
-      // Η ετικέτα κερδίζει τη θέση της ΜΟΝΟ όταν ο αριθμός θα παρανοηθεί ως προς την πηγή:
-      // 'diff' (δύο μεγέθη), 'own' (δικός μας, δεν δημοσιεύει), 'reponly' (δημοσιευμένος,
-      // δεν υπολογίζουμε). Παρενέργεια: μια εταιρεία εντός ανοχής με **προσαρμοσμένο**
-      // δημοσιευμένο EBITDA (σήμερα μόνο η 17 COCA COLA) δεν φέρει πια αυτή την ένδειξη.
-      if(eb.s==='same'||eb.s==='legacy'){
-        const one=(eb.s==='legacy')?eb.own:eb.rep;
-        return `<div class="metric-item"><div class="k">${label}</div><div class="cell"><div class="v">${money(one)}</div></div></div>`;
-      }
-      let inner;
-      if(eb.s==='diff'){
-        inner=`<div class="ebb t"><div class="ebl1">${L('co.eb.pub')}</div><div class="ebl2">${kindLab(eb.kind)}</div><div class="ebn">${money(eb.rep)}</div></div>`
-             +`<div class="ebb b"><div class="ebl1">${L('co.eb.calc')}</div><div class="ebl2 ax">AXION</div><div class="ebn d">${money(eb.own)}</div></div>`;
-      }else if(eb.s==='reponly'){ // δημοσιευμένο, χωρίς δικό μας υπολογισμό (holdings/ΑΕΕΧ)
-        inner=`<div class="ebb s"><div class="ebl1">${L('co.eb.pub')}</div><div class="ebl2">${kindLab(eb.kind)}</div><div class="ebn">${money(eb.rep)}</div></div>`;
-      }else{ // 'own' — η εταιρεία δεν δημοσιεύει
-        inner=`<div class="ebb s"><div class="ebl1">${L('co.eb.calc')}</div><div class="ebl2 ax">AXION</div><div class="ebn">${money(eb.own)}</div></div>`;
-      }
-      return `<div class="metric-item"><div class="k">${label}</div><div class="ebx">${inner}</div></div>`;
-    }
-  }
-  let extra='';
-  return `<div class="metric-item${uni}"><div class="k">${label}</div><div class="cell"><div class="v">${val}</div>${extra}</div></div>`;
-}).join('');
-// §45 — η λωρίδα εξήγησης κάτω από τη μπάρα
+/* ══ §185 — «ΜΕΓΕΘΗ ΠΕΡΙΟΔΟΥ» ════════════════════════════════════════════════════
+   Αντικαθιστά τη σκούρα ζώνη «Ετήσια/Τρέχοντα μεγέθη». ΟΛΕΣ οι δημοσιευμένες περίοδοι του
+   έτους δίπλα-δίπλα: Ετήσια (τελευταία χρήση) · [3Μ] · 6Μ · [9Μ]. Σε ετήσιο και 6μηνο, δεύτερη
+   στήλη με P/E · P/BV · κεφαλαιοποίηση στην τρέχουσα τιμή (AXION_CURRENT).
+   ΙΔΙΟΙ κανόνες με την παλιά ζώνη: EBITDA κατά §45 (ένα νούμερο εντός ανοχής 5%, αλλιώς το
+   δημοσιευμένο με υποσημείωση), τράπεζες κατά BANK_SWAP, υποσημειώσεις κατά §68 (δυναμική
+   αρίθμηση), μεταβολή κατά §76 (|βάση|, φορά από τη Δ).
+   3Μ / 9Μ: έτοιμες στήλες· εμφανίζονται μόνο αν υπάρχει AX.quarters.q1 / .q3 με μορφή
+   {y:<έτος>, m:{revenue:..,…}, p:{revenue:..,…}, px:'31/03/2026'} (p = ίδια περίοδος πέρσι). */
 (function(){
-  // §68 — η λωρίδα ζωγραφίζει τη λίστα FN. Ό,τι αποφασίστηκε για το ΑΝ υπάρχει υποσημείωση
-  // ζει στο FN (παραπάνω)· εδώ μένει μόνο η απόδοση. Καμία υποσημείωση → κρυφή λωρίδα.
-  const el=document.getElementById('eb-strip'); if(!el) return;
-  if(!FN.length){ el.hidden=true; return; }
-  el.className='ebstrip';
-  el.innerHTML=FN.map(function(f,i){
-    return `<div class="fn"><span class="fnn">${i+1}</span><span class="fnt">${f.html}</span></div>`;
-  }).join('');
-  el.hidden=false;
-})();
-// Στο 6μηνο, το P/E τελευταίας περιόδου είναι TTM (κυλιόμενο 12μηνο) — διακριτική υποσημείωση όταν υπάρχει τιμή
-(function(){
-  var ln=document.getElementById('latest-note'); if(!ln) return;
-  var isI=(typeof AXBASIS!=='undefined' && AXBASIS==='interim');
-  var pev=company.metrics&&company.metrics.pe?company.metrics.pe[li]:null;
-  if(isI && typeof pev==='number' && !isNaN(pev)){ ln.textContent=L('co.cband.ttm'); ln.hidden=false; }
-  else { ln.hidden=true; }
-})();
-(function(){
-  const cb=document.getElementById('current-band'); if(!cb) return;
+  const host=document.getElementById('per'); if(!host) return;
+  const has=v=>typeof v==='number'&&!isNaN(v);
   const cur=company.current;
-  if(!cur||(cur.mcap==null&&cur.pe==null&&cur.pbv==null)){ cb.style.display='none'; return; }
-  const eur=v=>v==null?'—':`${fMil(v)}<small>${EURSUF()}</small>`;
-  const xx=v=>(v==null||isNaN(v))?'—':fX(v);
-  const item=(k,val)=>`<div class="metric-item uni"><div class="k">${k}</div><div class="cell"><div class="v">${val}</div></div></div>`;
-  const fmtd=s=>{const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(s||'');return m?`${m[3]}/${m[2]}/${m[1]}`:s;};
-  const dt=cur.date?` · ${fmtd(cur.date)}`:'';
-  // Στο 6μηνο: αν υπάρχει interim variant (δηλ. το 6μηνο είναι ΠΙΟ πρόσφατο από το τελευταίο ετήσιο),
-  // P/E = TTM (κυλιόμενο 12μηνο) & P/BV = ίδια κεφάλαια 6μήνου (30/6). Αλλιώς → fallback στα ετήσια.
-  const isI=(typeof AXBASIS!=='undefined' && AXBASIS==='interim');
-  const usePeI = isI && cur.pe_i!=null;
-  const usePbvI= isI && cur.pbv_i!=null;
-  const peVal  = usePeI ? cur.pe_i : cur.pe;
-  const pbvVal = usePbvI? cur.pbv_i: cur.pbv;
-  const clab=`<div class="clab"><div class="t"><span class="cdot"></span>${L('co.cband.title')}</div><div class="s">${L('co.cband.sub')}${dt}</div></div>`;
-  let note='';
-  if(usePeI||usePbvI){
-    const parts=[];
-    if(usePeI) parts.push(L('co.cband.ttm'));
-    if(usePbvI) parts.push(L('co.cband.bvi'));
-    note=`<div class="cnote">${parts.join(' · ')}</div>`;
+  const fmtd=s=>{const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(s||'');return m?`${m[3]}/${m[2]}/${m[1]}`:(s||'');};
+  const curD=cur&&cur.date?fmtd(cur.date):'';
+  const hasCur=!!(cur&&(has(cur.mcap)||has(cur.pe)||has(cur.pbv)));
+  function ebState(M,i){
+    const own=(M.ebitda||[])[i];
+    if(!('ebitda_rep' in M)) return has(own)?{s:'legacy',own:own}:{s:'na'};
+    const rep=(M.ebitda_rep||[])[i], kind=(M.ebitda_kind||[])[i]||null, _a=(M.ebitda_adj||[])[i], adj=has(_a)?_a:null;
+    if(!has(own)&&!has(rep)) return {s:'na',adj:adj};
+    if(!has(rep)) return {s:'own',own:own,adj:adj};
+    if(!has(own)) return {s:'reponly',rep:rep,kind:kind,adj:adj};
+    const d=Math.abs(own-rep)/Math.max(Math.abs(rep),1);
+    return d<=EB_TOL?{s:'same',rep:rep,own:own,kind:kind,adj:adj}:{s:'diff',rep:rep,own:own,kind:kind,adj:adj};
   }
-  cb.innerHTML=`<div class="latest">${clab}${item(L('co.m.mcap'),eur(cur.mcap))}${item('P/E',xx(peVal))}${item('P/BV',xx(pbvVal))}</div>${note}`;
-  // §115 — αρίθμηση προς τα πάνω ΜΟΝΟ στην κεφαλαιοποίηση. Τα P/E και P/BV έχουν πολύ μικρή
-  // διαδρομή (π.χ. 0 -> 1,25): σε 700ms δεν διαβάζεται ως κίνηση αλλά ως τρεμόπαιγμα δεκαδικών.
-  (function(){
-    try{ if(matchMedia('(prefers-reduced-motion:reduce)').matches) return; }catch(e){}
-    if(cur.mcap==null) return;
-    const el=cb.querySelector('.metric-item .v'); if(!el) return;
-    const suf=EURSUF(), target=cur.mcap, DUR=700, t0=performance.now();
-    (function step(now){
-      // clamp και στα δύο άκρα: το requestAnimationFrame δίνει τη σφραγίδα ΕΝΑΡΞΗΣ του καρέ,
-      // που μπορεί να προηγείται του t0 -> αρνητικό p -> αρνητικό ποσό στο πρώτο καρέ.
-      const p=Math.min(1,Math.max(0,(now-t0)/DUR)), e=1-Math.pow(1-p,3);
-      el.innerHTML=`${fMil(target*e)}<small>${suf}</small>`;
-      if(p<1) requestAnimationFrame(step);
-    })(t0);
-  })();
-})();
-// «Ζώνη ένωσης» — διακριτικό background πίσω από τα κοινά μεγέθη (Κεφαλαιοποίηση/P·E/P·BV) και στα δύο blocks
-(function(){
-  var head=document.querySelector('.phead.yr'), wash=document.getElementById('union-wash');
-  if(!head||!wash) return;
-  function place(){
-    if(window.innerWidth<=820){ wash.hidden=true; return; }
-    var cells=head.querySelectorAll('.uni .cell');
-    if(!cells.length){ wash.hidden=true; return; }
-    var pr=head.getBoundingClientRect(), l=1e9,r=-1e9,t=1e9,b=-1e9;
-    cells.forEach(function(c){var q=c.getBoundingClientRect();l=Math.min(l,q.left);r=Math.max(r,q.right);t=Math.min(t,q.top);b=Math.max(b,q.bottom);});
-    var pad=6;
-    wash.style.left=(l-pr.left-pad)+'px';
-    wash.style.top=(t-pr.top-pad)+'px';
-    wash.style.width=(r-l+pad*2)+'px';
-    wash.style.height=(b-t+pad*2)+'px';
-    wash.hidden=false;
+  // περίοδοι-στήλες
+  const PS=[];
+  const fromSeries=(C,lab,px,now)=>{ const i=(C.latest&&C.latest.idx!=null)?C.latest.idx:C.years.length-1;
+    const M=C.metrics||{}; return {lab:lab,y:C.years[i],px:px,now:now,
+      v:k=>(M[k]||[])[i], p:k=>(M[k]||[])[i-1], M:M, i:i, series:true}; };
+  const ya=AX&&AX.latest?AX.latest.period:'';
+  PS.push(fromSeries(AX,L('co.per.annual').replace('{y}',ya),'31/12/'+ya,
+    hasCur?{mcap:cur.mcap,pe:cur.pe,pbv:cur.pbv}:null));
+  const Q=(AX&&AX.quarters)||{};
+  const fromQ=(q,key)=>({lab:L(key).replace('{y}',q.y),y:q.y,px:q.px||'',now:null,
+      v:k=>(q.m||{})[k], p:k=>(q.p||{})[k], M:null, series:false, opt:true});
+  if(Q.q1) PS.push(fromQ(Q.q1,'co.per.q1'));
+  if(HAS6) PS.push(fromSeries(AXI,L('co.per.h1').replace('{y}',AXI.latest.period),'30/06/'+AXI.latest.period,
+    hasCur?{mcap:cur.mcap,pe:(cur.pe_i!=null?cur.pe_i:null),pbv:(cur.pbv_i!=null?cur.pbv_i:null)}:null));
+  if(Q.q3) PS.push(fromQ(Q.q3,'co.per.q3'));
+  PS.forEach((P,j)=>{ P.cls=j===0?'ya':(P.opt?'q':'h1'); });
+  // γραμμές
+  const R=[
+    [{k:'revenue',d:true,up:true},{k:'ebitda',d:true,up:true},{k:'net_profit',d:true,up:true}],
+    [{k:'total_debt'},{k:'cash'},{k:'net_debt'}],
+    [{k:'mcap',now:true},{k:'pe',x:true,now:true},{k:'pbv',x:true,now:true}]
+  ];
+  // υποσημειώσεις (§68: δυναμική αρίθμηση, μία φορά κάθε κείμενο)
+  const FNS=[]; const fnIdx=html=>{ let n=FNS.indexOf(html); if(n<0){FNS.push(html); n=FNS.length-1;} return n+1; };
+  const sup=n=>`<sup class="fnm">${n}</sup>`;
+  const dl=(v,p,up)=>{
+    if(!has(v)||!has(p)||!p) return '<i class="d n">(—)</i>';
+    const d=(v-p)/Math.abs(p)*100, good=up?d>=0:d<0;
+    return `<i class="d ${good?'u':'w'}">(${d>=0?'+':'−'}${Math.abs(d).toLocaleString(LOC(),{minimumFractionDigits:1,maximumFractionDigits:1})}%)</i>`;
+  };
+  const val=(v,x)=>has(v)?(x?fX(v):fMil(v)):'—';
+  function cell(P,r){
+    const sw=IS_BANK?BANK_SWAP[r.k]:null, k=sw?sw.k:r.k;
+    let v=P.v(k), pv=P.p(k), mark='';
+    if(r.k==='ebitda'&&!sw&&P.series){
+      const st=ebState(P.M,P.i);
+      if(st.s==='na'){ v=null; }
+      else{
+        v=(st.s==='same'||st.s==='diff'||st.s==='reponly')?st.rep:st.own;
+        const ser=(v===st.rep)?(P.M.ebitda_rep||[]):(P.M.ebitda||[]); pv=ser[P.i-1];
+        const parts=[];
+        if(!(st.s==='legacy'||st.s==='same')){
+          if(st.s==='reponly') parts.push(L('co.eb.s.reponly'));
+          else if(st.s==='own') parts.push(L('co.eb.s.own'));
+          else { parts.push(st.kind?L('co.eb.s.kind').replace('{k}',`<span class="kt">${st.kind}</span>`).replace('{w}',L(EB_WHY(st.kind))):L('co.eb.s.plain'));
+                 parts.push(L('co.eb.s.axv').replace('{v}',fMil(st.own)+EURSUF())); }
+        }
+        if(st.adj!=null) parts.push(L('co.eb.s.adj').replace('{v}',`${fMil(st.adj)}${EURSUF()}`));
+        if(parts.length) mark=sup(fnIdx(L('co.per.fnp').replace('{p}',P.lab)+parts.join(' ')));
+      }
+    }
+    if(r.k==='net_profit'&&P.series){
+      const pat=(P.M.pat||[])[P.i];
+      if(has(v)&&has(pat)&&fMil(v)!==fMil(pat)) mark=sup(fnIdx(L('co.np.s.mi')));
+    }
+    const dd=(r.d&&P.lab)?dl(v,pv,r.up):'';
+    return `<td class="${P.cls}">${dd}<b class="v">${val(v,r.x)}</b>${mark}</td>`;
   }
-  window.addEventListener('load',function(){setTimeout(place,60);});
-  window.addEventListener('resize',place);
-  setTimeout(place,120);
+  const nowCell=(P,r)=>{ if(!P.now) return ''; const v=r.now?P.now[r.k]:null;
+    return `<td class="nw">${r.now&&has(v)?`<b class="now">${val(v,r.x)}</b>`:''}</td>`; };
+  // κεφαλίδα (δύο σειρές)
+  let h1=`<th class="l" rowspan="2">${L('co.per.fig')} <span class="u">${L('co.per.unit')}</span></th>`, h2='';
+  PS.forEach(P=>{
+    if(P.now){ h1+=`<th class="${P.cls} grp" colspan="2">${P.lab}</th>`;
+               h2+=`<th class="${P.cls} sub2">${L('co.per.px').replace('{d}',SD(P.px))}</th><th class="nw sub2">${L('co.per.px').replace('{d}',SD(curD))}</th>`; }
+    else { h1+=`<th class="${P.cls} grp">${P.lab}</th>`; h2+=`<th class="${P.cls} sub2">${P.px?L('co.per.px').replace('{d}',SD(P.px)):''}</th>`; }
+  });
+  const lab=r=>{ const sw=IS_BANK?BANK_SWAP[r.k]:null; return sw?L(sw.l):L('co.m.'+r.k); };
+  let body='';
+  R.forEach((g,gi)=>g.forEach((r,ri)=>{
+    body+=`<tr${gi&&!ri?' class="gs"':''}><td class="l"><b>${lab(r)}</b></td>`+PS.map(P=>cell(P,r)+nowCell(P,r)).join('')+'</tr>';
+  }));
+  host.innerHTML=`<table class="pt"><thead><tr>${h1}</tr><tr>${h2}</tr></thead><tbody>${body}</tbody></table>`;
+  const fe=document.getElementById('per-fn');
+  if(fe){ if(FNS.length){ fe.innerHTML=FNS.map((t,i)=>`<div class="fn"><span class="fnn">${i+1}</span><span class="fnt">${t}</span></div>`).join(''); fe.hidden=false; } else fe.hidden=true; }
+  const ne=document.getElementById('per-note');
+  if(ne) ne.textContent=(HAS6&&hasCur)?L('co.per.note').replace(/\{d\}/g,curD):(hasCur?L('co.per.note1').replace(/\{d\}/g,curD):L('co.per.note0'));
 })();
 
 const FAM={
@@ -671,7 +691,15 @@ const REV_C='#2f80c2', EB_C='#3f9e6a';
 
 const NS='http://www.w3.org/2000/svg';
 const el=(n,a={})=>{const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);return e;};
-const W=720,H=418,padL=72,padR=64,evLaneY=20,plotTop=74,plotBottom=232,yearY=248,ROWS_TOP=262,ROW_H=30,INSET=22;
+let W=720,H=418,padL=72,padR=64,evLaneY=20,plotTop=74,plotBottom=232,yearY=248,ROWS_TOP=262,ROW_H=30,INSET=22,MOB=false;
+// §185 — ΚΙΝΗΤΟ: κάτω από 560px το γράφημα σχεδιάζεται σε κλίμακα 1:1 με το πλάτος του (όχι το 720 σμικρυμένο),
+// με τα μεγέθη του πίνακα σε δύο γραμμές (όνομα από πάνω, τιμή + μεταβολή κάτω από κάθε έτος).
+function trajGeom(){
+  const cw=Math.round((document.getElementById('host')||{}).clientWidth||720);
+  MOB=cw>0&&cw<560;
+  if(!MOB){ W=720;H=418;padL=72;padR=64;evLaneY=20;plotTop=74;plotBottom=232;yearY=248;ROWS_TOP=262;ROW_H=30;INSET=22; return; }
+  W=Math.max(280,cw); padL=44; padR=24; INSET=12; evLaneY=26; plotTop=70; plotBottom=214; yearY=230; ROWS_TOP=244; ROW_H=40; H=ROWS_TOP+5*ROW_H+4;
+}
 const host=document.getElementById('host'),tip=document.getElementById('tip'),wrapEl=host.parentElement;
 const WIN=6; let trajStart=Math.max(0,((company.years&&company.years.length)||6)-WIN);
 const xOf=i=>padL+INSET+(W-padL-padR-INSET)*(i/(WIN-1));
@@ -702,9 +730,9 @@ const pathOf=(arr,yOf)=>{ let d='',started=false; arr.forEach((v,i)=>{ if(v==nul
 const yoy=(arr,i)=> (i===0||arr[i]==null||arr[i-1]==null||!arr[i-1]) ? null
                   : (arr[i]-arr[i-1])/Math.abs(arr[i-1])*100;
 function addPill(g,x,by,txt,col){
-  const w=Math.max(30, txt.length*5.9 + 10);
+  const w=Math.max(MOB?24:30, txt.length*(MOB?5.4:5.9) + (MOB?4:10));
   const lx=Math.min(Math.max(x,w/2+4),W-w/2-4);
-  const t=el('text',{x:lx,y:by,'text-anchor':'middle','font-family':"'Ubuntu Mono'",'font-size':9.5,'font-weight':700,fill:col});
+  const t=el('text',{x:lx,y:by,'text-anchor':'middle','font-family':"'Ubuntu Mono'",'font-size':(MOB?9:9.5),'font-weight':700,fill:col});
   t.textContent=txt; g.appendChild(t);
 }
 function ptLabel(x,py,val,d,place){
@@ -722,6 +750,19 @@ function metricRow(svg,name,arr,fmtV,color,top,goodUp,showPct){
   if(goodUp===undefined) goodUp=true;
   if(showPct===undefined) showPct=true;
   svg.appendChild(el('line',{x1:0,y1:top,x2:W,y2:top,stroke:'#eaf1f8','stroke-width':1}));
+  if(MOB){
+    const ml=el('text',{x:2,y:top+11,'font-family':"'Open Sans'",'font-size':9,'font-weight':700,fill:color}); ml.textContent=name; svg.appendChild(ml);
+    for(let li=0; li<WIN; li++){
+      const gi=trajStart+li; if(gi>=arr.length) continue;
+      const vt=el('text',{x:xOf(li).toFixed(1),y:top+25,'text-anchor':'middle','font-family':"'Ubuntu Mono'",'font-size':10.5,fill:'#16243d'}); vt.textContent=fmtV(arr[gi]); svg.appendChild(vt);
+      if(!showPct) continue;
+      const d=yoy(arr,gi); if(d===null) continue;
+      const good=goodUp?d>=0:d<0;
+      const dt=el('text',{x:xOf(li).toFixed(1),y:top+36,'text-anchor':'middle','font-family':"'Ubuntu Mono'",'font-size':8.5,'font-weight':700,fill:good?'#2f9e52':'#d64530'});
+      dt.textContent=(d>=0?'+':'-')+Math.abs(d).toLocaleString(LOC(),{maximumFractionDigits:1})+'%'; svg.appendChild(dt);
+    }
+    return;
+  }
   const nl=el('text',{x:3,y:top+ROW_H/2+3.5,'font-family':"'Open Sans'",'font-size':9,'font-weight':700,fill:color}); nl.textContent=name; svg.appendChild(nl);
   const vy=top+ROW_H/2+4, YEAR_R=13, PCTG=38;
   for(let li=0; li<WIN; li++){
@@ -737,6 +778,7 @@ function metricRow(svg,name,arr,fmtV,color,top,goodUp,showPct){
 }
 
 function draw(){
+  trajGeom();
   const revF=(company.metrics.revenue||[]).map(v=>(v==null?null:v/1e6));
   const ebF=(company.metrics.ebitda||[]).map(v=>(v==null?null:v/1e6));
   const ppiF=(company.metrics.ppi||[]).map(v=>(v==null?null:v/1e6));   // τράπεζες: Κέρδη προ προβλέψεων
@@ -753,9 +795,9 @@ function draw(){
 
   lines.forEach(v=>{const y=yOf(v);
     svg.appendChild(el('line',{x1:padL,y1:y,x2:W-padR,y2:y,stroke:'#eaf1f8','stroke-width':1}));
-    const tl=el('text',{x:padL-10,y:y+4,'text-anchor':'end','font-family':"'Ubuntu Mono'",'font-size':10,fill:'#8199b3'}); tl.textContent=(v==null||isNaN(v))?'—':v.toLocaleString(LOC()); svg.appendChild(tl);
+    const tl=el('text',{x:padL-(MOB?5:10),y:y+(MOB?3:4),'text-anchor':'end','font-family':"'Ubuntu Mono'",'font-size':(MOB?9:10),fill:'#8199b3'}); tl.textContent=(v==null||isNaN(v))?'—':v.toLocaleString(LOC()); svg.appendChild(tl);
   });
-  const evl=el('text',{x:3,y:evLaneY+4,'font-family':"'Open Sans'",'font-size':9,'font-weight':700,fill:'#6b8199'}); evl.textContent=L('co.chart.events'); svg.appendChild(evl);
+  const evl=el('text',{x:MOB?2:3,y:MOB?9:evLaneY+4,'font-family':"'Open Sans'",'font-size':(MOB?8.5:9),'font-weight':700,fill:'#6b8199'}); evl.textContent=L('co.chart.events'); svg.appendChild(evl);
 
   const defs=el('defs',{});
   [['grev',REV_C],['geb',EB_C]].forEach(([id,c])=>{
@@ -775,7 +817,7 @@ function draw(){
 
   // axis baseline + year numbers close to axis
   svg.appendChild(el('line',{x1:padL,y1:zeroY,x2:W-padR,y2:zeroY,stroke:(yMin<0?'#b8c6d8':'#cfdcea'),'stroke-width':(yMin<0?1.4:1)}));
-  company.years.slice(s,s+WIN).forEach((yr,li)=>{ const t=el('text',{x:xOf(li),y:yearY,'text-anchor':'middle','font-family':"'Ubuntu Mono'",'font-size':11,fill:'#6b8199'});
+  company.years.slice(s,s+WIN).forEach((yr,li)=>{ const t=el('text',{x:xOf(li),y:yearY,'text-anchor':'middle','font-family':"'Ubuntu Mono'",'font-size':(MOB?10:11),fill:'#6b8199'});
     if(IS_H1){ const a=el('tspan',{fill:'#0b5a56','font-weight':700}); a.textContent='6M '; t.appendChild(a); const b=el('tspan',{}); b.textContent=yr; t.appendChild(b); }
     else t.textContent=yr; svg.appendChild(t); });
   // «Αλλαγή οντότητας» — διακριτικό κάθετο σημάδι στο έτος τομής (τα αριστερά αφορούν την παλιά οντότητα)
@@ -784,11 +826,11 @@ function draw(){
     var yrs=company.years.slice(s,s+WIN); var mi=yrs.indexOf(ech.year), mx=null;
     if(mi>0) mx=(xOf(mi-1)+xOf(mi))/2;                       // ανάμεσα στο προηγ. έτος και στο έτος αλλαγής
     else if(mi===0) mx=xOf(0)-INSET*0.55;                    // αρχή παραθύρου
-    else if(ech.year>yrs[yrs.length-1]) mx=(xOf(WIN-1)+(W-padR))/2;  // πέρα από το παράθυρο → δεξί άκρο
+    else if(ech.year>yrs[yrs.length-1]) mx=MOB?W-3:(xOf(WIN-1)+(W-padR))/2;  // πέρα από το παράθυρο → δεξί άκρο
     else return;                                             // πριν το παράθυρο → χωρίς σημάδι
     var CA='#c8862a';
-    svg.appendChild(el('line',{x1:mx,y1:plotTop-2,x2:mx,y2:yearY-9,stroke:CA,'stroke-width':1.3,'stroke-dasharray':'3 3',opacity:.7}));
-    var tg=el('text',{x:mx,y:plotTop-6,'text-anchor':'middle','font-family':"'Open Sans'",'font-size':8.5,'font-weight':700,fill:CA,opacity:.95}); tg.textContent='▸ '+L('co.echange.mark'); svg.appendChild(tg);
+    svg.appendChild(el('line',{x1:mx,y1:(MOB?13:plotTop-2),x2:mx,y2:yearY-9,stroke:CA,'stroke-width':1.3,'stroke-dasharray':'3 3',opacity:.7}));
+    var tg=el('text',{x:(MOB?Math.min(W-36,Math.max(mx,128)):mx),y:(MOB?9:plotTop-6),'text-anchor':'middle','font-family':"'Open Sans'",'font-size':8.5,'font-weight':700,fill:CA,opacity:.95}); tg.textContent='▸ '+L('co.echange.mark'); svg.appendChild(tg);
   })();
   // έντονη διαχωριστική γραμμή ανάμεσα στο γράφημα/έτη και στον πίνακα μεγεθών
   svg.appendChild(el('line',{x1:0,y1:ROWS_TOP-7,x2:W,y2:ROWS_TOP-7,stroke:'#8299b3','stroke-width':1.8}));
@@ -816,8 +858,9 @@ function draw(){
     const ry=(rev[li]==null)?null:yOf(rev[li]);   // τρέχον έτος (κενά μεγέθη) → χωρίς σημείο εσόδων
     const g=el('g',{class:'evt',style:'cursor:pointer'});
     const conn=el('line',{x1:x,y1:evLaneY+8,x2:x,y2:(ry==null?plotBottom:ry),stroke:'#cfdcea','stroke-width':1,'stroke-dasharray':(ry==null?'3 3':'none')}); g.appendChild(conn);
-    const dot=el('circle',{cx:x,cy:evLaneY,r:10,fill:'#2f80c2',stroke:'#ffffff','stroke-width':2}); g.appendChild(dot);
-    const n=el('text',{x:x,y:evLaneY+3.5,'text-anchor':'middle','font-family':"'Ubuntu Mono'",'font-size':10.5,fill:'#fff','font-weight':600}); n.textContent=list.length; g.appendChild(n);
+    const DR=MOB?8.5:10;
+    const dot=el('circle',{cx:x,cy:evLaneY,r:DR,fill:'#2f80c2',stroke:'#ffffff','stroke-width':2}); g.appendChild(dot);
+    const n=el('text',{x:x,y:evLaneY+(MOB?3:3.5),'text-anchor':'middle','font-family':"'Ubuntu Mono'",'font-size':(MOB?9.5:10.5),fill:'#fff','font-weight':600}); n.textContent=list.length; g.appendChild(n);
     const ring=(ry==null)?null:el('circle',{cx:x,cy:ry,r:3.4,fill:'#ffffff',stroke:REV_C,'stroke-width':2}); if(ring) g.appendChild(ring);
     g.appendChild(el('circle',{cx:x,cy:evLaneY,r:15,fill:'transparent'}));
     g.addEventListener('mouseenter',()=>{
@@ -829,12 +872,12 @@ function draw(){
       tip.style.left=Math.max(pad,Math.min(cx-tw/2, wr.width-tw-pad))+'px';
       tip.style.top=(dr.bottom-wr.top+8)+'px';
       conn.setAttribute('stroke','#b9cade'); conn.setAttribute('stroke-width',1.5);
-      if(ring) ring.setAttribute('r',5); dot.setAttribute('r',11.5);
+      if(ring) ring.setAttribute('r',5); dot.setAttribute('r',DR+1.5);
     });
     g.addEventListener('mouseleave',()=>{
       tip.classList.remove('on');
       conn.setAttribute('stroke','#2b4a7d'); conn.setAttribute('stroke-width',1);
-      if(ring) ring.setAttribute('r',3.4); dot.setAttribute('r',10);
+      if(ring) ring.setAttribute('r',3.4); dot.setAttribute('r',DR);
     });
     svg.appendChild(g);
   });
@@ -845,17 +888,22 @@ function draw(){
   // (ψηλότερο→πάνω, χαμηλότερο→κάτω) ώστε να μην πέφτουν το ένα πάνω στο άλλο. Αλλιώς: πάνω.
   const CLOSE=32;
   rev.forEach((v,i)=>{ if(v==null)return; let place='above';
-    if(eb.length&&eb[i]!=null){ const yr=yOf(v),ye=yOf(eb[i]); if(Math.abs(yr-ye)<CLOSE && yr>ye && yr+33<yearY-2) place='below'; }
+    if(eb.length&&eb[i]!=null){ const yr=yOf(v),ye=yOf(eb[i]); if(Math.abs(yr-ye)<CLOSE && yr>ye && yr+33<yearY-(MOB?12:2)) place='below'; }
     svg.appendChild(ptLabel(xOf(i),yOf(v),v,yoy(revF,s+i),place)); });
   // §78 — Η 2η γραμμή ΤΙΜΕΣ από `secF`, άρα και η ΜΕΤΑΒΟΛΗ από `secF`. Το `yoy(ebF,…)`
   // ήταν καρφωμένο στο EBITDA· στις τράπεζες το EBITDA είναι παντού κενό, οπότε η μεταβολή
   // έβγαινε null και η γραμμή PPI εμφανιζόταν χωρίς κανένα ποσοστό ανά έτος.
   eb.forEach((v,i)=>{ if(v==null)return; let place='above';
-    if(rev[i]!=null){ const ye=yOf(v),yr=yOf(rev[i]); if(Math.abs(yr-ye)<CLOSE && ye>yr && ye+33<yearY-2) place='below'; }
+    if(rev[i]!=null){ const ye=yOf(v),yr=yOf(rev[i]); if(Math.abs(yr-ye)<CLOSE && ye>yr && ye+33<yearY-(MOB?12:2)) place='below'; }
     svg.appendChild(ptLabel(xOf(i),yOf(v),v,yoy(secF,s+i),place)); });
   host.appendChild(svg);
 }
 draw();
+(function(){ var lastW=Math.round(host.clientWidth||0), tmr=null;
+  window.addEventListener('resize',function(){ clearTimeout(tmr); tmr=setTimeout(function(){
+    var cw=Math.round(host.clientWidth||0); if(cw===lastW) return;
+    var wasMob=MOB; lastW=cw; if(wasMob||cw<560) draw(); },150); });
+})();
 
 const ownership=(AX&&AX.ownership)||[];;
 const SIZE_RAMP=['#c2410c','#e2590e','#f0791f','#f5a04c','#f0c07e','#5ea9b4','#8dc8d1','#bce0e6'];
@@ -864,42 +912,18 @@ const SIZE_RAMP=['#c2410c','#e2590e','#f0791f','#f5a04c','#f0c07e','#5ea9b4','#8
   named.forEach((h,i)=> h._c = SIZE_RAMP[Math.min(i,SIZE_RAMP.length-1)]);
   ownership.filter(h=>h.type==='ευρύ επενδυτικό κοινό').forEach(h=> h._c='#c3d3e3');
 })();
-// pie (donut) chart + shareholder legend
+const escA=t=>String(t).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+// §185 — compact «Μέτοχοι»: μία λεπτή μπάρα 100% + μία γραμμή ανά μέτοχο (το free float τελευταίο, αχνό)
 (function(){
+  const el=document.getElementById('own-viz'); if(!el) return;
   const ffObj=ownership.find(h=>h.type==='ευρύ επενδυτικό κοινό');
   const rest=ownership.filter(h=>h!==ffObj).sort((a,b)=>b.pct-a.pct);
   const ord=ffObj?[...rest,ffObj]:rest.slice();
+  if(!ord.length){ el.innerHTML=''; return; }
   const fp=p=>(p==null?0:p).toLocaleString(LOC(),{minimumFractionDigits:1,maximumFractionDigits:1})+'%';
-  const R=92, cx=100, cy=100;
-  const arc=(a0,a1)=>{
-    const x0=cx+R*Math.cos(a0),y0=cy+R*Math.sin(a0),x1=cx+R*Math.cos(a1),y1=cy+R*Math.sin(a1);
-    const lg=(a1-a0)>Math.PI?1:0;
-    return `M ${cx} ${cy} L ${x0.toFixed(2)} ${y0.toFixed(2)} A ${R} ${R} 0 ${lg} 1 ${x1.toFixed(2)} ${y1.toFixed(2)} Z`;
-  };
-  let a=-Math.PI/2, slices='';
-  ord.forEach(h=>{ const ang=h.pct/100*2*Math.PI,a0=a,a1=a+ang; a=a1; slices+=`<path d="${arc(a0,a1)}" fill="${h._c}" stroke="#ffffff" stroke-width="3"/>`; });
-  const top2=rest.slice(0,2);
-  const topBoxes=top2.map(h=>`<div class="holder-box"><span class="hb-sw" style="background:${h._c}"></span><span class="hb-n">${h.name}</span><span class="hb-t">${h.type}</span><span class="hb-p">${fp(h.pct)}</span></div>`).join('');
-  const legItems=rest.slice(2).concat(ffObj?[ffObj]:[]);
-  const leg=legItems.map(h=>`<div class="pl"><span class="pl-s" style="background:${h._c}"></span><span class="pl-n">${h===ffObj?'Free float':h.name}</span><span class="pl-p">${fp(h.pct)}</span></div>`).join('');
-  document.getElementById('own-viz').innerHTML=`<div class="holder-top">${topBoxes}</div><div class="pie-wrap"><div class="pie-c"><svg viewBox="0 0 200 200" class="pie" role="img" aria-label="Μετοχική σύνθεση">${slices}</svg></div><div class="pie-leg">${leg}</div></div>`;
-})();
-
-// equal height: shareholders block matches subsidiaries block while its dropdown is closed
-(function(){
-  const yt=document.querySelector('.year-top'); if(!yt) return;
-  const p=yt.querySelectorAll(':scope > .panel'); if(p.length<2) return;
-  const meto=p[0], thyg=p[1], own=document.getElementById('own-viz');
-  const subsFull=document.getElementById('subs-full');
-  function eq(){
-    if(subsFull && !subsFull.classList.contains('hidden')) return;
-    own.style.height='auto';
-    const th=thyg.offsetHeight, mh=meto.offsetHeight, oh=own.offsetHeight;
-    own.style.height=Math.max(220, oh+(th-mh))+'px';
-  }
-  const run=()=>requestAnimationFrame(()=>requestAnimationFrame(eq));
-  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(run); else run();
-  window.addEventListener('resize',run);
+  const bar=ord.map(h=>`<i style="width:${Math.max(0,h.pct||0)}%;background:${h._c}"></i>`).join('');
+  const rows=ord.map(h=>`<div class="rw${h===ffObj?' ff':''}"><span class="sw" style="background:${h._c}"></span><span class="n">${h===ffObj?L('co.ff'):h.name}</span><span class="p">${fp(h.pct)}</span></div>`).join('');
+  el.innerHTML=`<div class="own2"><div class="bar2" role="img" aria-label="${escA(L('co.ph.holders'))}">${bar}</div>${rows}</div>`;
 })();
 
 const subs=(AX&&AX.subs)||{total:0,countries:0,full:0,equity:0,listed:[],byCountry:[]};;
@@ -908,68 +932,35 @@ const subs=(AX&&AX.subs)||{total:0,countries:0,full:0,equity:0,listed:[],byCount
    βάζουμε μία γραμμή κειμένου. Η γραμμή φτιάχνεται ΕΔΩ (όχι στο κέλυφος) ώστε η αλλαγή να μην
    απαιτεί ξαναψήσιμο και των 139 στατικών σελίδων. Η διατύπωση λέει ΤΙ βρέθηκε στις καταστάσεις,
    δεν βεβαιώνει ότι η εταιρεία δεν έχει θυγατρικές. */
-if(!subs.total){
-  var _lw=document.getElementById('listed-wrap'), _pb=_lw&&_lw.parentElement;
-  if(_pb){
-    var _p=document.createElement('p');
-    _p.className='subs-none'; _p.id='subs-none';
-    _p.setAttribute('data-i18n','co.subs.none');
-    _p.textContent=L('co.subs.none');
-    _lw.insertAdjacentElement('afterend',_p);
-    _pb.classList.add('subs-empty');
-  }
-  // display:none ΡΗΤΑ: το .geo-wrap έχει display:flex στο CSS, που νικάει το [hidden].
-  var _gw=document.querySelector('.geo-wrap'); if(_gw) _gw.style.display='none';
-  var _sa=document.getElementById('show-all'); if(_sa) _sa.style.display='none';
-  var _sf=document.getElementById('subs-full'); if(_sf) _sf.style.display='none';
-}
-
+// §185 — compact «Θυγατρικές & συμμετοχές»: σύνοψη, λεπτή μπάρα, μία γραμμή ανά χώρα (5 + «Λοιπές»).
+// Η πλήρης λίστα (με αναζήτηση) ανοίγει από το «Όλες οι οντότητες». Χωρίς ντόνατ/Chart.js.
 const geoShort={'Ηνωμένο Βασίλειο':'Ην. Βασίλειο'};
-// Εμφανίζουμε τις 5 χώρες με τις περισσότερες οντότητες (byCountry είναι ήδη ταξινομημένο φθίνουσα)·
-// οι υπόλοιπες συγκεντρώνονται σε ένα «Λοιπές (Ν χώρες)» — και στο legend και στο pie. Η πλήρης λίστα μένει στο dropdown.
 const GEO_TOP=5, GEO_REST_COL='#c3d3e3';
 const geoData=(function(){
   const all=subs.byCountry||[];
   const out=all.slice(0,GEO_TOP).map((g,i)=>({c:g.country,label:geoShort[g.country]||g.country,n:g.count,col:SIZE_RAMP[Math.min(i,SIZE_RAMP.length-1)]}));
   if(all.length>GEO_TOP){
     const rest=all.slice(GEO_TOP), rn=rest.reduce((s,g)=>s+(g.count||0),0);
-    out.push({c:`${L('co.geo.other')} (${rest.length} ${rest.length===1?L('co.geo.country'):L('co.geo.countries')})`,label:`${L('co.geo.other')} (${rest.length})`,n:rn,col:GEO_REST_COL,rest:true});
+    out.push({c:`${L('co.geo.other')} (${rest.length})`,label:`${L('co.geo.other')} (${rest.length})`,n:rn,col:GEO_REST_COL,rest:true});
   }
   return out;
 })();
 const geoPct=n=>Math.round(n/subs.total*100);
-document.getElementById('geo-total').textContent=subs.total;
-document.getElementById('geo-sub').innerHTML=L('co.geo.entities')+'<br>'+subs.countries+' '+L('co.geo.countries');
-document.getElementById('geo-legend').innerHTML=geoData.map(g=>`<div class="lg${g.rest?' rest':''}"><span class="sw" style="background:${g.col}"></span><span class="c">${g.label}</span><span class="n">${g.n}</span><span class="p">${geoPct(g.n)}%</span></div>`).join('');
-// §132 — ΤΟ Chart.js ΦΟΡΤΩΝΕΙ ΜΕ ΚΑΘΥΣΤΕΡΗΣΗ. Είναι 59 KB από cdnjs, το 65% του δεν
-// εκτελείται ποτέ (Lighthouse), και υπάρχει για ΕΝΑ ντόνατ που ζει μέσα στο πλαίσιο
-// «Θυγατρικές & συμμετοχές» — κάτω από το πρώτο κάδρο στο κινητό. Τώρα κατεβαίνει μόνο
-// όταν το ντόνατ πλησιάσει το κάδρο (300px πριν), ή αμέσως αν λείπει IntersectionObserver.
 (function(){
-  var cv=document.getElementById('geo'); if(!cv) return;
-  var done=false;
-  function draw(){
-    if(done||!window.Chart) return; done=true;
-    try{ new Chart(cv,{type:'doughnut',
-      data:{labels:geoData.map(g=>g.c),datasets:[{data:geoData.map(g=>g.n),backgroundColor:geoData.map(g=>g.col),borderColor:'#ffffff',borderWidth:3,hoverOffset:5}]},
-      options:{cutout:'66%',responsive:true,maintainAspectRatio:false,
-        plugins:{legend:{display:false},tooltip:{backgroundColor:'#16243d',borderColor:'#2b4a6b',borderWidth:1,padding:10,callbacks:{label:c=>` ${c.label}: ${c.parsed} (${geoPct(c.parsed)}%)`}}}}
-    }); }catch(e){}
+  const s2=document.getElementById('subs2'), all=document.getElementById('subs-all');
+  if(!s2) return;
+  if(!subs.total){
+    s2.innerHTML=`<p class="subs-none" id="subs-none" data-i18n="co.subs.none">${L('co.subs.none')}</p>`;
+    if(all) all.hidden=true;
+    return;
   }
-  function load(){
-    if(window.Chart) return draw();
-    var s=document.createElement('script');
-    s.src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js';
-    s.async=true; s.onload=draw; document.head.appendChild(s);
-  }
-  if('IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(es){
-      for(var i=0;i<es.length;i++) if(es[i].isIntersecting){ io.disconnect(); load(); return; }
-    },{rootMargin:'300px'});
-    io.observe(cv);
-  } else load();
+  const cty=subs.countries===1?L('co.geo.country'):L('co.geo.countries');
+  s2.innerHTML=`<div class="sum"><b>${subs.total}</b> ${subs.total===1?L('co.geo.entity'):L('co.geo.entities')}${L('co.geo.in')}<b>${subs.countries}</b> ${cty}</div>`
+    +`<div class="bar2">${geoData.map(g=>`<i style="width:${g.n/subs.total*100}%;background:${g.col}"></i>`).join('')}</div>`
+    +geoData.map(g=>`<div class="rw${g.rest?' rest':''}"><span class="sw" style="background:${g.col}"></span><span class="n">${g.label}</span><span class="t">${g.n}</span><span class="p">${geoPct(g.n)}%</span></div>`).join('');
 })();
-document.getElementById('listed-wrap').innerHTML=subs.listed.map(l=>`<div class="listed-box"><span class="tag">${L('co.geo.listed')}</span><span class="ln">${l.name}</span><span class="lp">${(l.stake==null?0:l.stake).toLocaleString(LOC(),{minimumFractionDigits:1,maximumFractionDigits:1})}%</span>${l.exch?`<span class="lx"><i class="pico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l18 0"/><path d="M3 10l18 0"/><path d="M5 6l7 -3l7 3"/><path d="M4 10l0 11"/><path d="M20 10l0 11"/><path d="M8 14l0 3"/><path d="M12 14l0 3"/><path d="M16 14l0 3"/></svg></i>${l.exch}</span>`:''}</div>`).join('');
+// §185 — εισηγμένες θυγατρικές: ένα μικρό μπλοκ με μία γραμμή ανά εταιρεία (όνομα · αγορά · ποσοστό)
+document.getElementById('listed-wrap').innerHTML=subs.listed.length?`<div class="lst"><div class="lst-h">${L('co.geo.listedh')}</div>`+subs.listed.map(l=>`<div class="lst-r"><span class="ln">${l.name}</span><span class="lx">${l.exch||''}</span><span class="lp">${(l.stake==null?0:l.stake).toLocaleString(LOC(),{minimumFractionDigits:1,maximumFractionDigits:1})}%</span></div>`).join('')+'</div>':'';
 
 const acc=document.getElementById('acc');
 acc.innerHTML=subs.byCountry.map(g=>{
@@ -979,10 +970,8 @@ acc.innerHTML=subs.byCountry.map(g=>{
 }).join('');
 acc.querySelectorAll('.acc-head').forEach(h=>h.onclick=()=>h.parentElement.classList.toggle('open'));
 
-const showBtn=document.getElementById('show-all'),full=document.getElementById('subs-full');
-const showAllTxt=`${L('co.geo.showall')} (${subs.total}${L('co.geo.in')}${subs.countries} ${L('co.geo.countries')})`;
-showBtn.textContent=showAllTxt;
-showBtn.onclick=()=>{const hid=full.classList.toggle('hidden');showBtn.textContent=hid?showAllTxt:L('co.geo.hide');};
+(function(){ const sb=document.getElementById('show-all');
+  if(sb) sb.innerHTML=`${L('co.geo.all')} (${subs.total}) <span class="arw">▸</span>`; })();
 document.getElementById('subs-filter').oninput=e=>{
   const q=e.target.value.trim().toLowerCase();
   acc.querySelectorAll('.acc-group').forEach(g=>{
@@ -1102,36 +1091,67 @@ function secNaText(n){
 }
 const esc=t=>String(t).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 const CATEN={'Κερδοφορία':'Profitability','Ρευστότητα':'Liquidity','Φερεγγυότητα':'Solvency','Δραστηριότητα':'Operation','Αποτίμηση':'Value','Λειτουργικού κόστους':'Operating Cost','Χρηματοοικονομικής διάρθρωσης':'Financial Structure'};
-ratiosEl.innerHTML=RATIOS.map((c,ci)=>{
-  const rows=c.items.map(it=>{
-    const bo = IS_BANK ? RATIO_BANK[it.slug] : null;
-    const nm = bo ? (EN()?bo.en:bo.el) : (EN()?it.en:it.label);
-    const nm2= bo ? (EN()?bo.el:bo.en) : (EN()?it.label:it.en);
-    const dsc= bo ? (EN()?bo.den:bo.desc) : (EN()?(it.den||it.desc):it.desc);
-    const drc= (IS_BANK&&NA_RATIO.has(it.slug)) ? null : (bo ? bo.dir : it.dir);
-    let body;
-    if(IS_BANK&&NA_RATIO.has(it.slug)){
-      body=`<td class="c-na" colspan="${YEARS.length+1}">${L('co.na.banks')}</td>`;
-    } else {
-      const _ser=it.series.slice(0,YEARS.length);   // ίδιο εύρος με τις κεφαλίδες ετών (χωρίς την κενή στήλη 2026)
-      const yr=_ser.map((v,i)=>`<td class="c-val${i===_ser.length-1?' last':''}">${(v==null&&REV_DEP.has(it.slug)&&FIGN[String(YEARS[i])])?`<span class="c-nt" title="${esc(EN()?FIGN[String(YEARS[i])].en:FIGN[String(YEARS[i])].el)}">—<sup>*</sup></span>`:(v==null&&bynAt(it.slug,i))?`<span class="c-nt" title="${esc(bynText())}">—<sup>*</sup></span>`:fmtU(v,it.unit)}</td>`).join('');
-      body=`${yr}<td class="c-sec">${(it.sector==null&&it.secna)?`<span class="c-nt" title="${esc(secNaText(it.secna))}">—<sup>*</sup></span>`:fmtU(it.sector,it.unit)}</td>`;
-    }
-    return `<tr><td class="c-name">${nm}<span class="en">(${nm2})</span></td><td class="c-desc">${dsc}</td>${dirCell(drc)}${body}</tr>`;
+/* ══ §185 — ΑΡΙΘΜΟΔΕΙΚΤΕΣ ══════════════════════════════════════════════════════════
+   Ένας πίνακας για όλες τις κατηγορίες (κάθε κατηγορία ανοίγει/κλείνει· ανοιχτές στην αρχή
+   Κερδοφορία και Αποτίμηση). Στήλες: [συρτάρι ιστορικού] · Ετήσια <τελευταία> · Κλάδος ·
+   6Μ <έτος> · Κλάδος (6Μ μόνο με HAS6). Οι ροές του 6μήνου (ROA/ROE/ROIC/EPS, ταχύτητες)
+   ΔΕΝ ετησιοποιούνται (απόφαση user) και σημαίνονται με «½». Διανομές (DPS, απόδοση, ποσοστό
+   διανομής) είναι μεγέθη ΧΡΗΣΗΣ: στη στήλη 6Μ μένουν «—». Ίδιες υποσημειώσεις με πριν
+   («κατά είδος», δεν δημοσιεύεται τζίρος, καμία διάμεσος κλάδου). */
+(function(){
+  const nY=YEARS.length, HI=YEARS.slice(0,nY-1), yl=YEARS[nY-1];
+  const i6=HAS6?AXI.latest.idx:null, y6=HAS6?AXI.latest.period:null;
+  const HALF=new Set(['roa','roe','roic','eps','atr','etr']);
+  const OPEN0=new Set(['Κερδοφορία','Αποτίμηση']);
+  const note=(t)=>`<span class="na" title="${esc(t)}">—<sup class="ast">*</sup></span>`;
+  const dash='<span class="na">—</span>';
+  function aCell(it,i){
+    const v=it.series[i];
+    if(v==null&&REV_DEP.has(it.slug)&&FIGN[String(YEARS[i])]) return note(EN()?FIGN[String(YEARS[i])].en:FIGN[String(YEARS[i])].el);
+    if(v==null&&bynAt(it.slug,i)) return note(bynText());
+    return v==null?dash:fmtU(v,it.unit);
+  }
+  const secCell=(s,na,u)=>(s==null&&na)?note(secNaText(na)):(s==null?dash:fmtU(s,u));
+  const btn=HI.length?`<button class="drw" type="button" aria-expanded="false" aria-controls="rt"><span class="ar">▸</span><span class="tx">${HI[0]}–${HI[HI.length-1]}</span></button>`:'';
+  const ncols=1+HI.length+2+(HAS6?2:0);
+  let head=`<tr><th class="l"><div class="lh"><span>${L('co.rt.ratio')}</span>${btn}</div></th>`
+    +HI.map(y=>`<th class="hx"><div class="hw">${y}</div></th>`).join('')
+    +`<th class="ya"><span class="yl">${L('co.per.annual').replace('{y}',yl)}</span></th><th class="kl">${L('co.rt.sector')}</th>`
+    +(HAS6?`<th class="h1">${L('co.per.h1').replace('{y}',y6)}</th><th class="kl h1">${L('co.rt.sector')}</th>`:'')+'</tr>';
+  const bodies=RATIOS.map(c=>{
+    const cn=EN()?(CATEN[c.cat]||c.cat):c.cat, cn2=EN()?c.cat:(CATEN[c.cat]||'');
+    const nShow=c.items.length, open=OPEN0.has(c.cat);
+    const rows=c.items.map(it=>{
+      const bo=IS_BANK?RATIO_BANK[it.slug]:null;
+      const nm=bo?(EN()?bo.en:bo.el):(EN()?it.en:it.label);
+      if(IS_BANK&&NA_RATIO.has(it.slug))
+        return `<tr><td class="l"><b>${nm}</b></td><td class="c-na" colspan="${ncols-1}">${L('co.na.banks')}</td></tr>`;
+      const hx=HI.map((y,i)=>`<td class="hx"><div class="hw">${aCell(it,i)}</div></td>`).join('');
+      let six='';
+      if(HAS6){
+        const r6=(AXI.ratios&&AXI.ratios[it.slug])||{};
+        const isDiv=DIV_SLUGS_UI.indexOf(it.slug)>-1;
+        const v6=isDiv?null:(r6.series||[])[i6];
+        let c6=v6==null?(isDiv?dash:(bynAt(it.slug,nY-1)?note(bynText()):dash)):fmtU(v6,it.unit);
+        if(v6!=null&&HALF.has(it.slug)) c6+=` <sup class="hf" title="${esc(L('co.rt.half'))}">½</sup>`;
+        six=`<td class="h1"><b class="v">${c6}</b></td><td class="kl h1">${isDiv?dash:secCell(r6.sector,r6.secna,it.unit)}</td>`;
+      }
+      return `<tr><td class="l"><b>${nm}</b></td>${hx}<td class="ya"><b class="v">${aCell(it,nY-1)}</b></td><td class="kl">${secCell(it.sector,it.secna,it.unit)}</td>${six}</tr>`;
+    }).join('');
+    return `<tbody class="${open?'':'shut'}"><tr class="cat" tabindex="0" role="button" aria-expanded="${open}"><td colspan="${ncols}"><span class="ct"><span class="ca">▸</span>${cn} <span>(${cn2})</span><em class="cn">${nShow} ${nShow===1?L('co.rt.n1'):L('co.rt.nn')}</em></span></td></tr>${rows}</tbody>`;
   }).join('');
-  const yhead=YEARS.map(y=>`<th class="y">${IS_H1?H1C:''}${y}</th>`).join('');
-  const cn=EN()?(CATEN[c.cat]||c.cat):c.cat, cn2=EN()?c.cat:(CATEN[c.cat]||'');
-  // §72 — chips με τα ονόματα των δεικτών της κατηγορίας, ορατά ΜΟΝΟ όσο είναι κλειστή.
-  // Ίδια ανάλυση ονόματος με τις γραμμές του πίνακα: τραπεζική παράκαμψη όπου υπάρχει.
-  // Παραλείπονται οι δείκτες που δεν ισχύουν στις τράπεζες — η γραμμή τους στον πίνακα
-  // γράφει «δεν ισχύει», οπότε ένα chip θα υποσχόταν κάτι που δεν βρίσκει ο αναγνώστης.
-  const chips=c.items.filter(it=>!(IS_BANK&&NA_RATIO.has(it.slug))).map(it=>{
-    const bo = IS_BANK ? RATIO_BANK[it.slug] : null;
-    return `<span class="cat-chip">${bo?(EN()?bo.en:bo.el):(EN()?it.en:it.label)}</span>`;
-  }).join('');
-  return `<div class="cat"><div class="cat-head"><div class="hd"><h3>${cn} <span class="caten">(${cn2})</span></h3>${chips?`<div class="cat-chips">${chips}</div>`:''}</div><span class="arr">›</span></div><div class="cat-body"><div class="rtbl-wrap"><table class="rtbl"><thead><tr><th class="l">${L('co.rt.ratio')}</th><th class="l">${L('co.rt.desc')}</th><th class="l"></th>${yhead}<th>${L('co.rt.secmed')}${IS_H1?' '+H1C:''}</th></tr></thead><tbody>${rows}</tbody></table></div></div></div>`;
-}).join('');
-ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.classList.toggle('open'));
+  ratiosEl.innerHTML=`<table class="rt" id="rt"><thead>${head}</thead>${bodies}</table>`;
+  const T=document.getElementById('rt');
+  const b=T.querySelector('.drw');
+  if(b) b.addEventListener('click',function(){ const o=T.classList.toggle('open'); b.setAttribute('aria-expanded',o);
+    b.querySelector('.tx').textContent=o?L('co.rt.close'):`${HI[0]}–${HI[HI.length-1]}`; });
+  T.querySelectorAll('tr.cat').forEach(function(r){
+    function t(){ const s=r.parentElement.classList.toggle('shut'); r.setAttribute('aria-expanded',!s); }
+    r.addEventListener('click',t);
+    r.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); t(); } });
+  });
+})();
+
 
 // «Με μια ματιά» — χαρακτηρισμοί με ΑΠΟΛΥΤΑ ΟΡΙΑ (κλάδος μόνο ως αναφορά)· 3ετία μ.ο. Κερδοφορία/Ανάπτυξη, περιόδου Μόχλευση/Ρευστότητα + Χρηματικές διανομές
 (function(){
@@ -1221,11 +1241,11 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
   // ένωση ετών (μέρισμα ή επιστροφή), φθίνουσα, τελευταία 3ετία
   const yrs=Array.from(new Set(Object.keys(divBy).concat(Object.keys(capBy)).map(Number))).sort((a,b)=>b-a).slice(0,3);
   if(yrs.length){
-    const head=`<span class="dvh hb">${L('co.dist.yr')}</span><span class="dvh hb r mh">${L('co.dist.divsh')}</span><span class="dvh hb r dvpr">${L('co.dist.yield')}</span><span class="dvh hb r dvpl ch">${L('co.dist.capsh')}</span>`;
-    const body=yrs.map((y,i)=>{ const lc=(i===yrs.length-1)?' lastrow':''; return `<span class="dvc dv-yr${lc}">${y}</span><span class="dvc dv-eur r${lc}">${divBy[y]==null?'—':nf(divBy[y],3)}</span><span class="dvc dv-yld r dvpr${lc}">${dyBy[y]==null?'—':nf(dyBy[y])+'%'}</span><span class="dvc dv-cap r dvpl${lc}">${capBy[y]==null?'—':nf(capBy[y],3)}</span>`; }).join('');
-    dvEl.innerHTML=`<div class="dv-list"><div class="dv-grid" style="grid-template-rows:repeat(${yrs.length+1},auto)"><i class="dv-rule"></i>${head}${body}</div><div class="dv-note">${L('co.dist.note')}${IS_H1?' <b>'+L('co.dist.annualNote')+'</b>':''}</div></div>`;
+    const head=`<div class="hdr"><span>${L('co.dist.yr')}</span><span class="r">${L('co.dist.divsh')}</span><span class="r">${L('co.dist.yield')}</span><span class="r">${L('co.dist.capsh')}</span></div>`;
+    const body=yrs.map(y=>`<div class="rw"><span class="y">${y}</span><span class="e">${divBy[y]==null?'—':nf(divBy[y],3)}</span><span class="v">${dyBy[y]==null?'—':nf(dyBy[y])+'%'}</span><span class="c">${capBy[y]==null?'—':nf(capBy[y],3)}</span></div>`).join('');
+    dvEl.innerHTML=`<div class="dv2">${head}${body}<p class="nt">${L('co.dist.note')}</p></div>`;
   } else {
-    dvEl.innerHTML=`<div class="dv-empty"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/></svg></div><div class="t">${L('co.dist.none')}</div><div class="s">${L('co.dist.none.s')}</div></div>`;
+    dvEl.innerHTML=`<div class="dv2 empty"><b>${L('co.dist.none')}</b><p class="nt">${L('co.dist.none.s')}</p></div>`;
   }
 })();
 
@@ -1270,7 +1290,7 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
    άλλο «τρέχον» δεδομένο της σελίδας. Χωρίς γνωστοποιήσεις → δεν εμφανίζεται τίποτα. */
 (function(){
   if(typeof AX==='undefined' || !AX || !AX.tk) return;
-  var ph=document.querySelector('.phead.yr'); if(!ph) return;
+  var ph=document.getElementById('co-shorts-host'); if(!ph) return;
 
   function esc(t){return String(t==null?'':t).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
   /* δεκαδικό χωριστικό κατά γλώσσα: κόμμα στα ελληνικά, τελεία στα αγγλικά */
@@ -1318,7 +1338,7 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
        ΕΔΩ δεν υπάρχει λίστα: έρχεται έτοιμη στο κλειδί `exempt` του shorts.js. */
     var EX=(!hasRec && D.exempt && D.exempt[AX.tk])?D.exempt[AX.tk]:null;
     var en=EN();
-    var T=en?{t:'Short positions',s:'Hellenic Capital Market Commission · disclosures ≥0.5% of share capital',
+    var T=en?{t:'Short positions',s:'Hellenic Capital Market Commission · disclosures ≥0.5% of share capital',fund:'Fund',st:'Status',
               open:'open',closed:'closed',date:'Date',pos:'Position',chg:'Change',dis:'disclosures',
               twoS:'two independent sources — they are not added together',
               nodH:'No position ≥0.5%',
@@ -1330,7 +1350,7 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
               aggN:'Anonymised aggregate', aggCur:'current', pubs:'publications',
               noopen:'No open short position', lastk:'last known',
               hist:'Short position history', hn:function(n){return n+' fund'+(n===1?'':'s');}, grH:'Greece (Hellenic Capital Market Commission ≥0.5%)', ukH:'United Kingdom (FCA ≥0.2%)',}
-             :{t:'Short θέσεις',s:'Επιτροπή Κεφαλαιαγοράς · δημοσιοποιήσεις ≥0,5% του μετοχικού κεφαλαίου',
+             :{t:'Short θέσεις',s:'Επιτροπή Κεφαλαιαγοράς · δημοσιοποιήσεις ≥0,5% του μετοχικού κεφαλαίου',fund:'Fund',st:'Κατάσταση',
               open:'ανοιχτή',closed:'κλειστή',date:'Ημερομηνία',pos:'Θέση',chg:'Μεταβολή',dis:'γνωστοπ.',
               twoS:'δύο ανεξάρτητες πηγές — δεν αθροίζονται',
               exH:'Εκτός ελληνικού καθεστώτος',
@@ -1349,25 +1369,19 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
       var rows=g.rows.map(function(r,i){
         var cv=chg(g.rows,i);
         var c=(cv==null||Math.abs(cv)<0.5*Math.pow(10,-k))?'nw':(cv>0?'up':'dn');
-        return '<div class="r"><span class="d">'+gd(r.d)+'</span>'
-          +'<span class="p">'+pc(r.p,k)+'%'+(r.x?' <span class="chip cl">'+T.closed+'</span>':'')+'</span>'
-          +'<span class="c '+c+'">'+dl(cv,k)+'</span></div>';
+        return '<tr><td>'+gd(r.d)+'</td><td>'+pc(r.p,k)+'%'+(r.x?' <span class="chip cl">'+T.closed+'</span>':'')+'</td>'
+          +'<td class="'+c+'">'+dl(cv,k)+'</td></tr>';
       }).join('');
+      /* §173 — «τελευταία γνωστή» / «κλειστή» δίπλα στο όνομα, όπως πριν. */
+      var tag=g.wasOpen?'<span class="chip lk">'+T.lastk+'</span>':(g.open?'':(inHist?'':'<span class="chip cl">'+T.closed+'</span>'));
       return '<details class="'+(g.open?'op':'')+'">'
         +'<summary><span class="arw">▶</span>'
-        +'<span class="nm"><b title="'+esc(g.f)+'">'+esc(g.f)+'</b>'
-        /* §173 — ΚΑΘΕ ΙΣΤΟΡΙΚΗ ΘΕΣΗ ΔΗΛΩΝΕΙ ΚΑΤΑΣΤΑΣΗ. Μέσα στο ιστορικό δεν αρκεί
-           ο τίτλος του μενού: η λίστα της FCA περιέχει και θέσεις που ήταν ΑΚΟΜΗ
-           ανοιχτές στην τελευταία δημοσίευση ονομάτων (10/07/2026) — αυτές παίρνουν
-           «τελευταία γνωστή», ΟΧΙ «κλειστή», γιατί δεν ξέρουμε αν έκλεισαν. Το
-           `wasOpen` το βάζει η block() πριν μηδενίσει το `open`. */
-        +(g.wasOpen?'<span class="chip lk">'+T.lastk+'</span>'
-          :(g.open?'':'<span class="chip cl">'+T.closed+'</span>'))+'</span>'
-        +'<span class="meta"><span class="lp">'+pc(g.lp,k)+'%</span>'
-        +(g.open?'<span class="chip op">'+opT+'</span>':'')
-        +'<span class="ld">'+gd(g.ld)+' · '+g.n+' '+(g.u||T.dis)+'</span></span></summary>'
-        +'<div class="rows"><div class="rh"><span>'+T.date+'</span><span>'+T.pos+'</span><span class="ra">'+T.chg+'</span></div>'
-        +rows+'</div></details>';
+        +'<span class="nm"><b title="'+esc(g.f)+'">'+esc(g.f)+'</b>'+tag+'</span>'
+        +'<span class="p">'+pc(g.lp,k)+'%</span>'
+        +'<span class="s">'+(g.open?'<span class="chip op">'+opT+'</span>':'')+'</span>'
+        +'<span class="d">'+gd(g.ld)+'</span></summary>'
+        +'<div class="rows"><table><thead><tr><th>'+T.date+'</th><th>'+T.pos+'</th><th>'+T.chg+'</th></tr></thead><tbody>'
+        +rows+'</tbody></table></div></details>';
     }).join(''); }
 
     /* §144 — ΑΝΟΙΧΤΕΣ ΠΑΝΩ, ΚΛΕΙΣΤΕΣ ΣΤΟ «ΙΣΤΟΡΙΚΟ». Όσες θέσεις δεν είναι ανοιχτές μπαίνουν
@@ -1390,16 +1404,15 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
           +'<div class="hb">'+fundList(cl.map(function(g){var o={};for(var q in g)o[q]=g[q];o.wasOpen=!!g.open;o.open=false;return o;}),k,opT,true)+'</div></details>';
       return h;
     }
-    function wrap(h){ return h?'<div class="scwrap"><div class="sc">'+h+'</div></div>':''; }
+    function wrap(h){ return h?'<div class="hdr"><span></span><span>'+T.fund+'</span><span class="r">'+T.pos+'</span><span>'+T.st+'</span><span class="r">'+T.date+'</span></div>'+h:''; }
 
     var box=document.getElementById('co-shorts');
-    if(!box){ box=document.createElement('div'); box.className='sh'; box.id='co-shorts'; ph.appendChild(box); }
+    if(!box){ box=document.createElement('div'); box.className='shl'; box.id='co-shorts'; ph.appendChild(box); }
+    var pnl=document.getElementById('p-shorts'); if(pnl) pnl.hidden=false;
     var listHtml=wrap(hasRec?block(rec.funds,3,T.open,false):'');
 
     if(!F){  /* ΜΙΑ ΠΗΓΗ (139 από τις 141): μονόστηλο, χωρίς ζώνη σύγκρισης. */
-      box.innerHTML='<div class="hd"><div class="t"><span class="dot"></span>'+T.t+'</div>'
-        +'<div class="s">'+T.s+'</div></div>'
-        +listHtml;
+      box.innerHTML=listHtml+'<p class="src">'+T.s+'</p>';
       return;
     }
 
@@ -1436,9 +1449,7 @@ ratiosEl.querySelectorAll('.cat-head').forEach(h=>h.onclick=()=>h.parentElement.
       +'<path d="M30,0v30M0,15h60" stroke="#fff" stroke-width="10"/>'
       +'<path d="M30,0v30M0,15h60" stroke="#C8102E" stroke-width="6"/></svg></span>';
 
-    box.innerHTML='<div class="hd"><div class="t"><span class="dot"></span>'+T.t+'</div>'
-      +'<div class="s">'+T.twoS+'</div></div>'
-      +'<div class="two even">'
+    box.innerHTML='<div class="two">'
         +'<div class="col"><div class="lb">'+FLAG_GR+'<span>'+T.grH+'</span></div>'
         +leftHtml+'</div>'
         +'<div class="col"><div class="lb">'+FLAG_UK+'<span>'+T.ukH+'</span></div>'

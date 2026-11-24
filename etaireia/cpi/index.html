@@ -90,64 +90,63 @@
     </div>
   </section>
 
-  <div class="page-basis page-basis-mid" id="ambasis-page" style="margin:22px 0 -9px"></div>
-
   <div class="layout">
 
-    <div class="a-year">
-      <div class="panel">
-        <div class="phead yr"><div class="union-wash" id="union-wash" hidden></div><div class="yr-top"><h2 id="yr-h">2025</h2><span class="ynote" id="yr-note" hidden></span></div><div class="latest" id="latest"></div><div class="lnote" id="latest-note" hidden></div><div class="ebstrip" id="eb-strip" hidden></div><div class="cband" id="current-band"></div></div>
-        <div class="pbody year-body">
-          <div class="year-top">
-            <div class="panel sub">
-              <div class="phead purple"><i class="pico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1"/><path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M17 10h2a2 2 0 0 1 2 2v1"/><path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M3 13v-1a2 2 0 0 1 2 -2h2"/></svg></i><h2 data-i18n="co.ph.holders">Μέτοχοι</h2></div>
-              <div class="pbody"><div id="own-viz"></div></div>
-            </div>
-            <div class="panel sub">
-              <div class="phead emerald"><i class="pico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M3.6 9h16.8"/><path d="M3.6 15h16.8"/><path d="M11.5 3a17 17 0 0 0 0 18"/><path d="M12.5 3a17 17 0 0 1 0 18"/></svg></i><h2 data-i18n="co.ph.subs">Θυγατρικές &amp; συμμετοχές</h2></div>
-              <div class="pbody">
-                <div id="listed-wrap"></div>
-                <div class="geo-wrap">
-                  <div class="donut-box"><canvas id="geo" role="img" aria-label="Κατανομή οντοτήτων ανά χώρα"></canvas>
-                    <div class="donut-center"><span class="big" id="geo-total"></span><span class="lbl" id="geo-sub"></span></div>
-                  </div>
-                  <div class="legend" id="geo-legend"></div>
-                </div>
-                <button class="show-all" id="show-all"></button>
-                <div class="subs-full hidden" id="subs-full">
-                  <input class="filter" id="subs-filter" placeholder="Αναζήτηση θυγατρικής ή χώρας…" data-i18n-ph="co.subs.ph">
-                  <div id="acc"></div>
-                </div>
-              </div>
-            </div>
+    <div class="a-own">
+      <div class="year-top own3">
+        <div class="panel sub p-hold">
+          <div class="phead teal"><i class="pico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1"/><path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M17 10h2a2 2 0 0 1 2 2v1"/><path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M3 13v-1a2 2 0 0 1 2 -2h2"/></svg></i><h2 data-i18n="co.ph.holders">Μέτοχοι</h2></div>
+          <div class="pbody cmp"><div id="own-viz"></div></div>
+        </div>
+        <div class="panel sub p-subs">
+          <div class="phead teal"><i class="pico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M3.6 9h16.8"/><path d="M3.6 15h16.8"/><path d="M11.5 3a17 17 0 0 0 0 18"/><path d="M12.5 3a17 17 0 0 1 0 18"/></svg></i><h2 data-i18n="co.ph.subs">Θυγατρικές &amp; συμμετοχές</h2></div>
+          <div class="pbody cmp">
+            <div id="listed-wrap"></div>
+            <div class="subs2" id="subs2"></div>
+            <details class="subs-all" id="subs-all">
+              <summary id="show-all"></summary>
+              <input class="filter" id="subs-filter" placeholder="Αναζήτηση θυγατρικής ή χώρας…" data-i18n-ph="co.subs.ph">
+              <div id="acc"></div>
+            </details>
           </div>
-          <div class="glance-row">
-            <div class="panel sub p-glance">
-              <div class="phead teal"><i class="pico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M13.41 10.59l2.59 -2.59"/><path d="M7 12a5 5 0 0 1 5 -5"/></svg></i><h2 data-i18n="co.ph.glance">Με μια ματιά</h2><span class="hint" data-i18n="co.hint.vssec">έναντι κλάδου</span></div>
-              <div class="pbody"><div class="sc-grid" id="scorecard"></div></div>
-            </div>
-            <div class="panel sub p-dist">
-              <div class="phead teal"><i class="pico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M14.8 9a2 2 0 0 0 -1.8 -1h-2a2 2 0 1 0 0 4h2a2 2 0 1 1 0 4h-2a2 2 0 0 1 -1.8 -1"/><path d="M12 7v10"/></svg></i><h2 data-i18n="co.ph.dist">Χρηματικές διανομές</h2><span class="hint"><span class="h1mark" hidden data-i18n="co.dist.annual">ΕΤΗΣΙΑ ΣΤΟΙΧΕΙΑ</span><span class="h1mark" hidden> · </span><span data-i18n="co.hint.3y">3ετία</span></span></div>
-              <div class="pbody" id="distcard"></div>
-            </div>
-          </div>
+        </div>
+        <div class="panel sub p-dist">
+          <div class="phead teal"><i class="pico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M14.8 9a2 2 0 0 0 -1.8 -1h-2a2 2 0 1 0 0 4h2a2 2 0 1 1 0 4h-2a2 2 0 0 1 -1.8 -1"/><path d="M12 7v10"/></svg></i><h2 data-i18n="co.ph.dist">Χρηματικές διανομές</h2><span class="hint" data-i18n="co.hint.3y">3ετία</span></div>
+          <div class="pbody cmp" id="distcard"></div>
         </div>
       </div>
     </div>
 
-    <div class="a-ratios">
+    <div class="a-per">
       <div class="panel">
-        <div class="phead blue"><i class="pico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M9 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M19 7m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M14 15m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M10.16 10.62l2.34 2.88"/><path d="M15.088 13.328l2.837 -4.586"/></svg></i><h2 data-i18n="co.ph.ratios">Αριθμοδείκτες</h2><span class="h1c h1mark" hidden>6M</span></div>
+        <div class="phead blue"><i class="pico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15v2M11 11v6M15 13v4M19 8v9"/></svg></i><h2 data-i18n="co.ph.per">Μεγέθη περιόδου</h2></div>
         <div class="pbody">
-          <div id="ratios"></div>
-          <p class="note" data-i18n-html="co.ratios.note"><strong>Διάμεσος κλάδου:</strong> η σύγκριση γίνεται με τη διάμεση («τυπική») τιμή των εταιρειών του κλάδου, όχι με μέσο όρο — έτσι ακραίες τιμές λίγων εταιρειών δεν αλλοιώνουν τη σύγκριση. Οι τράπεζες εξετάζονται χωριστά.</p>
+          <div class="per-sc" id="per"></div>
+          <div class="per-fn" id="per-fn" hidden></div>
+          <p class="per-note" id="per-note"></p>
         </div>
+      </div>
+    </div>
+
+    <div class="row2">
+      <div class="a-ratios">
+        <div class="panel">
+          <div class="phead blue"><i class="pico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M9 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M19 7m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M14 15m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M10.16 10.62l2.34 2.88"/><path d="M15.088 13.328l2.837 -4.586"/></svg></i><h2 data-i18n="co.ph.ratios">Αριθμοδείκτες</h2></div>
+          <div class="pbody">
+            <div class="rt-sc" id="ratios"></div>
+            <p class="note" data-i18n-html="co.ratios.note"><strong>Διάμεσος κλάδου:</strong> η σύγκριση γίνεται με τη διάμεση («τυπική») τιμή των εταιρειών του κλάδου, όχι με μέσο όρο — έτσι ακραίες τιμές λίγων εταιρειών δεν αλλοιώνουν τη σύγκριση. Οι τράπεζες εξετάζονται χωριστά.</p>
+          </div>
+        </div>
+      </div>
+      <div class="panel sub p-shorts" id="p-shorts" hidden>
+        <div class="phead teal"><i class="pico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7l6 6 4-4 8 8"/><path d="M21 10v7h-7"/></svg></i><h2 data-i18n="co.ph.shorts">Short θέσεις</h2></div>
+        <div class="pbody" id="co-shorts-host"></div>
       </div>
     </div>
 
     <div class="a-traj">
       <div class="panel">
-        <div class="phead blue"><i class="pico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19l16 0"/><path d="M4 15l4 -6l4 2l4 -5l4 4"/></svg></i><h2 data-i18n="co.ph.traj">Τροχιά μεγεθών</h2><span class="h1c h1mark" hidden>6M</span></div>
+        <div class="phead blue"><i class="pico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19l16 0"/><path d="M4 15l4 -6l4 2l4 -5l4 4"/></svg></i><h2 data-i18n="co.ph.traj">Τροχιά μεγεθών</h2></div>
         <div class="pbody">
           <div class="mlegend"><span class="ml"><i style="background:#2f80c2"></i><span data-i18n="co.leg.rev">Τζίρος</span></span><span class="ml" id="eb-leg"><i style="background:#3f9e6a"></i>EBITDA</span><span class="u" data-i18n="co.unit.meur2">(εκατ. €)</span></div>
           <div class="chart-wrap" style="position:relative">
@@ -156,6 +155,11 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="panel sub p-glance" hidden>
+      <div class="phead teal"><i class="pico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M13.41 10.59l2.59 -2.59"/><path d="M7 12a5 5 0 0 1 5 -5"/></svg></i><h2 data-i18n="co.ph.glance">Με μια ματιά</h2><span class="hint" data-i18n="co.hint.vssec">έναντι κλάδου</span></div>
+      <div class="pbody"><div class="sc-grid" id="scorecard"></div></div>
     </div>
 
   </div>
