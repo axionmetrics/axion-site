@@ -179,6 +179,9 @@ AX_I18N.add({
                  en:'Changes compare with the previous fiscal year. The «Prices {d}» column applies the market capitalisation of {d}.'},
  'co.per.note0':{el:'Η μεταβολή συγκρίνει με την προηγούμενη χρήση.', en:'Changes compare with the previous fiscal year.'},
  'co.per.fnp':{el:'{p}: ', en:'{p}: '},
+ 'co.np.s.patq':{el:'Η εταιρεία δημοσίευσε μόνο τα <b>κέρδη μετά φόρων του ομίλου</b>, χωρίς τον διαχωρισμό του μεριδίου των μη ελεγχουσών συμμετοχών.', en:'The company published only the <b>group profit after tax</b>, without separating the share of non-controlling interests.'},
+ 'co.eb.s.reponlyq':{el:'Ο αριθμός είναι το <b>δημοσιευμένο</b> EBITDA της εταιρείας. Η ανακοίνωση της περιόδου δεν περιέχει τα στοιχεία για δικό μας υπολογισμό.', en:'This figure is the company\u2019s <b>reported</b> EBITDA. The period announcement does not contain the figures needed for our own calculation.'},
+ 'co.per.noteq':{el:'Στο 3μηνο και στο 9μηνο εμφανίζονται μόνο τα μεγέθη που δημοσιεύει η εταιρεία· η μεταβολή συγκρίνει με την ίδια περίοδο πέρσι.', en:'The 3M and 9M columns show only the figures the company publishes; changes compare with the same period a year earlier.'},
  'co.eb.s.axv':{el:' Υπολογισμός Axion: <b>{v}</b>.', en:' Axion calculation: <b>{v}</b>.'},
  'co.rt.sector':{el:'Κλάδος', en:'Sector'},
  'co.rt.close':{el:'κλείσιμο', en:'close'},
@@ -607,13 +610,22 @@ function FNMARK(key){ const n=key?FN_N[key]:0; return n?`<sup class="fnm">${n}</
   const ya=AX&&AX.latest?AX.latest.period:'';
   PS.push(fromSeries(AX,L('co.per.annual').replace('{y}',ya),'31/12/'+ya,
     hasCur?{mcap:cur.mcap,pe:cur.pe,pbv:cur.pbv}:null));
+  // §190 — Τα 3Μ/9Μ έρχονται από τη γέφυρα ως {y, m:{…}, p:{…}} (p = ίδια περίοδος πέρσι).
+  // Περνούν από την ΙΔΙΑ λογική με το ετήσιο/6μηνο: φτιάχνεται μια σειρά δύο θέσεων [πέρσι, φέτος]
+  // ώστε το EBITDA να ακολουθεί το §45 (δημοσιευμένο/δικό μας + υποσημείωση) και τα καθαρά
+  // κέρδη την υποσημείωση μειοψηφιών. Χωρίς στήλη «Τιμές»: στο τρίμηνο δεν υπάρχει αποτίμηση.
+  // Εμφανίζονται μόνο όταν το έτος τους είναι νεότερο από την τελευταία χρήση (όπως το 6μηνο).
   const Q=(AX&&AX.quarters)||{};
-  const fromQ=(q,key)=>({lab:L(key).replace('{y}',q.y),y:q.y,px:q.px||'',now:null,
-      v:k=>(q.m||{})[k], p:k=>(q.p||{})[k], M:null, series:false, opt:true});
-  if(Q.q1) PS.push(fromQ(Q.q1,'co.per.q1'));
+  const fromQ=(q,key)=>{ const m=q.m||{}, p=q.p||{}, M={};
+    ['ebitda','ebitda_rep','ebitda_kind','pat'].forEach(k=>{ M[k]=[(k in p)?p[k]:null,(k in m)?m[k]:null]; });
+    return {lab:L(key).replace('{y}',q.y),y:q.y,px:'',now:null,
+      v:k=>m[k], p:k=>p[k], M:M, i:1, series:true, opt:true}; };
+  const qOk=q=>!!(q&&q.m&&Number(q.y)>Number(ya));
+  const HASQ=qOk(Q.q1)||qOk(Q.q3);
+  if(qOk(Q.q1)) PS.push(fromQ(Q.q1,'co.per.q1'));
   if(HAS6) PS.push(fromSeries(AXI,L('co.per.h1').replace('{y}',AXI.latest.period),'30/06/'+AXI.latest.period,
     hasCur?{mcap:cur.mcap,pe:(cur.pe_i!=null?cur.pe_i:null),pbv:(cur.pbv_i!=null?cur.pbv_i:null)}:null));
-  if(Q.q3) PS.push(fromQ(Q.q3,'co.per.q3'));
+  if(qOk(Q.q3)) PS.push(fromQ(Q.q3,'co.per.q3'));
   PS.forEach((P,j)=>{ P.cls=j===0?'ya':(P.opt?'q':'h1'); });
   // γραμμές
   const R=[
@@ -633,6 +645,12 @@ function FNMARK(key){ const n=key?FN_N[key]:0; return n?`<sup class="fnm">${n}</
   function cell(P,r){
     const sw=IS_BANK?BANK_SWAP[r.k]:null, k=sw?sw.k:r.k;
     let v=P.v(k), pv=P.p(k), mark='';
+    // §190 — 3Μ/9Μ: όταν το δελτίο δίνει μόνο τα κέρδη μετά φόρων του ομίλου (όχι τα αναλογούντα
+    // στη μητρική), δείχνεται αυτό το νούμερο ΜΕ υποσημείωση — ποτέ σιωπηλά στη θέση του άλλου.
+    if(r.k==='net_profit'&&P.opt&&!has(v)&&has(P.v('pat'))){
+      v=P.v('pat'); pv=P.p('pat');
+      mark=sup(fnIdx(L('co.per.fnp').replace('{p}',P.lab)+L('co.np.s.patq')));
+    }
     if(r.k==='ebitda'&&!sw&&P.series){
       const st=ebState(P.M,P.i);
       if(st.s==='na'){ v=null; }
@@ -641,7 +659,7 @@ function FNMARK(key){ const n=key?FN_N[key]:0; return n?`<sup class="fnm">${n}</
         const ser=(v===st.rep)?(P.M.ebitda_rep||[]):(P.M.ebitda||[]); pv=ser[P.i-1];
         const parts=[];
         if(!(st.s==='legacy'||st.s==='same')){
-          if(st.s==='reponly') parts.push(L('co.eb.s.reponly'));
+          if(st.s==='reponly') parts.push(L(P.opt?'co.eb.s.reponlyq':'co.eb.s.reponly'));
           else if(st.s==='own') parts.push(L('co.eb.s.own'));
           else { parts.push(st.kind?L('co.eb.s.kind').replace('{k}',`<span class="kt">${st.kind}</span>`).replace('{w}',L(EB_WHY(st.kind))):L('co.eb.s.plain'));
                  parts.push(L('co.eb.s.axv').replace('{v}',fMil(st.own)+EURSUF())); }
@@ -675,7 +693,7 @@ function FNMARK(key){ const n=key?FN_N[key]:0; return n?`<sup class="fnm">${n}</
   const fe=document.getElementById('per-fn');
   if(fe){ if(FNS.length){ fe.innerHTML=FNS.map((t,i)=>`<div class="fn"><span class="fnn">${i+1}</span><span class="fnt">${t}</span></div>`).join(''); fe.hidden=false; } else fe.hidden=true; }
   const ne=document.getElementById('per-note');
-  if(ne) ne.textContent=(HAS6&&hasCur)?L('co.per.note').replace(/\{d\}/g,curD):(hasCur?L('co.per.note1').replace(/\{d\}/g,curD):L('co.per.note0'));
+  if(ne) ne.textContent=((HAS6&&hasCur)?L('co.per.note').replace(/\{d\}/g,curD):(hasCur?L('co.per.note1').replace(/\{d\}/g,curD):L('co.per.note0')))+(HASQ?' '+L('co.per.noteq'):'');
 })();
 
 const FAM={

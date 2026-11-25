@@ -1,678 +1,678 @@
 {
-"generated": "2026-11-11",
+"generated": "2026-11-25",
 "note": "Το γράφει η γέφυρα (§163). Αποτύπωμα περιεχομένου ανά διεύθυνση, ώστε το lastmod του sitemap να ανανεώνεται μόνο σε πραγματική αλλαγή.",
 "pages": {
 "": {
-"fp": "463696a5c487",
-"lastmod": "2026-11-11"
+"fp": "394e46e2d688",
+"lastmod": "2026-11-25"
 },
 "about/": {
 "fp": "bad60b8de921",
 "lastmod": "2026-11-04"
 },
 "apotelesmata/": {
-"fp": "6d44b052086d",
-"lastmod": "2026-11-11"
+"fp": "6a7ffada02b9",
+"lastmod": "2026-11-25"
 },
 "company/": {
-"fp": "bb6dff2e5d56",
-"lastmod": "2026-11-11"
+"fp": "f433a1df2b94",
+"lastmod": "2026-11-25"
 },
 "compare/": {
-"fp": "1385e016e52e",
-"lastmod": "2026-11-11"
+"fp": "c8be43b18b26",
+"lastmod": "2026-11-25"
 },
 "etaireia/admie-symmetochon/": {
-"fp": "e34f5e79ac6b",
-"lastmod": "2026-11-04"
+"fp": "0f51d751c4de",
+"lastmod": "2026-11-25"
 },
 "etaireia/aegean-airlines/": {
-"fp": "ec69aee2aee2",
-"lastmod": "2026-11-04"
+"fp": "89908b93e49f",
+"lastmod": "2026-11-25"
 },
 "etaireia/afoi-kordellou/": {
-"fp": "137ad2e402f1",
-"lastmod": "2026-11-04"
+"fp": "0c3095c48fc9",
+"lastmod": "2026-11-25"
 },
 "etaireia/agrotikos-oikos-spyrou/": {
-"fp": "86c7757734db",
-"lastmod": "2026-11-04"
+"fp": "225d60ec955e",
+"lastmod": "2026-11-25"
 },
 "etaireia/allwyn/": {
-"fp": "892d4e5671d5",
-"lastmod": "2026-11-05"
+"fp": "0f6ad6dd8be9",
+"lastmod": "2026-11-25"
 },
 "etaireia/alpha-asset-management/": {
-"fp": "ea0323bd773d",
-"lastmod": "2026-11-04"
+"fp": "227dce9e011e",
+"lastmod": "2026-11-25"
 },
 "etaireia/alpha-bank/": {
-"fp": "61e9b6a72d59",
-"lastmod": "2026-11-04"
+"fp": "32bba8c21c7f",
+"lastmod": "2026-11-25"
 },
 "etaireia/alpha-real-estate-services/": {
-"fp": "f122ae58ad7a",
-"lastmod": "2026-11-04"
+"fp": "ce1a2c366aa4",
+"lastmod": "2026-11-25"
 },
 "etaireia/alpha-trust-holdings/": {
-"fp": "24fe2accad65",
-"lastmod": "2026-11-04"
+"fp": "a1ed77f1d437",
+"lastmod": "2026-11-25"
 },
 "etaireia/alphatrust-andromeda/": {
-"fp": "ff57d15fb5a3",
-"lastmod": "2026-11-04"
+"fp": "9da1d026e732",
+"lastmod": "2026-11-25"
 },
 "etaireia/alter-ego-media/": {
-"fp": "ba7ca19f7a3c",
-"lastmod": "2026-11-04"
+"fp": "ed9d43c92054",
+"lastmod": "2026-11-25"
 },
 "etaireia/alumil/": {
-"fp": "70f9f6a07792",
-"lastmod": "2026-11-04"
+"fp": "865079f4160b",
+"lastmod": "2026-11-25"
 },
 "etaireia/as-company/": {
-"fp": "e75cde9e2cbc",
-"lastmod": "2026-11-04"
+"fp": "a87398e5effb",
+"lastmod": "2026-11-25"
 },
 "etaireia/attica-group/": {
-"fp": "dfee56e8328b",
-"lastmod": "2026-11-04"
+"fp": "1bd70378e10a",
+"lastmod": "2026-11-25"
 },
 "etaireia/attica-media-group/": {
-"fp": "ab57b789adb7",
-"lastmod": "2026-11-04"
+"fp": "b971fbc796bb",
+"lastmod": "2026-11-25"
 },
 "etaireia/attica-polykatastimata/": {
-"fp": "4b49c0f6b913",
-"lastmod": "2026-11-04"
+"fp": "2e1ab6f15d8b",
+"lastmod": "2026-11-25"
 },
 "etaireia/austriacard/": {
-"fp": "811384ba8b70",
-"lastmod": "2026-11-04"
+"fp": "28a2a544719d",
+"lastmod": "2026-11-25"
 },
 "etaireia/autohellas/": {
-"fp": "18caed7ef9ae",
-"lastmod": "2026-11-04"
+"fp": "9635dd0967c1",
+"lastmod": "2026-11-25"
 },
 "etaireia/avax-group/": {
-"fp": "1497c4f8d2af",
-"lastmod": "2026-11-04"
+"fp": "af22156fafb2",
+"lastmod": "2026-11-25"
 },
 "etaireia/ave/": {
-"fp": "45919b39324a",
-"lastmod": "2026-11-04"
+"fp": "4ab0a888cfc0",
+"lastmod": "2026-11-25"
 },
 "etaireia/ballys-intralot/": {
-"fp": "ac801aa79edf",
-"lastmod": "2026-11-04"
+"fp": "22676ef72559",
+"lastmod": "2026-11-25"
 },
 "etaireia/biokarpet/": {
-"fp": "e6f432f245a9",
-"lastmod": "2026-11-04"
+"fp": "7ce19f2848af",
+"lastmod": "2026-11-25"
 },
 "etaireia/briq-properties/": {
-"fp": "4f7b0fb905a4",
-"lastmod": "2026-11-06"
+"fp": "2fd3b3e64628",
+"lastmod": "2026-11-25"
 },
 "etaireia/capital-maritime-finance/": {
-"fp": "abfde40d7da6",
-"lastmod": "2026-11-04"
+"fp": "0e090fd82d08",
+"lastmod": "2026-11-25"
 },
 "etaireia/cenergy-holdings/": {
-"fp": "56b6b43bcf3c",
-"lastmod": "2026-11-04"
+"fp": "61e0c1fd6dbe",
+"lastmod": "2026-11-25"
 },
 "etaireia/centric/": {
-"fp": "e837c21f7d6e",
-"lastmod": "2026-11-04"
+"fp": "3425e86a8219",
+"lastmod": "2026-11-25"
 },
 "etaireia/chaidemenos/": {
-"fp": "a0c718f58032",
-"lastmod": "2026-11-04"
+"fp": "ddf8e3b384b7",
+"lastmod": "2026-11-25"
 },
 "etaireia/cnl-capital/": {
-"fp": "512155f85e61",
-"lastmod": "2026-11-04"
+"fp": "965a1f691ebb",
+"lastmod": "2026-11-25"
 },
 "etaireia/coca-cola/": {
-"fp": "603a2bc4b881",
-"lastmod": "2026-11-04"
+"fp": "bb8a1fda804e",
+"lastmod": "2026-11-25"
 },
 "etaireia/cpi/": {
-"fp": "66c2bd63630e",
-"lastmod": "2026-11-04"
+"fp": "bd94a8c4595e",
+"lastmod": "2026-11-25"
 },
 "etaireia/crediabank/": {
-"fp": "f50de4651f1e",
-"lastmod": "2026-11-04"
+"fp": "478676df0fa0",
+"lastmod": "2026-11-25"
 },
 "etaireia/daios-plastics/": {
-"fp": "ce2612e7d762",
-"lastmod": "2026-11-04"
+"fp": "413e40e23d00",
+"lastmod": "2026-11-25"
 },
 "etaireia/dei/": {
-"fp": "ef75a40d2c24",
-"lastmod": "2026-11-04"
+"fp": "4cf14d8336c8",
+"lastmod": "2026-11-25"
 },
 "etaireia/diethnis-aerolimenas-athinon/": {
-"fp": "107affee4e20",
-"lastmod": "2026-11-04"
+"fp": "a38d4ff3e270",
+"lastmod": "2026-11-25"
 },
 "etaireia/dimand/": {
-"fp": "a7ae73c6838f",
-"lastmod": "2026-11-04"
+"fp": "5870bf7eb44a",
+"lastmod": "2026-11-25"
 },
 "etaireia/domiki-kritis/": {
-"fp": "a1c588ac994b",
-"lastmod": "2026-11-04"
+"fp": "b6c1556ce3dc",
+"lastmod": "2026-11-25"
 },
 "etaireia/doppler/": {
-"fp": "45f7c5ddfd3b",
-"lastmod": "2026-11-04"
+"fp": "e8891b8df23d",
+"lastmod": "2026-11-25"
 },
 "etaireia/dotsoft/": {
-"fp": "fec08ff95c25",
-"lastmod": "2026-11-04"
+"fp": "f3a1eee0fa04",
+"lastmod": "2026-11-25"
 },
 "etaireia/dromeas/": {
-"fp": "b5942c870a98",
-"lastmod": "2026-11-04"
+"fp": "195912dea518",
+"lastmod": "2026-11-25"
 },
 "etaireia/eins/": {
-"fp": "1c4ee1f59bfb",
-"lastmod": "2026-11-04"
+"fp": "5782cdabac91",
+"lastmod": "2026-11-25"
 },
 "etaireia/ekter/": {
-"fp": "df332df4af0a",
-"lastmod": "2026-11-04"
+"fp": "0fb23f3b8a43",
+"lastmod": "2026-11-25"
 },
 "etaireia/el-d-mouzakis/": {
-"fp": "fb85f0c033cd",
-"lastmod": "2026-11-04"
+"fp": "23e5609fd3af",
+"lastmod": "2026-11-25"
 },
 "etaireia/elastron/": {
-"fp": "dbc5655875db",
-"lastmod": "2026-11-04"
+"fp": "d2eb44670e64",
+"lastmod": "2026-11-25"
 },
 "etaireia/elin/": {
-"fp": "d6128d579c93",
-"lastmod": "2026-11-04"
+"fp": "13edb893df22",
+"lastmod": "2026-11-25"
 },
 "etaireia/ellaktor/": {
-"fp": "d790b19dee5e",
-"lastmod": "2026-11-04"
+"fp": "ce43b433def0",
+"lastmod": "2026-11-25"
 },
 "etaireia/elton-group/": {
-"fp": "f3c25bfb1366",
-"lastmod": "2026-11-04"
+"fp": "0739e1cf0742",
+"lastmod": "2026-11-25"
 },
 "etaireia/elvalhalcor/": {
-"fp": "402f860780e3",
-"lastmod": "2026-11-04"
+"fp": "8bcd89c58dcc",
+"lastmod": "2026-11-25"
 },
 "etaireia/elve/": {
-"fp": "2233058d7844",
-"lastmod": "2026-11-04"
+"fp": "7290e87773f0",
+"lastmod": "2026-11-25"
 },
 "etaireia/ethniki-trapeza-tis-ellados/": {
-"fp": "6d74783c006d",
-"lastmod": "2026-11-04"
+"fp": "d83c6525afa9",
+"lastmod": "2026-11-25"
 },
 "etaireia/eurobank/": {
-"fp": "d433977d3dca",
-"lastmod": "2026-11-04"
+"fp": "c861460bead1",
+"lastmod": "2026-11-25"
 },
 "etaireia/euronext-athens/": {
-"fp": "ad02ccebe449",
-"lastmod": "2026-11-04"
+"fp": "617bc09ea971",
+"lastmod": "2026-11-25"
 },
 "etaireia/euroxx-securities/": {
-"fp": "598a78a495df",
-"lastmod": "2026-11-04"
+"fp": "940a25c8325d",
+"lastmod": "2026-11-25"
 },
 "etaireia/evath/": {
-"fp": "cee6ede56286",
-"lastmod": "2026-11-04"
+"fp": "02460cbf1a23",
+"lastmod": "2026-11-25"
 },
 "etaireia/evdap/": {
-"fp": "2b17abe983d4",
-"lastmod": "2026-11-04"
+"fp": "12ad21c6aa1f",
+"lastmod": "2026-11-25"
 },
 "etaireia/evrofarma/": {
-"fp": "8d42e8cffd02",
-"lastmod": "2026-11-04"
+"fp": "c118b58a09ec",
+"lastmod": "2026-11-25"
 },
 "etaireia/evropi-holdings/": {
-"fp": "c5ad3c89c9dc",
-"lastmod": "2026-11-04"
+"fp": "d6aa8c7dedd2",
+"lastmod": "2026-11-25"
 },
 "etaireia/fais-group/": {
-"fp": "138a8cc0fe42",
-"lastmod": "2026-11-04"
+"fp": "bf03d0e7d0b4",
+"lastmod": "2026-11-25"
 },
 "etaireia/fdl-group/": {
-"fp": "57d504eff618",
-"lastmod": "2026-11-04"
+"fp": "2ef3c6db5d3d",
+"lastmod": "2026-11-25"
 },
 "etaireia/filippos-nakas/": {
-"fp": "675145d4b9ca",
-"lastmod": "2026-11-04"
+"fp": "3f6abb261c76",
+"lastmod": "2026-11-25"
 },
 "etaireia/flexopack/": {
-"fp": "4594270f0935",
-"lastmod": "2026-11-04"
+"fp": "a8ef2113c466",
+"lastmod": "2026-11-25"
 },
 "etaireia/fourlis-group/": {
-"fp": "acb67b63cf65",
-"lastmod": "2026-11-04"
+"fp": "2db98fef59d8",
+"lastmod": "2026-11-25"
 },
 "etaireia/frigoglass-saic/": {
-"fp": "6138f2d3836c",
-"lastmod": "2026-11-04"
+"fp": "fbc932f7344a",
+"lastmod": "2026-11-25"
 },
 "etaireia/gek-terna/": {
-"fp": "47580b4df606",
-"lastmod": "2026-11-04"
+"fp": "02ae401d6008",
+"lastmod": "2026-11-25"
 },
 "etaireia/geniki-emporiou-viomichanias/": {
-"fp": "a15471cf5fd5",
-"lastmod": "2026-11-04"
+"fp": "29320f7a8c9e",
+"lastmod": "2026-11-25"
 },
 "etaireia/heleniq-energy/": {
-"fp": "302580610d8e",
-"lastmod": "2026-11-04"
+"fp": "96899d2deb34",
+"lastmod": "2026-11-25"
 },
 "etaireia/ideal-holdings/": {
-"fp": "f487435d1eee",
-"lastmod": "2026-11-04"
+"fp": "87ba910767b0",
+"lastmod": "2026-11-25"
 },
 "etaireia/iktinos-ellas/": {
-"fp": "81fce687242a",
-"lastmod": "2026-11-04"
+"fp": "57a5d02e7798",
+"lastmod": "2026-11-25"
 },
 "etaireia/ilyda/": {
-"fp": "7786f3efca5c",
-"lastmod": "2026-11-04"
+"fp": "7d852973a0d4",
+"lastmod": "2026-11-25"
 },
 "etaireia/interlife-asfalistiki/": {
-"fp": "9652d3ff9fff",
-"lastmod": "2026-11-04"
+"fp": "fd167d98c542",
+"lastmod": "2026-11-25"
 },
 "etaireia/intertech/": {
-"fp": "bd325f845780",
-"lastmod": "2026-11-04"
+"fp": "b5e613dd63bb",
+"lastmod": "2026-11-25"
 },
 "etaireia/interwood-xylemporia/": {
-"fp": "d63751e1289d",
-"lastmod": "2026-11-04"
+"fp": "bac959e8a78b",
+"lastmod": "2026-11-25"
 },
 "etaireia/intracom-holdings/": {
-"fp": "3e1b34b741e3",
-"lastmod": "2026-11-04"
+"fp": "7f8779c60873",
+"lastmod": "2026-11-25"
 },
 "etaireia/jumbo/": {
-"fp": "b3cf276afda9",
-"lastmod": "2026-11-04"
+"fp": "6b68207188b9",
+"lastmod": "2026-11-25"
 },
 "etaireia/kapnoviomichania-karelia/": {
-"fp": "013d1ec85f99",
-"lastmod": "2026-11-04"
+"fp": "cb29b2dade16",
+"lastmod": "2026-11-25"
 },
 "etaireia/kekrops/": {
-"fp": "a24f429c6f55",
-"lastmod": "2026-11-04"
+"fp": "528b409ab3e7",
+"lastmod": "2026-11-25"
 },
 "etaireia/klostoufantourgia-navpaktou/": {
-"fp": "653d47ce115d",
-"lastmod": "2026-11-04"
+"fp": "ac14ac92b729",
+"lastmod": "2026-11-25"
 },
 "etaireia/kri-kri/": {
-"fp": "6bf44a5aaaf3",
-"lastmod": "2026-11-04"
+"fp": "e21c73024ba9",
+"lastmod": "2026-11-25"
 },
 "etaireia/lamda-development/": {
-"fp": "d16037282134",
-"lastmod": "2026-11-04"
+"fp": "c893124b5f51",
+"lastmod": "2026-11-25"
 },
 "etaireia/lampsa/": {
-"fp": "5523107ec0a2",
-"lastmod": "2026-11-04"
+"fp": "22b17e454f3b",
+"lastmod": "2026-11-25"
 },
 "etaireia/lanakam/": {
-"fp": "e18c474d50cf",
-"lastmod": "2026-11-04"
+"fp": "54a200a98bdf",
+"lastmod": "2026-11-25"
 },
 "etaireia/lavipharm/": {
-"fp": "cffa1e9360e8",
-"lastmod": "2026-11-04"
+"fp": "30141540a595",
+"lastmod": "2026-11-25"
 },
 "etaireia/leventeris/": {
-"fp": "07692805fe22",
-"lastmod": "2026-11-04"
+"fp": "6164f95e7bae",
+"lastmod": "2026-11-25"
 },
 "etaireia/logismos/": {
-"fp": "ca8165416e81",
-"lastmod": "2026-11-04"
+"fp": "024ae1c66d04",
+"lastmod": "2026-11-25"
 },
 "etaireia/loulis-food-ingredients/": {
-"fp": "a9b596e7cfb9",
-"lastmod": "2026-11-04"
+"fp": "a8d32d31fca8",
+"lastmod": "2026-11-25"
 },
 "etaireia/marfin-investment-group/": {
-"fp": "969af2ec56b6",
-"lastmod": "2026-11-04"
+"fp": "51ecf7f2c20e",
+"lastmod": "2026-11-25"
 },
 "etaireia/mathios-refractories/": {
-"fp": "ccdadd2bcbfb",
-"lastmod": "2026-11-04"
+"fp": "f8f498c9e1e6",
+"lastmod": "2026-11-25"
 },
 "etaireia/medicon-hellas/": {
-"fp": "d403bac8dbbd",
-"lastmod": "2026-11-04"
+"fp": "8fcc16223f27",
+"lastmod": "2026-11-25"
 },
 "etaireia/mediterra/": {
-"fp": "f5e3ad745c96",
-"lastmod": "2026-11-04"
+"fp": "e021b0e230bc",
+"lastmod": "2026-11-25"
 },
 "etaireia/metlen-energy-metals/": {
-"fp": "36ed40f82673",
-"lastmod": "2026-11-04"
+"fp": "0c20fbbb2537",
+"lastmod": "2026-11-25"
 },
 "etaireia/mevaco/": {
-"fp": "553f4c0fda17",
-"lastmod": "2026-11-04"
+"fp": "f1beba8452ec",
+"lastmod": "2026-11-25"
 },
 "etaireia/minerva/": {
-"fp": "cf0f84af0305",
-"lastmod": "2026-11-04"
+"fp": "3b4ff64c4be0",
+"lastmod": "2026-11-25"
 },
 "etaireia/motodynamiki/": {
-"fp": "c8228d15af90",
-"lastmod": "2026-11-04"
+"fp": "332e37fe9190",
+"lastmod": "2026-11-25"
 },
 "etaireia/motor-oil/": {
-"fp": "04cf8ef10dc9",
-"lastmod": "2026-11-04"
+"fp": "036dd44b23fc",
+"lastmod": "2026-11-25"
 },
 "etaireia/mple-kedros/": {
-"fp": "1a2d4a395192",
-"lastmod": "2026-11-04"
+"fp": "eaf4c3fe5cea",
+"lastmod": "2026-11-25"
 },
 "etaireia/noval-property/": {
-"fp": "a2b7b7ec8233",
-"lastmod": "2026-11-04"
+"fp": "063189b09230",
+"lastmod": "2026-11-25"
 },
 "etaireia/omilos-aktor/": {
-"fp": "67c15548c743",
-"lastmod": "2026-11-04"
+"fp": "736629164f74",
+"lastmod": "2026-11-25"
 },
 "etaireia/omilos-iatrikou-athinon/": {
-"fp": "b782b23c143b",
-"lastmod": "2026-11-04"
+"fp": "cfd73a9f7a9d",
+"lastmod": "2026-11-25"
 },
 "etaireia/omilos-plastika-thrakis/": {
-"fp": "de079a6367de",
-"lastmod": "2026-11-04"
+"fp": "aba72483aca4",
+"lastmod": "2026-11-25"
 },
 "etaireia/onyx-touristiki/": {
-"fp": "866b72ae7254",
-"lastmod": "2026-11-04"
+"fp": "cc27976da45c",
+"lastmod": "2026-11-25"
 },
 "etaireia/optima-bank/": {
-"fp": "187e74896325",
-"lastmod": "2026-11-04"
+"fp": "a909dc001aa6",
+"lastmod": "2026-11-25"
 },
 "etaireia/optronics-technologies/": {
-"fp": "4aef58f1751d",
-"lastmod": "2026-11-04"
+"fp": "2b4d6ea53bbc",
+"lastmod": "2026-11-25"
 },
 "etaireia/organismos-limenos-peiraios/": {
-"fp": "6464e2fbd351",
-"lastmod": "2026-11-04"
+"fp": "8f06a8cba0a7",
+"lastmod": "2026-11-25"
 },
 "etaireia/organismos-limenos-thessalonikis/": {
-"fp": "226540d4efc2",
-"lastmod": "2026-11-04"
+"fp": "ff23bc6e4ef5",
+"lastmod": "2026-11-25"
 },
 "etaireia/organismos-tilepikoinonion-ellados/": {
-"fp": "bba661f772f1",
-"lastmod": "2026-11-04"
+"fp": "d43bd7113fff",
+"lastmod": "2026-11-25"
 },
 "etaireia/orilina-properties/": {
-"fp": "bb88c1fb610c",
-"lastmod": "2026-11-04"
+"fp": "fa6bc4563471",
+"lastmod": "2026-11-25"
 },
 "etaireia/pairis/": {
-"fp": "89f0ed8b02a6",
-"lastmod": "2026-11-04"
+"fp": "082e5ca28676",
+"lastmod": "2026-11-25"
 },
 "etaireia/papoutsanis/": {
-"fp": "b63cb5701136",
-"lastmod": "2026-11-04"
+"fp": "edd55f67dab3",
+"lastmod": "2026-11-25"
 },
 "etaireia/performance-technologies/": {
-"fp": "935da0f525af",
-"lastmod": "2026-11-04"
+"fp": "3fd76ab6af0f",
+"lastmod": "2026-11-25"
 },
 "etaireia/petros-petropoulos/": {
-"fp": "60220ea92cf0",
-"lastmod": "2026-11-04"
+"fp": "9888a05e5860",
+"lastmod": "2026-11-25"
 },
 "etaireia/piraeus-bank/": {
-"fp": "99c7111977ba",
-"lastmod": "2026-11-04"
+"fp": "f96166a3c3f3",
+"lastmod": "2026-11-25"
 },
 "etaireia/plastika-kritis/": {
-"fp": "b76af356758c",
-"lastmod": "2026-11-04"
+"fp": "0c521caeeead",
+"lastmod": "2026-11-25"
 },
 "etaireia/premia-properties/": {
-"fp": "24f2517d7e25",
-"lastmod": "2026-11-04"
+"fp": "3894aa081e1b",
+"lastmod": "2026-11-25"
 },
 "etaireia/prodea-investments/": {
-"fp": "2a23b5e5ab1a",
-"lastmod": "2026-11-04"
+"fp": "7c9cea3e8f93",
+"lastmod": "2026-11-25"
 },
 "etaireia/profil-tzirakian/": {
-"fp": "62d64816c6b3",
-"lastmod": "2026-11-04"
+"fp": "23e6f7efb520",
+"lastmod": "2026-11-25"
 },
 "etaireia/profile-software/": {
-"fp": "c8ca517abd8e",
-"lastmod": "2026-11-04"
+"fp": "83c7b0b8c2e4",
+"lastmod": "2026-11-25"
 },
 "etaireia/proodeftiki/": {
-"fp": "6aefa0f6dae2",
-"lastmod": "2026-11-04"
+"fp": "a72927753322",
+"lastmod": "2026-11-25"
 },
 "etaireia/qnr/": {
-"fp": "ae26a634b784",
-"lastmod": "2026-11-04"
+"fp": "2e2b131131b5",
+"lastmod": "2026-11-25"
 },
 "etaireia/qualco-group/": {
-"fp": "43f43f5a08bf",
-"lastmod": "2026-11-04"
+"fp": "2173bc8c4f21",
+"lastmod": "2026-11-25"
 },
 "etaireia/quest-holdings/": {
-"fp": "fed1b0f19bb3",
-"lastmod": "2026-11-04"
+"fp": "433cf4e15de9",
+"lastmod": "2026-11-25"
 },
 "etaireia/real-consulting/": {
-"fp": "07bf0df3ce9f",
-"lastmod": "2026-11-04"
+"fp": "c1d6b94254db",
+"lastmod": "2026-11-25"
 },
 "etaireia/revoil/": {
-"fp": "70ace85d93c5",
-"lastmod": "2026-11-04"
+"fp": "55790bcbc7bd",
+"lastmod": "2026-11-25"
 },
 "etaireia/safe-bulkers/": {
-"fp": "9915b4a13fa4",
-"lastmod": "2026-11-04"
+"fp": "ab8bdfa2a4cb",
+"lastmod": "2026-11-25"
 },
 "etaireia/sarantis/": {
-"fp": "506c128cce2d",
-"lastmod": "2026-11-04"
+"fp": "d7cf3c02e2a9",
+"lastmod": "2026-11-25"
 },
 "etaireia/sarantopoulos/": {
-"fp": "92a132e3fa8d",
-"lastmod": "2026-11-04"
+"fp": "93d053c522d0",
+"lastmod": "2026-11-25"
 },
 "etaireia/sidma/": {
-"fp": "a2ca67476fa9",
-"lastmod": "2026-11-04"
+"fp": "845b57984680",
+"lastmod": "2026-11-25"
 },
 "etaireia/softweb/": {
-"fp": "fc7781286af4",
-"lastmod": "2026-11-04"
+"fp": "8834ed43e79e",
+"lastmod": "2026-11-25"
 },
 "etaireia/space-hellas/": {
-"fp": "40f16de9175c",
-"lastmod": "2026-11-04"
+"fp": "f8380950306b",
+"lastmod": "2026-11-25"
 },
 "etaireia/star-bulk-carriers/": {
-"fp": "c679e4f30fd3",
-"lastmod": "2026-11-04"
+"fp": "84ddabbf902e",
+"lastmod": "2026-11-25"
 },
 "etaireia/techniki-olympiaki/": {
-"fp": "cd8927563427",
-"lastmod": "2026-11-04"
+"fp": "66fad79ffe95",
+"lastmod": "2026-11-25"
 },
 "etaireia/terna-energeiaki/": {
-"fp": "48f5c68d1401",
-"lastmod": "2026-11-04"
+"fp": "f11aa5b0eb87",
+"lastmod": "2026-11-25"
 },
 "etaireia/titan/": {
-"fp": "eaca3322ef6d",
-"lastmod": "2026-11-04"
+"fp": "b249c45b7bda",
+"lastmod": "2026-11-25"
 },
 "etaireia/trade-estates/": {
-"fp": "73176a8457f7",
-"lastmod": "2026-11-04"
+"fp": "2482233f64a3",
+"lastmod": "2026-11-25"
 },
 "etaireia/trastor/": {
-"fp": "77cec623efd9",
-"lastmod": "2026-11-04"
+"fp": "8afa7bd41b63",
+"lastmod": "2026-11-25"
 },
 "etaireia/tria-alfa/": {
-"fp": "77b154a9e909",
-"lastmod": "2026-11-04"
+"fp": "52710caa5a8b",
+"lastmod": "2026-11-25"
 },
 "etaireia/unibios/": {
-"fp": "16cec4439c69",
-"lastmod": "2026-11-04"
+"fp": "312138f3a1fc",
+"lastmod": "2026-11-25"
 },
 "etaireia/verallis/": {
-"fp": "4fd90cd57021",
-"lastmod": "2026-11-04"
+"fp": "94dc48d82533",
+"lastmod": "2026-11-25"
 },
 "etaireia/vidavo/": {
-"fp": "aa8f5b2a53ef",
-"lastmod": "2026-11-04"
+"fp": "ec0d2c2254ab",
+"lastmod": "2026-11-25"
 },
 "etaireia/viohalco/": {
-"fp": "b9e05215b529",
-"lastmod": "2026-11-04"
+"fp": "6987b036497f",
+"lastmod": "2026-11-25"
 },
 "etaireia/vioter/": {
-"fp": "ee0643a263b9",
-"lastmod": "2026-11-04"
+"fp": "1cdb068a5d02",
+"lastmod": "2026-11-25"
 },
 "etaireia/vogyatzoglou-systems/": {
-"fp": "22ce3725d1ff",
-"lastmod": "2026-11-04"
+"fp": "e0db33737aa0",
+"lastmod": "2026-11-25"
 },
 "etaireia/y-knot-invest/": {
-"fp": "498724e61f9f",
-"lastmod": "2026-11-04"
+"fp": "682ec12b05dc",
+"lastmod": "2026-11-25"
 },
 "index-reviews/": {
-"fp": "26c52f06a864",
-"lastmod": "2026-11-11"
+"fp": "094d82fea8d3",
+"lastmod": "2026-11-25"
 },
 "katataxeis/ev-ebitda/": {
-"fp": "979d1ea35490",
-"lastmod": "2026-11-04"
+"fp": "7f1b0302339b",
+"lastmod": "2026-11-25"
 },
 "katataxeis/katharos-daneismos-ebitda/": {
-"fp": "71810c77f60b",
-"lastmod": "2026-11-04"
+"fp": "62178057be84",
+"lastmod": "2026-11-25"
 },
 "katataxeis/merismatiki-apodosi/": {
-"fp": "ea534045d5a9",
-"lastmod": "2026-11-04"
+"fp": "fe17dd9f2f60",
+"lastmod": "2026-11-25"
 },
 "katataxeis/p-bv/": {
-"fp": "f310fc796455",
-"lastmod": "2026-11-04"
+"fp": "89ad1a3953cb",
+"lastmod": "2026-11-25"
 },
 "katataxeis/p-e/": {
-"fp": "41b7cbc75d45",
-"lastmod": "2026-11-04"
+"fp": "c41763972637",
+"lastmod": "2026-11-25"
 },
 "katataxeis/roe/": {
-"fp": "39a1be91fbbc",
-"lastmod": "2026-11-04"
+"fp": "50ec7ccae3d5",
+"lastmod": "2026-11-25"
 },
 "klados/akinita/": {
-"fp": "b3f75f8fd323",
-"lastmod": "2026-11-04"
+"fp": "fcc7b5f85197",
+"lastmod": "2026-11-25"
 },
 "klados/chrimatooikonomika/": {
-"fp": "1594b4e48d59",
-"lastmod": "2026-11-04"
+"fp": "69f41ffd26a8",
+"lastmod": "2026-11-25"
 },
 "klados/emporio-dianomi/": {
-"fp": "45e763592a33",
-"lastmod": "2026-11-04"
+"fp": "5a473de8ebd7",
+"lastmod": "2026-11-25"
 },
 "klados/energeia-koinis-ofeleias/": {
-"fp": "edbc7f98d3cb",
-"lastmod": "2026-11-04"
+"fp": "6a6366164153",
+"lastmod": "2026-11-25"
 },
 "klados/holding/": {
-"fp": "25d848e865a5",
-"lastmod": "2026-11-04"
+"fp": "d93f67580eb9",
+"lastmod": "2026-11-25"
 },
 "klados/katanalotika-agatha/": {
-"fp": "72211b506084",
-"lastmod": "2026-11-04"
+"fp": "54b1db9ad7fc",
+"lastmod": "2026-11-25"
 },
 "klados/kataskeves-ypodomes-metafores/": {
-"fp": "7b52f35c1890",
-"lastmod": "2026-11-04"
+"fp": "7ba07edc02ac",
+"lastmod": "2026-11-25"
 },
 "klados/navtilia/": {
 "fp": "2f96a182461e",
 "lastmod": "2026-11-04"
 },
 "klados/technologia-mme-tilepikoinonies/": {
-"fp": "e304bf0251da",
-"lastmod": "2026-11-04"
+"fp": "e2596ae89511",
+"lastmod": "2026-11-25"
 },
 "klados/trapezes/": {
-"fp": "6f08f98ef4ca",
-"lastmod": "2026-11-04"
+"fp": "8a10fea3f771",
+"lastmod": "2026-11-25"
 },
 "klados/viomichania-vasika-ylika/": {
-"fp": "4884bd036e85",
-"lastmod": "2026-11-04"
+"fp": "03afcc204a2f",
+"lastmod": "2026-11-25"
 },
 "market-events/": {
-"fp": "ff0fd2347f57",
-"lastmod": "2026-11-11"
+"fp": "799832422a01",
+"lastmod": "2026-11-25"
 },
 "methodology/": {
 "fp": "28e33a92b86e",
 "lastmod": "2026-11-04"
 },
 "sectors/": {
-"fp": "f2f06951be35",
-"lastmod": "2026-11-11"
+"fp": "9cd57596f260",
+"lastmod": "2026-11-25"
 },
 "short-positions/": {
-"fp": "455fc933bdc4",
-"lastmod": "2026-11-11"
+"fp": "b01ab44bc791",
+"lastmod": "2026-11-25"
 },
 "terms/": {
 "fp": "e45a9f4d29e3",
