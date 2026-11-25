@@ -49,7 +49,7 @@
 
  /* §118 — επιλογή γλώσσας με σημαίες: και οι δύο πάντα ορατές, η τρέχουσα ανενεργή */
  var LANGHTML="<div class=\"langflags\" role=\"group\" aria-label=\"Language\"><button type=\"button\" data-langset=\"el\" title=\"Ελληνικά\" aria-label=\"Ελληνικά\"><svg viewBox=\"0 0 27 18\" aria-hidden=\"true\"><rect width=\"27\" height=\"18\" fill=\"#fff\"/><g fill=\"#0D5EAF\"><rect width=\"27\" height=\"2\"/><rect width=\"27\" height=\"2\" y=\"4\"/><rect width=\"27\" height=\"2\" y=\"8\"/><rect width=\"27\" height=\"2\" y=\"12\"/><rect width=\"27\" height=\"2\" y=\"16\"/></g><rect width=\"10\" height=\"10\" fill=\"#0D5EAF\"/><path d=\"M0 4h10v2H0z M4 0h2v10H4z\" fill=\"#fff\"/><rect width=\"27\" height=\"18\" fill=\"none\" stroke=\"rgba(0,0,0,.18)\"/></svg></button><button type=\"button\" data-langset=\"en\" title=\"English\" aria-label=\"English\"><svg viewBox=\"0 0 60 30\" aria-hidden=\"true\"><clipPath id=\"axukj\"><path d=\"M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z\"/></clipPath><rect width=\"60\" height=\"30\" fill=\"#012169\"/><path d=\"M0,0 L60,30 M60,0 L0,30\" stroke=\"#fff\" stroke-width=\"6\"/><path d=\"M0,0 L60,30 M60,0 L0,30\" clip-path=\"url(#axukj)\" stroke=\"#C8102E\" stroke-width=\"4\"/><path d=\"M30,0 v30 M0,15 h60\" stroke=\"#fff\" stroke-width=\"10\"/><path d=\"M30,0 v30 M0,15 h60\" stroke=\"#C8102E\" stroke-width=\"6\"/><rect width=\"60\" height=\"30\" fill=\"none\" stroke=\"rgba(0,0,0,.18)\" stroke-width=\"2\"/></svg></button></div>";
- var NAVHTML="<nav class=\"site-nav\">\n <div class=\"bar1\"><a class=\"lock\" href=\"/\"><span class=\"am\">A<i>M</i></span><span class=\"lrule\"></span><span class=\"lname\"><span class=\"wm\">AXION <i>METRICS</i></span><span class=\"tag\">ΜΕΤΡΟΝ ΑΞΙΟΝ</span></span></a><ul class=\"tabs\" id=\"navtabs\"></ul><div class=\"am-right\"><div class=\"am-basis\" id=\"ambasis\"></div>"+LANGHTML+"<span class=\"mrule\"></span><a class=\"am-mail\" id=\"ammail\" href=\"mailto:"+MAIL+"\">"+MAILSVG+"</a></div></div>\n <div class=\"bar2\" id=\"navbar2\"></div>\n <div class=\"am-ev\" id=\"amev\" hidden></div>\n <div class=\"am-upd\" id=\"amupd\" hidden></div>\n</nav>";
+ var NAVHTML="<nav class=\"site-nav\">\n <div class=\"bar1\"><a class=\"lock\" href=\"/\"><span class=\"am\">A<i>M</i></span><span class=\"lrule\"></span><span class=\"lname\"><span class=\"wm\">AXION <i>METRICS</i></span><span class=\"tag\">ΜΕΤΡΟΝ ΑΞΙΟΝ</span></span></a><ul class=\"tabs\" id=\"navtabs\"></ul><div class=\"am-right\"><div class=\"am-basis\" id=\"ambasis\"></div>"+LANGHTML+"<span class=\"mrule\"></span><a class=\"am-mail\" id=\"ammail\" href=\"mailto:"+MAIL+"\">"+MAILSVG+"</a></div></div>\n <div class=\"bar2\" id=\"navbar2\"></div>\n <div class=\"am-ev\" id=\"amev\" hidden></div>\n</nav>";
 
  function footerHTML(){
    /* Οι στήλες παράγονται ΑΠΟ ΤΟΝ ΙΔΙΟ πίνακα NAV με το header — καμία χειροκίνητη λίστα,
@@ -145,36 +145,6 @@
    if(page){ page.innerHTML=basisSegHTML(cur,hasInterim); wireBasis(page,cur); }
  }
 
- /* ===== λωρίδα «Νέα αποτελέσματα» =====
-    Πηγή: AXION.updates (γέφυρα) — οι 10 τελευταίες ΔΗΜΟΣΙΕΥΣΕΙΣ που έχουν
-    ενσωματωθεί, με ημερομηνία δημοσίευσης έκθεσης από το Euronext.
-    Το tag περιόδου είναι ΑΓΓΛΙΚΟ και στις δύο γλώσσες (6M 2026 / YR 2026). */
- var UPD_T={el:'Νέα αποτελέσματα',en:'New results'};
- function updPeriod(u){
-   if(u.basis==='interim') return {cls:'p-h1',txt:'6M '+String(u.period).replace(/H1$/,'')};
-   return {cls:'p-yr',txt:'YR '+u.period};
- }
- function updDate(iso){
-   var p=String(iso).split('-'); if(p.length!==3) return '';
-   return parseInt(p[2],10)+'/'+parseInt(p[1],10);
- }
- function renderUpdates(){
-   var el=document.getElementById('amupd'); if(!el) return;
-   var U=(window.AXION&&window.AXION.updates)||[];
-   if(!U.length){ el.hidden=true; el.innerHTML=''; return; }
-   var chips=U.map(function(u){
-     var pr=updPeriod(u), nm=u.name||u.tk;
-     return '<a class="chip" href="'+AX_CO(u.tk,u.basis)+'">'
-          + '<span class="co">'+esc(nm)+'</span>'
-          + '<span class="per '+pr.cls+'">'+esc(pr.txt)+'</span>'
-          + '<span class="dt">'+updDate(u.date)+'</span></a>';
-   }).join('');
-   // σήμα εκπομπής: ραντάρ με σάρωση (§30/§114) — καθαρά διακοσμητικό, aria-hidden
-   var sig='<span class="sig" aria-hidden="true"><u></u><i></i><i></i><s></s><b></b></span>';
-   el.innerHTML='<div class="uhd">'+sig+'<span class="t">'+esc(L(UPD_T))+'</span></div>'
-              + '<div class="chips">'+chips+'</div>';
-   el.hidden=false;
- }
  /* §119 — η κολλητή κεφαλίδα ψήλωσε· τα in-page scroll (#anchors, scrollIntoView)
     πρέπει να σταματούν ΚΑΤΩ από αυτήν, αλλιώς ο στόχος κρύβεται από πίσω της */
  function setScrollPad(){
@@ -349,7 +319,7 @@
      document.dispatchEvent(new CustomEvent('axion:langchange',{detail:{lang:nl}}));
    }
  });
- function relocalize(){ buildNav(); renderBasis(); renderUpdates(); renderEvents(); var f=document.querySelector('.site-ft'); if(f) f.outerHTML=footerHTML(); syncLangFlags(); }
+ function relocalize(){ buildNav(); renderBasis(); renderEvents(); var f=document.querySelector('.site-ft'); if(f) f.outerHTML=footerHTML(); syncLangFlags(); }
  document.addEventListener('axion:langchange', relocalize);
 
  function injectAnalytics(){
@@ -360,6 +330,6 @@
    s.setAttribute('data-cf-beacon','{"token": "a9e573e27dd34f6784b7df2d706c1bee"}');
    document.head.appendChild(s);
  }
- function init(){ mount(); buildNav(); renderBasis(); renderUpdates(); renderEvents(); syncLangFlags(); setScrollPad(); injectAnalytics(); }
+ function init(){ mount(); buildNav(); renderBasis(); renderEvents(); syncLangFlags(); setScrollPad(); injectAnalytics(); }
  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);} else {init();}
 })();

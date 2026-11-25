@@ -170,28 +170,6 @@
 .tbanner.t-frozen{background:#fdf4e3;color:#b57d00;border-color:#f0d8a6}
 .tdot.t-frozen{background:#cf7f00}
 
-/* ===== λωρίδα «Νέα αποτελέσματα» — τροφοδοτείται από AXION.updates (γέφυρα) ===== */
-.am-upd{background:#fbfcfe;border-bottom:1px solid #e4e8f0;padding:12px max(22px, calc((100% - 1180px)/2 + 22px)) 14px}
-.am-upd .uhd{display:flex;align-items:center;gap:9px;margin:0 0 9px}
-.am-upd .uhd .t{font-family:Inter,sans-serif;font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#5a6577}
-.am-upd .chips{display:flex;flex-wrap:wrap;gap:6px}
-.am-upd a.chip{display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid #e3e8f0;border-radius:999px;padding:3px 11px 3px 12px;text-decoration:none;transition:.12s}
-.am-upd a.chip:hover{border-color:#c9d3e0;box-shadow:0 1px 4px rgba(27,39,64,.09);transform:translateY(-1px)}
-.am-upd .chip .co{font-family:Inter,sans-serif;font-size:12.5px;font-weight:700;color:#25313f;line-height:1.5}
-.am-upd .chip .per{font-family:Inter,sans-serif;font-size:9.5px;font-weight:800;letter-spacing:.02em;border-radius:4px;padding:2px 6px;line-height:1.3;white-space:nowrap;transition:.12s}
-.am-upd .chip .dt{font-family:Inter,sans-serif;font-size:11px;color:#8794a8;font-variant-numeric:tabular-nums;line-height:1.5}
-.am-upd .chip .p-h1{background:#e4f0ef;color:#0b5a56}
-.am-upd .chip .p-yr{background:#e6eff8;color:#1f6198}
-.am-upd a.chip:hover .p-h1{background:#0f6f6a;color:#fff}
-.am-upd a.chip:hover .p-yr{background:#2f80c2;color:#fff}
-@media(prefers-reduced-motion:reduce){.am-upd a.chip:hover{transform:none}}
-/* σε στενές οθόνες: μία σειρά με οριζόντια κύλιση, όπως ήδη κάνει το .bar2 —
-   αλλιώς τα 10 chips πιάνουν ~7 σειρές και τρώνε μισή οθόνη */
-@media(max-width:820px){.am-upd{padding:10px 16px 12px}
- .am-upd .chips{flex-wrap:nowrap;overflow-x:auto;padding-bottom:3px;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
- .am-upd a.chip{flex:none}
- .am-upd a.chip:hover{transform:none}}
-
 /* ===== §119/§166 — λωρίδα «Τελευταία γεγονότα» (συνεχής κύλιση, όψη αρχικής) ===== */
  .am-ev{background:#f3f4f5;border-bottom:1px solid #e3e5e7;display:flex;
   align-items:stretch;padding:0 max(22px, calc((100% - 1180px)/2 + 22px));
@@ -267,33 +245,6 @@
    padding:18px 0 12px;gap:0 12px}
  .wrap>.secbox:first-child>.hero-in>h1,.wrap>.hero:first-child>.hero-in>h1,.wrap>.mast:first-child>.hero-in>h1{font-size:17px}}
 
-/* ===== §30 σήμα εκπομπής στην επικεφαλίδα της λωρίδας «Νέα αποτελέσματα» =====
-   Ραντάρ με σάρωση (§114, 27/09/2026): στενή δέσμη που περιστρέφεται μέσα σε δύο
-   δακτυλίους, με κουκκίδα και παλμό που φεύγει σε κάθε κύκλο. 22×22px — η σειρά
-   .uhd ψηλώνει κατά 9px σε σχέση με το παλιό 30×12 σήμα δύο τόξων.
-   ΔΙΠΛΟ ΧΡΩΜΑ, σκόπιμα: δέσμη και δακτύλιοι στο πετρόλ #0f6f6a των εξαμηνιαίων,
-   κουκκίδα και παλμός στο μπλε #2f80c2 της μάρκας — τα ΔΥΟ χρώματα που έχουν ήδη
-   τα chips της λωρίδας (.p-h1 πετρόλ, .p-yr μπλε). Καθαρά CSS, χωρίς εικόνες. */
-.am-upd .uhd .sig{position:relative;display:inline-block;flex:none;width:22px;height:22px}
-.am-upd .uhd .sig u{position:absolute;inset:0;border-radius:50%;
-  /* η ΦΩΤΕΙΝΗ ΑΚΜΗ είναι η δέσμη και η σκιά την ΑΚΟΛΟΥΘΕΙ: ο σταδιακός τόνος μπαίνει ΠΡΙΝ
-     τις 360°, ώστε με δεξιόστροφη περιστροφή να μένει πίσω από τη δέσμη, όχι μπροστά της. */
-  background:conic-gradient(from 0turn,rgba(15,111,106,0) 70%,rgba(15,111,106,.07) 84%,rgba(15,111,106,.45) 100%);
-  animation:amSweep 2.4s linear infinite}
-.am-upd .uhd .sig i{position:absolute;border-radius:50%}
-.am-upd .uhd .sig i:nth-of-type(1){inset:0;border:1.5px solid rgba(15,111,106,.32)}
-.am-upd .uhd .sig i:nth-of-type(2){inset:23%;border:1px solid rgba(15,111,106,.20)}
-.am-upd .uhd .sig s{position:absolute;inset:0;border-radius:50%;border:1.5px solid #2f80c2;opacity:0;
-  animation:amPing 2.4s ease-out infinite}
-.am-upd .uhd .sig b{position:absolute;left:50%;top:50%;width:21%;height:21%;transform:translate(-50%,-50%);
-  border-radius:50%;background:#2f80c2}
-@keyframes amSweep{to{transform:rotate(1turn)}}
-@keyframes amPing{0%{transform:scale(.22);opacity:0}15%{opacity:.75}100%{transform:scale(1);opacity:0}}
-@media(prefers-reduced-motion:reduce){
-  .am-upd .uhd .sig u,.am-upd .uhd .sig s{animation:none}
-  .am-upd .uhd .sig u{opacity:.5}
-  .am-upd .uhd .sig s{opacity:.35;transform:scale(.9)}}
-
 /* ── §34 Κοινά στοιχεία όψης 6μήνου (σελίδες 2–11) ───────────────────────────
    .h1c  = chip «6M» — παίρνει ΠΑΝΤΑ το font-size του κειμένου δίπλα του.
    .na-* = κατάσταση «Μη Διαθέσιμο» (ουδέτερο μπλε, ΟΧΙ κόκκινο σφάλματος). */
@@ -321,50 +272,44 @@
    και στην ίδια την μπάρα. ΚΑΝΕΝΑ εσωτερικό μπλοκ δεν αγγίζεται, ώστε να μην μπορεί να
    αλλάξει η διάταξη καμίας σελίδας.
    Τα ύψη δεν είναι εκτιμήσεις. Η bar1 μετρήθηκε σε 13 τύπους σελίδας × 6 πλάτη και τα
-   όρια αναδίπλωσης βρέθηκαν με δυαδική αναζήτηση (367, 430, 558 px)· η am-upd αλλάζει
-   στα 821 και 1067 px. Κρατήθηκε το ΕΛΑΧΙΣΤΟ κάθε ζώνης (bar1 146/110/73/54), ώστε η
+   όρια αναδίπλωσης βρέθηκαν με δυαδική αναζήτηση (367, 430, 558 px). Κρατήθηκε το ΕΛΑΧΙΣΤΟ κάθε ζώνης (bar1 146/110/73/54), ώστε η
    δέσμευση να μην κάνει ΚΑΜΙΑ σελίδα ψηλότερη απ' ό,τι είναι σήμερα — το πολύ μένει
    υπόλοιπο 12 px σε μία σελίδα, δηλαδή CLS ~0,013. Ελληνικά και αγγλικά δίνουν τα ίδια
    ύψη (ελεγμένο σε 8 πλάτη), άρα η γλώσσα δεν είναι μεταβλητή.
    Οι σελίδες χωρίς ροή δεδομένων (about / terms / methodology) δεν αποκτούν ποτέ τις
-   λωρίδες am-upd και am-ev, γι' αυτό παίρνουν δική τους δέσμευση μέσω .am-nofeed στο
+   λωρίδα am-ev, γι' αυτό παίρνουν δική τους δέσμευση μέσω .am-nofeed στο
    <body> — αλλιώς θα έμενε κενή λωρίδα 124 px. */
-/* §166 — ΞΑΝΑΜΕΤΡΗΘΗΚΑΝ (05/11/2026) μετά την ευθυγράμμιση κεφαλίδας/λωρίδας.
-   Άλλαξαν και τα όρια αναδίπλωσης της bar1 (367/430/558 → 375/449/577, δυαδική
-   αναζήτηση) και τα ύψη (η λωρίδα 40→52px, το σήμα ψήλωσε). Προστέθηκε όριο 935px:
-   εκεί τα «Νέα αποτελέσματα» πέφτουν από 183 σε 150px — παλιά έμενε υπόλοιπο 12px,
-   τώρα η δέσμευση είναι ΑΚΡΙΒΗΣ σε κάθε ζώνη. Μετρήσεις σε /etaireia/jumbo/ (με ροή)
-   και /methodology/ (χωρίς ροή)· κρατιέται το ΕΛΑΧΙΣΤΟ κάθε ζώνης. */
-#am-nav,.site-nav{min-height:371px}
+/* §188 — ΞΑΝΑΜΕΤΡΗΘΗΚΑΝ (25/11/2026) μετά την αφαίρεση της λωρίδας «Νέα αποτελέσματα»
+   (οι λίστες νέων αποτελεσμάτων ζουν πλέον μόνο στην αρχική, §187). Μέτρηση ανά 1 px
+   από 320 ως 1400 σε /etaireia/jumbo/, /rankings/ (με ροή) και /methodology/ (χωρίς ροή),
+   με το min-height της πλοήγησης απενεργοποιημένο: τα ύψη με ροή είναι πλέον ΣΤΑΘΕΡΑ ανά
+   ζώνη = bar1 + υπομενού 44 + λωρίδα 52, άρα τα όρια 821/935/1067 δεν χρειάζονται. */
+#am-nav,.site-nav{min-height:287px}
 body.am-nofeed #am-nav,body.am-nofeed .site-nav{min-height:239px}
-/* Ο δεσμευμένος χώρος ΒΑΦΕΤΑΙ στα χρώματα των τεσσάρων λωρίδων, ώστε όσο δεν έχει τρέξει
+/* Ο δεσμευμένος χώρος ΒΑΦΕΤΑΙ στα χρώματα των τριών λωρίδων, ώστε όσο δεν έχει τρέξει
    ακόμη το chrome.js να μοιάζει με πλοήγηση που φορτώνει — όχι με κενό. */
 /* Και η ίδια η bar1 κρατά το ελάχιστο της ζώνης της: ανάμεσα στο mount() και στο
    buildNav() η σειρά των tabs δεν υπάρχει ακόμη και η μπάρα είναι 37 px κοντύτερη. Το
    ελάχιστο δεν μεγαλώνει καμία σελίδα — απλώς δεν την αφήνει να ξεκινήσει πιο χαμηλά. */
 .site-nav .bar1{min-height:191px}
-/* §166 — οι ζώνες ακολουθούν τη ΝΕΑ σειρά: υπομενού 44px, λωρίδα 52px,
-   «Νέα αποτελέσματα» ως το τέλος. */
-#am-nav{--b1:191px;background:linear-gradient(#12303f 0 var(--b1),#fff var(--b1) calc(var(--b1) + 44px),#f3f4f5 calc(var(--b1) + 44px) calc(var(--b1) + 96px),#fbfcfe calc(var(--b1) + 96px) 100%)}
+/* §166/§188 — οι ζώνες: υπομενού 44px, λωρίδα γεγονότων 52px ως το τέλος. */
+#am-nav{--b1:191px;background:linear-gradient(#12303f 0 var(--b1),#fff var(--b1) calc(var(--b1) + 44px),#f3f4f5 calc(var(--b1) + 44px) 100%)}
 body.am-nofeed #am-nav{background:linear-gradient(#12303f 0 var(--b1),#fff var(--b1) 100%)}
 @media(min-width:375px){
-  #am-nav,.site-nav{min-height:299px}
+  #am-nav,.site-nav{min-height:215px}
   body.am-nofeed #am-nav,body.am-nofeed .site-nav{min-height:165px}
   #am-nav{--b1:119px}
   .site-nav .bar1{min-height:119px} }
 @media(min-width:449px){
-  #am-nav,.site-nav{min-height:255px}
+  #am-nav,.site-nav{min-height:171px}
   body.am-nofeed #am-nav,body.am-nofeed .site-nav{min-height:121px}
   #am-nav{--b1:75px}
   .site-nav .bar1{min-height:75px} }
 @media(min-width:577px){
-  #am-nav,.site-nav{min-height:242px}
+  #am-nav,.site-nav{min-height:158px}
   body.am-nofeed #am-nav,body.am-nofeed .site-nav{min-height:106px}
   #am-nav{--b1:62px}
   .site-nav .bar1{min-height:62px} }
-@media(min-width:821px){ #am-nav,.site-nav{min-height:341px} }
-@media(min-width:935px){ #am-nav,.site-nav{min-height:329px} }
-@media(min-width:1067px){ #am-nav,.site-nav{min-height:308px} }
 /* §135 — ήταν στο chrome.js (injectStyle). Το JavaScript το πρόσθετε στο <head> στο
    runtime· τώρα είναι στατικό, ώστε οι σημαίες να έχουν μέγεθος από την πρώτη ζωγραφιά. */
 .am-right{display:flex;align-items:center;gap:10px}
