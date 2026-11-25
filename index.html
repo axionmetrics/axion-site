@@ -254,6 +254,23 @@
    border-top:1px solid var(--line2)}
  .rnote b{color:var(--muted)}
  @media(max-width:900px){.resblk .g3{grid-template-columns:1fr;gap:22px}}
+ /* §187 — ΝΕΑ ΑΠΟΤΕΛΕΣΜΑΤΑ: τέσσερις λιτές λίστες (Έτος · 3Μ · 6Μ · 9Μ). Χρώματα ίδια με τις
+    στήλες των «Μεγεθών περιόδου» στη σελίδα εταιρείας: Έτος #2f80c2, 6Μ #1f7a55, 3Μ/9Μ #8a99ad. */
+ #ax-newres:empty{display:none}
+ .nwblk{background:#fff;border:1px solid var(--line2);border-radius:16px;padding:18px 20px 16px;margin-top:26px}
+ .nwblk .bh{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px}
+ .nwblk .bh a{font-size:11px;font-weight:600;color:var(--cyan);text-decoration:none;white-space:nowrap}
+ .nwg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0 28px}
+ .nwc{min-width:0}
+ .nwh{display:block;font-family:var(--disp);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+   color:var(--c);border-bottom:2px solid var(--c);padding-bottom:7px;margin-bottom:4px;line-height:1.4}
+ .nwr{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:5px 0;text-decoration:none}
+ .nwn{font-family:var(--disp);font-size:12.5px;font-weight:700;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+ .nwr:hover .nwn{color:var(--cyan)}
+ .nwd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10.5px;color:var(--faint);flex:none}
+ .nwe{font-size:11.5px;color:#a9b8c9;padding:5px 0}
+ @media(max-width:1000px){.nwg{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 28px}}
+ @media(max-width:560px){.nwg{grid-template-columns:1fr}.nwblk{padding:14px 14px 12px;border-radius:14px}}
 
  /* ═══ ΥΠΟΣΕΛΙΔΟ — το ΙΔΙΟ με τις υπόλοιπες σελίδες (chrome.css) ══════════ */
  .site-ft{background:var(--chrome2);color:var(--chrometxt);margin-top:64px}
@@ -684,6 +701,7 @@
  <div class="g3" id="ax-res"><div class="g3c"><div class="sc"><div class="sc-l">Πωλήσεις</div><div class="sc-n up">▲ +16,4%</div><div class="sc-a">63,45 δισ. €<s>από</s>54,53</div><div class="sc-e">σύνολο · 127 εταιρείες</div></div></div><div class="g3c"><div class="sc"><div class="sc-l">EBITDA</div><div class="sc-n up">▲ +39,9%</div><div class="sc-a">10,21 δισ. €<s>από</s>7,30</div><div class="sc-e">σύνολο · 113 εταιρείες</div></div></div><div class="g3c"><div class="sc"><div class="sc-l">Καθαρά κέρδη</div><div class="sc-n up">▲ +41,2%</div><div class="sc-a">7,45 δισ. €<s>από</s>5,27</div><div class="sc-e">σύνολο · 133 εταιρείες</div></div></div></div>
  <div class="rnote" id="ax-rnote">Άθροισμα των δημοσιευμένων μεγεθών — η μεταβολή του <b>συνόλου</b> της αγοράς, όχι της μέσης εισηγμένης. Οι ALLWYN και BALLY'S INTRALOT άλλαξαν οντότητα μέσα στην περίοδο — χωρίς αυτές: πωλήσεις <b>+12,5%</b>, EBITDA <b>+38,8%</b>, καθαρά κέρδη <b>+45,0%</b>.</div>
  </div><!-- /resblk -->
+ <div id="ax-newres"><div class="nwblk"><div class="bh"><h2>Νέα αποτελέσματα</h2><a href="/apotelesmata/">όλα →</a></div><div class="nwg"><div class="nwc" style="--c:#2f80c2"><span class="nwh">Έτος 2025</span><a class="nwr" href="/etaireia/cpi/"><span class="nwn">CPI</span><span class="nwd">30.10</span></a><a class="nwr" href="/etaireia/filippos-nakas/"><span class="nwn">ΦΙΛΙΠΠΟΣ ΝΑΚΑΣ</span><span class="nwd">29.10</span></a><a class="nwr" href="/etaireia/mediterra/"><span class="nwn">MEDITERRA</span><span class="nwd">02.07</span></a><a class="nwr" href="/etaireia/proodeftiki/"><span class="nwn">PROODEFTIKI</span><span class="nwd">14.05</span></a><a class="nwr" href="/etaireia/y-knot-invest/"><span class="nwn">Y/KNOT INVEST</span><span class="nwd">30.04</span></a><a class="nwr" href="/etaireia/alpha-real-estate-services/"><span class="nwn">ALPHA REAL ESTATE SERVICES</span><span class="nwd">29.04</span></a></div><div class="nwc" style="--c:#8a99ad"><span class="nwh">3Μ 2026</span><div class="nwe">—</div></div><div class="nwc" style="--c:#1f7a55"><span class="nwh">6Μ 2026</span><a class="nwr" href="/etaireia/attica-group/"><span class="nwn">ATTICA GROUP</span><span class="nwd">30.09</span></a><a class="nwr" href="/etaireia/attica-media-group/"><span class="nwn">ATTICA MEDIA GROUP</span><span class="nwd">30.09</span></a><a class="nwr" href="/etaireia/ave/"><span class="nwn">AVE</span><span class="nwd">30.09</span></a><a class="nwr" href="/etaireia/leventeris/"><span class="nwn">LEVENTERIS</span><span class="nwd">30.09</span></a><a class="nwr" href="/etaireia/medicon-hellas/"><span class="nwn">MEDICON HELLAS</span><span class="nwd">30.09</span></a><a class="nwr" href="/etaireia/pairis/"><span class="nwn">PAIRIS</span><span class="nwd">30.09</span></a></div><div class="nwc" style="--c:#8a99ad"><span class="nwh">9Μ 2026</span><div class="nwe">—</div></div></div></div></div>
  <div class="cols2">
   <div id="ax-divs"><div class="pane"><h2 class="pane-h">Τελευταία μερίσματα &amp; διανομές <a href="/market-events/">όλες →</a></h2><div class="dv-hd"><span class="dv-d">Ημ/νία</span><span class="dv-c">Εταιρεία</span><span class="dv-a">€/μετοχή</span><span class="dv-y">Απόδοση</span></div><a class="dv" href="/etaireia/eurobank/"><span class="dv-d">23.11</span><span class="dv-c"><b>EUROBANK</b></span><span class="dv-a">€0,0599</span><span class="dv-y">3,47%</span></a><a class="dv" href="/etaireia/trastor/"><span class="dv-d">23.11</span><span class="dv-c"><b>TRASTOR</b></span><span class="dv-a">€0,02</span><span class="dv-y">3,23%</span></a><a class="dv" href="/etaireia/ethniki-trapeza-tis-ellados/"><span class="dv-d">16.11</span><span class="dv-c"><b>ΕΘΝΙΚΗ ΤΡΑΠΕΖΑ ΤΗΣ ΕΛΛΑΔΟΣ</b></span><span class="dv-a">€0,2606</span><span class="dv-y">3,96%</span></a><a class="dv" href="/etaireia/jumbo/"><span class="dv-d">16.11</span><span class="dv-c"><b>JUMBO</b></span><span class="dv-a">€1,00</span><span class="dv-y">6,09%</span></a><a class="dv" href="/etaireia/briq-properties/"><span class="dv-d">04.11</span><span class="dv-c"><b>BRIQ PROPERTIES</b></span><span class="dv-a">€0,10</span><span class="dv-y">6,76%</span></a><a class="dv" href="/etaireia/elve/"><span class="dv-d">30.10</span><span class="dv-c"><b>ΕΛΒΕ</b></span><span class="dv-a">€0,50</span><span class="dv-y">17,14%</span></a><a class="dv" href="/etaireia/papoutsanis/"><span class="dv-d">26.10</span><span class="dv-c"><b>ΠΑΠΟΥΤΣΑΝΗΣ</b></span><span class="dv-a">€0,0501</span><span class="dv-y">2,31%</span></a><a class="dv" href="/etaireia/allwyn/"><span class="dv-d">21.10</span><span class="dv-c"><b>ALLWYN</b></span><span class="dv-a">€0,20</span><span class="dv-y">2,62%</span></a><div class="mvnote">499 μερίσματα και διανομές από το 2020. Η απόδοση είναι η μερισματική απόδοση <b>χρήσης 2025</b> της εταιρείας, όχι της συγκεκριμένης διανομής.</div></div></div>
   <div class="stack" id="ax-tops"><div class="tp shb"><h3 class="tp-h">Short θέσεις στις ελληνικές εταιρείες <a href="/short-positions/">όλες →</a></h3><a class="r3" href="/etaireia/metlen-energy-metals/"><div class="nm">METLEN ENERGY &amp; METALS</div><div class="mcol"><span class="ml"><i class="mk ath">ATH</i><b>1,10%</b><u>66,02 εκ. €</u></span><span class="ml"><i class="mk lon">LON</i><b>5,97%</b><u>357,06 εκ. €</u></span></div></a><a class="r3" href="/etaireia/omilos-aktor/"><div class="nm">ΌΜΙΛΟΣ AKTOR</div><div class="mcol"><span class="ml"><i class="mk ath">ATH</i><b>0,90%</b><u>21,27 εκ. €</u></span></div></a><a class="r3" href="/etaireia/ballys-intralot/"><div class="nm">BALLY'S INTRALOT</div><div class="mcol"><span class="ml"><i class="mk ath">ATH</i><b>0,79%</b><u>15,30 εκ. €</u></span></div></a><a class="r3" href="/etaireia/crediabank/"><div class="nm">CREDIABANK</div><div class="mcol"><span class="ml"><i class="mk ath">ATH</i><b>0,70%</b><u>13,69 εκ. €</u></span></div></a><a class="r3" href="/etaireia/admie-symmetochon/"><div class="nm">ΑΔΜΗΕ ΣΥΜΜΕΤΟΧΩΝ</div><div class="mcol"><span class="ml"><i class="mk ath">ATH</i><b>0,69%</b><u>10,85 εκ. €</u></span></div></a><a class="r3" href="/etaireia/lamda-development/"><div class="nm">LAMDA DEVELOPMENT</div><div class="mcol"><span class="ml"><i class="mk ath">ATH</i><b>0,61%</b><u>5,68 εκ. €</u></span></div></a><a class="r3" href="/etaireia/coca-cola/"><div class="nm">COCA COLA</div><div class="mcol"><span class="ml"><i class="mk lon">LON</i><b>0,62%</b><u>119,64 εκ. €</u></span></div></a></div></div>
@@ -800,6 +818,7 @@ try{AX_I18N.add({"f.about":{"el":"Περί","en":"About the project"},"f.bot":{"
         s+=' '+n.join(' and ')+' changed entity within the period';
         return s+(x.length?' — excluding '+(n.length>1?'them':'it')+': '+x.join(', ')+'.':'.');
       },
+      nr:'New results', nrAll:'all →', nrP:{Y:'Year',Q1:'3M',H1:'6M',Q3:'9M'},
       divs:'Latest dividends &amp; distributions', all:'all →',
       cDate:'Date', cCo:'Company', cAmt:'€ / share', cY:'Yield',
       note:function(n){return n+' dividends and distributions since 2020. The yield is the company’s <b>FY2025</b> dividend yield, not that of this distribution.';},
@@ -832,6 +851,7 @@ try{AX_I18N.add({"f.about":{"el":"Περί","en":"About the project"},"f.bot":{"
            +' οντότητα μέσα στην περίοδο';
         return s+(x.length?' — χωρίς '+(n.length>1?'αυτές':'αυτήν')+': '+x.join(', ')+'.':'.');
       },
+      nr:'Νέα αποτελέσματα', nrAll:'όλα →', nrP:{Y:'Έτος',Q1:'3Μ',H1:'6Μ',Q3:'9Μ'},
       divs:'Τελευταία μερίσματα &amp; διανομές', all:'όλες →',
       cDate:'Ημ/νία', cCo:'Εταιρεία', cAmt:'€/μετοχή', cY:'Απόδοση',
       note:function(n){return n+' μερίσματα και διανομές από το 2020. Η απόδοση είναι η μερισματική απόδοση <b>χρήσης 2025</b> της εταιρείας, όχι της συγκεκριμένης διανομής.';},
@@ -905,6 +925,27 @@ try{AX_I18N.add({"f.about":{"el":"Περί","en":"About the project"},"f.bot":{"
       if(x && x.p!=null) xs.push(t.rlab[i]+' <b>'+(x.p>=0?'+':'')+num(x.p,1)+'%</b>');
     }
     return t.rnote(nm,xs);
+  }
+
+  /* ───────────────────────── ΝΕΑ ΑΠΟΤΕΛΕΣΜΑΤΑ (§187) ─────────────────────────
+     Τέσσερις λιτές λίστες: ποιες εταιρείες δημοσίευσαν, με την ημερομηνία
+     δημοσίευσης. Τα δεδομένα (H.newres) βγαίνουν από τη γέφυρα: τελευταία
+     περίοδος ανά βάση, οι 6 πιο πρόσφατες. Τα 3Μ/9Μ μένουν με «—» μέχρι να
+     υπάρξουν βάσεις τριμήνου· το έτος τους ακολουθεί το τελευταίο 6Μ. */
+  function newres(t){
+    var N=H.newres||{}; if(!N.Y && !N.H1) return '';
+    var y6=N.H1? String(N.H1.p).slice(0,4) : (N.Y? String(+N.Y.p+1) : '');
+    var C={Y:'#2f80c2',Q1:'#8a99ad',H1:'#1f7a55',Q3:'#8a99ad'};
+    var cols=['Y','Q1','H1','Q3'].map(function(k){
+      var D=N[k], yr=D? String(D.p).slice(0,4) : y6;
+      var L=(D&&D.list)||[];
+      var rows=L.length? L.map(function(r){
+        return '<a class="nwr" href="'+co(r.slug)+'"><span class="nwn">'+esc(r.n)+'</span><span class="nwd">'+dm(r.d)+'</span></a>';
+      }).join('') : '<div class="nwe">—</div>';
+      return '<div class="nwc" style="--c:'+C[k]+'"><span class="nwh">'+t.nrP[k]+' '+yr+'</span>'+rows+'</div>';
+    }).join('');
+    return '<div class="nwblk"><div class="bh"><h2>'+t.nr+'</h2><a href="/apotelesmata/">'+t.nrAll+'</a></div>'
+         + '<div class="nwg">'+cols+'</div></div>';
   }
 
   /* ───────────────────────── ΜΕΡΙΣΜΑΤΑ ───────────────────────── */
@@ -1080,6 +1121,7 @@ try{AX_I18N.add({"f.about":{"el":"Περί","en":"About the project"},"f.bot":{"
     put('ax-seasonh', t.season((H.periods&&H.periods.cur)||''));
     put('ax-res', res(t));
     put('ax-rnote', rnote(t));
+    put('ax-newres', newres(t));
     put('ax-divs', divs(t));
     put('ax-tops', shorts(t));
     var xh=xenoi(t); put('ax-xenoi', xh);
