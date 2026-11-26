@@ -987,3 +987,13 @@ table.rt{border-collapse:collapse;font-variant-numeric:tabular-nums;width:auto;m
  .rt th.kl,.rt td.kl{padding-left:4px}
  .rt td.kl{font-size:10px}
 }
+
+/* §194 — ΠΑΛΜΟΣ ΣΤΟΝ ΤΙΤΛΟ ΤΩΝ ΤΡΕΧΟΥΣΩΝ ΤΙΜΩΝ («Τιμές <σήμερα>», Μεγέθη περιόδου).
+   Επιλογή user από mockup: «A1 σε πορτοκαλί, O1» — κουκκίδα στο πορτοκαλί του site (--orange)
+   με δακτύλιο που απλώνεται και σβήνει κάθε 2,4″. ΜΟΝΟ CSS: ο δακτύλιος είναι box-shadow της ίδιας
+   της κουκκίδας, άρα δεν χρειάζεται αλλαγή στο company.js ούτε στις ψημένες σελίδες.
+   «Λιγότερη κίνηση» στο λειτουργικό → ακίνητη κουκκίδα. */
+.pt th.nw.sub2::before{content:"";display:inline-block;width:6px;height:6px;margin-right:6px;border-radius:50%;
+  background:var(--orange);vertical-align:1px;animation:axPx 2.4s cubic-bezier(.2,.6,.3,1) infinite}
+@keyframes axPx{0%{box-shadow:0 0 0 0 rgba(224,134,0,.55)}70%{box-shadow:0 0 0 6.6px rgba(224,134,0,0)}100%{box-shadow:0 0 0 0 rgba(224,134,0,0)}}
+@media(prefers-reduced-motion:reduce){.pt th.nw.sub2::before{animation:none}}

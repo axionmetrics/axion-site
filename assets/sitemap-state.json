@@ -1,34 +1,34 @@
 {
-"generated": "2026-11-25",
+"generated": "2026-11-26",
 "note": "Το γράφει η γέφυρα (§163). Αποτύπωμα περιεχομένου ανά διεύθυνση, ώστε το lastmod του sitemap να ανανεώνεται μόνο σε πραγματική αλλαγή.",
 "pages": {
 "": {
-"fp": "394e46e2d688",
-"lastmod": "2026-11-25"
+"fp": "8dcdeada0612",
+"lastmod": "2026-11-26"
 },
 "about/": {
 "fp": "bad60b8de921",
 "lastmod": "2026-11-04"
 },
 "apotelesmata/": {
-"fp": "6a7ffada02b9",
-"lastmod": "2026-11-25"
+"fp": "d1629787920c",
+"lastmod": "2026-11-26"
 },
 "company/": {
-"fp": "f433a1df2b94",
-"lastmod": "2026-11-25"
+"fp": "1ced6c89cf44",
+"lastmod": "2026-11-26"
 },
 "compare/": {
-"fp": "c8be43b18b26",
-"lastmod": "2026-11-25"
+"fp": "2a03f8914fe4",
+"lastmod": "2026-11-26"
 },
 "etaireia/admie-symmetochon/": {
 "fp": "0f51d751c4de",
 "lastmod": "2026-11-25"
 },
 "etaireia/aegean-airlines/": {
-"fp": "89908b93e49f",
-"lastmod": "2026-11-25"
+"fp": "5b0441005cbb",
+"lastmod": "2026-11-26"
 },
 "etaireia/afoi-kordellou/": {
 "fp": "0c3095c48fc9",
@@ -75,8 +75,8 @@
 "lastmod": "2026-11-25"
 },
 "etaireia/attica-group/": {
-"fp": "1bd70378e10a",
-"lastmod": "2026-11-25"
+"fp": "5761d28af751",
+"lastmod": "2026-11-26"
 },
 "etaireia/attica-media-group/": {
 "fp": "b971fbc796bb",
@@ -95,8 +95,8 @@
 "lastmod": "2026-11-25"
 },
 "etaireia/avax-group/": {
-"fp": "af22156fafb2",
-"lastmod": "2026-11-25"
+"fp": "2c9c0e4b0e5d",
+"lastmod": "2026-11-26"
 },
 "etaireia/ave/": {
 "fp": "4ab0a888cfc0",
@@ -155,16 +155,16 @@
 "lastmod": "2026-11-25"
 },
 "etaireia/diethnis-aerolimenas-athinon/": {
-"fp": "a38d4ff3e270",
-"lastmod": "2026-11-25"
+"fp": "ca1fa09e2329",
+"lastmod": "2026-11-26"
 },
 "etaireia/dimand/": {
 "fp": "5870bf7eb44a",
 "lastmod": "2026-11-25"
 },
 "etaireia/domiki-kritis/": {
-"fp": "b6c1556ce3dc",
-"lastmod": "2026-11-25"
+"fp": "134b9660d1e6",
+"lastmod": "2026-11-26"
 },
 "etaireia/doppler/": {
 "fp": "e8891b8df23d",
@@ -179,12 +179,12 @@
 "lastmod": "2026-11-25"
 },
 "etaireia/eins/": {
-"fp": "5782cdabac91",
-"lastmod": "2026-11-25"
+"fp": "e277ee71d7c6",
+"lastmod": "2026-11-26"
 },
 "etaireia/ekter/": {
-"fp": "0fb23f3b8a43",
-"lastmod": "2026-11-25"
+"fp": "abe3c7924f20",
+"lastmod": "2026-11-26"
 },
 "etaireia/el-d-mouzakis/": {
 "fp": "23e5609fd3af",
@@ -199,8 +199,8 @@
 "lastmod": "2026-11-25"
 },
 "etaireia/ellaktor/": {
-"fp": "ce43b433def0",
-"lastmod": "2026-11-25"
+"fp": "b815941b2978",
+"lastmod": "2026-11-26"
 },
 "etaireia/elton-group/": {
 "fp": "0739e1cf0742",
@@ -251,8 +251,8 @@
 "lastmod": "2026-11-25"
 },
 "etaireia/fdl-group/": {
-"fp": "2ef3c6db5d3d",
-"lastmod": "2026-11-25"
+"fp": "a8fbbb4a7b43",
+"lastmod": "2026-11-26"
 },
 "etaireia/filippos-nakas/": {
 "fp": "3f6abb261c76",
@@ -271,8 +271,8 @@
 "lastmod": "2026-11-25"
 },
 "etaireia/gek-terna/": {
-"fp": "02ae401d6008",
-"lastmod": "2026-11-25"
+"fp": "4f7b91bb64eb",
+"lastmod": "2026-11-26"
 },
 "etaireia/geniki-emporiou-viomichanias/": {
 "fp": "29320f7a8c9e",
@@ -374,9 +374,13 @@
 "fp": "e021b0e230bc",
 "lastmod": "2026-11-25"
 },
+"etaireia/metka/": {
+"fp": "87c459967d23",
+"lastmod": "2026-11-26"
+},
 "etaireia/metlen-energy-metals/": {
-"fp": "0c20fbbb2537",
-"lastmod": "2026-11-25"
+"fp": "b4b1abb22ec8",
+"lastmod": "2026-11-26"
 },
 "etaireia/mevaco/": {
 "fp": "f1beba8452ec",
@@ -403,8 +407,8 @@
 "lastmod": "2026-11-25"
 },
 "etaireia/omilos-aktor/": {
-"fp": "736629164f74",
-"lastmod": "2026-11-25"
+"fp": "7ed0872a22d3",
+"lastmod": "2026-11-26"
 },
 "etaireia/omilos-iatrikou-athinon/": {
 "fp": "cfd73a9f7a9d",
@@ -427,12 +431,12 @@
 "lastmod": "2026-11-25"
 },
 "etaireia/organismos-limenos-peiraios/": {
-"fp": "8f06a8cba0a7",
-"lastmod": "2026-11-25"
+"fp": "bcdde4bc6a55",
+"lastmod": "2026-11-26"
 },
 "etaireia/organismos-limenos-thessalonikis/": {
-"fp": "ff23bc6e4ef5",
-"lastmod": "2026-11-25"
+"fp": "cb315f615f1e",
+"lastmod": "2026-11-26"
 },
 "etaireia/organismos-tilepikoinonion-ellados/": {
 "fp": "d43bd7113fff",
@@ -483,8 +487,8 @@
 "lastmod": "2026-11-25"
 },
 "etaireia/proodeftiki/": {
-"fp": "a72927753322",
-"lastmod": "2026-11-25"
+"fp": "fb8bef5bb4fc",
+"lastmod": "2026-11-26"
 },
 "etaireia/qnr/": {
 "fp": "2e2b131131b5",
@@ -535,8 +539,8 @@
 "lastmod": "2026-11-25"
 },
 "etaireia/techniki-olympiaki/": {
-"fp": "66fad79ffe95",
-"lastmod": "2026-11-25"
+"fp": "0426ca71229c",
+"lastmod": "2026-11-26"
 },
 "etaireia/terna-energeiaki/": {
 "fp": "f11aa5b0eb87",
@@ -563,8 +567,8 @@
 "lastmod": "2026-11-25"
 },
 "etaireia/verallis/": {
-"fp": "94dc48d82533",
-"lastmod": "2026-11-25"
+"fp": "d8502ee5d044",
+"lastmod": "2026-11-26"
 },
 "etaireia/vidavo/": {
 "fp": "ec0d2c2254ab",
@@ -575,8 +579,8 @@
 "lastmod": "2026-11-25"
 },
 "etaireia/vioter/": {
-"fp": "1cdb068a5d02",
-"lastmod": "2026-11-25"
+"fp": "f54c23df21aa",
+"lastmod": "2026-11-26"
 },
 "etaireia/vogyatzoglou-systems/": {
 "fp": "e0db33737aa0",
@@ -587,92 +591,92 @@
 "lastmod": "2026-11-25"
 },
 "index-reviews/": {
-"fp": "094d82fea8d3",
-"lastmod": "2026-11-25"
+"fp": "f12969c77412",
+"lastmod": "2026-11-26"
 },
 "katataxeis/ev-ebitda/": {
-"fp": "7f1b0302339b",
-"lastmod": "2026-11-25"
+"fp": "7fc3e27bf5ed",
+"lastmod": "2026-11-26"
 },
 "katataxeis/katharos-daneismos-ebitda/": {
-"fp": "62178057be84",
-"lastmod": "2026-11-25"
+"fp": "8ba6979ef49f",
+"lastmod": "2026-11-26"
 },
 "katataxeis/merismatiki-apodosi/": {
-"fp": "fe17dd9f2f60",
-"lastmod": "2026-11-25"
+"fp": "816d352794bc",
+"lastmod": "2026-11-26"
 },
 "katataxeis/p-bv/": {
-"fp": "89ad1a3953cb",
-"lastmod": "2026-11-25"
+"fp": "4e9b18472bf7",
+"lastmod": "2026-11-26"
 },
 "katataxeis/p-e/": {
-"fp": "c41763972637",
-"lastmod": "2026-11-25"
+"fp": "28fd71fab099",
+"lastmod": "2026-11-26"
 },
 "katataxeis/roe/": {
-"fp": "50ec7ccae3d5",
-"lastmod": "2026-11-25"
+"fp": "c2d31b163c10",
+"lastmod": "2026-11-26"
 },
 "klados/akinita/": {
-"fp": "fcc7b5f85197",
-"lastmod": "2026-11-25"
+"fp": "b147ec03fab1",
+"lastmod": "2026-11-26"
 },
 "klados/chrimatooikonomika/": {
-"fp": "69f41ffd26a8",
-"lastmod": "2026-11-25"
+"fp": "baf461508050",
+"lastmod": "2026-11-26"
 },
 "klados/emporio-dianomi/": {
-"fp": "5a473de8ebd7",
-"lastmod": "2026-11-25"
+"fp": "679b8c323baa",
+"lastmod": "2026-11-26"
 },
 "klados/energeia-koinis-ofeleias/": {
-"fp": "6a6366164153",
-"lastmod": "2026-11-25"
+"fp": "aac57d9e5b1d",
+"lastmod": "2026-11-26"
 },
 "klados/holding/": {
-"fp": "d93f67580eb9",
-"lastmod": "2026-11-25"
+"fp": "2edc19edd5a1",
+"lastmod": "2026-11-26"
 },
 "klados/katanalotika-agatha/": {
-"fp": "54b1db9ad7fc",
-"lastmod": "2026-11-25"
+"fp": "b83515608448",
+"lastmod": "2026-11-26"
 },
 "klados/kataskeves-ypodomes-metafores/": {
-"fp": "7ba07edc02ac",
-"lastmod": "2026-11-25"
+"fp": "d0a6daac16d5",
+"lastmod": "2026-11-26"
 },
 "klados/navtilia/": {
-"fp": "2f96a182461e",
-"lastmod": "2026-11-04"
+"fp": "40790ffda25a",
+"lastmod": "2026-11-26"
 },
 "klados/technologia-mme-tilepikoinonies/": {
-"fp": "e2596ae89511",
-"lastmod": "2026-11-25"
+"fp": "54926fdc3075",
+"lastmod": "2026-11-26"
 },
 "klados/trapezes/": {
-"fp": "8a10fea3f771",
-"lastmod": "2026-11-25"
+"fp": "f93a599f7793",
+"lastmod": "2026-11-26"
 },
 "klados/viomichania-vasika-ylika/": {
-"fp": "03afcc204a2f",
-"lastmod": "2026-11-25"
+"fp": "b220261b77a7",
+"lastmod": "2026-11-26"
 },
 "market-events/": {
-"fp": "799832422a01",
-"lastmod": "2026-11-25"
+"fp": "1b4c98b56a49",
+"lastmod": "2026-11-26"
 },
 "methodology/": {
 "fp": "28e33a92b86e",
 "lastmod": "2026-11-04"
 },
 "sectors/": {
-"fp": "9cd57596f260",
-"lastmod": "2026-11-25"
+"fp": "e6cce0ae664d",
+"lastmod": "2026-11-26"
 },
 "short-positions/": {
-"fp": "b01ab44bc791",
-"lastmod": "2026-11-25"
+"fp": "8100ff4dfb05",
+"lastmod": "2026-11-26"
 },
 "terms/": {
 "fp": "e45a9f4d29e3",
