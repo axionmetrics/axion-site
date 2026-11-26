@@ -1,7 +1,7 @@
 # results-reconciler.yml
 # Θέση στο repo:  .github/workflows/results-reconciler.yml
 #
-# Ελέγχει ποιες εταιρείες δημοσίευσαν αποτελέσματα περιόδου (ετήσια + 6μηνο)
+# Ελέγχει ποιες εταιρείες δημοσίευσαν αποτελέσματα περιόδου (ετήσια + 6μηνο + 3μηνο/9μηνο, §193)
 # στο Euronext Financial Calendar αλλά ΔΕΝ είναι ακόμη live στο data.js
 # (reported=false). ΔΕΝ αλλάζει master ούτε data.js — μόνο αναφέρει.
 #
@@ -24,16 +24,19 @@ on:
     #   εξαμηνιαίες (58) : Μαρ 2 · Ιουλ 10 · Αυγ 10 · **Σεπ 36**
     #   → ΚΑΘΕ ΜΙΑ από τις 137 πέφτει στους μήνες 2-5 ή 7-10. Καμία εξαίρεση.
     #
-    # Γι' αυτό: Δευ/Τετ/Παρ μέσα στα δύο παράθυρα, **Παρασκευή** εκτός. Το εκτός-παραθύρου
+    # §193 (2026-11-26) — ΚΑΙ 3μηνα/9μηνα (μη υποχρεωτικά): 3Μ 2026 Απρ–Ιουλ (Μάιος–Ιούνιος κυρίως),
+    # 9Μ 2026 Οκτ–Δεκ (Νοέμβριος κυρίως) → ο Ιούνιος και ο Νοέμβριος μπαίνουν στο Δευ/Τετ/Παρ.
+    #
+    # Γι' αυτό: Δευ/Τετ/Παρ μέσα στα παράθυρα (Φεβ–Νοέ), **Παρασκευή** εκτός. Το εκτός-παραθύρου
     # τρέξιμο ΔΕΝ καταργείται: οι μη-ημερολογιακές χρήσεις και οι εκπρόθεσμες δημοσιεύσεις
     # υπάρχουν (Μάιος, Οκτώβριος) και ένα σκληρό εποχικό κλείδωμα θα τις έχανε.
-    - cron: '10 6 * 2-5,7-10 1,3,5'   # παράθυρα δημοσίευσης → Δευ/Τετ/Παρ
-    - cron: '10 6 * 1,6,11,12 5'      # νεκροί μήνες → μόνο Παρασκευή
+    - cron: '10 6 * 2-11 1,3,5'       # παράθυρα δημοσίευσης (έτος · 3Μ · 6Μ · 9Μ) → Δευ/Τετ/Παρ
+    - cron: '10 6 * 1,12 5'           # νεκροί μήνες → μόνο Παρασκευή
   workflow_dispatch: {}
 
 permissions:
   issues: write
-  contents: read
+  contents: write   # §193: commit της μνήμης 3Μ/9Μ (.github/monitor/reconciler_q_state.json)
 
 concurrency:
   group: results-reconciler
@@ -44,18 +47,41 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Reconciler (interim + annual)
+      - name: Reconciler (ετήσια + 6μηνο + 3μηνο/9μηνο)
         id: run
         run: |
-          python .github/scripts/results_reconciler.py --both \
+          python .github/scripts/results_reconciler.py --all \
+            --q-state .github/monitor/reconciler_q_state.json \
             --cid-map .github/scripts/euronext_cid_map.json \
             --data-js assets/data.js \
             --out .github/monitor/reconciler_report.md
+
+      # §193 — η μνήμη 3Μ/9Μ (τι βρέθηκε, ως πού διαβάστηκαν οι ανακοινώσεις κάθε εκδότη) γίνεται
+      # commit ώστε το επόμενο τρέξιμο να ψάχνει ΜΟΝΟ όσες λείπουν και ΜΟΝΟ στις νέες ανακοινώσεις.
+      - name: Commit μνήμης 3Μ/9Μ (αν άλλαξε)
+        if: always()
+        run: |
+          F=.github/monitor/reconciler_q_state.json
+          [ -f "$F" ] || { echo "Χωρίς μνήμη 3Μ/9Μ (εκτός περιόδου)."; exit 0; }
+          git add "$F"
+          if git diff --cached --quiet; then echo "Καμία μεταβολή."; exit 0; fi
+          git config user.name  "axion-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "reconciler: μνήμη 3Μ/9Μ $(date -u +%Y-%m-%d)"
+          for i in 1 2 3 4 5; do
+            git fetch origin ${{ github.ref_name }}
+            if git rebase origin/${{ github.ref_name }} && git push; then echo "OK pushed"; exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            echo "retry $i ..."; sleep 5
+          done
+          echo "push failed after retries"; exit 1
 
       # ΔΙΟΡΘΩΣΗ 2026-09-05: ίδιο πρόβλημα με τον Euronext Monitor — το Issue και τα
       # σχόλια δημιουργούνταν χωρίς @mention/assignee, οπότε δεν έφτανε ειδοποίηση

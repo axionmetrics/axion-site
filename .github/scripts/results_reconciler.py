@@ -17,6 +17,9 @@ Axion Metrics — Results Reconciler  (AUTO layer)
      μετατέθηκαν. Εταιρεία που φαίνεται ΜΟΝΟ στο ημερολόγιο (χωρίς έκθεση) μπαίνει σε
      χωριστή ενότητα και ΔΕΝ μετράει ως εκκρεμότητα.
 
+3ΜΗΝΑ / 9ΜΗΝΑ (§193, 2026-11-26): τρίτη πηγή οι ανακοινώσεις του εκδότη, αυξητικός έλεγχος με
+μνήμη στο .github/monitor/reconciler_q_state.json — βλ. ενότητα «§193» πιο κάτω.
+
 ΦΙΛΤΡΑ: εξαιρεί (α) frozen εταιρείες (UPDATED/CALCULATED=NO → `calculated=false`
 στο data.js) και (β) μελλοντικές (προγραμματισμένες) ημ/νίες.
 Σε ΚΑΘΕ report δείχνει ρητά το «Εκτός κάλυψης (frozen)» roster — ποιες αφήνουμε εκτός.
@@ -267,19 +270,215 @@ def reconcile(events, cid2row, reported_tks, basis, period, excluded_tks=None, a
     pub = sorted(published.values(), key=lambda r: date_key(r["date"]))
     return {"published": pub, "new": [r for r in pub if r["tk"] not in reported_tks]}
 
+# ---------------------------------------------------------------- §193 — 3ΜΗΝΑ / 9ΜΗΝΑ
+# Οι τριμηνιαίες ΔΕΝ είναι υποχρεωτικές (Ν. 3556/2007 όπως ισχύει) → δεν υπάρχει πλήρης λίστα
+# «ποιος πρέπει να δημοσιεύσει». Έλεγχος 26/11/2026 στις εταιρείες με δεδομένα 3Μ/9Μ 2026:
+#   πηγή                        3Μ (43)   9Μ (40)
+#   οικονομικό ημερολόγιο         26        32
+#   σελίδα εκθέσεων εκδότη        14        13
+#   ανακοινώσεις εκδότη           41        37 (+2 με γενικό τίτλο)
+#   ανακοινώσεις + εκθέσεις       43        40
+# → ΤΡΕΙΣ πηγές. Οι ανακοινώσεις είναι ΑΝΑ ΕΚΔΟΤΗ (καμία ενιαία λίστα στο Euronext Athens),
+#   οπότε ο έλεγχος είναι ΑΥΞΗΤΙΚΟΣ (απαίτηση user): ψάχνει ΜΟΝΟ εταιρείες που (α) δεν είναι
+#   live στο data.js και (β) δεν έχουν ήδη βρεθεί. Ό,τι βρεθεί, και ως ποια ημερομηνία έχουν
+#   διαβαστεί οι ανακοινώσεις κάθε εκδότη, μένει στο Q_STATE· το επόμενο τρέξιμο διαβάζει
+#   μόνο τις καινούργιες ανακοινώσεις (συνήθως μόνο την 1η σελίδα).
+Q_BASES  = ("q1", "q3")
+Q_WIN    = {"q1": (4, 5, 6, 7), "q3": (10, 11, 12)}          # μήνες δημοσίευσης
+Q_CAL    = {"q1": ("three months results", "three month results"),
+            "q3": ("nine months results", "nine month results")}
+Q_REP    = {"q1": "τριμην", "q3": "εννιαμην"}                 # «Τριμηνιαία» / «Εννιαμηνιαία»
+_AP = r"\s*['΄’`]?\s*"
+Q_ANN = {
+    "q1": re.compile(r"(α|a|1ου|πρωτου|πρωτο)" + _AP + r"τριμην|3μην|\b3μ\s*\d{4}|three.?month"
+                     r"|\bq1\b|\b1q\b|first quarter"),
+    "q3": re.compile(r"εννε?α?μην|εννιαμην|9μην|\b9μ\s*\d{4}|\b9m\b|nine.?month|(γ|3ου|τριτου|τριτο)"
+                     + _AP + r"τριμην|\bq3\b|\b3q\b|third quarter"),
+}
+# ημερομηνία λήξης περιόδου στον τίτλο μετράει ΜΟΝΟ μαζί με λέξη αποτελεσμάτων
+# (123 REVOIL «αποτελεσμάτων περιόδου 01.01 έως 30.09.2026» ναι · 57 ALUMIL «Midcap Event … 30.09.2026» όχι)
+Q_ANN_DATE = {"q1": re.compile(r"31[./]0?3[./]\d{4}"), "q3": re.compile(r"30[./]0?9[./]\d{4}")}
+Q_ANN_RES  = re.compile(r"αποτελεσματ|results|μεγεθ|περιοδου")
+# εκτός: ανακοινώσεις ΗΜΕΡΟΜΗΝΙΑΣ αποτελεσμάτων, οικονομικό ημερολόγιο, άλλο τρίμηνο
+# (60 ADMHE / 119 PLASTIKA THRAKIS: «Ημερομηνία δημοσίευσης αποτελεσμάτων εννεαμήνου» — προαναγγελία, όχι δημοσίευση·
+#  29 JUMBO: «δυναμική των πωλήσεων στο εννεάμηνο» — ενημέρωση πωλήσεων, όχι αποτελέσματα)
+Q_ANN_EXC = re.compile(r"ημερομηνι\w* (και ωρα )?(ανακοινωσ|δημοσιευσ)|οικονομικο(υ)? ημερολογιο"
+                       r"|financial calendar|(β|2ου|δευτερου)" + _AP + r"τριμην|εξαμην|πωλησ|\bsales\b"
+                       r"|subsidiary|θυγατρικ")      # 51 VIOHALCO: «subsidiary ElvalHalcor financial results Q1»
+# γενικός τίτλος χωρίς περίοδο («Δελτία Τύπου Αποτελεσμάτων – Παρουσιάσεις»): μόνο ένδειξη
+Q_ANN_GEN = re.compile(r"αποτελεσματ|results")
+Q_ANN_GEN_EXC = re.compile(r"ψηφοφορι|συνελευσ|δημοπρασ|δημοσιας (προσφορας|προτασ)|ipo|χρησ|ετησ|ετους|31\.12")
+# γενικός τίτλος μετράει ως ένδειξη ΜΟΝΟ σε μήνες χωρίς ετήσια/6μηνα: Απρίλιος = ετήσια, Ιούλιος = 6μηνα
+Q_GEN_MONTHS = {"q1": (5, 6), "q3": (10, 11, 12)}
+ANN_URL = "https://athens.euronext.com/el/market-data/issuers/{cid}/announcements?page={p}"
+ANN_MAX_PAGES = 15
+
+def q_label(basis, period): return ("3μηνο " if basis == "q1" else "9μηνο ") + period[:4]
+
+def q_season(asof):
+    """Ποια τριμηνιαία περίοδος ελέγχεται σήμερα (ή None): 3Μ Απρ–Αύγ, 9Μ Οκτ–Ιαν."""
+    m = asof.month
+    if 4 <= m <= 8:  return "q1", f"{asof.year}Q1"
+    if m >= 10:      return "q3", f"{asof.year}Q3"
+    if m == 1:       return "q3", f"{asof.year - 1}Q3"
+    return None
+
+def _ymd(d):  # '05-11-2026' ή '05.11.2026' → '20261105'
+    p = re.split(r"[.-]", d or "")
+    return f"{p[2]}{p[1].zfill(2)}{p[0].zfill(2)}" if len(p) == 3 else ""
+
+def q_live(data_js, basis, yr):
+    """tickers με δεδομένα αποτελεσμάτων 3Μ/9Μ στο data.js (ίδιος κανόνας με το site, §191:
+    μόνο ισολογισμός ΔΕΝ μετράει ως live)."""
+    pl = ("revenue", "ebitda", "ebitda_rep", "net_profit", "pat", "ppi")
+    out = set()
+    for c in _load_axion(data_js).get("companies", {}).get("annual", []):
+        q = (c.get("quarters") or {}).get(basis)
+        if q and q.get("y") == yr and any((q.get("m") or {}).get(k) is not None for k in pl):
+            out.add(c["tk"])
+    return out
+
+def fetch_announcements(cid, stop_before):
+    """Ανακοινώσεις εκδότη, νεότερες πρώτα, μέχρι να βρεθεί ημερομηνία < stop_before.
+    → (rows[(yyyymmdd, title, href)], newest_seen)"""
+    out, newest = [], ""
+    for p in range(ANN_MAX_PAGES):
+        t = _get_text(ANN_URL.format(cid=cid, p=p)); page = []
+        for tr in re.findall(r'<tr[^>]*>([\s\S]*?)</tr>', t):
+            cells = [re.sub(r'\s+', ' ', html.unescape(re.sub(r'<[^>]+>', ' ', c))).strip()
+                     for c in re.findall(r'<td[^>]*>([\s\S]*?)</td>', tr)]
+            d = next((_ymd(m.group(0)) for c in cells for m in [re.search(r'\d{2}-\d{2}-\d{4}', c)] if m), "")
+            if not (cells and d): continue
+            a = re.search(r'href="([^"]+)"', tr)
+            href = a.group(1) if a else ""
+            if href.startswith("/"): href = "https://athens.euronext.com" + href
+            page.append((d, cells[0], href))
+        if not page: break
+        out += page; newest = max(newest, max(x[0] for x in page))
+        if min(x[0] for x in page) < stop_before: break
+    return out, newest
+
+def run_quarter(basis, period, cid2row, data_js, asof, state_path):
+    yr = int(period[:4]); months = Q_WIN[basis]
+    lo = f"{yr}{months[0]:02d}01"; cut = asof.strftime("%Y%m%d")
+    live = q_live(data_js, basis, yr)
+    ann_year = _load_axion(data_js)["rowsByPeriod"]["annual"]
+    _last = max(ann_year) if ann_year else None
+    excluded = load_calc_excluded_from_datajs(data_js, "annual", _last) if _last else set()
+    names = load_display_names(data_js, "annual", _last) if _last else {}
+    try: ST = json.load(open(state_path, encoding="utf-8"))
+    except Exception: ST = {}
+    S = ST.setdefault(period, {"found": {}, "scanned": {}})
+    rows = [r for r in cid2row.values() if r["tk"] not in excluded]
+    todo = [r for r in rows if r["tk"] not in live and r["tk"] not in S["found"]]
+
+    # 1) οικονομικό ημερολόγιο (λίγες σελίδες για όλη την αγορά)
+    cal_past, upcoming = {}, {}
+    for m in months:
+        for ev in fetch_month(f"{yr}-{m}"):
+            t = (ev["title"] or "").lower()
+            if not ev["cid"] or not any(x in t for x in Q_CAL[basis]): continue
+            row = cid2row.get(ev["cid"])
+            if not row or row["tk"] in excluded or row["tk"] in live: continue
+            d = _ymd(ev["date"])
+            tgt = cal_past if d <= cut else upcoming
+            if d > tgt.get(row["tk"], ("",))[0]: tgt[row["tk"]] = (d, row)
+
+    # 2) ανακοινώσεις + 3) εκθέσεις — ΜΟΝΟ για όσες λείπουν (αυξητικά)
+    def one(r):
+        cid = str(r["cid"]); seen = S["scanned"].get(cid, "")
+        hit, weak, err = None, None, None
+        try:
+            ann, newest = fetch_announcements(cid, max(lo, seen))
+            for d, ti, href in ann:
+                if not (lo <= d <= cut) or (seen and d < seen): continue
+                f = _fold(ti)
+                if Q_ANN_EXC.search(f): continue
+                if Q_ANN[basis].search(f) or (Q_ANN_DATE[basis].search(f) and Q_ANN_RES.search(f)):
+                    if not hit or d < hit["d"]: hit = {"d": d, "title": ti, "url": href, "src": "ανακοίνωση"}
+                elif (Q_ANN_GEN.search(f) and not Q_ANN_GEN_EXC.search(f) and str(yr - 1) not in f
+                      and int(d[4:6]) in Q_GEN_MONTHS[basis] and not weak):
+                    weak = {"d": d, "title": ti, "url": href, "src": "ανακοίνωση (γενικός τίτλος)", "weak": True}
+            if not hit:
+                for x in fetch_fin_reports(cid):
+                    if (x["year"] == yr and _fold(x["kind"]).startswith(Q_REP[basis])
+                            and _fold(x["title"]).startswith(FIN_DOC_OK) and lo <= x["date"] <= cut):
+                        hit = {"d": x["date"], "title": x["title"], "url": x["pdf"], "src": "έκθεση"}; break
+        except Exception as e:
+            return r, None, None, None, str(e)
+        return r, hit or weak, newest, None, err
+    failed = []
+    with ThreadPoolExecutor(4) as ex:
+        for r, hit, newest, _, err in ex.map(one, todo):
+            if err: failed.append(r["code"]); continue
+            if newest: S["scanned"][str(r["cid"])] = newest
+            if hit and not hit.get("weak"): S["found"][r["tk"]] = hit
+            elif hit: S.setdefault("weak", {})[r["tk"]] = hit
+    for tk in list(S.get("weak", {})):           # γενικός τίτλος που πλέον επιβεβαιώθηκε/έγινε live
+        if tk in S["found"] or tk in live: S["weak"].pop(tk)
+
+    def mk(row, d, src, title="", url=""):
+        return {**row, "date": f"{d[6:]}.{d[4:6]}.{d[:4]}", "src": src, "title": title,
+                "pdf": url, "disp": names.get(row["tk"]) or _short(row["name"])}
+    by_tk = {r["tk"]: r for r in rows}
+    new = {}
+    for tk, h in S["found"].items():
+        if tk in live or tk not in by_tk: continue
+        new[tk] = mk(by_tk[tk], h["d"], h["src"], h.get("title", ""), h.get("url", ""))
+    for tk, (d, row) in cal_past.items():
+        if tk not in new: new[tk] = mk(row, d, "ημερολόγιο")
+        elif "ημερολόγιο" not in new[tk]["src"]: new[tk]["src"] += " + ημερολόγιο"
+    weak = [mk(by_tk[tk], h["d"], h["src"], h.get("title", ""), h.get("url", ""))
+            for tk, h in S.get("weak", {}).items() if tk not in new and tk in by_tk]
+    up = [mk(row, d, "ημερολόγιο") for tk, (d, row) in upcoming.items() if tk not in new]
+    os.makedirs(os.path.dirname(os.path.abspath(state_path)), exist_ok=True)
+    json.dump(ST, open(state_path, "w", encoding="utf-8"), ensure_ascii=False, indent=1, sort_keys=True)
+    srt = lambda L: sorted(L, key=lambda r: date_key(r["date"]))
+    return {"q": True, "published": srt(new.values()), "new": srt(new.values()), "weak": srt(weak),
+            "upcoming": srt(up), "failed": failed, "n_live": len(live), "n_scan": len(todo)}
+
 def _short(n): return n.split(" ", 1)[1] if " " in n else n
-def label(basis, period): return (f"6μηνο {period[:4]}" if basis == "interim" else f"έτος {period}")
+def label(basis, period):
+    if basis in Q_BASES: return q_label(basis, period)
+    return (f"6μηνο {period[:4]}" if basis == "interim" else f"έτος {period}")
 
 # ---------------------------------------------------------------- report
+def render_quarter(basis, period, res):
+    """§193 — ενότητα 3Μ/9Μ. Μετράει ΜΟΝΟ το «εκκρεμούν»· γενικοί τίτλοι και προγραμματισμένες
+    ημερομηνίες εμφανίζονται για ενημέρωση."""
+    L = ["", f"## {label(basis, period)}",
+         f"live στο site: **{res['n_live']}** · ελέγχθηκαν σε αυτό το τρέξιμο: {res['n_scan']} "
+         f"(μόνο όσες λείπουν) · εκκρεμούν στο master: **{len(res['new'])}**", ""]
+    if res.get("failed"):
+        L += [f"⚠️ Δεν διαβάστηκαν οι σελίδες για κωδ. {', '.join(map(str, res['failed']))} — ξαναδοκιμάζονται στο επόμενο τρέξιμο.", ""]
+    if not res["new"]:
+        L.append("_Καμία εκκρεμότητα._")
+    else:
+        L += ["| Εταιρεία | Ticker | Δημοσίευση | Πηγή | Σύνδεσμος |", "|---|---|---|---|---|"]
+        for r in res["new"]:
+            link = f"[↗]({r['pdf']})" if r.get("pdf") else f"[issuer ↗]({ISSUER_URL.format(cid=r['cid'])})"
+            L.append(f"| **{r['code']} · {r['disp']}** | {r['tk']} | {r['date']} | {r['src']} | {link} |")
+    if res.get("weak"):
+        L += ["", "**Ανακοίνωση αποτελεσμάτων χωρίς περίοδο στον τίτλο — να ελεγχθεί** (δεν μετράει):", ""]
+        for r in res["weak"]:
+            L.append(f"- {r['code']} · {r['disp']} — {r['date']} «{r['title']}» [↗]({r['pdf']})")
+    if res.get("upcoming"):
+        L += ["", "**Αναμένονται** (οικονομικό ημερολόγιο):", ""]
+        for r in res["upcoming"]:
+            L.append(f"- {r['code']} · {r['disp']} — {r['date']}")
+    return L
+
 def render_report(results, asof, roster):
     tot_new = sum(len(r["new"]) for _,_,r in results)
     L = [f"# 🎯 Results Reconciler — {asof}", ""]
     if tot_new == 0:
         L.append("Καμία νέα δημοσίευση εκτός site. ✅")
     for basis, period, res in results:
+        if res.get("q"):
+            L += render_quarter(basis, period, res); continue
         L += ["", f"## {label(basis, period)}",
-              f"δημοσίευσαν: **{len(res['published'])}** "
-              f"(εκθέσεις {res.get('n_rep', 0)} · ημερολόγιο {res.get('n_cal', 0)})  ·  "
+              f"live στο site: **{res.get('n_live', 0)}** · δημοσίευσαν εκτός site: εκθέσεις {res.get('n_rep', 0)} "
+              f"(ελέγχονται μόνο όσες λείπουν) · ημερολόγιο {res.get('n_cal', 0)}  ·  "
               f"εκκρεμούν στο master: **{len(res['new'])}**", ""]
         if res.get("failed"):
             L += [f"⚠️ Δεν διαβάστηκαν οι εκθέσεις για κωδ. {', '.join(map(str, res['failed']))} — "
@@ -332,7 +531,9 @@ def run_basis(basis, period, cid2row, data_js, asof, events_json=None):
     if os.environ.get("RECON_NO_REPORTS"):
         rep_pub, failed = {}, []
     else:
-        rep_pub, failed = reports_published(cid2row, basis, period, excluded, asof)
+        # §193 — οι εκθέσεις διαβάζονται ΜΟΝΟ για όσες ΔΕΝ είναι ήδη live (δεν ξαναελέγχουμε
+        # ό,τι έχουμε ήδη): ένα αίτημα ανά εταιρεία που λείπει, αντί για ~140 σε κάθε τρέξιμο.
+        rep_pub, failed = reports_published(cid2row, basis, period, excluded | reported, asof)
     # Έκθεση = κυρίαρχη. Ημερολόγιο μόνο: (α) όπου απέτυχε η ανάγνωση εκθέσεων → μετράει κανονικά,
     # (β) αλλιώς → «μόνο ημερολόγιο» (πιθανώς μετατεθειμένη ημερομηνία), ΔΕΝ μετράει ως εκκρεμότητα.
     published = dict(rep_pub)
@@ -344,7 +545,7 @@ def run_basis(basis, period, cid2row, data_js, asof, events_json=None):
     pub = sorted(published.values(), key=lambda r: date_key(r["date"]))
     res = {"published": pub, "new": [r for r in pub if r["tk"] not in reported],
            "cal_only": sorted([r for r in cal_only if r["tk"] not in reported], key=lambda r: date_key(r["date"])),
-           "failed": failed, "n_cal": len(cal), "n_rep": len(rep_pub)}
+           "failed": failed, "n_cal": len(cal), "n_rep": len(rep_pub), "n_live": len(reported)}
     # Εμπλουτισμός ΜΟΝΟ εμφάνισης: database name από το master· fallback στο cid_map name.
     # (res["new"] μοιράζεται τα ίδια dict-objects με res["published"], άρα καλύπτεται κι αυτό.)
     for r in res["published"] + res["cal_only"]:
@@ -355,8 +556,10 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--cid-map", default=".github/scripts/euronext_cid_map.json")
     ap.add_argument("--data-js", default="assets/data.js")
-    ap.add_argument("--basis", default="interim", choices=["interim", "annual"])
+    ap.add_argument("--basis", default="interim", choices=["interim", "annual", "q1", "q3"])
     ap.add_argument("--both", action="store_true")
+    ap.add_argument("--all", action="store_true", help="ετήσια + 6μηνο + το τρέχον 3μηνο/9μηνο (§193)")
+    ap.add_argument("--q-state", default=".github/monitor/reconciler_q_state.json")
     ap.add_argument("--period"); ap.add_argument("--asof"); ap.add_argument("--out")
     ap.add_argument("--events-json")
     args = ap.parse_args()
@@ -364,11 +567,17 @@ def main():
     asof = datetime.date.fromisoformat(args.asof) if args.asof else datetime.datetime.utcnow().date()
     auto_period = lambda b: (f"{asof.year}H1" if b == "interim" else str(asof.year - 1))
     cid2row, _ = load_cid_map(args.cid_map)
-    bases = ["interim", "annual"] if args.both else [args.basis]
+    bases = ["interim", "annual"] if (args.both or args.all) else [args.basis]
+    if args.all and q_season(asof): bases.append(q_season(asof)[0])
 
     results, roster = [], []
     for b in bases:
-        period = args.period if (args.period and not args.both) else auto_period(b)
+        if b in Q_BASES:
+            period = (args.period if (args.period and not (args.both or args.all))
+                      else (q_season(asof) or (None, f"{asof.year}{b.upper()}"))[1])
+            results.append((b, period, run_quarter(b, period, cid2row, args.data_js, asof, args.q_state)))
+            continue
+        period = args.period if (args.period and not (args.both or args.all)) else auto_period(b)
         results.append((b, period, run_basis(b, period, cid2row, args.data_js, asof, args.events_json)))
         if not roster:
             roster = load_frozen_roster(args.data_js, b, period)
