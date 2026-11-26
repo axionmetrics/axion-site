@@ -3,7 +3,7 @@
 "note": "Το γράφει η γέφυρα (§163). Αποτύπωμα περιεχομένου ανά διεύθυνση, ώστε το lastmod του sitemap να ανανεώνεται μόνο σε πραγματική αλλαγή.",
 "pages": {
 "": {
-"fp": "8dcdeada0612",
+"fp": "c12d357bf8d0",
 "lastmod": "2026-11-26"
 },
 "about/": {
@@ -11,15 +11,15 @@
 "lastmod": "2026-11-04"
 },
 "apotelesmata/": {
-"fp": "d1629787920c",
+"fp": "18cbcd4ad545",
 "lastmod": "2026-11-26"
 },
 "company/": {
-"fp": "1ced6c89cf44",
+"fp": "f26403bf7585",
 "lastmod": "2026-11-26"
 },
 "compare/": {
-"fp": "2a03f8914fe4",
+"fp": "64a83b4724b4",
 "lastmod": "2026-11-26"
 },
 "etaireia/admie-symmetochon/": {
@@ -327,8 +327,8 @@
 "lastmod": "2026-11-25"
 },
 "etaireia/kri-kri/": {
-"fp": "e21c73024ba9",
-"lastmod": "2026-11-25"
+"fp": "9b4d495c0512",
+"lastmod": "2026-11-26"
 },
 "etaireia/lamda-development/": {
 "fp": "c893124b5f51",
@@ -415,8 +415,8 @@
 "lastmod": "2026-11-25"
 },
 "etaireia/omilos-plastika-thrakis/": {
-"fp": "aba72483aca4",
-"lastmod": "2026-11-25"
+"fp": "8453cbdb6c90",
+"lastmod": "2026-11-26"
 },
 "etaireia/onyx-touristiki/": {
 "fp": "cc27976da45c",
@@ -511,8 +511,8 @@
 "lastmod": "2026-11-25"
 },
 "etaireia/safe-bulkers/": {
-"fp": "ab8bdfa2a4cb",
-"lastmod": "2026-11-25"
+"fp": "9549cf37d7c0",
+"lastmod": "2026-11-26"
 },
 "etaireia/sarantis/": {
 "fp": "d7cf3c02e2a9",
@@ -535,8 +535,8 @@
 "lastmod": "2026-11-25"
 },
 "etaireia/star-bulk-carriers/": {
-"fp": "84ddabbf902e",
-"lastmod": "2026-11-25"
+"fp": "d3be4cc62547",
+"lastmod": "2026-11-26"
 },
 "etaireia/techniki-olympiaki/": {
 "fp": "0426ca71229c",
@@ -591,7 +591,7 @@
 "lastmod": "2026-11-25"
 },
 "index-reviews/": {
-"fp": "f12969c77412",
+"fp": "3562f6aafa90",
 "lastmod": "2026-11-26"
 },
 "katataxeis/ev-ebitda/": {
@@ -663,7 +663,7 @@
 "lastmod": "2026-11-26"
 },
 "market-events/": {
-"fp": "1b4c98b56a49",
+"fp": "0ea0897b99ca",
 "lastmod": "2026-11-26"
 },
 "methodology/": {
@@ -671,11 +671,11 @@
 "lastmod": "2026-11-04"
 },
 "sectors/": {
-"fp": "e6cce0ae664d",
+"fp": "d4c3a48d5415",
 "lastmod": "2026-11-26"
 },
 "short-positions/": {
-"fp": "8100ff4dfb05",
+"fp": "62fabf45f4f2",
 "lastmod": "2026-11-26"
 },
 "terms/": {
