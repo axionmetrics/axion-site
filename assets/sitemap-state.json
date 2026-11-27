@@ -1,30 +1,30 @@
 {
-"generated": "2026-11-26",
+"generated": "2026-11-27",
 "note": "Το γράφει η γέφυρα (§163). Αποτύπωμα περιεχομένου ανά διεύθυνση, ώστε το lastmod του sitemap να ανανεώνεται μόνο σε πραγματική αλλαγή.",
 "pages": {
 "": {
-"fp": "c12d357bf8d0",
-"lastmod": "2026-11-26"
+"fp": "e36a79cc3ee6",
+"lastmod": "2026-11-27"
 },
 "about/": {
-"fp": "bad60b8de921",
-"lastmod": "2026-11-04"
+"fp": "0de0f0dc55c7",
+"lastmod": "2026-11-27"
 },
 "apotelesmata/": {
-"fp": "18cbcd4ad545",
-"lastmod": "2026-11-26"
+"fp": "919fa81c4efc",
+"lastmod": "2026-11-27"
 },
 "company/": {
-"fp": "f26403bf7585",
-"lastmod": "2026-11-26"
+"fp": "5660751e0a85",
+"lastmod": "2026-11-27"
 },
 "compare/": {
-"fp": "64a83b4724b4",
-"lastmod": "2026-11-26"
+"fp": "95f5802f5d0d",
+"lastmod": "2026-11-27"
 },
 "etaireia/admie-symmetochon/": {
-"fp": "0f51d751c4de",
-"lastmod": "2026-11-25"
+"fp": "627a7ea2f738",
+"lastmod": "2026-11-27"
 },
 "etaireia/aegean-airlines/": {
 "fp": "5b0441005cbb",
@@ -71,8 +71,8 @@
 "lastmod": "2026-11-25"
 },
 "etaireia/as-company/": {
-"fp": "a87398e5effb",
-"lastmod": "2026-11-25"
+"fp": "373c508f3d5b",
+"lastmod": "2026-11-27"
 },
 "etaireia/attica-group/": {
 "fp": "5761d28af751",
@@ -171,8 +171,8 @@
 "lastmod": "2026-11-25"
 },
 "etaireia/dotsoft/": {
-"fp": "f3a1eee0fa04",
-"lastmod": "2026-11-25"
+"fp": "1975cfb180b3",
+"lastmod": "2026-11-27"
 },
 "etaireia/dromeas/": {
 "fp": "195912dea518",
@@ -591,96 +591,96 @@
 "lastmod": "2026-11-25"
 },
 "index-reviews/": {
-"fp": "3562f6aafa90",
-"lastmod": "2026-11-26"
+"fp": "0a099fb496eb",
+"lastmod": "2026-11-27"
 },
 "katataxeis/ev-ebitda/": {
-"fp": "7fc3e27bf5ed",
-"lastmod": "2026-11-26"
+"fp": "3598c5f0f1c4",
+"lastmod": "2026-11-27"
 },
 "katataxeis/katharos-daneismos-ebitda/": {
-"fp": "8ba6979ef49f",
-"lastmod": "2026-11-26"
+"fp": "f837e2991ef5",
+"lastmod": "2026-11-27"
 },
 "katataxeis/merismatiki-apodosi/": {
-"fp": "816d352794bc",
-"lastmod": "2026-11-26"
+"fp": "6bf4eea98696",
+"lastmod": "2026-11-27"
 },
 "katataxeis/p-bv/": {
-"fp": "4e9b18472bf7",
-"lastmod": "2026-11-26"
+"fp": "06f6afa25f3d",
+"lastmod": "2026-11-27"
 },
 "katataxeis/p-e/": {
-"fp": "28fd71fab099",
-"lastmod": "2026-11-26"
+"fp": "fc7a9632b893",
+"lastmod": "2026-11-27"
 },
 "katataxeis/roe/": {
-"fp": "c2d31b163c10",
-"lastmod": "2026-11-26"
+"fp": "3f6c4264720a",
+"lastmod": "2026-11-27"
 },
 "klados/akinita/": {
-"fp": "b147ec03fab1",
-"lastmod": "2026-11-26"
+"fp": "7c4648a57c7b",
+"lastmod": "2026-11-27"
 },
 "klados/chrimatooikonomika/": {
-"fp": "baf461508050",
-"lastmod": "2026-11-26"
+"fp": "65bca3dd051f",
+"lastmod": "2026-11-27"
 },
 "klados/emporio-dianomi/": {
-"fp": "679b8c323baa",
-"lastmod": "2026-11-26"
+"fp": "1a40860f4cf5",
+"lastmod": "2026-11-27"
 },
 "klados/energeia-koinis-ofeleias/": {
-"fp": "aac57d9e5b1d",
-"lastmod": "2026-11-26"
+"fp": "490c8f9ded77",
+"lastmod": "2026-11-27"
 },
 "klados/holding/": {
-"fp": "2edc19edd5a1",
-"lastmod": "2026-11-26"
+"fp": "a74fb03c3fcd",
+"lastmod": "2026-11-27"
 },
 "klados/katanalotika-agatha/": {
-"fp": "b83515608448",
-"lastmod": "2026-11-26"
+"fp": "72d3bcffd6e9",
+"lastmod": "2026-11-27"
 },
 "klados/kataskeves-ypodomes-metafores/": {
-"fp": "d0a6daac16d5",
-"lastmod": "2026-11-26"
+"fp": "2cf55ae5a8b4",
+"lastmod": "2026-11-27"
 },
 "klados/navtilia/": {
-"fp": "40790ffda25a",
-"lastmod": "2026-11-26"
+"fp": "b6d86dfad44f",
+"lastmod": "2026-11-27"
 },
 "klados/technologia-mme-tilepikoinonies/": {
-"fp": "54926fdc3075",
-"lastmod": "2026-11-26"
+"fp": "313489837459",
+"lastmod": "2026-11-27"
 },
 "klados/trapezes/": {
-"fp": "f93a599f7793",
-"lastmod": "2026-11-26"
+"fp": "de175f617fc6",
+"lastmod": "2026-11-27"
 },
 "klados/viomichania-vasika-ylika/": {
-"fp": "b220261b77a7",
-"lastmod": "2026-11-26"
+"fp": "94567a81c55b",
+"lastmod": "2026-11-27"
 },
 "market-events/": {
-"fp": "0ea0897b99ca",
-"lastmod": "2026-11-26"
+"fp": "a0bf6f2604f5",
+"lastmod": "2026-11-27"
 },
 "methodology/": {
-"fp": "28e33a92b86e",
-"lastmod": "2026-11-04"
+"fp": "6542bb4df629",
+"lastmod": "2026-11-27"
 },
 "sectors/": {
-"fp": "d4c3a48d5415",
-"lastmod": "2026-11-26"
+"fp": "78d92f3f82fd",
+"lastmod": "2026-11-27"
 },
 "short-positions/": {
-"fp": "62fabf45f4f2",
-"lastmod": "2026-11-26"
+"fp": "9e770036c459",
+"lastmod": "2026-11-27"
 },
 "terms/": {
-"fp": "e45a9f4d29e3",
-"lastmod": "2026-11-04"
+"fp": "2e21c5c1c57f",
+"lastmod": "2026-11-27"
 }
 }
 }
