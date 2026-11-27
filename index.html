@@ -319,7 +319,9 @@
     Χρώματα ΙΔΙΑ με τη σελίδα /short-positions/: αύξηση short = κόκκινο, μείωση = πράσινο. */
  .shb .sbl{display:flex;flex-wrap:wrap;gap:3px 10px;margin-top:3px}
  .shb .sbi{display:inline-flex;align-items:baseline;gap:5px;white-space:nowrap}
- .shb .sbi .mk{font-size:8px;padding:0 3px;border-radius:3px}
+ .shb .sbi .mk{font-size:8px}
+ /* §200 — στην κάρτα short τα σήματα ATH/LON ΧΩΡΙΣ background: μόνο χρωματιστό κείμενο */
+ .shb .mk{background:none;padding:0;border-radius:0}
  .shb .cx{font-family:var(--f-disp);font-size:var(--s10);font-weight:var(--w-disp);
    font-variant-numeric:tabular-nums}
  .shb .cx.up{color:#c23b22}.shb .cx.dn{color:#1d8a46}.shb .cx.nw{color:#9aa7b8}
