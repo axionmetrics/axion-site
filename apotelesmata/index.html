@@ -94,7 +94,6 @@
  td.sc{font-size:12px;color:var(--muted);width:130px}
  td.val{font-family:'Ubuntu Mono';font-weight:700;font-size:17px;text-align:right;width:96px}
  td.pct{width:280px;padding-right:16px}
- td.sec2{font-family:'Ubuntu Mono';font-size:13px;color:var(--muted);text-align:center;width:78px}
  .g{color:var(--good)}.m{color:var(--mid)}.b{color:var(--bad)}
  .pbar{position:relative;height:9px;border-radius:5px;background:#eef1f6;overflow:hidden}
  .pfill{position:absolute;left:0;top:0;bottom:0;border-radius:5px}
@@ -120,10 +119,7 @@
  /* == ομογενοποίηση: κοινή τυπογραφία επικεφαλίδων == */
  .mast h1,h2,h2.sec{font-family:'Inter',sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.02em}
 
-
  /* navy hero + secbox + picker (όπως στη σελίδα κλάδου) */
- .crumb{font-size:11.5px;color:#9aa7b8;padding:20px 0 0}
- .crumb a{color:var(--accent);text-decoration:none}
  .hero{background:var(--text);border-radius:14px;padding:16px 24px;margin-top:14px}
  .secbox{background:#fff;border:1px solid #eef1f6;border-radius:14px;box-shadow:0 4px 16px rgba(27,39,64,.06);overflow:hidden;margin-top:22px}
  .secbox .stripe{height:5px;background:#c6a24e}
@@ -143,10 +139,6 @@
  @media(max-width:640px){.hero{padding:14px 16px}.secbox .hero-in{padding:20px 20px}.secbox .hs{padding:2px 14px}.cards{grid-template-columns:1fr}.wrap{padding-left:14px;padding-right:14px}}
  /* ── σελίδα αποτελεσμάτων (§80) ───────────────────────────────── */
  .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}
- .tile{border:1px solid var(--line);border-radius:12px;padding:13px 16px;background:#fff;min-width:0}
- .tile .n{font-family:'Ubuntu Mono';font-weight:700;font-size:21px;line-height:1.1;color:var(--text)}
- .tile .d{font-family:'Ubuntu Mono';font-weight:700;font-size:12px;margin-left:7px}
- .tile .l{font-size:10.5px;color:#8a95a6;letter-spacing:.02em;margin-top:5px;line-height:1.35}
  td.co{font-weight:700;font-size:13.5px;min-width:170px}   /* όνομα: ΑΜΕΤΑΒΛΗΤΟ */
  td.co a{color:var(--text);text-decoration:none}
  td.co a:hover{color:var(--accent)}
@@ -161,11 +153,6 @@
  thead th.s:hover{background:#2c4a7d}
  thead th .ar{opacity:.45;font-size:9px;margin-left:3px}
  thead th.on .ar{opacity:1}
- .perbar{display:flex;flex-wrap:wrap;gap:8px}
- .perbar a{font-size:12.5px;font-weight:700;padding:7px 15px;border-radius:20px;border:1px solid var(--line);
-   background:#fff;color:var(--muted);text-decoration:none;transition:.12s}
- .perbar a:hover{border-color:#c3d3e8;color:var(--text)}
- .perbar a.on{background:#33425c;border-color:#33425c;color:#fff}
  .empty{padding:40px 10px;text-align:center;color:var(--muted);font-size:13px}
  @media(max-width:900px){.tiles{grid-template-columns:1fr 1fr}}
  @media(max-width:640px){.tiles{grid-template-columns:1fr}}
@@ -269,19 +256,17 @@ AX_I18N.add({
  'ap.sector':{el:'Κλάδος', en:'Sector'},
  'ap.all':{el:'Όλοι', en:'All'},
  'ap.h.aa':{el:'Α/Α', en:'#'},
- 'ap.h.co':{el:'Εταιρεία', en:'Company'}, 'ap.h.kl':{el:'Κλάδος', en:'Sector'},
- 'ap.h.dt':{el:'Δημοσίευση', en:'Published'}, 'ap.h.rev':{el:'Τζίρος', en:'Revenue'},
- 'ap.h.eb':{el:'EBITDA', en:'EBITDA'}, 'ap.h.np':{el:'Καθαρά κέρδη', en:'Net profit'},
+ 'ap.h.co':{el:'Εταιρεία', en:'Company'},
+ 'ap.h.rev':{el:'Τζίρος', en:'Revenue'},
+ 'ap.h.eb':{el:'EBITDA', en:'EBITDA'},
  'ap.t.cos':{el:'εταιρείες δημοσίευσαν', en:'companies reported'},
  'ap.t.rev':{el:'συνολικός τζίρος (εκτός τραπεζών)', en:'total revenue (excluding banks)'},
  'ap.t.np':{el:'συνολικά καθαρά κέρδη', en:'total net profit'},
  'ap.t.up':{el:'με αύξηση καθαρών κερδών', en:'with higher net profit'},
- 'ap.res':{el:'Τελευταία αποτελέσματα', en:'Latest results'},
  'ap.q.rep':{el:'Δημοσιευμένο EBITDA της εταιρείας — δεν υπάρχουν στοιχεία για τον υπολογισμό του.', en:'EBITDA as reported by the company — the inputs to compute it are not available.'},
  'ap.q.pat':{el:'Κέρδη μετά φόρων ομίλου — η εταιρεία δεν δημοσίευσε τα κέρδη που αναλογούν στους μετόχους της μητρικής.', en:'Group profit after tax — the company did not publish profit attributable to the parent’s shareholders.'},
  'ap.h.dts':{el:'Δημοσ.', en:'Publ.'}, 'ap.h.nps':{el:'Καθ. κέρδη', en:'Net profit'},
  'ap.none':{el:'Καμία εταιρεία δεν έχει δημοσιεύσει ακόμη για την περίοδο αυτή.', en:'No company has reported for this period yet.'},
- 'ap.of':{el:'από', en:'of'},
  'ap.foot':{el:'<span style="color:var(--mid)">ⓘ</span> Τα <b>καθαρά κέρδη</b> είναι όσα αναλογούν στους μετόχους της μητρικής. Για τις <b>τράπεζες</b> ο «τζίρος» είναι τα <b>συνολικά έσοδα</b> και στη θέση του EBITDA εμφανίζονται τα <b>κέρδη προ προβλέψεων</b>· γι’ αυτό οι τράπεζες δεν αθροίζονται στον συνολικό τζίρο. Η <b>ημερομηνία δημοσίευσης</b> προέρχεται από το οικονομικό ημερολόγιο του Euronext Athens και εμφανίζεται όπου είναι γνωστή. Πηγή μεγεθών: οι δημοσιευμένες οικονομικές καταστάσεις κάθε εταιρείας.',
             en:'<span style="color:var(--mid)">ⓘ</span> <b>Net profit</b> is the share attributable to the parent’s shareholders. For <b>banks</b>, “revenue” means <b>total income</b> and <b>pre-provision income</b> replaces EBITDA; that is why banks are excluded from the revenue total. The <b>publication date</b> comes from the Euronext Athens financial calendar and is shown where known. Figures come from each company’s published financial statements.'}
 });

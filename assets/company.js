@@ -31,9 +31,6 @@ AX_I18N.add({
  'co.m.net_profit':{el:'Καθαρά κέρδη', en:'Net profit'},
  'co.m.ebitda':{el:'EBITDA', en:'EBITDA'},
  // §45 — EBITDA: δημοσιευμένο έναντι υπολογισμένου
- 'co.eb.pub':{el:'Δημοσιευμένο', en:'Reported'},
- 'co.eb.calc':{el:'Υπολογισμένο', en:'Calculated'},
- 'co.eb.plain':{el:'(κανονικό)', en:'(standard)'},
  'co.eb.s.reponly':{el:'Ο αριθμός είναι το <b>δημοσιευμένο</b> EBITDA της εταιρείας. Για αυτή την εταιρεία δεν υπολογίζουμε δικό μας EBITDA — ο ενιαίος τύπος δεν έχει νόημα στη δομή της.', en:'This figure is the company\u2019s <b>reported</b> EBITDA. We do not compute our own EBITDA for this company \u2014 the standard formula is not meaningful for its structure.'},
  'co.eb.s.own':{el:'<b>Η εταιρεία δεν δημοσιεύει EBITDA.</b> Ο αριθμός είναι <b>υπολογισμός Axion</b> με τον ίδιο τύπο που εφαρμόζεται σε όλες τις εισηγμένες: κέρδη προ φόρων + τόκοι − χρηματοοικονομικά έσοδα + αποσβέσεις.', en:'<b>The company does not report EBITDA.</b> This figure is an <b>Axion calculation</b> using the same formula applied to every listed company: pre-tax profit + interest − financial income + depreciation.'},
  /* §45.8 — ΣΥΓΚΡΙΣΙΜΟ (ADJUSTED) EBITDA: το δημοσιεύει η ΙΔΙΑ η εταιρεία δίπλα στο
@@ -57,24 +54,11 @@ AX_I18N.add({
  'co.m.pe':{el:'P/E', en:'P/E'},
  'co.m.pbv':{el:'P/BV', en:'P/BV'},
  'co.m.cash':{el:'Ταμείο', en:'Cash'},
- 'co.msub.cash':{el:'ταμειακά διαθέσιμα & ισοδύναμα', en:'cash & equivalents'},
  'co.m.loans':{el:'Δάνεια', en:'Loans'},
  'co.m.deposits':{el:'Καταθέσεις', en:'Deposits'},
  'co.m.total_debt':{el:'Συν. δανεισμός', en:'Total debt'},
  'co.m.net_debt':{el:'Καθ. δανεισμός', en:'Net debt'},
- 'co.msub.revenue':{el:'Κύκλος εργασιών', en:'Turnover'},
- 'co.msub.net_profit':{el:'μετά φόρων, μητρικής', en:'after tax, parent'},
- 'co.msub.ebitda':{el:'λειτουργική κερδοφορία', en:'operating profitability'},
- 'co.msub.mcap':{el:'χρημ. αξία', en:'market value'},
- 'co.msub.pe':{el:'τιμή / κέρδη', en:'price / earnings'},
- 'co.msub.pbv':{el:'τιμή / λογιστική αξία', en:'price / book value'},
- 'co.msub.total_debt':{el:'σύνολο δανεισμού', en:'total debt'},
- 'co.msub.net_debt':{el:'χρέος μείον ταμειακά', en:'debt minus cash'},
  // current band
- 'co.cband.title':{el:'Τρέχοντα Μεγέθη', en:'Current figures'},
- 'co.cband.sub':{el:'τιμή κλεισίματος', en:'closing price'},
- 'co.cband.ttm':{el:'P/E σε κυλιόμενο 12μηνο (TTM)', en:'P/E on trailing twelve months (TTM)'},
- 'co.cband.bvi':{el:'P/BV στα ίδια κεφάλαια 6μήνου', en:'P/BV on interim book value'},
  // FAM / event families
  'co.fam.capital':{el:'Μετ.Κεφαλαίου', en:'Capital'},
  'co.fam.div':{el:'Χρημ.Διανομές', en:'Distributions'},
@@ -103,17 +87,9 @@ AX_I18N.add({
  'co.geo.other':{el:'Λοιπές', en:'Other'},
  'co.geo.listed':{el:'εισηγμένη', en:'listed'},
  'co.geo.entities_n':{el:'οντότητες', en:'entities'},
- 'co.geo.showall':{el:'Εμφάνιση όλων', en:'Show all'},
  'co.geo.in':{el:' σε ', en:' in '},
- 'co.geo.hide':{el:'Απόκρυψη πλήρους λίστας', en:'Hide full list'},
  // ratios table
  'co.rt.ratio':{el:'Δείκτης', en:'Ratio'},
- 'co.rt.desc':{el:'Περιγραφή', en:'Description'},
- 'co.rt.secmed':{el:'Διάμεσος κλάδου', en:'Sector median'},
- 'co.rt.pref':{el:'Επιθυμητό:', en:'Preferred:'},
- 'co.rt.hi':{el:'ΥΨΗΛΟ', en:'HIGH'},
- 'co.rt.lo':{el:'ΧΑΜΗΛΟ', en:'LOW'},
- 'co.rt.dep':{el:'ΕΞΑΡΤΑΤΑΙ', en:'DEPENDS'},
  'unit.days':{el:' ημ.', en:' d'},
  // glance
  'co.gl.profit':{el:'Κερδοφορία', en:'Profitability'},
@@ -123,8 +99,6 @@ AX_I18N.add({
  'co.gl.b3':{el:'μ.ο. 3ετίας', en:'3-yr avg'},
  'co.gl.bp':{el:'περιόδου', en:'period'},
  // §31 — δυναμική ετικέτα βάσης στην όψη 6μήνου: λέει ΠΟΣΕΣ και ΠΟΙΕΣ περίοδοι μπήκαν
- 'co.gl.b6n':{el:'μ.ο. {n} εξαμήνων', en:'{n}-half avg'},
- 'co.gl.b6na':{el:'απαιτεί δύο εξάμηνα', en:'needs two half-years'},
  'co.gl.sector':{el:'κλάδος ', en:'sector '},
  'co.gl.met.ebt':{el:'Κέρδη προ φόρων', en:'Pre-tax profit'},
  'co.gl.met.rev':{el:'Τζίρος', en:'Revenue'},
@@ -153,14 +127,11 @@ AX_I18N.add({
  'co.dist.divsh':{el:'Μέρισμα', en:'Dividend'},
  'co.dist.capsh':{el:'Επιστρ. κεφ.', en:'Capital ret.'},
  'co.dist.yield':{el:'Απόδοση', en:'Yield'},
- 'co.dist.annual':{el:'ΕΤΗΣΙΑ ΣΤΟΙΧΕΙΑ', en:'ANNUAL FIGURES'},
- 'co.dist.annualNote':{el:'Οι διανομές είναι πάντα ετήσιες — δεν αλλάζουν με την όψη εξαμήνου.', en:'Distributions are always annual — they do not change with the interim view.'},
  'co.dist.note':{el:'Μέρισμα ανά χρήση· επιστροφές κεφαλαίου ανά έτος πληρωμής.', en:'Dividend per fiscal year; capital returns per payment year.'},
  'co.dist.none':{el:'Δεν διανέμει', en:'No distributions'},
  'co.dist.none.s':{el:'Καμία χρηματική διανομή στους μετόχους την τελευταία 3ετία.', en:'No cash distribution to shareholders in the last 3 years.'},
  'co.latest.note':{el:'Στοιχεία τελευταίας ενημερωμένης περιόδου', en:'Figures for the latest updated period'},
  'co.basis.annual':{el:'ΕΤΗΣΙΑ', en:'ANNUAL'},
- 'co.basis.interim':{el:'ΕΞΑΜΗΝΟ', en:'INTERIM'}
 });
 // §185 — κλειδιά της νέας διάταξης (Μεγέθη περιόδου · Αριθμοδείκτες · compact blocks)
 AX_I18N.add({
@@ -194,7 +165,6 @@ AX_I18N.add({
  'co.ff':{el:'Free float', en:'Free float'}
 });
 function L(k){var v=AX_I18N.t(k);return v==null?'':v;}
-function SEC(n){return AX_I18N.sector(n);}
 function curLang(){return window.AX_I18N?AX_I18N.lang:'el';}
 function EN(){return curLang()==='en';}
 function LOC(){return EN()?'en-US':'el-GR';}
@@ -217,14 +187,6 @@ const company = AX ? {ticker:AX.tk,name:AX.name,euronext_name:(AX.en||''),sector
 // ετήσια τιμή στη στήλη της χρήσης και 0 στο τρέχον εξάμηνο. Άρα στην όψη 6μήνου τόσο η
 // κάρτα «Χρηματικές διανομές» όσο και οι δείκτες dps/dy/payout διαβάζουν ΠΑΝΤΑ την ετήσια
 // βάση — αλλιώς η κάρτα κόβεται σε 1 γραμμή και το DPS δείχνει ψευδές «0,00 €».
-const IS_H1=(AXBASIS==='interim');
-try{if(IS_H1)document.querySelectorAll('.h1mark').forEach(function(e){e.hidden=false;});}catch(e){}
-const H1C='<span class="h1c">6M</span>';
-const AXY=(function(){
-  if(AXBASIS==='annual') return AX;
-  try{ var _L=(window.AXION&&window.AXION.companies&&window.AXION.companies.annual)||[];
-       return (AX&&_L.find(function(c){return c.tk===AX.tk;}))||AX; }catch(e){ return AX; }
-})();
 const DIV_SLUGS_UI=['dps','dy','payout'];
 // §185 — η 6μηνη εγγραφή της ίδιας εταιρείας. Στήλες 6Μ εμφανίζονται ΜΟΝΟ όταν το 6μηνο
 // είναι νεότερο από την τελευταία χρήση (π.χ. 6Μ 2026 μετά τη χρήση 2025)· ένα 6μηνο της
@@ -235,42 +197,22 @@ const SD=function(d){ return String(d==null?'':d).replace(/\/(\d\d)(\d\d)$/,'/<s
 const HAS6=!!(AXI && !AXI.nodata && AXI.latest && AXI.latest.idx!=null && AX && AX.latest &&
   Number(AXI.latest.period)>Number(AX.latest.period));
 const IS_BANK = !!(AX && AX.s==='Τράπεζες');   // banks: EBITDA-family δεν εφαρμόζεται
-const NA_METRIC = new Set(['ebitda']);
 const NA_RATIO  = new Set(['ebitdam','evebitda','gm','cogs','selling','dio']);
 if(IS_BANK){var _ebl=document.getElementById('eb-leg'); if(_ebl)_ebl.innerHTML='<i style="background:#3f9e6a"></i>'+L('co.leg.ppi');}  // τράπεζες: 2η γραμμή = Κέρδη προ προβλέψεων (PPI) αντί EBITDA
-const METRICS=[
-  {key:'revenue',label:L('co.m.revenue'),sub:L('co.msub.revenue'),unit:'eur',goodUp:true},
-  {key:'ebitda',label:L('co.m.ebitda'),sub:L('co.msub.ebitda'),unit:'eur',goodUp:true},
-  {key:'net_profit',label:L('co.m.net_profit'),sub:L('co.msub.net_profit'),unit:'eur',goodUp:true},
-  {key:'mcap',label:L('co.m.mcap'),sub:L('co.msub.mcap'),unit:'eur',goodUp:null},
- {key:'pe',label:L('co.m.pe'),sub:L('co.msub.pe'),unit:'x',goodUp:null},
-  {key:'pbv',label:L('co.m.pbv'),sub:L('co.msub.pbv'),unit:'x',goodUp:null},
-  // Σειρά: Συν. δανεισμός − Ταμείο = Καθ. δανεισμός (η αφαίρεση διαβάζεται αριστερά→δεξιά)
-  {key:'total_debt',label:L('co.m.total_debt'),sub:L('co.msub.total_debt'),unit:'eur',goodUp:false},
-  {key:'cash',label:L('co.m.cash'),sub:L('co.msub.cash'),unit:'eur',goodUp:true},
-  {key:'net_debt',label:L('co.m.net_debt'),sub:L('co.msub.net_debt'),unit:'eur',goodUp:false}
-];
 // Τράπεζες: δεν έχουν εταιρικό δανεισμό (§5.1) → οι δύο στήλες δανεισμού αντικαθίστανται
 // από τα δικά τους μεγέθη ισολογισμού. Το Ταμείο μένει Ταμείο.
 const BANK_SWAP={ebitda:{k:'ppi',l:'co.m.ppi'},total_debt:{k:'loans',l:'co.m.loans'},net_debt:{k:'deposits',l:'co.m.deposits'}};
 const fMil=v=>{if(v==null||isNaN(v))return '—';const m=v/1e6,a=Math.abs(m),d=a<100?2:a<1000?1:0;return m.toLocaleString(LOC(),{minimumFractionDigits:d,maximumFractionDigits:d});};
 const fX=v=>(v==null||(typeof v==='number'&&isNaN(v)))?'—':v.toLocaleString(LOC(),{minimumFractionDigits:1,maximumFractionDigits:1});
 const EURSUF=()=>EN()?' €M':' εκ.€';
-const fmt=(v,unit)=>v==null?'—':(unit==='eur'?fMil(v):fX(v));
-function deltaMark(arr,i,goodUp){
-  if(i===0||arr[i]==null||arr[i-1]==null) return '';
-  const d=arr[i]-arr[i-1]; if(Math.abs(d)<1e-9) return '<span class="delta flat">―</span>';
-  const up=d>0; const pct=arr[i-1]?Math.round(Math.abs(d/arr[i-1])*100):0;
-  let cls='flat'; if(goodUp===true) cls=up?'up':'down'; else if(goodUp===false) cls=up?'down':'up';
-  return `<span class="delta ${cls}">${up?'▲':'▼'} ${pct}%</span>`;
-}
 
 document.getElementById('co-name').textContent=company.name;
 // Λογότυπο εταιρείας (μετά το όνομα, με κάθετο διαχωριστικό)· fallback: κρύβεται αν λείπει.
 // §134 — στις 140 στατικές σελίδες το src/width/height τα ψήνει η γέφυρα και το μπλοκ εδώ
 // ΔΕΝ τρέχει (ο έλεγχος getAttribute('src')). Μένει ζωντανό μόνο για το /company/?tk=.
-window.AX_LOGO={"ALWN":1,"ΑΣΤΑΚ":2,"ΑΝΔΡΟ":3,"ΑΤΡΑΣΤ":4,"ΑΛΦΑ":5,"AEM":6,"ΑΣΚΟ":7,"ΑΤΤΙΚΑ":8,"ACAG":9,"ΟΤΟΕΛ":10,"ΑΒΕ":11,"BYLOT":12,"ΜΠΡΙΚ":13,"CENER":14,"ΣΕΝΤΡ":15,"CNLCAP":16,"ΕΕΕ":17,"ΣΠΙ":18,"CREDIA":19,"DIMAND":20,"ΝΤΟΤΣΟΦΤ":21,"ΕΧΑΕ":22,"EX":23,"ΕΧ":23,"ΦΛΕΞΟ":24,"ΦΡΛΚ":25,"ΦΡΙΓΟ":26,"ΕΛΠΕ":27,"ΙΝΤΕΚ":28,"ΜΠΕΛΑ":29,"ΛΑΜΔΑ":30,"ΛΟΓΟΣ":31,"ΛΟΥΛΗ":32,"ΜΑΣΤΙΧΑ":33,"MTLN":34,"ΜΕΒΑ":35,"ΜΙΓ":36,"ΟΡΙΛΙΝΑ":37,"ΠΕΡΦ":38,"ΠΡΕΜΙΑ":39,"ΠΡΟΦ":40,"ΚΟΥΑΛ":41,"ΚΟΥΕΣ":42,"REALCONS":43,"SOFTWEB":44,"ΣΠΕΙΣ":45,"TITC":46,"ΤΡΕΣΤΑΤΕΣ":47,"ΤΡΑΣΤΟΡ":48,"ΒΙΟΣΚ":49,"ΒΙΝΤΑ":50,"ΒΙΟ":51,"ΑΒΑΞ":52,"ΣΠΥΡ":53,"ΚΟΡΔΕ":54,"ΑΡΑΙΓ":55,"AKTR":56,"ΑΛΜΥ":57,"ΛΑΒΙ":59,"ΑΔΜΗΕ":60,"ΛΕΒΚ":61,"ΜΑΘΙΟ":62,"ΑΤΕΚ":63,"ΜΕΝΤΙ":64,"ΜΙΝ":65,"ΒΙΟΚΑ":66,"ΒΙΟΤ":67,"ΒΟΣΥΣ":68,"ΓΕΚΤΕΡΝΑ":69,"ΓΕΒΚΑ":70,"ΣΑΡ":71,"ΔΑΙΟΣ":72,"ΔΕΗ":73,"ΔΑΑ":74,"ΔΟΜΙΚ":75,"ΠΑΙΡΗ":76,"ΠΑΙΡ":76,"ΕΒΡΟΦ":77,"ΕΤΕ":78,"ΕΚΤΕΡ":79,"ΕΛΣΤΡ":80,"ΕΛΧΑ":81,"ΕΛΒΕ":82,"ΜΟΥΖΚ":83,"ΕΛΙΝ":84,"ΕΛΛΑΚΤΩΡ":85,"ΙΚΤΙΝ":86,"ΕΛΤΟΝ":87,"ΜΟΤΟ":88,"ΑΑΑΚ":89,"ΛΑΜΨΑ":90,"ΕΥΑΠΣ":91,"ΕΥΔΑΠ":92,"ΕΥΡΩΣ":93,"EIS":93,"EVR":94,"ΙΑΤΡ":95,"ΙΛΥΔΑ":96,"ΞΥΛΚ":97,"ΙΝΛΙΦ":98,"ΙΝΤΕΤ":99,"ΙΝΤΚΑ":100,"ΚΑΡΕΛ":101,"ΝΑΥΠ":102,"ΚΡΙ":103,"ΣΑΡΑΝ":104,"ΛΑΝΑΚ":105,"ΜΟΗ":106,"ΜΠΛΕΚΕΔΡΟΣ":107,"NOVAL":108,"ΝΤΟΠΛΕΡ":109,"ΚΕΚΡ":110,"ONYX":111,"ΟΠΤΡΟΝ":112,"ΟΛΘ":113,"ΟΛΠ":114,"ΟΤΕ":115,"ΔΡΟΜΕ":116,"ΠΑΠ":117,"ΠΕΤΡΟ":118,"ΠΛΑΘ":119,"ΠΛΑΚΡ":120,"ΠΡΟΝΤΕΑ":121,"ΠΡΔ":122,"ΡΕΒ":123,"ΡΕΒΟΙΛ":123,"ΣΙΔΜΑ":124,"ΤΖΚΑ":125,"ΤΕΝΕΡΓΑ":126,"ΕΥΡΩΒ":127,"OPTIMA":128,"ΠΕΙΡ":129,"ΦΑΙΣ":130,"ΝΑΚΑΣ":131,"ΦΟΥΝΤΛ":132,"ΧΑΙΔΕ":133,"QLCO":134,"ADPS":135,"ΟΛΥΜΠ":136,"YKNOT":137,"SB":138,"SBLK":139,"VRLS":140,"CMFC":141,"METK":142};
-(function(){try{var lw=document.getElementById('co-logo-wrap'),lg=document.getElementById('co-logo'),hr=document.getElementById('co-hrule');var code=lw&&lg&&company&&company.ticker&&window.AX_LOGO[company.ticker];if(code&&!lg.getAttribute('src')){lg.onload=function(){lw.hidden=false;if(hr)hr.hidden=false;};lg.onerror=function(){lw.hidden=true;if(hr)hr.hidden=true;};lg.alt=company.name||'';lg.src='/assets/logos/'+code+'.png';}}catch(e){}})();
+// §201 — ζητά πρώτα .webp (όπως η γέφυρα) και .png μόνο ως εφεδρεία (7 λογότυπα χωρίς webp).
+window.AX_LOGO={"ALWN":1,"ΑΣΤΑΚ":2,"ΑΝΔΡΟ":3,"ΑΤΡΑΣΤ":4,"ΑΛΦΑ":5,"AEM":6,"ΑΣΚΟ":7,"ΑΤΤΙΚΑ":8,"ACAG":9,"ΟΤΟΕΛ":10,"ΑΒΕ":11,"BYLOT":12,"ΜΠΡΙΚ":13,"CENER":14,"ΣΕΝΤΡ":15,"CNLCAP":16,"ΕΕΕ":17,"ΣΠΙ":18,"CREDIA":19,"DIMAND":20,"ΝΤΟΤΣΟΦΤ":21,"ΕΧΑΕ":22,"ΕΧ":23,"ΦΛΕΞΟ":24,"ΦΡΛΚ":25,"ΦΡΙΓΟ":26,"ΕΛΠΕ":27,"ΙΝΤΕΚ":28,"ΜΠΕΛΑ":29,"ΛΑΜΔΑ":30,"ΛΟΓΟΣ":31,"ΛΟΥΛΗ":32,"ΜΑΣΤΙΧΑ":33,"MTLN":34,"ΜΕΒΑ":35,"ΜΙΓ":36,"ΟΡΙΛΙΝΑ":37,"ΠΕΡΦ":38,"ΠΡΕΜΙΑ":39,"ΠΡΟΦ":40,"ΚΟΥΑΛ":41,"ΚΟΥΕΣ":42,"REALCONS":43,"SOFTWEB":44,"ΣΠΕΙΣ":45,"TITC":46,"ΤΡΕΣΤΑΤΕΣ":47,"ΤΡΑΣΤΟΡ":48,"ΒΙΟΣΚ":49,"ΒΙΝΤΑ":50,"ΒΙΟ":51,"ΑΒΑΞ":52,"ΣΠΥΡ":53,"ΚΟΡΔΕ":54,"ΑΡΑΙΓ":55,"AKTR":56,"ΑΛΜΥ":57,"ΛΑΒΙ":59,"ΑΔΜΗΕ":60,"ΛΕΒΚ":61,"ΜΑΘΙΟ":62,"ΑΤΕΚ":63,"ΜΕΝΤΙ":64,"ΜΙΝ":65,"ΒΙΟΚΑ":66,"ΒΙΟΤ":67,"ΒΟΣΥΣ":68,"ΓΕΚΤΕΡΝΑ":69,"ΓΕΒΚΑ":70,"ΣΑΡ":71,"ΔΑΙΟΣ":72,"ΔΕΗ":73,"ΔΑΑ":74,"ΔΟΜΙΚ":75,"ΠΑΙΡ":76,"ΕΒΡΟΦ":77,"ΕΤΕ":78,"ΕΚΤΕΡ":79,"ΕΛΣΤΡ":80,"ΕΛΧΑ":81,"ΕΛΒΕ":82,"ΜΟΥΖΚ":83,"ΕΛΙΝ":84,"ΕΛΛΑΚΤΩΡ":85,"ΙΚΤΙΝ":86,"ΕΛΤΟΝ":87,"ΜΟΤΟ":88,"ΑΑΑΚ":89,"ΛΑΜΨΑ":90,"ΕΥΑΠΣ":91,"ΕΥΔΑΠ":92,"EIS":93,"EVR":94,"ΙΑΤΡ":95,"ΙΛΥΔΑ":96,"ΞΥΛΚ":97,"ΙΝΛΙΦ":98,"ΙΝΤΕΤ":99,"ΙΝΤΚΑ":100,"ΚΑΡΕΛ":101,"ΝΑΥΠ":102,"ΚΡΙ":103,"ΣΑΡΑΝ":104,"ΛΑΝΑΚ":105,"ΜΟΗ":106,"ΜΠΛΕΚΕΔΡΟΣ":107,"NOVAL":108,"ΝΤΟΠΛΕΡ":109,"ΚΕΚΡ":110,"ONYX":111,"ΟΠΤΡΟΝ":112,"ΟΛΘ":113,"ΟΛΠ":114,"ΟΤΕ":115,"ΔΡΟΜΕ":116,"ΠΑΠ":117,"ΠΕΤΡΟ":118,"ΠΛΑΘ":119,"ΠΛΑΚΡ":120,"ΠΡΟΝΤΕΑ":121,"ΠΡΔ":122,"ΡΕΒΟΙΛ":123,"ΣΙΔΜΑ":124,"ΤΖΚΑ":125,"ΤΕΝΕΡΓΑ":126,"ΕΥΡΩΒ":127,"OPTIMA":128,"ΠΕΙΡ":129,"ΦΑΙΣ":130,"ΝΑΚΑΣ":131,"ΦΟΥΝΤΛ":132,"ΧΑΙΔΕ":133,"QLCO":134,"ADPS":135,"ΟΛΥΜΠ":136,"YKNOT":137,"SB":138,"SBLK":139,"VRLS":140,"CMFC":141,"METK":142};
+(function(){try{var lw=document.getElementById('co-logo-wrap'),lg=document.getElementById('co-logo'),hr=document.getElementById('co-hrule');var code=lw&&lg&&company&&company.ticker&&window.AX_LOGO[company.ticker];if(code&&!lg.getAttribute('src')){lg.onload=function(){lw.hidden=false;if(hr)hr.hidden=false;};lg.onerror=function(){if(!lg._png){lg._png=1;lg.src='/assets/logos/'+code+'.png';return;}lw.hidden=true;if(hr)hr.hidden=true;};lg.alt=company.name||'';lg.src='/assets/logos/'+code+'.webp';}}catch(e){}})();
 // (ο τίτλος τίθεται στο §73 παρακάτω — και για τη γενική περίπτωση χωρίς εταιρεία)
 if(!(company&&company.name&&company.name!=='—')) document.title='Axion Metrics';
 document.getElementById('co-ticker').textContent=company.ticker;
@@ -339,15 +281,13 @@ document.getElementById('co-eur').textContent=company.euronext_name+' · Euronex
     : both+' ('+C.ticker+') — μετοχή, αποτελέσματα & αριθμοδείκτες';
 
   // ── ΜΕΓΕΘΗ ΤΕΛΕΥΤΑΙΑΣ ΠΕΡΙΟΔΟΥ
-  var isI=(typeof AXBASIS!=='undefined'&&AXBASIS==='interim');
   var per=(C.latest&&C.latest.period)||'';
-  var pw = EN() ? (isI?('in H1 '+per):('in FY '+per))
-                : (isI?('το α΄ εξάμηνο '+per):('τη χρήση '+per));
-  var rev=at('revenue'), np=at('net_profit'), eb=at('ebitda'), ppi=at('ppi'), nd=at('net_debt'), eqr=null;
+  var pw = EN() ? ('in FY '+per) : ('τη χρήση '+per);
+  var rev=at('revenue'), np=at('net_profit'), eb=at('ebitda'), ppi=at('ppi'), nd=at('net_debt');
   var cur=C.current||{}, mc=num(cur.mcap)!=null?num(cur.mcap):at('mcap');
-  var _pe=num(isI&&cur.pe_i!=null?cur.pe_i:cur.pe);
+  var _pe=num(cur.pe);
   var pe=(_pe!=null&&_pe>0)?x1(_pe):null;      // αρνητικό P/E (ζημιογόνος) δεν πληροφορεί — έξω
-  var pbv=x1(num(isI&&cur.pbv_i!=null?cur.pbv_i:cur.pbv));
+  var pbv=x1(num(cur.pbv));
 
   var sec=(C.sector&&C.sector!=='—')?C.sector:'';
   var P=[];
@@ -435,9 +375,8 @@ document.getElementById('co-eur').textContent=company.euronext_name+' · Euronex
 }catch(e){}})();
 // Δυναμική ετικέτα «ΕΤΗΣΙΑ/ΕΞΑΜΗΝΟ + περίοδος» + σημείωση + χρωματισμός block/toggle ανά βάση
 (function(){
-  try{ document.body.classList.add('am-view-'+AXBASIS); }catch(e){}
   var per=company.latest&&company.latest.period;
-  var blabel=L(AXBASIS==='interim'?'co.basis.interim':'co.basis.annual');
+  var blabel=L('co.basis.annual');
   var yh=document.getElementById('yr-h'); if(yh) yh.textContent=(per?(blabel+' '+per):blabel);
   var yn=document.getElementById('yr-note');
   if(yn&&per){ yn.textContent='('+L('co.latest.note')+')'; yn.hidden=false; }
@@ -498,26 +437,6 @@ const li=(company.latest && company.latest.idx!=null) ? company.latest.idx : com
 // και **καμία** λωρίδα εξήγησης. Δεν χρειάζεται δεύτερο κατώφλι για το κείμενο: όταν ο
 // αναγνώστης βλέπει έναν αριθμό, δεν υπάρχει διαφορά να εξηγηθεί.
 const EB_TOL=0.05;
-// §45.7 ΦΡΟΥΡΟΣ ΣΧΗΜΑΤΟΣ. Αν το data.js προέρχεται από ΠΑΛΙΑ γέφυρα, το `ebitda_rep` λείπει
-// ΕΝΤΕΛΩΣ. Χωρίς αυτόν τον έλεγχο κάθε εταιρεία θα έπεφτε στο 'own' και η σελίδα θα έλεγε
-// «δεν δημοσιεύει EBITDA» για ΟΛΕΣ — ενώ ο αριθμός που δείχνει είναι το δημοσιευμένο.
-// Η νέα γέφυρα εκπέμπει ΠΑΝΤΑ το κλειδί (έστω γεμάτο null), άρα η απουσία = παλιό σχήμα.
-const EB_SCHEMA_OK = !!(company.metrics && 'ebitda_rep' in company.metrics);
-const EB_STATE=(function(){
-  const has=v=>typeof v==='number'&&!isNaN(v);
-  const own=(company.metrics.ebitda||[])[li];
-  if(!EB_SCHEMA_OK) return has(own) ? {s:'legacy',own:own} : {s:'na'};
-  const rep=(company.metrics.ebitda_rep||[])[li];
-  const kind=(company.metrics.ebitda_kind||[])[li]||null;
-  const _a=(company.metrics.ebitda_adj||[])[li]; const adj=has(_a)?_a:null;
-  if(!has(own)&&!has(rep)) return {s:'na',adj:adj};
-  if(!has(rep)) return {s:'own',own:own,adj:adj};
-  // ΜΟΝΟ δημοσιευμένο: για holdings/ΑΕΕΧ δεν ορίζεται δικός μας EBITDA (κενός τύπος off27).
-  // ΔΕΝ είναι 'same' — δεν υπάρχει τίποτα να «συμφωνήσει».
-  if(!has(own)) return {s:'reponly',rep:rep,kind:kind,adj:adj};
-  const d=Math.abs(own-rep)/Math.max(Math.abs(rep),1);
-  return d<=EB_TOL ? {s:'same',rep:rep,own:own,kind:kind,d:d,adj:adj} : {s:'diff',rep:rep,own:own,kind:kind,d:d,adj:adj};
-})();
 function EB_WHY(k){
   const t=String(k||'').toLowerCase();
   if(t.indexOf('αποτιμ')>=0) return 'co.eb.w.val';
@@ -529,53 +448,6 @@ function EB_WHY(k){
   if(t.indexOf('συναλλαγμ')>=0) return 'co.eb.w.fx';
   return 'co.eb.w.gen';
 }
-// §68 — ΥΠΟΣΗΜΕΙΩΣΕΙΣ ΤΗΣ ΖΩΝΗΣ ΜΕΓΕΘΩΝ. ΜΙΑ λίστα, αριθμημένη 1..n με τη σειρά που
-// εμφανίζονται τα πλακίδια· ο ίδιος αριθμός μπαίνει ΣΤΟ πλακίδιο και μπροστά από την
-// επεξήγηση. Η αρίθμηση είναι ΔΥΝΑΜΙΚΗ — δεν είναι σταθερό «1=EBITDA, 2=καθαρά κέρδη»:
-// στη συνήθη περίπτωση η υποσημείωση του EBITDA λείπει ('same') και τότε τα καθαρά κέρδη
-// γίνονται 1. Σταθεροί αριθμοί θα άφηναν κενά («υπάρχει 2, πού είναι το 1;»).
-const FN=(function(){
-  const out=[];
-  // (α) EBITDA — σιωπή σε 'na' / 'legacy' / 'same' (§45): όταν η σελίδα δείχνει ΕΝΑ νούμερο
-  //     δεν υπάρχει διαφορά να εξηγηθεί.
-  const eb=EB_STATE;
-  // §45.8 — ΔΥΟ ΑΝΕΞΑΡΤΗΤΟΙ λόγοι για υποσημείωση EBITDA: (α) η σχέση δικού μας και
-  // δημοσιευμένου, (β) η ύπαρξη συγκρίσιμου (adjusted). Το (β) ΔΕΝ υπακούει στην ανοχή
-  // του 5%: όταν τα δύο πρώτα συμφωνούν ('same') η ζώνη δείχνει έναν αριθμό και η λωρίδα
-  // θα σιωπούσε — οπότε μέγεθος που ΑΝΑΚΟΙΝΩΣΕ η εταιρεία δεν θα φαινόταν πουθενά.
-  // 27 HELENIQ ENERGY 6μηνο 2026: 1.325,2 έναντι 1.317,9 (0,55% → 'same'), adjusted 734.
-  {
-    const parts=[];
-    if(!(eb.s==='na'||eb.s==='legacy'||eb.s==='same')){
-      if(eb.s==='reponly'){ parts.push(L('co.eb.s.reponly')); }
-      else if(eb.s==='own'){ parts.push(L('co.eb.s.own')); }
-      else if(eb.kind){ parts.push(L('co.eb.s.kind').replace('{k}',`<span class="kt">${eb.kind}</span>`).replace('{w}',L(EB_WHY(eb.kind)))); }
-      else { parts.push(L('co.eb.s.plain')); }
-    }
-    // ΦΡΟΥΡΟΣ: σε 'na' το πλακίδιο δείχνει «—», οπότε μια υποσημείωση «δημοσιεύει ΚΑΙ…»
-    // θα κρεμόταν από το τίποτα. Αν μια εταιρεία δημοσιεύει ΜΟΝΟ προσαρμοσμένο, αυτό
-    // ανήκει στη γραμμή «EBITDA ΔΗΜΟΣΙΕΥΜΕΝΟ» με ΕΙΔΟΣ «προσαρμοσμένο» (→ 'reponly').
-    if(eb.adj!=null && eb.s!=='na') parts.push(L('co.eb.s.adj').replace('{v}',`${fMil(eb.adj)}${EURSUF()}`));
-    if(parts.length) out.push({key:'ebitda',html:parts.join(' ')});
-  }
-  // (β) ΚΑΘΑΡΑ ΚΕΡΔΗ — ΜΟΝΟ όταν διαφέρουν από τα «κέρδη μετά φόρων» του ομίλου, δηλαδή
-  //     όταν υπάρχουν μη ελέγχουσες συμμετοχές. Χωρίς αυτόν τον έλεγχο η υποσημείωση θα
-  //     φορτωνόταν και στις ~100 εταιρείες χωρίς θυγατρικές μειοψηφίας, όπου δεν λέει τίποτα.
-  //     ΦΡΟΥΡΟΣ ΣΧΗΜΑΤΟΣ: παλιό data.js δεν έχει `pat` → σιωπή, όχι ψευδής υποσημείωση.
-  //     ΚΑΤΩΦΛΙ = Η ΙΔΙΑ Η ΟΘΟΝΗ: συγκρίνουμε τα δύο μεγέθη ΟΠΩΣ ΤΥΠΩΝΟΝΤΑΙ (fMil, εκ.€).
-  //     Η υποσημείωση απαντά σε μια απορία που γεννιέται μόνο όταν ο αναγνώστης δει τον
-  //     δικό μας αριθμό δίπλα στον δημοσιευμένο και διαφέρουν· αν η διαφορά χάνεται στη
-  //     στρογγυλοποίηση (π.χ. 95.255.000 έναντι 95.256.000 → 95,26 και τα δύο) δεν υπάρχει
-  //     απορία. Σταθερό ποσοστιαίο κατώφλι θα ήταν αυθαίρετο — η οθόνη είναι το αληθινό.
-  const hasn=v=>typeof v==='number'&&!isNaN(v);
-  const _np=(company.metrics.net_profit||[])[li], _pat=(company.metrics.pat||[])[li];
-  if(hasn(_np)&&hasn(_pat)&&fMil(_np)!==fMil(_pat)){
-    out.push({key:'net_profit',html:L('co.np.s.mi')});
-  }
-  return out;
-})();
-const FN_N=(function(){ const o={}; FN.forEach(function(f,i){ o[f.key]=i+1; }); return o; })();
-function FNMARK(key){ const n=key?FN_N[key]:0; return n?`<sup class="fnm">${n}</sup>`:''; }
 /* ══ §185 — «ΜΕΓΕΘΗ ΠΕΡΙΟΔΟΥ» ════════════════════════════════════════════════════
    Αντικαθιστά τη σκούρα ζώνη «Ετήσια/Τρέχοντα μεγέθη». ΟΛΕΣ οι δημοσιευμένες περίοδοι του
    έτους δίπλα-δίπλα: Ετήσια (τελευταία χρήση) · [3Μ] · 6Μ · [9Μ]. Σε ετήσιο και 6μηνο, δεύτερη
@@ -744,7 +616,7 @@ const pathOf=(arr,yOf)=>{ let d='',started=false; arr.forEach((v,i)=>{ if(v==nul
 // επιδείνωση. 404 από τα 4.655 ζεύγη του site (8,7 %) είχαν αρνητική βάση.
 //
 // ΚΑΝΟΝΑΣ: μέγεθος = |Δ| / |προηγούμενο| · πρόσημο και χρώμα από την ΠΡΑΓΜΑΤΙΚΗ φορά της
-// μεταβολής (Δ), όχι από το πηλίκο. Είναι η σύμβαση που ήδη εφάρμοζε η `deltaMark`.
+// μεταβολής (Δ), όχι από το πηλίκο.
 const yoy=(arr,i)=> (i===0||arr[i]==null||arr[i-1]==null||!arr[i-1]) ? null
                   : (arr[i]-arr[i-1])/Math.abs(arr[i-1])*100;
 function addPill(g,x,by,txt,col){
@@ -836,8 +708,7 @@ function draw(){
   // axis baseline + year numbers close to axis
   svg.appendChild(el('line',{x1:padL,y1:zeroY,x2:W-padR,y2:zeroY,stroke:(yMin<0?'#b8c6d8':'#cfdcea'),'stroke-width':(yMin<0?1.4:1)}));
   company.years.slice(s,s+WIN).forEach((yr,li)=>{ const t=el('text',{x:xOf(li),y:yearY,'text-anchor':'middle','font-family':"'Ubuntu Mono'",'font-size':(MOB?10:11),fill:'#6b8199'});
-    if(IS_H1){ const a=el('tspan',{fill:'#0b5a56','font-weight':700}); a.textContent='6M '; t.appendChild(a); const b=el('tspan',{}); b.textContent=yr; t.appendChild(b); }
-    else t.textContent=yr; svg.appendChild(t); });
+    t.textContent=yr; svg.appendChild(t); });
   // «Αλλαγή οντότητας» — διακριτικό κάθετο σημάδι στο έτος τομής (τα αριστερά αφορούν την παλιά οντότητα)
   (function(){
     var ech=(AX&&AX.echange); if(!ech||!ech.year) return;
@@ -1048,28 +919,12 @@ const fmtU=(v,u)=>{
   if(u==='d') return Math.round(v).toLocaleString(LOC())+L('unit.days');
   return v.toLocaleString(LOC(),{minimumFractionDigits:1,maximumFractionDigits:1})+(u==='%'?'%':'');
 };
-function spark(series){
-  const w=84,h=24,p=3,min=Math.min(...series),max=Math.max(...series),rng=(max-min)||1;
-  const pts=series.map((v,i)=>[p+(w-2*p)*i/(series.length-1),h-p-(h-2*p)*(v-min)/rng]);
-  const d=pts.map(q=>q[0].toFixed(1)+','+q[1].toFixed(1)).join(' ');
-  const L=pts[pts.length-1];
-  return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><polyline points="${d}" fill="none" stroke="#2f80c2" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><circle cx="${L[0].toFixed(1)}" cy="${L[1].toFixed(1)}" r="2.4" fill="#2f80c2"/></svg>`;
-}
 const _RLI=(company.latest&&company.latest.idx!=null)?company.latest.idx:company.years.length-1;
 const YEARS=company.years.slice(0,_RLI+1);   // πίνακας δεικτών: μόνο πραγματικά έτη (κόψε την κενή στήλη «μόνο-γεγονότων» CURRENT_YEAR)
 const ratiosEl=document.getElementById('ratios');
 (function(){var S=['roa','roe','roic','gm','nm','ebitdam','current','quick','cash','de','icov','dio','atr','etr','eps','pe','evebitda','dps','bvps','pbv','payout','dy','cogs','admin','selling','equityr'],i=0;
- // dps/dy/payout: ετήσιες τιμές, χαρτογραφημένες ΑΝΑ ΕΤΟΣ πάνω στις στήλες της τρέχουσας όψης
- var _dv={};
- if(AXY&&AXY!==AX&&AXY.ratios&&AXY.years){
-   DIV_SLUGS_UI.forEach(function(sl){ var r=AXY.ratios[sl]; if(!r||!r.series) return;
-     var m={}; AXY.years.forEach(function(y,j){ m[y]=r.series[j]; });
-     _dv[sl]={m:m,sector:r.sector,secna:r.secna}; });
- }
  RATIOS.forEach(function(cat){cat.items.forEach(function(it){it.slug=S[i];
-   var d=_dv[S[i]];
-   if(d){ it.series=company.years.map(function(y){ var v=d.m[y]; return v===undefined?null:v; }); it.sector=d.sector; it.secna=d.secna; }
-   else { var r=AX&&AX.ratios&&AX.ratios[S[i]]; if(r){it.series=r.series;it.sector=r.sector;it.secna=r.secna;} }
+   var r=AX&&AX.ratios&&AX.ratios[S[i]]; if(r){it.series=r.series;it.sector=r.sector;it.secna=r.secna;}
    i++;});});})();
 // Τράπεζες: η γραμμή «Έξοδα διοίκησης/πωλήσεις» ΕΙΝΑΙ ο δείκτης κόστους/εσόδων
 // (RAW off21 σύνολο λειτ. εξόδων / off18 σύνολο λειτ. εσόδων) — αλλάζει μόνο η ετικέτα.
@@ -1078,12 +933,6 @@ const RATIO_BANK={admin:{
   desc:'Πόσο από κάθε 100 ευρώ εσόδων το τρώνε τα λειτουργικά έξοδα της τράπεζας.',
   den:'How much of every 100 euros of income the bank\u2019s operating costs consume.',
   dir:'lo'}};
-function dirCell(d){
-  if(!d) return '<td class="c-dir"></td>';
-  if(d==='dep') return `<td class="c-dir">${L('co.rt.pref')} <b>${L('co.rt.dep')}</b></td>`;
-  const w=(d==='hi')?L('co.rt.hi'):L('co.rt.lo'), a=(d==='hi')?'\u2197':'\u2198';
-  return `<td class="c-dir">${L('co.rt.pref')} <b>${w}</b><i>${a}</i></td>`;
-}
 // δείκτες με παρονομαστή τον κύκλο εργασιών — δέχονται υποσημείωση όταν το μέγεθος λείπει σκόπιμα
 const REV_DEP=new Set(['gm','nm','atr','etr','cogs','admin','selling']);
 const FIGN=((company.figNotes||{}).revenue)||{};
@@ -1181,18 +1030,7 @@ const CATEN={'Κερδοφορία':'Profitability','Ρευστότητα':'Liqu
   const cards=[];
   // §31 — ετικέτα βάσης. Στο 6μηνο δεν υπάρχουν ποτέ 3 περίοδοι (102/133 έχουν μία,
   //        25 έχουν δύο), οπότε το «μ.ο. 3ετίας» θα ήταν ψευδές: λέμε τι μπήκε πραγματικά.
-  const h1y=y=>'6M '+y;
-  const basisAvg=o=>{ if(!IS_H1) return L('co.gl.b3');
-    const n=(o&&o.n)||0;
-    if(n>=2) return L('co.gl.b6n').replace('{n}',n);
-    if(n===1&&o.p!=null) return h1y(o.p);
-    return '—'; };
-  const basisGrowth=o=>{ if(!IS_H1) return L('co.gl.b3');
-    const n=(o&&o.n)||0;
-    if(n>=2) return L('co.gl.b6n').replace('{n}',n);
-    if(n===1&&o.p0!=null&&o.p1!=null) return '6M '+String(o.p1).slice(2)+' / 6M '+String(o.p0).slice(2);
-    return '—'; };
-  const basisPer=o=>(IS_H1?((o&&o.p!=null)?h1y(o.p):'—'):L('co.gl.bp'));
+  const basisAvg=()=>L('co.gl.b3'), basisGrowth=()=>L('co.gl.b3'), basisPer=()=>L('co.gl.bp');
   // Κερδοφορία — ROE μ.ο. 3ετίας (απόλυτα όρια· κλάδος μόνο ως αναφορά)
   (function(){
     const co=G.profit.co, sec=G.profit.sec;   // co/sec = μ.ο. 3ετίας κερδών προ φόρων (απόλυτο €)
@@ -1213,7 +1051,7 @@ const CATEN={'Κερδοφορία':'Profitability','Ρευστότητα':'Liqu
     else if(co<8){t='good';r=L('co.gl.r.steady');}
     else {t='good';r=L('co.gl.r.strong');}
     cards.push({cat:L('co.gl.growth'),basis:basisGrowth(G.growth),bc:'b3',tone:t,rating:r,metric:L('co.gl.met.rev'),main:co==null?'—':sgn(co)+nf(co)+'%',
-      sub:(IS_H1&&co==null)?L('co.gl.b6na'):L('co.gl.sector')+(sec==null?'—':sgn(sec)+nf(sec)+'%')});
+      sub:L('co.gl.sector')+(sec==null?'—':sgn(sec)+nf(sec)+'%')});
   })();
   // Μόχλευση — Χρέος/Ίδια περιόδου (απόλυτα όρια· κλάδος μόνο ως αναφορά)
   (function(){
@@ -1249,7 +1087,7 @@ const CATEN={'Κερδοφορία':'Profitability','Ρευστότητα':'Liqu
   })();
   scEl.innerHTML=cards.map(c=>`<div class="sc-item sc-${c.tone}"><div class="sc-cat">${c.cat}</div><div class="sc-basis ${c.bc}">${c.basis}</div><div class="sc-box"><span class="sc-badge">${c.rating}</span><div class="sc-val"><span class="sc-metric">${c.metric}</span><span class="sc-main">${c.main}</span></div><span class="sc-sub">${c.sub}</span></div></div>`).join('');
   // Χρηματικές διανομές — ενοποιημένος πίνακας: Μερίσματα (ανά χρήση) + Επιστροφές κεφ. (ανά έτος πληρωμής)
-  const D=((AXY&&AXY.glance&&AXY.glance.dist)||(G&&G.dist))||{distributes:false,rows:[]};
+  const D=(G&&G.dist)||{distributes:false,rows:[]};
   // Μερίσματα ανά χρήση (dps δείκτης) — dividend-only στο νέο μοντέλο
   const divBy={}, dyBy={};
   (D.rows||[]).forEach(r=>{ if(r&&r.dps!=null&&r.dps>1e-9){ divBy[r.y]=r.dps; dyBy[r.y]=(r.dy==null?null:r.dy); } });

@@ -38,7 +38,6 @@
  .hero{background:#fff;border:1px solid #eef1f6;border-radius:14px;box-shadow:0 4px 16px rgba(27,39,64,.06);overflow:hidden;margin-top:22px}
  .hero .stripe{height:5px;background:#c6a24e}
  .hero .hero-in{padding:24px 34px 22px}
- .hero .eye{font-family:Inter,sans-serif;font-weight:700;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:#7fb0e8;margin-bottom:10px}
  .hero h1{font-family:Inter,sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.02em;color:#1b2740;font-size:30px;line-height:1.05;margin:0}
  .hero .lead{font-size:14px;line-height:1.6;color:#aebfd8;max-width:600px;margin-top:11px}
  .hero .statrow{display:flex;flex-wrap:wrap;margin-top:15px}
@@ -71,7 +70,6 @@
  .cmeta b{font-family:'Ubuntu Mono';color:#fff;font-weight:700}
  .cmeta .up{color:#63d693} .cmeta .down{color:#ff8f80} .cmeta .dot{color:rgba(255,255,255,.4)}
 
-
  .colist{padding:6px 18px 12px}
  .colist .co{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:13px;color:var(--text);text-decoration:none;
    padding:6px 0;border-bottom:1px solid #f3f6fa}
@@ -81,7 +79,6 @@
  .colist .co:hover{color:var(--accent)}
 
  .foot{font-size:11.5px;color:var(--muted);margin-top:20px;line-height:1.6}
-
 
 </style>
 <link rel="stylesheet" href="/assets/chrome.css">
@@ -304,7 +301,6 @@ function LOC(){return curLang()==='en'?'en-US':'el-GR';}
 const SECTOR_PAGE='/sector/';
 const secHref=n=>{ try{ var u=(typeof AX_KLADOS==='function')?AX_KLADOS(n):null;
   if(u) return u.replace('https://www.axionmetrics.gr',''); }catch(e){} return SECTOR_PAGE; };
-const COMPANY_PAGE='../company/';
 
 const AXBASIS='annual'; /* Ευρετήριο κλάδων: μόνο ετήσια βάση (καμία εξαμηνιαία διάμεσος κλάδου) */
 /* §87 — ΤΡΕΧΟΥΣΑ ΚΕΦΑΛΑΙΟΠΟΙΗΣΗ. Το `rows[].mcap` κρατά την κεφαλαιοποίηση ΤΟΥ MASTER,
@@ -316,7 +312,6 @@ const DATA=((window.AXION&&window.AXION.rows&&window.AXION.rows[AXBASIS])||[])
   .filter(function(r){return r.calculated!==false;})
   .map(function(r){ var c=CUR[r.tk];
     return (c && c.mcap!=null && !isNaN(c.mcap)) ? Object.assign({},r,{mcap:c.mcap}) : r; });
-const CUR_DATE=(function(){ for(var k in CUR){ if(CUR[k]&&CUR[k].date) return CUR[k].date; } return null; })();
 document.addEventListener('axion:basischange',function(){location.reload();});
 
 const fmt=(v,d)=>(v==null||isNaN(v))?'—':v.toLocaleString(LOC(),{minimumFractionDigits:d,maximumFractionDigits:d});
@@ -342,7 +337,6 @@ const SECTORS=[...new Set(DATA.map(r=>r.s))].filter(s=>s&&s!=='—').map(name=>{
 });
 
 const ALLPE=DATA.map(r=>r.pe).filter(x=>x!=null&&!isNaN(x));
-const GLO=Math.min(...ALLPE), GHI=Math.max(...ALLPE);
 
 
 function card(sec){

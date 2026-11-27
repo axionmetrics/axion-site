@@ -234,9 +234,7 @@
 .wrap>.secbox:first-child .hero-stats,.wrap>.hero:first-child .hero-stats,.wrap>.mast:first-child .hero-stats,
 .wrap>.secbox:first-child .statrow,.wrap>.hero:first-child .statrow,.wrap>.mast:first-child .statrow{display:none}
 /* η περιγραφή, όπου υπάρχει, πάει δίπλα στον τίτλο */
-.wrap>.secbox:first-child>.hero-in>.hero-in-desc,
-.wrap>.secbox:first-child>.hero-in>.hero-desc,.wrap>.hero:first-child>.hero-in>.hero-desc,.wrap>.mast:first-child>.hero-in>.hero-desc,
-.wrap>.secbox:first-child>.hero-in>.sub,.wrap>.hero:first-child>.hero-in>.sub,.wrap>.mast:first-child>.hero-in>.sub{
+.wrap>.secbox:first-child>.hero-in>.hero-desc,.wrap>.hero:first-child>.hero-in>.hero-desc,.wrap>.mast:first-child>.hero-in>.hero-desc,.wrap>.secbox:first-child>.hero-in>.sub,.wrap>.hero:first-child>.hero-in>.sub,.wrap>.mast:first-child>.hero-in>.sub{
   flex:1 1 340px;margin:0;max-width:none;font-size:12.5px;line-height:1.5;color:#98a3b4}
 /* σελίδες κειμένου (.mast): το επόμενο μπλοκ είναι κείμενο χωρίς δικό του margin */
 .wrap>.mast:first-child{margin-bottom:15px}
@@ -319,7 +317,6 @@ body.am-nofeed #am-nav{background:linear-gradient(#12303f 0 var(--b1),#fff var(-
 .langflags button[aria-current]{opacity:.35;cursor:default}
 .langflags button:not([aria-current]):hover{transform:translateY(-1px)}
 .langflags button:focus-visible{outline:2px solid #57a5df;outline-offset:2px}
-
 
 /* ═══ §169 — ΚΙΝΗΤΟ: ΤΥΛΙΓΜΑ ΥΠΟΣΕΛΙΔΟΥ ΚΑΙ ΣΤΟΧΟΙ ΑΦΗΣ (05/11/2026) ═══════ */
 /* (α) ΤΙΤΛΟΣ ΗΡΩΑ — το `.hero-in` είναι flex και το h1 είχε `flex:0 0 auto`:

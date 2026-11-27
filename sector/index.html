@@ -35,8 +35,6 @@
  body{background:var(--bg);color:var(--text);font-family:'Open Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
  .wrap{max-width:1180px;margin:0 auto;padding:0 22px 60px}
 
- .crumb{font-size:11.5px;color:#9aa7b8;padding:20px 0 0}
- .crumb a{color:var(--accent);text-decoration:none}
  .mast{padding:8px 0 12px}
  .mast h1{font-size:30px;font-weight:800;letter-spacing:-.01em}
  .mast .sub{font-size:12.5px;color:var(--muted);margin-top:5px}
@@ -69,9 +67,6 @@
  .pb{padding:16px 14px 10px;background:#fff}
  svg{display:block;width:100%;height:auto}
 
- .dists{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-
- .boards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
  .board{border:1px solid var(--line);border-radius:12px;padding:14px 16px}
  .board .bh{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9aa7b8;margin-bottom:8px}
  .brow{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #eef1f6;font-size:13px}
@@ -85,14 +80,9 @@
  .controls{background:#f4f6f9;border:1px solid #e4e8f0;border-left:3px solid #5a6b85;border-radius:12px;padding:14px 16px;margin-top:14px}
  .controls .picker{margin-top:0}
  .filters{display:grid;grid-template-columns:repeat(4,1fr);gap:16px 22px}
- .flt label{display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:var(--text);margin-bottom:4px}
- .flt label b{color:var(--accent);font-family:'Ubuntu Mono'}
- .flt input[type=range]{width:100%;accent-color:var(--accent)}
- .flt .rng{font-size:10px;color:var(--muted);display:flex;justify-content:space-between;margin-top:1px}
  .resbar{display:flex;align-items:center;justify-content:space-between;margin:18px 2px 8px}
  .resbar .cnt{font-size:13.5px;font-weight:700}
  .resbar .cnt b{color:var(--accent)}
- .rst{font-family:inherit;font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--muted);cursor:pointer}
  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:2px}
  thead th{background:var(--phead);color:#fff;font-weight:700;text-align:center;padding:9px 10px;cursor:pointer;
    line-height:1.25;vertical-align:middle;font-size:11.5px;letter-spacing:.02em}
@@ -127,8 +117,6 @@
  .pio-col .val{font-family:'Ubuntu Mono';font-size:10px;font-weight:700;line-height:1;margin-bottom:2px}
  .pio-xlabels{display:flex;gap:3px;margin-top:4px}
  .pio-xlabels span{width:13px;flex:none;text-align:center;font-family:'Ubuntu Mono';font-size:8.5px;color:#aab4c4}
- .pio-d{font-weight:700;padding:1px 8px;border-radius:20px;font-size:10.5px}
- .pio-d.p{color:var(--good);background:#e7f5ec}.pio-d.n{color:var(--bad);background:#fdeceb}.pio-d.z{color:#55617a;background:#eef1f6}
  .pio-note{font-size:11px;color:var(--muted);margin-top:12px;line-height:1.55}
  .pio-about{background:var(--soft);border:1px solid var(--line);border-left:3px solid var(--accent);
    border-radius:10px;padding:12px 16px;margin:0 0 16px;font-size:12.5px;color:#41506a;line-height:1.6}
@@ -143,7 +131,6 @@
 
  /* ---- λίστα εταιρειών κλάδου (στυλ σύγκρισης) ---- */
  .cl-metbar{background:#f4f6f9;border:1px solid #e4e8f0;border-left:3px solid #5a6b85;border-radius:12px;padding:14px 16px;margin:14px 0 0}
- .cl-metlabel{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9aa7b8;margin-bottom:9px}
  .cl-metpick{display:flex;flex-wrap:wrap;gap:8px}
  .cl-mchip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:#fff;border-radius:20px;
    padding:6px 13px;font-size:12.5px;font-weight:700;color:#5f7088;cursor:pointer;transition:.12s;user-select:none}
@@ -167,7 +154,6 @@
  /* == ομογενοποίηση: κοινή τυπογραφία επικεφαλίδων == */
  .mast h1,h2.sec{font-family:'Inter',sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.02em}
 
-
  /* navy hero (όπως στη σύγκριση / ευρετήριο) */
  .hero{background:#fff;border:1px solid #eef1f6;border-radius:14px;box-shadow:0 4px 16px rgba(27,39,64,.06);overflow:hidden;margin-top:22px}
  .hero .stripe{height:5px;background:#c6a24e}
@@ -178,7 +164,6 @@
  .hero .hs+.hs{border-left:1px solid #edf0f5}
  .hero .hs .v{font-size:14px;font-weight:800;color:#1b2740;line-height:1.15}
  .hero .hs .l{font-size:10.5px;color:#8a95a6;letter-spacing:.01em;line-height:1.3}
- .hero .eye{font-family:Inter,sans-serif;font-weight:700;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:#7fb0e8;margin-bottom:10px}
  .hero h1,.hero .hero-h1{font-family:Inter,sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.02em;color:#1b2740;font-size:30px;line-height:1.05;margin:0}
  .hero .sub{font-size:13.5px;line-height:1.55;color:#aebfd8;margin-top:10px;max-width:640px}
  /* picker κλάδου μέσα στο navy hero */
@@ -296,7 +281,6 @@ function curLang(){return window.AX_I18N?AX_I18N.lang:'el';}
 function LOC(){return curLang()==='en'?'en-US':'el-GR';}
 function metL(k){return L('sm.met.'+k);}
 
-const COMPANY_PAGE='../company/';
 
 const AXBASIS='annual'; /* Σελίδα κλάδου: μόνο ετήσια βάση (καμία εξαμηνιαία διάμεσος κλάδου) */
 const DATA=(window.AXION&&window.AXION.rows&&window.AXION.rows[AXBASIS])||[];

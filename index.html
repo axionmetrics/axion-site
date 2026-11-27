@@ -113,28 +113,19 @@
    border-bottom:4px solid transparent}
  .navbar2 a:hover{color:#fff;border-bottom-color:#57a5df}
  @media(max-width:620px){.navbar2 .in{gap:22px;height:44px}.navbar2 a{letter-spacing:.04em}}
- /* (4) κάρτα short θέσεων */
- .tp-x{margin-left:auto;font-family:var(--disp);font-size:11.5px;font-weight:700;
-   color:var(--muted);white-space:nowrap;flex:none}
- .tp-n.neg{color:var(--down)}
 
  /* ── ταμπλό ───────────────────────────────────────────────────────────────── */
  .board{background:#fff;border-bottom:1px solid var(--line);padding:30px 0 34px}
  .bh{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:16px}
  .bh.ctr{justify-content:center;text-align:center}
  .bh h2{font-family:var(--disp);font-size:17px;font-weight:800;color:var(--ink);text-transform:uppercase;letter-spacing:.04em}
- .numrow{display:flex;gap:12px;align-items:stretch;flex-wrap:wrap;min-height:81px}
- .scards{display:flex;gap:12px;margin:0}
  .sc{width:auto;padding:12px 18px;background:#fff;border:1px solid var(--line2);border-radius:13px;
      display:flex;flex-direction:column;justify-content:center;text-align:center}
  .sc-l{font-size:11px;color:var(--muted)}
  .sc-n{font-family:var(--disp);font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.15;text-align:center}
  .sc-n.up{color:var(--up)} .sc-n.dn{color:var(--down)} .sc-n.nn{color:var(--faint)}
- .pgrid{display:grid;grid-template-rows:auto auto;grid-auto-flow:column;gap:8px}
  .pt{display:flex;align-items:baseline;gap:9px;padding:7px 13px;width:auto;
      background:#fff;border:1px solid var(--line2);border-radius:11px}
- .pt-l{font-size:10.5px;color:var(--muted);line-height:1.3;white-space:nowrap;flex:none}
- .pt-n{font-family:var(--disp);font-size:17px;font-weight:700;color:var(--ink);line-height:1.2;white-space:nowrap;flex:none}
  .cols2{display:grid;grid-template-columns:1.35fr 1fr;gap:12px;align-items:start;margin-top:26px;min-height:200px}
  .pane{background:#fff;border:1px solid var(--line2);border-radius:13px;overflow:hidden}
  .pane-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:11px 14px;
@@ -159,26 +150,7 @@
  .tp{background:#fff;border:1px solid var(--line2);border-radius:13px;overflow:hidden}
  .tp-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:11px 14px;border-bottom:1px solid var(--line2);font-family:var(--disp);font-size:12px;
    font-weight:700;color:var(--ink);text-transform:uppercase;letter-spacing:.05em;background:#fcfdff;margin:0}
- .tp-r{display:flex;gap:12px;align-items:baseline;padding:7px 14px;border-bottom:1px solid #f1f6fb;text-decoration:none;color:inherit}
- .tp-r:last-child{border-bottom:0}.tp-r:hover{background:#f8fbff}
- .tp-n{font-family:var(--disp);font-size:14px;font-weight:800;color:var(--cyan);width:62px;flex:none;text-align:right}
- .tp-c{font-size:12.5px;color:var(--text);line-height:1.35}
  .tp-h a{font-family:var(--sans);font-size:11px;font-weight:600;color:var(--cyan);text-decoration:none;text-transform:none;letter-spacing:0}
-
- /* ── κάρτες ───────────────────────────────────────────────────────────────── */
- .feat{padding:34px 0 60px;background:#fff}
- .feath{text-align:center;margin-bottom:30px}
- .feath h2{font-family:var(--disp);font-size:26px;font-weight:800;color:#20344a;letter-spacing:-.01em;text-transform:uppercase}
- .feath p{font-size:15px;color:var(--muted);margin-top:9px}
- .fgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
- .fcard{background:#fff;border:1px solid var(--line2);border-radius:18px;padding:26px 22px;text-align:center;
-   box-shadow:0 10px 26px rgba(47,128,194,.07);text-decoration:none;color:inherit;display:block;
-   transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease}
- .fcard:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(47,128,194,.15);border-color:#d7ecfb}
- .ficon{height:92px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center}
- .ficon img{max-height:88px;max-width:128px;width:auto;height:auto;object-fit:contain;display:block}
- .fcard h3{font-family:var(--disp);font-size:17px;font-weight:700;color:#20344a;margin-bottom:9px}
- .fcard p{font-size:13px;line-height:1.58;color:var(--muted)}
 
  @media(prefers-reduced-motion:reduce){.mq-t{animation:none!important}}
 
@@ -186,12 +158,7 @@
  @media(max-width:900px){
    .hw{padding:0 22px}
    .cols2{grid-template-columns:1fr}
-   .fgrid{grid-template-columns:1fr 1fr}
-   .numrow{flex-direction:column;min-height:0}
-   .scards{flex-wrap:wrap}
    .sc{flex:1 1 calc(50% - 6px)}
-   .pgrid{grid-auto-flow:row;grid-template-rows:none;grid-template-columns:1fr 1fr}
-   .feath h2{font-size:22px}
  }
  @media(max-width:560px){
    .k3 .bar{height:auto;flex-wrap:wrap;gap:10px 16px;padding:12px 0}
@@ -207,7 +174,6 @@
    .dv-y{width:52px;font-size:11.5px}
    .dv,.dv-hd{gap:7px;padding-left:11px;padding-right:11px}
    .dv-hd{font-size:9px;letter-spacing:.03em}
-   .fgrid{grid-template-columns:1fr}
  }
 
  /* ═══ ΑΛΛΑΓΕΣ 2ου ΓΥΡΟΥ ═══════════════════════════════════════════════════ */
@@ -364,7 +330,7 @@
  .xcol{min-width:0}
  .xch{display:block;width:100%;height:auto;overflow:visible}
  .xch line{stroke-width:1}
- .xch .gr{stroke:var(--grid)} .xch .zr{stroke:var(--axis)}
+ .xch .gr{stroke:var(--grid)}
  .xch .ln{fill:none;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round}
  .xch .pt{stroke:var(--surf);stroke-width:1.8}
  .xch .s1{stroke:var(--c1)} .xch .pt.s1,.xch text.s1{fill:var(--c1);stroke:none}
@@ -492,7 +458,6 @@
    .t-lead{padding-right:12px} .t-lt2{display:none}
  }
 
-
 /* ═══ ΚΛΙΜΑΚΑ ΤΥΠΟΓΡΑΦΙΑΣ ════════════════════════════════════════════════ */
  :root{
    --f-disp:Inter,system-ui,sans-serif;      /* αριθμοί · λογότυπα · τίτλοι */
@@ -517,7 +482,7 @@
  .lockh .wm,.flogo,.xn1 b{font-family:var(--f-disp);letter-spacing:var(--ls-num)}
  .h1lead{font-family:var(--f-disp);letter-spacing:-.01em}
  /* 17 — τίτλοι ενοτήτων (κεφαλαία) */
- .bh h2,.feath h2{font-family:var(--f-disp);font-size:var(--s17);
+ .bh h2{font-family:var(--f-disp);font-size:var(--s17);
    font-weight:var(--w-disp);text-transform:uppercase;letter-spacing:.04em}
  /* 13 — ποσά, ποσοστά, ημερομηνίες πινάκων, σύνδεσμοι πλοήγησης */
  .dv-a,.dv-y,.r3 b,.sc-a{font-family:var(--f-disp);font-size:var(--s13);
@@ -756,7 +721,6 @@ try{AX_I18N.add({"f.about":{"el":"Περί","en":"About the project"},"f.bot":{"
   function EN(){ try{ return (document.documentElement.lang||'el').slice(0,2)==='en'; }catch(e){ return false; } }
   function esc(t){return String(t==null?'':t).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
   function num(v,d){ if(v==null) return '—'; var s=Number(v).toFixed(d); return EN()?s:s.replace('.',','); }
-  function dmy(iso){ var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(iso||''); return m?(m[3]+'.'+m[2]+'.'+m[1].slice(2)):(iso||''); }
   function dm(iso){ var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(iso||''); return m?(m[3]+'.'+m[2]):(iso||''); }
 
   var MON_EL=['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου','Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
@@ -837,7 +801,6 @@ try{AX_I18N.add({"f.about":{"el":"Περί","en":"About the project"},"f.bot":{"
       shorts:'Short positions in Greek companies',
       shNote:'Latest change of the position (percentage points) and notification date', shNew:'new',
       tape:'Latest events', tapeS:'Events',
-      xTitle:'Foreign investors on the Athens Exchange',
       xSeven:function(n){return n+' years';}, xPart:'participation', xTurn:'share of turnover',
       xFlow:'Net flow by month, ', xIn:'inflow', xOut:'outflow',
       xT1:'Market participation', xT2:'Share of turnover',
@@ -871,7 +834,6 @@ try{AX_I18N.add({"f.about":{"el":"Περί","en":"About the project"},"f.bot":{"
       shorts:'Short θέσεις στις ελληνικές εταιρείες',
       shNote:'Τελευταία μεταβολή της θέσης (π.μ.) και ημερομηνία γνωστοποίησης', shNew:'νέα',
       tape:'Τελευταία γεγονότα', tapeS:'Γεγονότα',
-      xTitle:'Ξένοι επενδυτές στο Χρηματιστήριο Αθηνών',
       xSeven:function(n){var W=['','Ένας χρόνος','Δύο χρόνια','Τρία χρόνια','Τέσσερα χρόνια','Πέντε χρόνια','Έξι χρόνια','Επτά χρόνια','Οκτώ χρόνια','Εννέα χρόνια','Δέκα χρόνια']; return W[n]||(n+' χρόνια');}, xPart:'συμμετοχή', xTurn:'μερίδιο τζίρου',
       xFlow:'Καθαρή ροή ανά μήνα, ', xIn:'εισροή', xOut:'εκροή',
       xT1:'Συμμ/χή στην αγορά', xT2:'Μερίδιο στον τζίρο',
