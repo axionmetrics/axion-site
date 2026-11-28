@@ -1,26 +1,26 @@
 {
-"generated": "2026-11-27",
+"generated": "2026-11-28",
 "note": "Το γράφει η γέφυρα (§163). Αποτύπωμα περιεχομένου ανά διεύθυνση, ώστε το lastmod του sitemap να ανανεώνεται μόνο σε πραγματική αλλαγή.",
 "pages": {
 "": {
-"fp": "e36a79cc3ee6",
-"lastmod": "2026-11-27"
+"fp": "8b00224f4402",
+"lastmod": "2026-11-28"
 },
 "about/": {
 "fp": "0de0f0dc55c7",
 "lastmod": "2026-11-27"
 },
 "apotelesmata/": {
-"fp": "919fa81c4efc",
-"lastmod": "2026-11-27"
+"fp": "973c22123416",
+"lastmod": "2026-11-28"
 },
 "company/": {
-"fp": "5660751e0a85",
-"lastmod": "2026-11-27"
+"fp": "d8f9baef2432",
+"lastmod": "2026-11-28"
 },
 "compare/": {
-"fp": "95f5802f5d0d",
-"lastmod": "2026-11-27"
+"fp": "ca79da3ec3c4",
+"lastmod": "2026-11-28"
 },
 "etaireia/admie-symmetochon/": {
 "fp": "627a7ea2f738",
@@ -47,8 +47,8 @@
 "lastmod": "2026-11-25"
 },
 "etaireia/alpha-bank/": {
-"fp": "32bba8c21c7f",
-"lastmod": "2026-11-25"
+"fp": "7478d3e6a2a0",
+"lastmod": "2026-11-28"
 },
 "etaireia/alpha-real-estate-services/": {
 "fp": "ce1a2c366aa4",
@@ -187,8 +187,8 @@
 "lastmod": "2026-11-26"
 },
 "etaireia/el-d-mouzakis/": {
-"fp": "23e5609fd3af",
-"lastmod": "2026-11-25"
+"fp": "730d6112075d",
+"lastmod": "2026-11-28"
 },
 "etaireia/elastron/": {
 "fp": "d2eb44670e64",
@@ -207,8 +207,8 @@
 "lastmod": "2026-11-25"
 },
 "etaireia/elvalhalcor/": {
-"fp": "8bcd89c58dcc",
-"lastmod": "2026-11-25"
+"fp": "62c79fc97436",
+"lastmod": "2026-11-28"
 },
 "etaireia/elve/": {
 "fp": "7290e87773f0",
@@ -219,8 +219,8 @@
 "lastmod": "2026-11-25"
 },
 "etaireia/eurobank/": {
-"fp": "c861460bead1",
-"lastmod": "2026-11-25"
+"fp": "ca01e419c5d8",
+"lastmod": "2026-11-28"
 },
 "etaireia/euronext-athens/": {
 "fp": "617bc09ea971",
@@ -263,16 +263,16 @@
 "lastmod": "2026-11-25"
 },
 "etaireia/fourlis-group/": {
-"fp": "2db98fef59d8",
-"lastmod": "2026-11-25"
+"fp": "3c679a504d8b",
+"lastmod": "2026-11-28"
 },
 "etaireia/frigoglass-saic/": {
 "fp": "fbc932f7344a",
 "lastmod": "2026-11-25"
 },
 "etaireia/gek-terna/": {
-"fp": "4f7b91bb64eb",
-"lastmod": "2026-11-26"
+"fp": "2b292d9f4526",
+"lastmod": "2026-11-28"
 },
 "etaireia/geniki-emporiou-viomichanias/": {
 "fp": "29320f7a8c9e",
@@ -303,8 +303,8 @@
 "lastmod": "2026-11-25"
 },
 "etaireia/interwood-xylemporia/": {
-"fp": "bac959e8a78b",
-"lastmod": "2026-11-25"
+"fp": "05fae2d5ac29",
+"lastmod": "2026-11-28"
 },
 "etaireia/intracom-holdings/": {
 "fp": "7f8779c60873",
@@ -407,8 +407,8 @@
 "lastmod": "2026-11-25"
 },
 "etaireia/omilos-aktor/": {
-"fp": "7ed0872a22d3",
-"lastmod": "2026-11-26"
+"fp": "6c26e70bac40",
+"lastmod": "2026-11-28"
 },
 "etaireia/omilos-iatrikou-athinon/": {
 "fp": "cfd73a9f7a9d",
@@ -439,8 +439,8 @@
 "lastmod": "2026-11-26"
 },
 "etaireia/organismos-tilepikoinonion-ellados/": {
-"fp": "d43bd7113fff",
-"lastmod": "2026-11-25"
+"fp": "d41c59f43a6c",
+"lastmod": "2026-11-28"
 },
 "etaireia/orilina-properties/": {
 "fp": "fa6bc4563471",
@@ -455,8 +455,8 @@
 "lastmod": "2026-11-25"
 },
 "etaireia/performance-technologies/": {
-"fp": "3fd76ab6af0f",
-"lastmod": "2026-11-25"
+"fp": "f830e1c6124c",
+"lastmod": "2026-11-28"
 },
 "etaireia/petros-petropoulos/": {
 "fp": "9888a05e5860",
@@ -535,8 +535,8 @@
 "lastmod": "2026-11-25"
 },
 "etaireia/star-bulk-carriers/": {
-"fp": "d3be4cc62547",
-"lastmod": "2026-11-26"
+"fp": "84ddabbf902e",
+"lastmod": "2026-11-28"
 },
 "etaireia/techniki-olympiaki/": {
 "fp": "0426ca71229c",
@@ -591,8 +591,8 @@
 "lastmod": "2026-11-25"
 },
 "index-reviews/": {
-"fp": "0a099fb496eb",
-"lastmod": "2026-11-27"
+"fp": "422516661cea",
+"lastmod": "2026-11-28"
 },
 "katataxeis/ev-ebitda/": {
 "fp": "3598c5f0f1c4",
@@ -663,20 +663,20 @@
 "lastmod": "2026-11-27"
 },
 "market-events/": {
-"fp": "a0bf6f2604f5",
-"lastmod": "2026-11-27"
+"fp": "8de3bfb3be40",
+"lastmod": "2026-11-28"
 },
 "methodology/": {
 "fp": "6542bb4df629",
 "lastmod": "2026-11-27"
 },
 "sectors/": {
-"fp": "78d92f3f82fd",
-"lastmod": "2026-11-27"
+"fp": "38f344dcd016",
+"lastmod": "2026-11-28"
 },
 "short-positions/": {
-"fp": "9e770036c459",
-"lastmod": "2026-11-27"
+"fp": "98d67dce268e",
+"lastmod": "2026-11-28"
 },
 "terms/": {
 "fp": "2e21c5c1c57f",

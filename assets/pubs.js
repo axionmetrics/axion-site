@@ -1,4 +1,4 @@
-/* Axion Metrics — ημερομηνίες δημοσίευσης + μεγέθη εξαμήνου (§136). Παράγεται από το build_site_data.py στις 2026-11-27.
+/* Axion Metrics — ημερομηνίες δημοσίευσης + μεγέθη εξαμήνου (§136). Παράγεται από το build_site_data.py στις 2026-11-28.
    ΜΗΝ το επεξεργάζεσαι με το χέρι. Φορτώνεται ΜΕΤΑ το core.js. */
 (function(A,D){ if(!A) return; A.publications=D.publications; A.qres=D.qres||null;
  var L=A.companies&&A.companies.interim; if(!L) return;
